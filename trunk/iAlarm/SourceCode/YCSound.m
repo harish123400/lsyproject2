@@ -1,0 +1,54 @@
+//
+//  YCSounds.m
+//  iArrived
+//
+//  Created by li shiyong on 10-10-17.
+//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//
+
+#import "YCSound.h"
+
+
+@implementation YCSound
+
+@synthesize soundId;
+@synthesize soundName;
+
+#pragma mark NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	
+	[encoder encodeObject:soundId forKey:ksoundId];
+	[encoder encodeObject:soundName forKey:ksoundName];
+	
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    if (self = [super init]) {		
+		self.soundId = [decoder decodeObjectForKey:ksoundId];
+		self.soundName = [decoder decodeObjectForKey:ksoundName];
+    }
+    return self;
+}
+
+#pragma mark -
+#pragma mark NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+    YCSound *copy = [[[self class] allocWithZone: zone] init];
+    /*
+	copy.soundId = [[self.soundId copyWithZone:zone] autorelease];
+    copy.soundName = [[self.soundName copyWithZone:zone] autorelease];
+	 */
+	copy.soundId = self.soundId;
+    copy.soundName = self.soundName; 
+    return copy;
+}
+
+- (void)dealloc {
+	[soundId release];
+	[soundName release];
+    [super dealloc];
+}
+
+@end
