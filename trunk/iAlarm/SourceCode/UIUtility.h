@@ -39,8 +39,7 @@
 
 //发送个简单的通知 －－debug
 +(void)sendSimpleNotifyForAlart:(NSString*)alartBody;
-
-
++(void)sendNotifyForAlart:(NSString*)alartBody alartName:(NSString*)alartName;
 @end
 
 

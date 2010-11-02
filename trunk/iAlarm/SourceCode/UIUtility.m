@@ -269,7 +269,7 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	return [UIUtility convertgen:longitude decimal:decimal name:name];
 }
 
-//发送个简单的通知 －－debug
+//发送个简单的通知 弹出警告筐－－debug
 +(void)sendSimpleNotifyForAlart:(NSString*)alartBody
 {
 	// Create a new notification
@@ -280,6 +280,22 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	//notification.soundName = @"ping.caf";//@"default";
 	notification.alertBody = alartBody;
 	notification.userInfo = [NSDictionary dictionaryWithObject:@"sendSimpleNotifyForAlart"forKey:@"name"];
+	
+	UIApplication *app = [UIApplication sharedApplication];
+	[app scheduleLocalNotification:notification];
+	[notification release];
+}
+
++(void)sendNotifyForAlart:(NSString*)alartBody alartName:(NSString*)alartName
+{
+	// Create a new notification
+	UILocalNotification *notification = [[UILocalNotification alloc] init];
+	notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+	notification.timeZone = [NSTimeZone defaultTimeZone];
+	notification.repeatInterval = 0;
+	//notification.soundName = @"ping.caf";//@"default";
+	notification.alertBody = alartBody;
+	notification.userInfo = [NSDictionary dictionaryWithObject:alartName forKey:@"name"];
 	
 	UIApplication *app = [UIApplication sharedApplication];
 	[app scheduleLocalNotification:notification];
