@@ -98,7 +98,7 @@
 	}
 	
 	CLLocation *curLocation = self.bestEffortAtLocation;
-	CLLocationSpeed curSpeed = curLocation.speed;
+	//CLLocationSpeed curSpeed = curLocation.speed;
 	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
 	
@@ -109,7 +109,7 @@
 	//当前位置与“最后所在区域”列表中的各个位置比较,如果有 大于 区域列表的半径的，就启动标准定位
 	BOOL isContainLast =[LocationUtility includeNoContainsLocation:curLocation 
 														 atRegions:[regionsContainsLastLocation allValues]];
-	if(curSpeed > 1.0)
+	//if(curSpeed > 1.0)
 	if (regionsContainsLastLocation.count > 0 && !isContainLast) {
 		[[StandardLocationManager standardLocationManagerSigleInstance] start];
 		return;
@@ -126,6 +126,7 @@
 															location:curLocation 
 														   atRegions:regions
 														   noRegions:regionsContainsLastLocation];
+	//if(curSpeed > 1.0)
 	if (regions.count >0 && !lessProAlarmDistance) {
 		[[StandardLocationManager standardLocationManagerSigleInstance] start];
 		return;
@@ -146,10 +147,10 @@
 	didUpdateToLocation:(CLLocation *)newLocation 
 		   fromLocation:(CLLocation *)oldLocation
 {
-	NSDate* eventDate = newLocation.timestamp;
-    NSTimeInterval howRecent = -[eventDate timeIntervalSinceNow];
+	//NSDate* eventDate = newLocation.timestamp;
+    //NSTimeInterval howRecent = -[eventDate timeIntervalSinceNow];
 
-    if (howRecent > 5.0) return;
+    //if (howRecent > 5.0) return;
 	
 	if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) 
 	{
