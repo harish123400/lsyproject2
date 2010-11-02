@@ -40,7 +40,8 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
 	NSString *notificationName = [notification.userInfo objectForKey:@"name"];
-	if (([notificationName isEqualToString:@"updateAlarm"])) 
+	if (([notificationName isEqualToString:@"updateAlarm"]) ||
+		([notificationName isEqualToString:@"updateParam"])) 
 	{
 		[self resetMonitoredRegions];
 	}else if (notificationName !=nil){ //notificationName != nil 就一定是自定义的通知
