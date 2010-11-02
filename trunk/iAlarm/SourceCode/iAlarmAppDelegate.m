@@ -33,7 +33,7 @@
 	}
 	
 	//重启一次
-	//[ycLocationManager restart];
+	[ycLocationManager restart];
 
 }
 
