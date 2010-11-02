@@ -34,5 +34,6 @@
 @property (nonatomic,assign) CLLocationCoordinate2D offsetCoordinateOfMap;
 
 +(YCParam*) paramSingleInstance;
++(void)updateParam;
 
 @end

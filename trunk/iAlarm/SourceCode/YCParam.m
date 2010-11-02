@@ -7,7 +7,9 @@
 //
 
 #import "YCParam.h"
-
+#import "DataUtility.h"
+#import "UIUtility.h"
+#import "YCAlarmEntity.h"
 
 @implementation YCParam
 
@@ -38,6 +40,20 @@
 	}
 	
 	return obj;
+	
+}
+
++(void)updateParam
+{
+	//半径 Debug
+	NSArray * alarms = [DataUtility alarmArray];
+	for (NSUInteger i=0; i<alarms.count; i++) {
+		YCAlarmEntity *alarm = [alarms objectAtIndex:i];
+		alarm.radius = [self paramSingleInstance].radiusForAlarm;
+	}
+	[DataUtility saveAlarmArray:alarms];
+	
+	[UIUtility sendNotifyForAlart:nil alartName :@"updateParam"];
 	
 }
 

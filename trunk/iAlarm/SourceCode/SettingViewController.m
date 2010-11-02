@@ -21,36 +21,37 @@
 @synthesize currentSpeedLabel;
 @synthesize regionsView;
 @synthesize lastRegionsView;
+@synthesize radiusForAlarmField;
+@synthesize distanceForProAlarmField;
 
-
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-*/
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
--(IBAction) refreshButtonPressed:(id)sender
+-(IBAction) radiusChanged:(id)sender
 {
 	YCParam *param = [YCParam paramSingleInstance];
+	param.radiusForAlarm =  [self.radiusForAlarmField.text doubleValue];
+	[YCParam updateParam];
+}
+-(IBAction) distancePreAlarmChanged:(id)sender
+{
+	YCParam *param = [YCParam paramSingleInstance];
+	param.distanceForProAlarm =  [self.distanceForProAlarmField.text doubleValue];
+}
+
+-(IBAction) OKButtonPressed:(id)sender
+{
+	[self distancePreAlarmChanged:nil];
+	[self radiusChanged:nil];
+}
+
+-(IBAction) refreshButtonPressed:(id)sender
+{
+	[self.distanceForProAlarmField resignFirstResponder];
+	[self.radiusForAlarmField resignFirstResponder];
+	
+	YCParam *param = [YCParam paramSingleInstance];
 	self.mapOffsetSwitch.on = param.enableOffset;
+	self.radiusForAlarmField.text = [NSString stringWithFormat:@"%.1f",param.radiusForAlarm];
+	self.distanceForProAlarmField.text = [NSString stringWithFormat:@"%.1f",param.distanceForProAlarm];
+
 	
 	YCDeviceStatus *devs = [YCDeviceStatus deviceStatusSingleInstance];
 	self.lastStandardSpeedLabel.text =[NSString stringWithFormat:@"%.1f",devs.lastStandardLocationSpeed];
@@ -84,7 +85,7 @@
 		double distanceLastSign = [devs.lastSignificantLocation distanceFromLocation:locRegion];
 		double distanceLastStand = [devs.lastStandardLocation distanceFromLocation:locRegion];
 
-		[regionsStr appendFormat:@"%@   %6.1f   %6.1f   %6.1f",alarm.alarmName,distanceCur,distanceLastStand,distanceLastSign];
+		[regionsStr appendFormat:@"%@  %6.1f %6.1f %6.1f %6.1f",alarm.alarmName,distanceCur,distanceLastStand,distanceLastSign,alarm.radius];
 		[regionsStr appendString:@"\n"];
 	}
 	regionsView.text = regionsStr;
@@ -104,12 +105,15 @@
 		double distanceLastSign = [devs.lastSignificantLocation distanceFromLocation:locRegion];
 		double distanceLastStand = [devs.lastStandardLocation distanceFromLocation:locRegion];
 		
-		[lastRegionsStr appendFormat:@"%8@ %6.1f %6.1f %6.1f",alarm.alarmName,distanceCur,distanceLastStand,distanceLastSign];
+		[lastRegionsStr appendFormat:@"%@  %6.1f %6.1f %6.1f %6.1f",alarm.alarmName,distanceCur,distanceLastStand,distanceLastSign,alarm.radius];
 		[lastRegionsStr appendString:@"\n"];
 	}
 	self.lastRegionsView.text = lastRegionsStr;
 	
 }
+
+
+
 -(IBAction) mapOffsetSwitchChanged:(id)sender
 {
 	YCParam *param = [YCParam paramSingleInstance];

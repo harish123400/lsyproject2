@@ -20,6 +20,9 @@
 	
 	UITextView *regionsView;
 	UITextView *lastRegionsView;
+	
+	UITextField *radiusForAlarmField;
+	UITextField *distanceForProAlarmField;
 
 }
 @property (nonatomic,retain) IBOutlet UISwitch *mapOffsetSwitch;
@@ -30,8 +33,13 @@
 @property (nonatomic,retain) IBOutlet UITextView *regionsView;
 @property (nonatomic,retain) IBOutlet UITextView *lastRegionsView;
 @property (nonatomic,retain) IBOutlet UILabel *currentSpeedLabel;
+@property (nonatomic,retain) IBOutlet UITextField *radiusForAlarmField;
+@property (nonatomic,retain) IBOutlet UITextField *distanceForProAlarmField;
 
 -(IBAction) refreshButtonPressed:(id)sender;
 -(IBAction) mapOffsetSwitchChanged:(id)sender;
+-(IBAction) OKButtonPressed:(id)sender;
+//-(IBAction) radiusChanged:(id)sender;
+//-(IBAction) distancePreAlarmChanged:(id)sender;
 
 @end
