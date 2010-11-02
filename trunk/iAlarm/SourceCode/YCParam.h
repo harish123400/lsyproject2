@@ -17,9 +17,6 @@
 	CLLocationAccuracy desiredAccuracyForStartStandardLocation; //Standard Location服务的精度
 	NSTimeInterval     intervalForStartStandardLocation;        //过了多久，启动Standard Location服务
 	
-	BOOL significantService; //SignificantService 服务是否启动
-	BOOL standardService; //standardService 服务是否启动
-	
 	BOOL enableOffset;                             //是否启用偏移坐标
 	CLLocationCoordinate2D offsetCoordinateOfMap;  //地图的偏移坐标
 	
@@ -31,8 +28,7 @@
 @property (nonatomic,assign) CLLocationAccuracy desiredAccuracyForStartStandardLocation;
 @property (nonatomic,assign) NSTimeInterval     intervalForStartStandardLocation;
 
-@property (nonatomic,assign) BOOL significantService;
-@property (nonatomic,assign) BOOL standardService;
+
 
 @property (nonatomic,assign) BOOL enableOffset;
 @property (nonatomic,assign) CLLocationCoordinate2D offsetCoordinateOfMap;

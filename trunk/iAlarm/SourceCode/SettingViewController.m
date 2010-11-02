@@ -8,12 +8,19 @@
 
 #import "SettingViewController.h"
 #import "YCParam.h"
-
+#import "YCDeviceStatus.h"
+#import "RegionCenter.h"
+#import "DataUtility.h"
+#import "YCAlarmEntity.h"
 
 @implementation SettingViewController
+@synthesize mapOffsetSwitch;
 @synthesize signicantSeriveLabel;
 @synthesize standardSeriveLabel;
-@synthesize mapOffsetSwitch;
+@synthesize lastStandardSpeedLabel;
+@synthesize currentSpeedLabel;
+@synthesize regionsView;
+@synthesize lastRegionsView;
 
 
 /*
@@ -40,7 +47,69 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 */
+-(IBAction) refreshButtonPressed:(id)sender
+{
+	YCParam *param = [YCParam paramSingleInstance];
+	self.mapOffsetSwitch.on = param.enableOffset;
+	
+	YCDeviceStatus *devs = [YCDeviceStatus deviceStatusSingleInstance];
+	self.lastStandardSpeedLabel.text =[NSString stringWithFormat:@"%.1f",devs.lastStandardLocationSpeed];
+	self.currentSpeedLabel.text =[NSString stringWithFormat:@"%.1f",devs.currentLocationSpeed];
 
+	
+	if (devs.significantService)
+		self.signicantSeriveLabel.text = @"Open";
+	else 
+		self.signicantSeriveLabel.text = @"Close";
+	
+	if (devs.standardService)
+		self.standardSeriveLabel.text = @"Open";
+	else 
+		self.standardSeriveLabel.text = @"Close";
+	
+	NSArray *alarms = [DataUtility alarmArray];
+	
+	
+	NSArray *regions = [RegionCenter regionCenterSingleInstance].regions;
+	NSMutableString *regionsStr = [NSMutableString stringWithString:@""];
+	for (NSUInteger i=0; i<regions.count; i++) 
+	{
+		CLRegion * region = [regions objectAtIndex:i];
+		YCAlarmEntity *alarm =[DataUtility alarmArray:alarms alarmId:region.identifier];
+		CLLocation *locRegion = 
+		[[[CLLocation alloc] initWithLatitude:region.center.latitude
+									longitude:region.center.longitude] autorelease];
+		
+		double distanceCur = [devs.currentLocation distanceFromLocation:locRegion];
+		double distanceLastSign = [devs.lastSignificantLocation distanceFromLocation:locRegion];
+		double distanceLastStand = [devs.lastStandardLocation distanceFromLocation:locRegion];
+
+		[regionsStr appendFormat:@"%@   %6.1f   %6.1f   %6.1f",alarm.alarmName,distanceCur,distanceLastStand,distanceLastSign];
+		[regionsStr appendString:@"\n"];
+	}
+	regionsView.text = regionsStr;
+	 
+	
+	NSArray *lastRegions = [[RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation allValues];
+	NSMutableString *lastRegionsStr = [NSMutableString stringWithString:@""];
+	for (NSUInteger i=0; i<lastRegions.count; i++) 
+	{
+		CLRegion * region = [lastRegions objectAtIndex:i];
+		YCAlarmEntity *alarm =[DataUtility alarmArray:alarms alarmId:region.identifier];
+		CLLocation *locRegion = 
+		[[[CLLocation alloc] initWithLatitude:region.center.latitude
+									longitude:region.center.longitude] autorelease];
+		
+		double distanceCur = [devs.currentLocation distanceFromLocation:locRegion];
+		double distanceLastSign = [devs.lastSignificantLocation distanceFromLocation:locRegion];
+		double distanceLastStand = [devs.lastStandardLocation distanceFromLocation:locRegion];
+		
+		[lastRegionsStr appendFormat:@"%8@ %6.1f %6.1f %6.1f",alarm.alarmName,distanceCur,distanceLastStand,distanceLastSign];
+		[lastRegionsStr appendString:@"\n"];
+	}
+	self.lastRegionsView.text = lastRegionsStr;
+	
+}
 -(IBAction) mapOffsetSwitchChanged:(id)sender
 {
 	YCParam *param = [YCParam paramSingleInstance];
@@ -49,23 +118,7 @@
 
 -(void) viewWillAppear:(BOOL)animated
 {
-	YCParam *param = [YCParam paramSingleInstance];
-	
-	if (param.significantService)
-		self.signicantSeriveLabel.text = @"Open";
-	else 
-		self.signicantSeriveLabel.text = @"Close";
-	
-	if (param.standardService)
-		self.standardSeriveLabel.text = @"Open";
-	else 
-		self.standardSeriveLabel.text = @"Close";
-	
-
-	self.mapOffsetSwitch.on = param.enableOffset;
-	
-	
-
+	[self refreshButtonPressed:nil];
 }
 
 - (void)didReceiveMemoryWarning {

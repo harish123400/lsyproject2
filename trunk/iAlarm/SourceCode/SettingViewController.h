@@ -11,15 +11,27 @@
 
 @interface SettingViewController : UIViewController {
 
+	UISwitch *mapOffsetSwitch;
+	
 	UILabel *signicantSeriveLabel;
 	UILabel *standardSeriveLabel;
-	UISwitch *mapOffsetSwitch;
+	UILabel *lastStandardSpeedLabel;
+	UILabel *currentSpeedLabel;
+	
+	UITextView *regionsView;
+	UITextView *lastRegionsView;
+
 }
- 
-@property (nonatomic,retain) IBOutlet UILabel *signicantSeriveLabel;
-@property (nonatomic,retain) IBOutlet UILabel *standardSeriveLabel;
 @property (nonatomic,retain) IBOutlet UISwitch *mapOffsetSwitch;
 
+@property (nonatomic,retain) IBOutlet UILabel *signicantSeriveLabel;
+@property (nonatomic,retain) IBOutlet UILabel *standardSeriveLabel;
+@property (nonatomic,retain) IBOutlet UILabel *lastStandardSpeedLabel;
+@property (nonatomic,retain) IBOutlet UITextView *regionsView;
+@property (nonatomic,retain) IBOutlet UITextView *lastRegionsView;
+@property (nonatomic,retain) IBOutlet UILabel *currentSpeedLabel;
+
+-(IBAction) refreshButtonPressed:(id)sender;
 -(IBAction) mapOffsetSwitchChanged:(id)sender;
 
 @end

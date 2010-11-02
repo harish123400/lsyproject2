@@ -19,6 +19,8 @@
 @synthesize delegate;
 //@synthesize desiredAccurac;
 @synthesize bestEffortAtLocation;
+@synthesize lastLocation;
+@synthesize running;
 
 
 
@@ -95,9 +97,13 @@
 
 	if (self.bestEffortAtLocation == nil) {
 		return;
+	}else {
+		self.lastLocation = self.bestEffortAtLocation;
+		self.bestEffortAtLocation = nil;
 	}
+
 	
-	CLLocation *curLocation = self.bestEffortAtLocation;
+	CLLocation *curLocation = self.lastLocation;
 	//CLLocationSpeed curSpeed = curLocation.speed;
 	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
@@ -182,7 +188,6 @@
 	{
 		[self.significantLocationManager startMonitoringSignificantLocationChanges];
 		running = YES;
-		[YCParam paramSingleInstance].significantService = YES;
 		//[UIUtility sendSimpleNotifyForAlart:@"startMonitoringSignificantLocationChanges"];  //debug
 	}
 }
@@ -193,7 +198,6 @@
 	{
 		[self.significantLocationManager stopMonitoringSignificantLocationChanges];
 		running = NO;
-		[YCParam paramSingleInstance].significantService = NO;
 		//[UIUtility sendSimpleNotifyForAlart:@"stopMonitoringSignificantLocationChanges"];  //debug
 	}
 }
@@ -202,6 +206,15 @@
 {
 	[self stop];
 	[self performSelector:@selector(start) withObject:nil afterDelay:0.1];
+}
+
+-(void) dealloc
+{
+	[delegate release];
+	[significantLocationManager release];
+	[bestEffortAtLocation release];
+	[lastLocation release];
+	[super dealloc];
 }
 
 @end

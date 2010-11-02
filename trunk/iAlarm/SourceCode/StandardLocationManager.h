@@ -15,9 +15,13 @@
 	CLLocationManager *locationManager;
 	BOOL running; //是否正在运行
 	CLLocation *bestEffortAtLocation;
+	CLLocation *lastLocation;
 }
 @property (nonatomic,readonly) CLLocationManager *locationManager;
-@property (nonatomic, retain) CLLocation *bestEffortAtLocation;
+@property (nonatomic,retain) CLLocation *bestEffortAtLocation;
+@property (nonatomic,retain) CLLocation *lastLocation;
+@property(nonatomic,assign,readonly) BOOL running; //是否正在运行
+
 
 +(StandardLocationManager*) standardLocationManagerSigleInstance;
 

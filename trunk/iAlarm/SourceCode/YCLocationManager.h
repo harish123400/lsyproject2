@@ -18,12 +18,16 @@
 	BOOL running; //是否正在运行
 	
 	CLLocation *bestEffortAtLocation;
+	CLLocation *lastLocation;
 
 }
 
-@property(readonly, nonatomic) CLLocationManager *significantLocationManager;
-@property(assign, nonatomic,readonly) id<YCLocationManagerDelegateProtocol> delegate;
-@property (nonatomic, retain) CLLocation *bestEffortAtLocation;
+@property(nonatomic,readonly) CLLocationManager *significantLocationManager;
+@property(nonatomic,assign,readonly) id<YCLocationManagerDelegateProtocol> delegate;
+@property(nonatomic,retain) CLLocation *bestEffortAtLocation;
+@property(nonatomic,retain) CLLocation *lastLocation;
+
+@property(nonatomic,assign,readonly) BOOL running; //是否正在运行
 
 +(YCLocationManager*) locationManagerSigleInstance;
 

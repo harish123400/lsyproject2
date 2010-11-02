@@ -17,9 +17,6 @@
 @synthesize desiredAccuracyForStartStandardLocation;
 @synthesize intervalForStartStandardLocation;
 
-@synthesize significantService;
-@synthesize standardService;
-
 @synthesize enableOffset;
 @synthesize offsetCoordinateOfMap;
 
@@ -33,8 +30,6 @@
 		obj.distanceForProAlarm = 2000.0;
 		obj.desiredAccuracyForStartStandardLocation = kCLLocationAccuracyNearestTenMeters;
 		obj.intervalForStartStandardLocation = 60;
-		obj.significantService = NO;
-		obj.standardService = NO;
 		obj.enableOffset = NO;
 		CLLocationCoordinate2D tmp  = {0.0,0.0};
 		obj.offsetCoordinateOfMap = tmp;
@@ -44,6 +39,10 @@
 	
 	return obj;
 	
+}
+
+- (void)dealloc {
+    [super dealloc];
 }
 
 @end

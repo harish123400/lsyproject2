@@ -16,6 +16,8 @@
 
 @implementation StandardLocationManager
 @synthesize bestEffortAtLocation;
+@synthesize lastLocation;
+@synthesize running;
 
 -(CLLocationManager *) locationManager
 {
@@ -44,7 +46,6 @@
 	{
 		[self.locationManager startUpdatingLocation];
 		running = YES;
-		[YCParam paramSingleInstance].standardService = YES;
 		//[UIUtility sendSimpleNotifyForAlart:@"startUpdatingLocation"];  //debug
 	}
 	
@@ -56,18 +57,29 @@
 	{
 		[self.locationManager stopUpdatingHeading];
 		running = NO;
-		[YCParam paramSingleInstance].standardService = NO;
 		//[UIUtility sendSimpleNotifyForAlart:@"stopUpdatingLocation"];  //debug
 	}
 
 }
 -(void)monitorRegionCenter
 {
-	if (self.bestEffortAtLocation == nil) {
+	if (self.bestEffortAtLocation == nil) 
 		return;
+	else {
+		self.lastLocation = self.bestEffortAtLocation;
+		self.bestEffortAtLocation = nil; //为下次定位数据
 	}
 	
-	CLLocation *curLocation = self.bestEffortAtLocation;
+	if (self.running == NO) //定位已经被停止，就不在继续检测了。防止检测被重复调用
+		return;
+	
+	//设备低速（静止）运行时候，关闭standard
+	CLLocation *curLocation = self.lastLocation;
+	CLLocationSpeed curSpeed = curLocation.speed;
+	if(curSpeed <= 1.0) [self stop];
+	
+	
+	
 	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
 	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 	YCLocationManager* yclm = [YCLocationManager locationManagerSigleInstance];
@@ -102,10 +114,6 @@
 	}
 	////
 	///////////////////////////////“最后所在区域”列表///////////////////////////////
-	
-	//低速（静止）运行时候，关闭standard
-	CLLocationSpeed curSpeed = curLocation.speed;
-	if(curSpeed <= 1.0) [self stop];
 	
 	
 }
@@ -145,6 +153,14 @@
 		[notificationMsg stringByAppendingString:[error localizedFailureReason]];
 	
 	[UIUtility sendSimpleNotifyForAlart:notificationMsg];  //debug
+}
+
+-(void) dealloc
+{
+	[locationManager release];
+	[bestEffortAtLocation release];
+	[lastLocation release];
+	[super dealloc];
 }
 
 @end
