@@ -15,6 +15,7 @@
 
 
 @implementation StandardLocationManager
+@synthesize bestEffortAtLocation;
 
 -(CLLocationManager *) locationManager
 {
@@ -60,17 +61,13 @@
 	}
 
 }
-
-
-#pragma mark - locationManager
-#pragma mark - CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager 
-	didUpdateToLocation:(CLLocation *)newLocation 
-		   fromLocation:(CLLocation *)oldLocation
+-(void)monitorRegionCenter
 {
+	if (self.bestEffortAtLocation == nil) {
+		return;
+	}
 	
-	CLLocation *curLocation = newLocation;
+	CLLocation *curLocation = self.bestEffortAtLocation;
 	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
 	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 	YCLocationManager* yclm = [YCLocationManager locationManagerSigleInstance];
@@ -106,7 +103,34 @@
 	////
 	///////////////////////////////“最后所在区域”列表///////////////////////////////
 	
+	//低速（静止）运行时候，关闭standard
+	CLLocationSpeed curSpeed = curLocation.speed;
+	if(curSpeed <= 1.0) [self stop];
 	
+	
+}
+
+
+#pragma mark - locationManager
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager 
+	didUpdateToLocation:(CLLocation *)newLocation 
+		   fromLocation:(CLLocation *)oldLocation
+{
+	
+	NSDate* eventDate = newLocation.timestamp;
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+	
+    if (abs(howRecent) > 5.0) return;
+	
+	if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) 
+	{
+        self.bestEffortAtLocation = newLocation;
+    }
+	
+	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:5.0];
+		
 }
 
 
