@@ -12,6 +12,7 @@
 #import "YCLocationManager.h"
 #import "UIUtility.h"
 #import "LocationUtility.h"
+#import "YCLog.h"
 
 
 @implementation StandardLocationManager
@@ -63,6 +64,9 @@
 }
 -(void)monitorRegionCenter
 {
+	[[YCLog logSingleInstance] addlog:@"here is stand-monitorRegionCenter"];
+	[self stop];
+	
 	if (self.bestEffortAtLocation == nil) 
 		return;
 	else {
@@ -70,13 +74,15 @@
 		self.bestEffortAtLocation = nil; //为下次定位数据
 	}
 	
-	if (self.running == NO) //定位已经被停止，就不在继续检测了。防止检测被重复调用
-		return;
+	//if (self.running == NO) //定位已经被停止，就不在继续检测了。防止检测被重复调用
+	//	return;
+	
 	
 	//设备低速（静止）运行时候，关闭standard
 	CLLocation *curLocation = self.lastLocation;
-	CLLocationSpeed curSpeed = curLocation.speed;
-	if(curSpeed <= 1.0) [self stop];
+	//CLLocationSpeed curSpeed = curLocation.speed;
+	//if(curSpeed <= 1.0) [self stop];
+	 
 	
 	
 	
@@ -116,6 +122,8 @@
 	///////////////////////////////“最后所在区域”列表///////////////////////////////
 	
 	
+	[[YCLog logSingleInstance] addlog:@"here is stand-monitorRegionCenter-end"];
+
 }
 
 
@@ -137,7 +145,7 @@
         self.bestEffortAtLocation = newLocation;
     }
 	
-	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:5.0];
+	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:3.0];
 		
 }
 
