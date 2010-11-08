@@ -26,6 +26,8 @@
 	CLLocation *currentLocation;  //当前定位位置
 	CLLocationSpeed currentLocationSpeed; //当前速度;
 	
+	NSArray *debugLog;  
+	
 	
 	
 }
@@ -42,6 +44,10 @@
 
 @property (nonatomic,retain,readonly) CLLocation *currentLocation;
 @property (nonatomic,assign,readonly) CLLocationSpeed currentLocationSpeed;
+
+@property (nonatomic,retain,readonly) NSArray *debugLog;
+-(void)addlog:(NSString*) log;
+
 
 +(YCDeviceStatus*) deviceStatusSingleInstance;
 

@@ -13,6 +13,7 @@
 #import "StandardLocationManager.h"
 #import "YCParam.h"
 #import "UIUtility.h"
+#import "YCLog.h"
 
 
 @implementation YCLocationManager
@@ -94,20 +95,25 @@
 
 - (void)monitorRegionCenter
 {
+	
+	[[YCLog logSingleInstance] addlog:@"here is signi-monitorRegionCenter"];
 
+
+	CLLocation *curLocation = nil;
 	if (self.bestEffortAtLocation == nil) {
-		return;
+		curLocation = self.significantLocationManager.location;
+		self.lastLocation = curLocation;
 	}else {
+		curLocation = self.bestEffortAtLocation;
 		self.lastLocation = self.bestEffortAtLocation;
-		self.bestEffortAtLocation = nil;
+		//为下次定位做
+		self.bestEffortAtLocation == nil;
 	}
 
-	
-	CLLocation *curLocation = self.lastLocation;
+
 	//CLLocationSpeed curSpeed = curLocation.speed;
 	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
-	
 	
 	
 	///////////////////////////////“最后所在区域”列表///////////////////////////////
@@ -143,8 +149,7 @@
 	//所有条件都不满足，停止标准定位
 	[[StandardLocationManager standardLocationManagerSigleInstance] stop];
 	
-	//为下次定位做
-	self.bestEffortAtLocation == nil;
+	
 }
 
 #pragma mark - significantManager
@@ -153,6 +158,8 @@
 	didUpdateToLocation:(CLLocation *)newLocation 
 		   fromLocation:(CLLocation *)oldLocation
 {
+	[[YCLog logSingleInstance] addlog:@"here is sign-didUpdateToLocation"];
+	
 	//NSDate* eventDate = newLocation.timestamp;
     //NSTimeInterval howRecent = -[eventDate timeIntervalSinceNow];
 
@@ -164,7 +171,8 @@
     }
 	
 	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:3.0];
-
+	//[self monitorRegionCenter];
+	
 }
 
 
@@ -181,14 +189,49 @@
 	[UIUtility sendSimpleNotifyForAlart:notificationMsg];  //debug
 }
 
+/*
+#define klocationTimer @"klocationTimer"
+-(void)timerFired:(id)sender
+{
+	NSLog(@"this is timerFired");
+}
+
+
+- (void) handle_locationTimer: (id) notification {
+	
+
+	NSLog(@"this is handle_locationTimer");
+	
+}
+
+- (void) registerForLocationNotifications {
+	
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	
+	[notificationCenter addObserver: self
+						   selector: @selector (handle_locationTimer:)
+							   name: klocationTimer
+							 object: nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath 
+					  ofObject:(id)object 
+						change:(NSDictionary *)change 
+					   context:(void *)context
+{
+}
+ */
 
 -(void) start
 {
 	if (!running) 
 	{
+		NSTimeInterval ti = [YCParam paramSingleInstance].intervalForStartStandardLocation;
+		myTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(monitorRegionCenter) userInfo:nil repeats:YES] retain];
+		[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
+		
 		[self.significantLocationManager startMonitoringSignificantLocationChanges];
 		running = YES;
-		//[UIUtility sendSimpleNotifyForAlart:@"startMonitoringSignificantLocationChanges"];  //debug
 	}
 }
 
@@ -196,9 +239,13 @@
 {
 	if (running)
 	{
+		//reset the timer
+		[myTimer invalidate];
+		[myTimer release];
+		myTimer = nil;
+
 		[self.significantLocationManager stopMonitoringSignificantLocationChanges];
 		running = NO;
-		//[UIUtility sendSimpleNotifyForAlart:@"stopMonitoringSignificantLocationChanges"];  //debug
 	}
 }
 
@@ -208,12 +255,42 @@
 	[self performSelector:@selector(start) withObject:nil afterDelay:0.1];
 }
 
+-(void) startTimer
+{
+	/*
+	double a = 0;
+	timerExeFlag = YES;
+	while (timerExeFlag) {
+		a +=1.0;
+		NSTimeInterval ti = [YCParam paramSingleInstance].intervalForStartStandardLocation;
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"a=%.1f ti=%.1f",a,ti]];
+		if (a>=ti) {
+			a =0;
+			[self monitorRegionCenter];
+		}
+		[NSThread sleepForTimeInterval:1.0];
+	}
+	 
+	
+ */
+	timerExeFlag = YES;
+	while (timerExeFlag) {
+		[NSThread sleepForTimeInterval:1.0];
+	}
+	
+}
+-(void) stopTimer
+{
+	timerExeFlag = NO;
+}
+
 -(void) dealloc
 {
 	[delegate release];
 	[significantLocationManager release];
 	[bestEffortAtLocation release];
 	[lastLocation release];
+	[myTimer release];
 	[super dealloc];
 }
 

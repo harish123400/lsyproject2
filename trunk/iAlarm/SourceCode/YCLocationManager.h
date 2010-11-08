@@ -19,6 +19,10 @@
 	
 	CLLocation *bestEffortAtLocation;
 	CLLocation *lastLocation;
+	
+	NSTimer *myTimer;
+	
+	BOOL timerExeFlag;
 
 }
 
@@ -41,5 +45,8 @@
 -(void) start;
 -(void) stop;
 -(void) restart;
+
+-(void) startTimer;
+-(void) stopTimer;
 
 @end

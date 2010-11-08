@@ -55,6 +55,7 @@
 @synthesize repeatTypeId;
 @synthesize vehicleTypeId;
 @synthesize radius;
+@synthesize locationAccuracy;
 
 /*
 -(id)init
@@ -92,6 +93,7 @@
 	[encoder encodeInteger:sortId  forKey:ksortId];
 	[encoder encodeBool:enabling forKey:kenabling];
 	[encoder encodeCLLocationCoordinate2D:coordinate forKey:kcoordinate];
+	[encoder encodeDouble:locationAccuracy forKey:klocationAccuracy];
 	[encoder encodeBool:vibrate forKey:kvibration];
 	[encoder encodeBool:ring forKey:kring];
 	[encoder encodeBool:nameChanged forKey:knameChanged];
@@ -112,6 +114,7 @@
 		self.sortId = [decoder decodeIntegerForKey:ksortId];
 		self.enabling = [decoder decodeBoolForKey:kenabling];
 		self.coordinate = [decoder decodeCLLocationCoordinate2DForKey:kcoordinate];
+		self.locationAccuracy = [decoder decodeDoubleForKey:klocationAccuracy];
 		self.vibrate =[decoder decodeBoolForKey:kvibration];
 		self.ring =[decoder decodeBoolForKey:kring];
 		self.nameChanged =[decoder decodeBoolForKey:knameChanged];
@@ -157,6 +160,7 @@
 	copy.sortId = self.sortId ;
 	copy.enabling = self.enabling;
 	copy.coordinate = self.coordinate;
+	copy.locationAccuracy = self.locationAccuracy;
 	copy.vibrate = self.vibrate;
 	copy.ring = self.ring;
 	copy.ring = self.ring;

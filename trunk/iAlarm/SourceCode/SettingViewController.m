@@ -84,8 +84,10 @@
 		double distanceCur = [devs.currentLocation distanceFromLocation:locRegion];
 		double distanceLastSign = [devs.lastSignificantLocation distanceFromLocation:locRegion];
 		double distanceLastStand = [devs.lastStandardLocation distanceFromLocation:locRegion];
+		double accuracy = alarm.locationAccuracy;
 
-		[regionsStr appendFormat:@"%@  %6.1f %6.1f %6.1f %6.1f",alarm.alarmName,distanceCur,distanceLastStand,distanceLastSign,alarm.radius];
+		[regionsStr appendFormat:@"%@  %6.1f %6.1f %6.1f %6.1f %6.1f",alarm.alarmName,distanceCur,distanceLastStand,
+		 distanceLastSign,alarm.radius,accuracy];
 		[regionsStr appendString:@"\n"];
 	}
 	regionsView.text = regionsStr;
@@ -104,11 +106,15 @@
 		double distanceCur = [devs.currentLocation distanceFromLocation:locRegion];
 		double distanceLastSign = [devs.lastSignificantLocation distanceFromLocation:locRegion];
 		double distanceLastStand = [devs.lastStandardLocation distanceFromLocation:locRegion];
+		double accuracy = alarm.locationAccuracy;
 		
-		[lastRegionsStr appendFormat:@"%@  %6.1f %6.1f %6.1f %6.1f",alarm.alarmName,distanceCur,distanceLastStand,distanceLastSign,alarm.radius];
+		[lastRegionsStr appendFormat:@"%@  %6.1f %6.1f %6.1f %6.1f %6.1f",alarm.alarmName,distanceCur,distanceLastStand,
+		 distanceLastSign,alarm.radius,accuracy];
 		[lastRegionsStr appendString:@"\n"];
 	}
 	self.lastRegionsView.text = lastRegionsStr;
+	
+	
 	
 }
 
@@ -122,7 +128,11 @@
 
 -(void) viewWillAppear:(BOOL)animated
 {
+	self.lastRegionsView.font = [UIFont fontWithName:@"Arial" size:12];
+	self.regionsView.font = [UIFont fontWithName:@"Arial" size:12];
+	
 	[self refreshButtonPressed:nil];
+	
 }
 
 - (void)didReceiveMemoryWarning {

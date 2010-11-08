@@ -31,7 +31,7 @@
 		obj.radiusForAlarm = 800.0;
 		obj.distanceForProAlarm = 2000.0;
 		obj.desiredAccuracyForStartStandardLocation = kCLLocationAccuracyNearestTenMeters;
-		obj.intervalForStartStandardLocation = 60;
+		obj.intervalForStartStandardLocation = 60.0;
 		obj.enableOffset = NO;
 		CLLocationCoordinate2D tmp  = {0.0,0.0};
 		obj.offsetCoordinateOfMap = tmp;

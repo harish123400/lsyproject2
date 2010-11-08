@@ -19,20 +19,21 @@
 @end
 
 
-#define    kalarmId        @"kalarmId"
-#define    kalarmName      @"kalarmName"
-#define    kposition       @"kposition"
-#define    kdescription    @"kdescription"
-#define    ksortId         @"ksortId"
-#define    kenabling       @"kenabling"
-#define    kcoordinate     @"kcoordinate"
-#define    kvibration      @"kvibration"
-#define    kring           @"kring"
-#define    knameChanged    @"knameChanged"
-#define    kasoundId       @"kasoundId"
-#define    karepeatTypeId  @"karepeatTypeId"
-#define    kavehicleTypeId @"kavehicleTypeId"
-#define    kradius         @"kradius"
+#define    kalarmId                 @"kalarmId"
+#define    kalarmName               @"kalarmName"
+#define    kposition                @"kposition"
+#define    kdescription             @"kdescription"
+#define    ksortId                  @"ksortId"
+#define    kenabling                @"kenabling"
+#define    kcoordinate              @"kcoordinate"
+#define    kvibration               @"kvibration"
+#define    kring                    @"kring"
+#define    knameChanged             @"knameChanged"
+#define    kasoundId                @"kasoundId"
+#define    karepeatTypeId           @"karepeatTypeId"
+#define    kavehicleTypeId          @"kavehicleTypeId"
+#define    kradius                  @"kradius"
+#define    klocationAccuracy        @"klocationAccuracy"
 
 @class YCSound;
 @class YCRepeatType;
@@ -47,6 +48,8 @@
 	NSUInteger sortId;                       //排序，用于界面显示
 	BOOL enabling;                           //启用状态
 	CLLocationCoordinate2D coordinate;       //坐标
+	CLLocationAccuracy locationAccuracy;     //定位时候的精度
+	
 	BOOL vibrate;                            //是否震动
 	BOOL ring;                               //是否静音
 	BOOL nameChanged;                        //闹钟名字是否被用户自己修改过
@@ -69,6 +72,7 @@
 @property (nonatomic,assign) NSUInteger sortId;
 @property (nonatomic,assign) BOOL enabling;
 @property (nonatomic,assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic,assign) CLLocationAccuracy locationAccuracy;
 @property (nonatomic,assign) BOOL vibrate;
 @property (nonatomic,assign) BOOL ring;
 @property (nonatomic,assign) BOOL nameChanged;

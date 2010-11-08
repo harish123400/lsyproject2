@@ -10,6 +10,7 @@
 #import "YCAlarmEntity.h"
 #import "DataUtility.h"
 #import "YCLocationManager.h"
+#import "YCLog.h"
 
 
 @implementation iAlarmAppDelegate
@@ -44,7 +45,11 @@
 		([notificationName isEqualToString:@"updateParam"])) 
 	{
 		[self resetMonitoredRegions];
-	}else if (notificationName !=nil){ //notificationName != nil 就一定是自定义的通知
+	}
+	//else if ([notificationName isEqualToString:@"klocationTimer"]){
+	//	NSLog(@"this is locationTimer");
+	//}
+	else if (notificationName !=nil){ //notificationName != nil 就一定是自定义的通知
 		NSString *alertTitle = NSLocalizedString(@"时空闹钟",@"");
 		NSString *alertMsg = notification.alertBody;
 		
@@ -56,8 +61,7 @@
 		
 		[alert show];
 		[alert release];
-	}
-	
+	}	
 	/*
 	 if([notificationName isEqualToString:@"didEnterRegion"])
 	 {
@@ -98,6 +102,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
+	[[YCLog logSingleInstance] addlog:@"here is didFinishLaunchingWithOptions"];
+	
     // Override point for customization after application launch.
 
     // Add the tab bar controller's view to the window and display.
@@ -118,13 +124,67 @@
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
 }
-
+/*
+BOOL lo;
+-(void) loop
+{
+	lo = YES;
+	while (lo) {
+		[[YCLog logSingleInstance] addlog:@"loop"];
+		[NSThread sleepForTimeInterval:1];
+	}
+}
+ */
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    /*
+    
+	
+	/*
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
+	
+	[[YCLog logSingleInstance] addlog:@"here is applicationDidEnterBackground"];
+	
+	UIApplication*    app = [UIApplication sharedApplication];
+	
+    // Request permission to run in the background. Provide an
+    // expiration handler in case the task runs long.
+    NSAssert(bgTask == UIBackgroundTaskInvalid, nil);
+	
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        // Synchronize the cleanup call on the main thread in case
+        // the task actually finishes at around the same time.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                [app endBackgroundTask:bgTask];
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    }];
+	
+    // Start the long-running task and return immediately.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		
+        // Do the work associated with the task.
+		
+		YCLocationManager * ycLocationManager = [YCLocationManager locationManagerSigleInstance];
+		[ycLocationManager startTimer];
+		
+        // Synchronize the cleanup call on the main thread in case
+        // the expiration handler is fired at the same time.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                [app endBackgroundTask:bgTask];
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    });
+	
+	
+	
 }
 
 
@@ -132,6 +192,13 @@
     /*
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
+	[[YCLog logSingleInstance] addlog:@"here is applicationWillEnterForeground"];
+	
+	[[YCLog logSingleInstance] addlog:@"here is applicationWillEnterForeground"];
+	YCLocationManager * ycLocationManager = [YCLocationManager locationManagerSigleInstance];
+	[ycLocationManager stopTimer];
+	 
+
 }
 
 
@@ -139,6 +206,7 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+	[[YCLog logSingleInstance] addlog:@"here is applicationDidBecomeActive"];
 }
 
 
@@ -147,6 +215,7 @@
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
      */
+	[[YCLog logSingleInstance] addlog:@"here is applicationWillTerminate"];
 }
 
 

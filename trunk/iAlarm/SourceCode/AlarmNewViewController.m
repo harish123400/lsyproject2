@@ -194,7 +194,8 @@
 	
 	CLLocationCoordinate2D coordinate = [self.bestEffortAtLocation coordinate];
 	//坐标
-	self.alarm.coordinate = coordinate; 
+	self.alarm.coordinate = coordinate;
+	self.alarm.locationAccuracy = self.bestEffortAtLocation.horizontalAccuracy;
 		
 	//反转坐标－地址
 	reverseGeocoder = [self reverseGeocoder:coordinate]; 

@@ -11,6 +11,7 @@
 @interface iAlarmAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
     UIWindow *window;
     UITabBarController *tabBarController;
+	UIBackgroundTaskIdentifier	bgTask;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

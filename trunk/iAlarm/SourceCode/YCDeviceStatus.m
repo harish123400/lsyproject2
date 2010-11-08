@@ -12,6 +12,7 @@
 
 
 @implementation YCDeviceStatus
+@synthesize debugLog;
 
 - (CLLocationManager *)locationManager
 {
@@ -80,7 +81,16 @@
 	return currentLocationSpeed;
 }
 
-
+-(void)addlog:(NSString*) log
+{
+	if (debugLog == nil) {
+		debugLog = [[NSMutableArray alloc] init];
+	}
+	if (debugLog.count > 100) {
+		[(NSMutableArray*)debugLog removeObjectAtIndex:0];
+	}
+	[(NSMutableArray*)debugLog addObject:log];
+}
 
 
 +(YCDeviceStatus*) deviceStatusSingleInstance
@@ -102,6 +112,7 @@
 	[lastStandardLocation release];
 	[lastSignificantLocation release];
 	[currentLocation release];
+	[debugLog release];
     [super dealloc];
 }
 
