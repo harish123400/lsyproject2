@@ -40,15 +40,14 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+	[[YCLog logSingleInstance] addlog:@"here is didReceiveLocalNotification"];
+	
 	NSString *notificationName = [notification.userInfo objectForKey:@"name"];
 	if (([notificationName isEqualToString:@"updateAlarm"]) ||
 		([notificationName isEqualToString:@"updateParam"])) 
 	{
 		[self resetMonitoredRegions];
 	}
-	//else if ([notificationName isEqualToString:@"klocationTimer"]){
-	//	NSLog(@"this is locationTimer");
-	//}
 	else if (notificationName !=nil){ //notificationName != nil 就一定是自定义的通知
 		NSString *alertTitle = NSLocalizedString(@"时空闹钟",@"");
 		NSString *alertMsg = notification.alertBody;

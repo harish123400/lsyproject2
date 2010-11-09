@@ -11,58 +11,39 @@
 #import "YCAlarmEntity.h"
 #import "YCRepeatType.h"
 #import "RegionCenter.h"
+#import "YCSound.h"
+#import "UIUtility.h"
 
 
 @implementation YCLocationManagerDelegate
 
 - (void)locationManager:(YCLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
-	UIApplication *app = [UIApplication sharedApplication];
-	// Clear out the old notification before scheduling a new one.
-	/*
-	NSArray *oldNotifications = [app scheduledLocalNotifications];
-	if (0 < [oldNotifications count]) {
-		[app cancelAllLocalNotifications];
-	}
-	 */
-	
-	
 	NSArray *alarms = [DataUtility alarmArray];
 	NSString *alarmId = region.identifier;
 	YCAlarmEntity *alarm = [DataUtility alarmArray:alarms alarmId:alarmId];
 	NSString *alarmName = alarm.alarmName;
+	NSString *soundName = alarm.sound.soundName;
 	
 	NSString *arrivedString = NSLocalizedString(@"已经到了!",@"");
 	NSString *notificationMsg = [[NSString alloc] initWithFormat:@"%@%@",alarmName,arrivedString];
+	
+	[UIUtility sendNotify:notificationMsg 
+				alartName:@"didEnterRegion" 
+				 fireDate:nil
+		   repeatInterval:0 
+				soundName:soundName];
 
-	
-	// Create a new notification
-	UILocalNotification *notification = [[UILocalNotification alloc] init];
-	notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-	notification.timeZone = [NSTimeZone defaultTimeZone];
-	notification.repeatInterval = 0;
-	notification.soundName = @"ping.caf";//@"default";
-	notification.alertBody = notificationMsg;
-	notification.userInfo = [NSDictionary dictionaryWithObject:@"didEnterRegion"forKey:@"name"];
-	[notificationMsg release];
-	
-	
-
-	[app scheduleLocalNotification:notification];
-	[notification release];
-
-	
 }
 
 - (void)locationManager:(YCLocationManager *)manager didExitRegion:(CLRegion *)region
 {
-	UIApplication *app = [UIApplication sharedApplication];
 
-	
 	NSArray *alarms = [DataUtility alarmArray];
 	NSString *alarmId = region.identifier;
 	YCAlarmEntity *alarm = [DataUtility alarmArray:alarms alarmId:alarmId];
 	NSString *alarmName = alarm.alarmName;
+	NSString *soundName = alarm.sound.soundName;
 	
 	//只闹一次
 	if ([alarm.repeatType.repeatTypeId isEqualToString:@"r002"]) 
@@ -74,21 +55,11 @@
 	NSString *arrivedString = NSLocalizedString(@"已经离开!",@"");
 	NSString *notificationMsg = [[NSString alloc] initWithFormat:@"%@%@",alarmName,arrivedString];
 	
-	
-	// Create a new notification
-	UILocalNotification *notification = [[UILocalNotification alloc] init];
-	notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-	notification.timeZone = [NSTimeZone defaultTimeZone];
-	notification.repeatInterval = 0;
-	notification.soundName = @"ping.caf";//@"default";
-	notification.alertBody = notificationMsg;
-	notification.userInfo = [NSDictionary dictionaryWithObject:@"didExitRegion"forKey:@"name"];
-	[notificationMsg release];
-	
-	
-	
-	[app scheduleLocalNotification:notification];
-	[notification release];
+	[UIUtility sendNotify:notificationMsg 
+				alartName:@"didExitRegion" 
+				 fireDate:nil
+		   repeatInterval:0 
+				soundName:soundName];
 	
 }
 

@@ -23,6 +23,8 @@
 #import "AlarmPositionViewController.h"
 #import "LocationUtility.h"
 #import "CheckmarkDisclosureIndicatorCell.h"
+#import "YCLog.h"
+#import "YCParam.h"
 
 
 @implementation AlarmNewViewController
@@ -178,7 +180,7 @@
 
 	// Start the location manager.
 	[[self locationManager] startUpdatingLocation];
-	[self performSelector:@selector(stopLocation) withObject:nil afterDelay:3.0];
+	[self performSelector:@selector(stopLocation) withObject:nil afterDelay:2.0];
 }
 
 -(void)stopLocation
@@ -189,6 +191,8 @@
 	if(self.bestEffortAtLocation==nil)
 	{
 		[self performSelector:@selector(finishLocation:) withObject:[NSNumber numberWithBool:NO] afterDelay:0.1];  //等待x秒，结束定位
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"alarm-didUpdateToLocation 无效精度:%.1f",self.bestEffortAtLocation.horizontalAccuracy ]];
+		[[YCLog logSingleInstance] addlog:@"返回"];
 		return;   //提示错误
 	}
 	
@@ -213,8 +217,8 @@
 		self.addAlarmButton.enabled = YES;
 	}
 	else {
-		self.addAlarmButton.enabled = YES;  //TODO for Debug
-		//self.addAlarmButton.enabled = NO;
+		//self.addAlarmButton.enabled = YES;  //TODO for Debug
+		self.addAlarmButton.enabled = NO;
 	}
 	
 	//隐藏等待圈
@@ -419,60 +423,29 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-	//self.addAlarmButton.enabled = YES;
-	//NSLog(@"didUpdateToLocation."); 	
-	
-	/*
-	//反转坐标－地址
-	reverseGeocoder = [self reverseGeocoder:newLocation.coordinate]; 
-	reverseGeocoder.delegate = self;
-	[reverseGeocoder start];
-	 */
-	
-	// If it's a relatively recent event, turn off updates to save power
-	
-
     
 	NSDate* eventDate = newLocation.timestamp;
-    NSTimeInterval howRecent = -[eventDate timeIntervalSinceNow];
-	/*
-	NSLog(@"loc : latitude %+.6f, longitude %+.6f horizontalAccuracy %+.6f howRecent %f\n",
-		  newLocation.coordinate.latitude,
-		  newLocation.coordinate.longitude,
-		  newLocation.horizontalAccuracy,
-		  howRecent);
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+
 	
-	NSLog(@"locf : latitude %@, longitude %@ horizontalAccuracy %+.6f howRecent %f\n",
-		  [UIUtility convertLatitude:newLocation.coordinate.latitude decimal:3],
-		  [UIUtility convertLatitude:newLocation.coordinate.longitude decimal:3],
-		  newLocation.horizontalAccuracy,
-		  howRecent);
-	 */
+    if (abs(howRecent) > 5.0) return;
 	
-    if (howRecent > 5.0) return;
+	if (newLocation.horizontalAccuracy > [[YCParam paramSingleInstance] invalidLocationAccuracy])
+	{
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"alarm-didUpdateToLocation 无效精度:%.1f",newLocation.horizontalAccuracy ]];
+		[[YCLog logSingleInstance] addlog:@"返回"];
+		return;
+	}
 	
 	if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) 
 	{
         self.bestEffortAtLocation = newLocation;
 		if (newLocation.horizontalAccuracy <= locationManager.desiredAccuracy)
 		{
-			[self stopLocation];
+			[[self locationManager] stopUpdatingLocation];
 		}
     }
 	 
-
-
-	/*
-	if (newLocation.horizontalAccuracy<100)
-	{
-
-		//反转坐标－地址
-		reverseGeocoder = [self reverseGeocoder:newLocation.coordinate]; 
-		reverseGeocoder.delegate = self;
-		[reverseGeocoder start];
-	}
-	 */
-    // else skip the event and process the next one.
 }
 
 

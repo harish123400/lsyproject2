@@ -302,6 +302,35 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	[notification release];
 }
 
++(void)sendNotify:(NSString*)alartBody 
+		alartName:(NSString*)alartName 
+		 fireDate:(NSDate*)fireDate 
+   repeatInterval:(NSCalendarUnit)repeatInterval 
+		soundName:(NSString*)soundName
+{
+	// Create a new notification
+	UILocalNotification *notification = [[UILocalNotification alloc] init];
+	notification.alertBody = alartBody;
+	notification.userInfo = [NSDictionary dictionaryWithObject:alartName forKey:@"name"];
+	
+	notification.timeZone = [NSTimeZone defaultTimeZone];
+	if(fireDate == nil)
+		notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+	else 
+		notification.fireDate = fireDate;
+	notification.repeatInterval = repeatInterval;
+	
+	if(soundName == nil)
+		notification.soundName = @"ping.caf";
+	else 
+		notification.soundName = soundName;
+	
+	UIApplication *app = [UIApplication sharedApplication];
+	[app scheduleLocalNotification:notification];
+	[notification release];
+}
+
+
 @end
 
 

@@ -20,6 +20,8 @@
 	BOOL enableOffset;                             //是否启用偏移坐标
 	CLLocationCoordinate2D offsetCoordinateOfMap;  //地图的偏移坐标
 	
+	
+	CLLocationDistance invalidLocationAccuracy;    //无效定位精度
 
 }
 
@@ -32,6 +34,7 @@
 
 @property (nonatomic,assign) BOOL enableOffset;
 @property (nonatomic,assign) CLLocationCoordinate2D offsetCoordinateOfMap;
+@property (nonatomic,assign) CLLocationDistance invalidLocationAccuracy;
 
 +(YCParam*) paramSingleInstance;
 +(void)updateParam;

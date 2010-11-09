@@ -21,6 +21,7 @@
 
 @synthesize enableOffset;
 @synthesize offsetCoordinateOfMap;
+@synthesize invalidLocationAccuracy;
 
 
 +(YCParam*) paramSingleInstance
@@ -35,6 +36,7 @@
 		obj.enableOffset = NO;
 		CLLocationCoordinate2D tmp  = {0.0,0.0};
 		obj.offsetCoordinateOfMap = tmp;
+		obj.invalidLocationAccuracy = 1000.0;
 		
 		[obj retain];
 	}

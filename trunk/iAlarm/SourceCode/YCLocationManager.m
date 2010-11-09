@@ -109,6 +109,13 @@
 		//为下次定位做
 		self.bestEffortAtLocation == nil;
 	}
+	
+	if (curLocation.horizontalAccuracy > [[YCParam paramSingleInstance] invalidLocationAccuracy])
+	{
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"signi-monitorRegionCenter 无效精度:%.1f",curLocation.horizontalAccuracy ]];
+		[[YCLog logSingleInstance] addlog:@"返回"];
+		return;
+	}
 
 
 	//CLLocationSpeed curSpeed = curLocation.speed;
@@ -158,12 +165,18 @@
 	didUpdateToLocation:(CLLocation *)newLocation 
 		   fromLocation:(CLLocation *)oldLocation
 {
-	[[YCLog logSingleInstance] addlog:@"here is sign-didUpdateToLocation"];
+	[[YCLog logSingleInstance] addlog:@"here is signi-didUpdateToLocation"];
 	
 	//NSDate* eventDate = newLocation.timestamp;
     //NSTimeInterval howRecent = -[eventDate timeIntervalSinceNow];
 
     //if (howRecent > 5.0) return;
+	if (newLocation.horizontalAccuracy > [[YCParam paramSingleInstance] invalidLocationAccuracy])
+	{
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"signi-didUpdateToLocation 无效精度:%.1f",newLocation.horizontalAccuracy ]];
+		[[YCLog logSingleInstance] addlog:@"返回"];
+		return;
+	}
 	
 	if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) 
 	{
@@ -186,41 +199,10 @@
 	if ([error localizedFailureReason])
 		[notificationMsg stringByAppendingString:[error localizedFailureReason]];
 	
-	[UIUtility sendSimpleNotifyForAlart:notificationMsg];  //debug
+	//[UIUtility sendSimpleNotifyForAlart:notificationMsg];  //debug
+	[[YCLog logSingleInstance] addlog:notificationMsg];
 }
 
-/*
-#define klocationTimer @"klocationTimer"
--(void)timerFired:(id)sender
-{
-	NSLog(@"this is timerFired");
-}
-
-
-- (void) handle_locationTimer: (id) notification {
-	
-
-	NSLog(@"this is handle_locationTimer");
-	
-}
-
-- (void) registerForLocationNotifications {
-	
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	
-	[notificationCenter addObserver: self
-						   selector: @selector (handle_locationTimer:)
-							   name: klocationTimer
-							 object: nil];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath 
-					  ofObject:(id)object 
-						change:(NSDictionary *)change 
-					   context:(void *)context
-{
-}
- */
 
 -(void) start
 {

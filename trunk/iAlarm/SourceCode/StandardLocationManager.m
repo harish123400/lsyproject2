@@ -47,7 +47,7 @@
 	{
 		[self.locationManager startUpdatingLocation];
 		running = YES;
-		//[UIUtility sendSimpleNotifyForAlart:@"startUpdatingLocation"];  //debug
+		[[YCLog logSingleInstance] addlog:@"here is stand-start"];
 	}
 	
 }
@@ -58,7 +58,7 @@
 	{
 		[self.locationManager stopUpdatingHeading];
 		running = NO;
-		//[UIUtility sendSimpleNotifyForAlart:@"stopUpdatingLocation"];  //debug
+		[[YCLog logSingleInstance] addlog:@"here is stand-stop"];
 	}
 
 }
@@ -73,6 +73,8 @@
 		self.lastLocation = self.bestEffortAtLocation;
 		self.bestEffortAtLocation = nil; //为下次定位数据
 	}
+	
+	
 	
 	//if (self.running == NO) //定位已经被停止，就不在继续检测了。防止检测被重复调用
 	//	return;
@@ -101,6 +103,7 @@
 		[regionsContainsLastLocation setObject:region forKey:region.identifier];
 		//调用didEnterRegion
 		[yclm.delegate locationManager:yclm didEnterRegion:region];
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"增加“最后区域” %@",region.identifier]];
 	}
 	////
 	///////////////////////////////“区域”列表///////////////////////////////
@@ -117,12 +120,13 @@
 		[regionsContainsLastLocation removeObjectForKey:region.identifier];
 		//调用didExitRegion
 		[yclm.delegate locationManager:yclm didExitRegion:region];
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"删除“最后区域” %@",region.identifier]];
 	}
 	////
 	///////////////////////////////“最后所在区域”列表///////////////////////////////
 	
 	
-	[[YCLog logSingleInstance] addlog:@"here is stand-monitorRegionCenter-end"];
+	//[[YCLog logSingleInstance] addlog:@"here is stand-monitorRegionCenter-end"];
 
 }
 
@@ -134,18 +138,26 @@
 	didUpdateToLocation:(CLLocation *)newLocation 
 		   fromLocation:(CLLocation *)oldLocation
 {
+	[[YCLog logSingleInstance] addlog:@"here is stand-didUpdateToLocation"];
 	
 	NSDate* eventDate = newLocation.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
 	
     if (abs(howRecent) > 5.0) return;
 	
+	if (newLocation.horizontalAccuracy > [[YCParam paramSingleInstance] invalidLocationAccuracy])
+	{
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"stand-didUpdateToLocation 无效精度:%.1f",newLocation.horizontalAccuracy ]];
+		[[YCLog logSingleInstance] addlog:@"返回"];
+		return;
+	}
+	
 	if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) 
 	{
         self.bestEffortAtLocation = newLocation;
     }
 	
-	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:3.0];
+	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:2.0];
 		
 }
 
@@ -153,6 +165,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
+	
 	NSString *notificationMsg = @"startUpdatingLocation didFailWithError \n error:";
 	if ([error localizedDescription])
 		[notificationMsg stringByAppendingString:[error localizedDescription]];
@@ -160,7 +173,9 @@
 	if ([error localizedFailureReason])
 		[notificationMsg stringByAppendingString:[error localizedFailureReason]];
 	
-	[UIUtility sendSimpleNotifyForAlart:notificationMsg];  //debug
+	//[UIUtility sendSimpleNotifyForAlart:notificationMsg];  //debug
+	 
+	[[YCLog logSingleInstance] addlog:notificationMsg];
 }
 
 -(void) dealloc

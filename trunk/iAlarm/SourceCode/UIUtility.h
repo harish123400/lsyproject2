@@ -40,6 +40,12 @@
 //发送个简单的通知 －－debug
 +(void)sendSimpleNotifyForAlart:(NSString*)alartBody;
 +(void)sendNotifyForAlart:(NSString*)alartBody alartName:(NSString*)alartName;
++(void)sendNotify:(NSString*)alartBody 
+		alartName:(NSString*)alartName 
+		 fireDate:(NSDate*)fireDate 
+   repeatInterval:(NSCalendarUnit)repeatInterval 
+		soundName:(NSString*)soundName;
+
 @end
 
 
