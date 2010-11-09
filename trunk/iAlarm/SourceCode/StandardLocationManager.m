@@ -40,53 +40,22 @@
 	return locationManager;
 }
 
--(void) start
-{
-	
-	if (!running) 
-	{
-		[self.locationManager startUpdatingLocation];
-		running = YES;
-		[[YCLog logSingleInstance] addlog:@"here is stand-start"];
-	}
-	
-}
-
--(void) stop
-{
-	if (running)
-	{
-		[self.locationManager stopUpdatingHeading];
-		running = NO;
-		[[YCLog logSingleInstance] addlog:@"here is stand-stop"];
-	}
-
-}
 -(void)monitorRegionCenter
 {
 	[[YCLog logSingleInstance] addlog:@"here is stand-monitorRegionCenter"];
-	[self stop];
 	
 	if (self.bestEffortAtLocation == nil) 
+	{		
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"stand-monitorRegionCenter bestEffortAtLocation is nil"]];
+		[[YCLog logSingleInstance] addlog:@"返回"];
 		return;
-	else {
+	}else {
 		self.lastLocation = self.bestEffortAtLocation;
 		self.bestEffortAtLocation = nil; //为下次定位数据
 	}
 	
 	
-	
-	//if (self.running == NO) //定位已经被停止，就不在继续检测了。防止检测被重复调用
-	//	return;
-	
-	
-	//设备低速（静止）运行时候，关闭standard
 	CLLocation *curLocation = self.lastLocation;
-	//CLLocationSpeed curSpeed = curLocation.speed;
-	//if(curSpeed <= 1.0) [self stop];
-	 
-	
-	
 	
 	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
 	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
@@ -125,11 +94,29 @@
 	////
 	///////////////////////////////“最后所在区域”列表///////////////////////////////
 	
-	
-	//[[YCLog logSingleInstance] addlog:@"here is stand-monitorRegionCenter-end"];
-
 }
 
+-(void) beginLocation
+{
+	//if (!running) 
+	{
+		[[YCLog logSingleInstance] addlog:@"here is stand-beginLocation"];
+		[self.locationManager startUpdatingLocation];
+		running = YES;
+		[self performSelector:@selector(endLocation) withObject:nil afterDelay:[YCParam paramSingleInstance].timeSpanForStandardLocation];
+	}
+}
+
+-(void) endLocation
+{
+	//if (running)
+	{
+		[[YCLog logSingleInstance] addlog:@"here is stand-endLocation"];
+		[self.locationManager stopUpdatingHeading];
+		running = NO;
+		[self monitorRegionCenter];
+	}
+}
 
 #pragma mark - locationManager
 #pragma mark - CLLocationManagerDelegate
@@ -156,8 +143,6 @@
 	{
         self.bestEffortAtLocation = newLocation;
     }
-	
-	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:2.0];
 		
 }
 
@@ -173,7 +158,6 @@
 	if ([error localizedFailureReason])
 		[notificationMsg stringByAppendingString:[error localizedFailureReason]];
 	
-	//[UIUtility sendSimpleNotifyForAlart:notificationMsg];  //debug
 	 
 	[[YCLog logSingleInstance] addlog:notificationMsg];
 }

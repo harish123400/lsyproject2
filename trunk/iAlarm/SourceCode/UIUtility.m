@@ -270,7 +270,7 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 }
 
 //发送个简单的通知 弹出警告筐－－debug
-+(void)sendSimpleNotifyForAlart:(NSString*)alartBody
++(void)sendSimpleNotifyForAlart:(NSString*)alertBody
 {
 	// Create a new notification
 	UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -278,7 +278,7 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	notification.timeZone = [NSTimeZone defaultTimeZone];
 	notification.repeatInterval = 0;
 	//notification.soundName = @"ping.caf";//@"default";
-	notification.alertBody = alartBody;
+	notification.alertBody = alertBody;
 	notification.userInfo = [NSDictionary dictionaryWithObject:@"sendSimpleNotifyForAlart"forKey:@"name"];
 	
 	UIApplication *app = [UIApplication sharedApplication];
@@ -286,7 +286,7 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	[notification release];
 }
 
-+(void)sendNotifyForAlart:(NSString*)alartBody alartName:(NSString*)alartName
++(void)sendNotifyForAlart:(NSString*)alertBody notifyName:(NSString*)notifyName
 {
 	// Create a new notification
 	UILocalNotification *notification = [[UILocalNotification alloc] init];
@@ -294,24 +294,24 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	notification.timeZone = [NSTimeZone defaultTimeZone];
 	notification.repeatInterval = 0;
 	//notification.soundName = @"ping.caf";//@"default";
-	notification.alertBody = alartBody;
-	notification.userInfo = [NSDictionary dictionaryWithObject:alartName forKey:@"name"];
+	notification.alertBody = alertBody;
+	notification.userInfo = [NSDictionary dictionaryWithObject:notifyName forKey:@"name"];
 	
 	UIApplication *app = [UIApplication sharedApplication];
 	[app scheduleLocalNotification:notification];
 	[notification release];
 }
 
-+(void)sendNotify:(NSString*)alartBody 
-		alartName:(NSString*)alartName 
++(void)sendNotify:(NSString*)alertBody 
+		notifyName:(NSString*)notifyName 
 		 fireDate:(NSDate*)fireDate 
    repeatInterval:(NSCalendarUnit)repeatInterval 
 		soundName:(NSString*)soundName
 {
 	// Create a new notification
 	UILocalNotification *notification = [[UILocalNotification alloc] init];
-	notification.alertBody = alartBody;
-	notification.userInfo = [NSDictionary dictionaryWithObject:alartName forKey:@"name"];
+	notification.alertBody = alertBody;
+	notification.userInfo = [NSDictionary dictionaryWithObject:notifyName forKey:@"name"];
 	
 	notification.timeZone = [NSTimeZone defaultTimeZone];
 	if(fireDate == nil)
@@ -328,6 +328,31 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	UIApplication *app = [UIApplication sharedApplication];
 	[app scheduleLocalNotification:notification];
 	[notification release];
+}
+
++(void)simpleAlertBody:(NSString*)alertBody 
+				alertTitle:(NSString*)alertTitle
+		 cancelButtonTitle:(NSString*)cancelButtonTitle
+				  delegate:(id)delegate
+{
+	
+	if(alertTitle ==nil)
+	{
+		//[UIApplication sharedApplication]
+		alertTitle = @"iAlarm";
+	}
+	
+	if(cancelButtonTitle ==nil)
+		alertTitle = @"OK";
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+													message:alertBody 
+												   delegate:delegate
+										  cancelButtonTitle:cancelButtonTitle 
+										  otherButtonTitles:nil];
+	
+	[alert show];
+	[alert release];
 }
 
 

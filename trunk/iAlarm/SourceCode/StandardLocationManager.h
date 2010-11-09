@@ -25,7 +25,7 @@
 
 +(StandardLocationManager*) standardLocationManagerSigleInstance;
 
--(void) start;
--(void) stop;
+-(void) beginLocation;
+-(void) endLocation;
 
 @end

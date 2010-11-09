@@ -29,7 +29,7 @@
 	NSString *notificationMsg = [[NSString alloc] initWithFormat:@"%@%@",alarmName,arrivedString];
 	
 	[UIUtility sendNotify:notificationMsg 
-				alartName:@"didEnterRegion" 
+				notifyName:@"didEnterRegion" 
 				 fireDate:nil
 		   repeatInterval:0 
 				soundName:soundName];
@@ -56,7 +56,7 @@
 	NSString *notificationMsg = [[NSString alloc] initWithFormat:@"%@%@",alarmName,arrivedString];
 	
 	[UIUtility sendNotify:notificationMsg 
-				alartName:@"didExitRegion" 
+				notifyName:@"didExitRegion" 
 				 fireDate:nil
 		   repeatInterval:0 
 				soundName:soundName];

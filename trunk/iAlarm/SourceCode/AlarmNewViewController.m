@@ -47,7 +47,7 @@
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellRing]];            //声音
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellVibrate]];         //震动
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellAlarmName]];       //标签
-	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellDebugCoordinate]]; //debug 
+	//[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellDebugCoordinate]]; //debug 
 	}
 	
 	return cellDescriptionIds;
@@ -97,19 +97,8 @@
 
 #pragma mark -
 #pragma mark Location,reverseGeocoder manager
-
-/*
- extern const CLLocationAccuracy kCLLocationAccuracyBestForNavigation;
- extern const CLLocationAccuracy kCLLocationAccuracyBest;
- extern const CLLocationAccuracy kCLLocationAccuracyNearestTenMeters;
- extern const CLLocationAccuracy kCLLocationAccuracyHundredMeters;
- extern const CLLocationAccuracy kCLLocationAccuracyKilometer;
- extern const CLLocationAccuracy kCLLocationAccuracyThreeKilometers;
- */
-/**
- Return a location manager -- create one if necessary.
- */
-- (CLLocationManager *)locationManager {
+- (CLLocationManager *)locationManager 
+{
 	
     if (locationManager != nil) {
 		return locationManager;
@@ -171,76 +160,71 @@
 	 */
 }
 
--(void)beginLocation
+-(void)beginReverse
 {
-	locationing = YES;
-	// 改变保存按钮状态，显示等待指示控件
-	self.addAlarmButton.enabled = NO;
-	[self showLocationProgress];
-
-	// Start the location manager.
-	[[self locationManager] startUpdatingLocation];
-	[self performSelector:@selector(stopLocation) withObject:nil afterDelay:2.0];
-}
-
--(void)stopLocation
-{
-	// Stop the location manager.
-	[[self locationManager] stopUpdatingLocation];  
-	
-	if(self.bestEffortAtLocation==nil)
-	{
-		[self performSelector:@selector(finishLocation:) withObject:[NSNumber numberWithBool:NO] afterDelay:0.1];  //等待x秒，结束定位
-		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"alarm-didUpdateToLocation 无效精度:%.1f",self.bestEffortAtLocation.horizontalAccuracy ]];
-		[[YCLog logSingleInstance] addlog:@"返回"];
-		return;   //提示错误
-	}
-	
 	CLLocationCoordinate2D coordinate = [self.bestEffortAtLocation coordinate];
 	//坐标
 	self.alarm.coordinate = coordinate;
 	self.alarm.locationAccuracy = self.bestEffortAtLocation.horizontalAccuracy;
-		
+	
 	//反转坐标－地址
 	reverseGeocoder = [self reverseGeocoder:coordinate]; 
 	reverseGeocoder.delegate = self;
 	[reverseGeocoder start];
 }
 
-
-//参数：是否定位成功
--(void)finishLocation:(NSNumber*)locationed;
+-(void)endReverse
 {
-
-	BOOL locationSuccessed = [locationed boolValue];
-	if (locationSuccessed) {
-		self.addAlarmButton.enabled = YES;
-	}
-	else {
-		//self.addAlarmButton.enabled = YES;  //TODO for Debug
-		self.addAlarmButton.enabled = NO;
-	}
-	
 	//隐藏等待圈
 	//[self hideLocationProgress];
-
-
+	
 	//重新生成cell描述数组
 	self.cellDescriptions = [YCCellDescription makeCellDescriptions:self.cellDescriptionIds alarm:alarm];
-	if (!locationSuccessed) //定位失败，需要设定字体
+	[self.tableView reloadData];
+	// 改变保存按钮状态，显示等待指示控件
+	locationing = NO;
+	self.addAlarmButton.enabled = YES;
+}
+
+
+-(void)beginLocation
+{
+	// 改变保存按钮状态，显示等待指示控件
+	locationing = YES;
+	self.addAlarmButton.enabled = NO;
+	[self showLocationProgress];
+	//[self performSelector:@selector(showLocationProgress) withObject:nil afterDelay:1.5];
+
+
+	// Start the location manager.
+	[[self locationManager] startUpdatingLocation];
+	[self performSelector:@selector(endLocation) withObject:nil afterDelay:[YCParam paramSingleInstance].timeSpanForStandardLocation];
+}
+
+-(void)endLocation
+{
+	// Stop the location manager.
+	[[self locationManager] stopUpdatingLocation];  
+	
+	if(self.bestEffortAtLocation==nil)
 	{
+		//重新生成cell描述数组
+		self.cellDescriptions = [YCCellDescription makeCellDescriptions:self.cellDescriptionIds alarm:alarm];
 		YCCellDescription *cellDes = [self cellDescriptions:self.cellDescriptions viewTag:kPositionCellTag];
 		cellDes.detailTextColor = [UIColor grayColor];
 		cellDes.detailText = NSLocalizedString(@"定位失败！请在“设置”中打开定位服务，或稍候再试。",@"定位失败的提示");
 		//self.alarm.position = NSLocalizedString(@"定位失败！请在“设置”中打开定位服务，或稍候再试。",@"定位失败的提示");
+		[self.tableView reloadData];
+		
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"alarm-didUpdateToLocation 无效精度:%.1f",self.bestEffortAtLocation.horizontalAccuracy ]];
+		[[YCLog logSingleInstance] addlog:@"返回"];
+	}else {
+		[self beginReverse];
 	}
-	
-	[self.tableView reloadData];
+
 	locationing = NO;
+	
 }
-
-
-
 
 
 #pragma mark -
@@ -258,7 +242,7 @@
 	// 定义cell数据
 	self.cellDescriptions = [YCCellDescription makeCellDescriptions:self.cellDescriptionIds alarm:alarm];
 	
-	[self performSelector:@selector(beginLocation) withObject:nil afterDelay:1.5];  //等待x秒,执行定位
+	[self performSelector:@selector(beginLocation) withObject:nil afterDelay:1.0];  //等待x秒,执行定位
 	
 }
 
@@ -279,7 +263,7 @@
 			return 3;
 			break;
 		case 1:
-			return 5;
+			return 4;
 			break;
 		default:
 			return 0;
@@ -423,11 +407,11 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+	[[YCLog logSingleInstance] addlog:@"alarm-didUpdateToLocation"];
     
 	NSDate* eventDate = newLocation.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
 
-	
     if (abs(howRecent) > 5.0) return;
 	
 	if (newLocation.horizontalAccuracy > [[YCParam paramSingleInstance] invalidLocationAccuracy])
@@ -465,13 +449,12 @@
 	NSString * thoroughfare = placemark.thoroughfare; //街道
 	NSString * subthoroughfare = placemark.subThoroughfare;//街道号
 	
-	self.alarm.position = [[[NSString alloc] initWithFormat:@"%@,%@%@",locality,thoroughfare,subthoroughfare] autorelease];
-	//NSLog(@"%@",self.alarm.position);
+	self.alarm.position = [[[NSString alloc] initWithFormat:@"%@%@,%@",thoroughfare,subthoroughfare,locality] autorelease];
 	if (!self.alarm.nameChanged) {
 		self.alarm.alarmName = [[[NSString alloc] initWithFormat:@"%@",thoroughfare] autorelease];
 	}
 	
-	[self performSelector:@selector(finishLocation:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.1];  //数据更新后，等待x秒
+	[self performSelector:@selector(endReverse) withObject:nil afterDelay:0.1];  //数据更新后，等待x秒
 	
 }
 
@@ -484,7 +467,7 @@
 	NSString *lonstr = [UIUtility convertLongitude:lon decimal:0];
 	NSString *position = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
 	self.alarm.position = position;
-	[self performSelector:@selector(finishLocation:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.1];  //等待x秒，结束定位
+	[self performSelector:@selector(endReverse) withObject:nil afterDelay:0.1];  //等待x秒，结束
 }
 
 
@@ -492,9 +475,9 @@
 #pragma mark Memory management
 - (void)dealloc {
 	
-	//[locationManager release];
-	//[reverseGeocoder release];
-	//[bestEffortAtLocation release];
+	[locationManager release];
+	[reverseGeocoder release];
+	[bestEffortAtLocation release];
 	 
     [super dealloc];
 }

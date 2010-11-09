@@ -43,43 +43,29 @@
 {
 	[[YCLog logSingleInstance] addlog:@"here is didReceiveLocalNotification"];
 	
-	NSString *appState = nil;
-	switch (application.applicationState) {
-		case UIApplicationStateActive:
-			appState = @"UIApplicationStateActive";
-			break;
-		case UIApplicationStateInactive:
-			appState = @"UIApplicationStateInactive";
-			break;
-		case UIApplicationStateBackground:
-			appState = @"UIApplicationStateBackground";
-			break;
-		default:
-			appState = @"UnKnown";
-			break;
-	}
-	
-	[[YCLog logSingleInstance] addlog:appState];
-	
 	NSString *notificationName = [notification.userInfo objectForKey:@"name"];
 	if (([notificationName isEqualToString:@"updateAlarm"]) ||
 		([notificationName isEqualToString:@"updateParam"])) 
 	{
 		[self resetMonitoredRegions];
+		
 	}else if(([notificationName isEqualToString:@"didEnterRegion"]) ||
 			 ([notificationName isEqualToString:@"didExitRegion"]))
 	{
 		if(application.applicationState == UIApplicationStateInactive)
 		{
 			//转到当前位置tab
+			[[YCLog logSingleInstance] addlog:@"here is UIApplicationStateInactive"];
 		}else {
 			//提示框
+			[[YCLog logSingleInstance] addlog:@"here is not"];
 			[UIUtility simpleAlertBody:notification.alertBody alertTitle:nil cancelButtonTitle:nil delegate:self];
 		}
 
 		
 	}else if (notificationName !=nil){ 
 		//notificationName != nil 就一定是自定义的通知
+		/*
 		NSString *alertTitle = NSLocalizedString(@"时空闹钟",@"");
 		NSString *alertMsg = notification.alertBody;
 		
@@ -89,8 +75,13 @@
 											  cancelButtonTitle:@"OK" 
 											  otherButtonTitles:nil];
 		
+		
 		[alert show];
 		[alert release];
+		 */
+		[[YCLog logSingleInstance] addlog:notificationName];
+		[UIUtility simpleAlertBody:notification.alertBody alertTitle:nil cancelButtonTitle:nil delegate:self];
+
 	}	
 	/*
 	 if([notificationName isEqualToString:@"didEnterRegion"])

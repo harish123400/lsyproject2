@@ -23,6 +23,10 @@
 @synthesize offsetCoordinateOfMap;
 @synthesize invalidLocationAccuracy;
 
+@synthesize timeSpanForStandardLocation;  
+@synthesize enableOfAllLocAlarms;                        
+@synthesize ignoreEdgeMoving;                           
+
 
 +(YCParam*) paramSingleInstance
 {
@@ -32,11 +36,15 @@
 		obj.radiusForAlarm = 800.0;
 		obj.distanceForProAlarm = 2000.0;
 		obj.desiredAccuracyForStartStandardLocation = kCLLocationAccuracyNearestTenMeters;
-		obj.intervalForStartStandardLocation = 60.0;
+		obj.intervalForStartStandardLocation = 90.0;
 		obj.enableOffset = NO;
 		CLLocationCoordinate2D tmp  = {0.0,0.0};
 		obj.offsetCoordinateOfMap = tmp;
 		obj.invalidLocationAccuracy = 1000.0;
+		
+		obj.timeSpanForStandardLocation = 3.0;
+		obj.enableOfAllLocAlarms = YES;
+		obj.ignoreEdgeMoving = YES;
 		
 		[obj retain];
 	}
@@ -55,7 +63,7 @@
 	}
 	[DataUtility saveAlarmArray:alarms];
 	
-	[UIUtility sendNotifyForAlart:nil alartName :@"updateParam"];
+	[UIUtility sendNotifyForAlart:nil notifyName :@"updateParam"];
 	
 }
 

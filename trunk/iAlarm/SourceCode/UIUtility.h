@@ -38,13 +38,18 @@
 +(NSString*)convertLongitude:(double)longitude decimal:(NSUInteger)decimal;
 
 //发送个简单的通知 －－debug
-+(void)sendSimpleNotifyForAlart:(NSString*)alartBody;
-+(void)sendNotifyForAlart:(NSString*)alartBody alartName:(NSString*)alartName;
-+(void)sendNotify:(NSString*)alartBody 
-		alartName:(NSString*)alartName 
++(void)sendSimpleNotifyForAlart:(NSString*)alertBody;
++(void)sendNotifyForAlart:(NSString*)alertBody notifyName:(NSString*)notifyName;
++(void)sendNotify:(NSString*)alertBody 
+		notifyName:(NSString*)notifyName 
 		 fireDate:(NSDate*)fireDate 
    repeatInterval:(NSCalendarUnit)repeatInterval 
 		soundName:(NSString*)soundName;
+
++(void)simpleAlertBody:(NSString*)alertBody 
+				alertTitle:(NSString*)alertTitle
+		 cancelButtonTitle:(NSString*)cancelButtonTitle
+				  delegate:(id)delegate;
 
 @end
 

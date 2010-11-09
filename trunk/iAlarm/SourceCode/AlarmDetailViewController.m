@@ -44,7 +44,7 @@
 		[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellRing]];            //声音
 		[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellVibrate]];         //震动
 		[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellAlarmName]];       //标签
-		[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellDebugCoordinate]]; //debug 
+		//[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellDebugCoordinate]]; //debug 
 	}
 	
 	return cellDescriptionIds;
@@ -120,7 +120,7 @@
 			return 1;
 			break;
 		case 2:
-			return 5;
+			return 4;
 			break;
 		default:
 			return 0;

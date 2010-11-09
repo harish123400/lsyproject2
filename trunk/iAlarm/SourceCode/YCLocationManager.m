@@ -130,7 +130,7 @@
 														 atRegions:[regionsContainsLastLocation allValues]];
 	//if(curSpeed > 1.0)
 	if (regionsContainsLastLocation.count > 0 && !isContainLast) {
-		[[StandardLocationManager standardLocationManagerSigleInstance] start];
+		[[StandardLocationManager standardLocationManagerSigleInstance] beginLocation];
 		return;
 	}
 	////
@@ -147,14 +147,14 @@
 														   noRegions:regionsContainsLastLocation];
 	//if(curSpeed > 1.0)
 	if (regions.count >0 && !lessProAlarmDistance) {
-		[[StandardLocationManager standardLocationManagerSigleInstance] start];
+		[[StandardLocationManager standardLocationManagerSigleInstance] beginLocation];
 		return;
 	}
 	////
 	///////////////////////////////“区域”列表///////////////////////////////
 	
 	//所有条件都不满足，停止标准定位
-	[[StandardLocationManager standardLocationManagerSigleInstance] stop];
+	[[StandardLocationManager standardLocationManagerSigleInstance] endLocation];
 	
 	
 }
@@ -186,6 +186,21 @@
 	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:3.0];
 	//[self monitorRegionCenter];
 	
+	
+	double a = 0.0;
+	while (timerExeFlag) {
+		double d = [UIApplication sharedApplication].backgroundTimeRemaining;
+		a +=1.0;
+		NSTimeInterval ti = [YCParam paramSingleInstance].intervalForStartStandardLocation;
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"a=%.1f ti=%.1f bt=%.1f",a,ti,d]];
+		if (a>=ti) {
+			a =0;
+			//[self monitorRegionCenter];
+			[UIUtility sendNotifyForAlart:@"测试通知" notifyName:@"didEnterRegion"];  //debug
+		}
+		[NSThread sleepForTimeInterval:1.0];
+	}
+	
 }
 
 
@@ -206,6 +221,10 @@
 
 -(void) start
 {
+	//是否启用所有闹钟
+	if([YCParam paramSingleInstance].enableOfAllLocAlarms == NO)
+		return;
+	
 	if (!running) 
 	{
 		NSTimeInterval ti = [YCParam paramSingleInstance].intervalForStartStandardLocation;
@@ -243,22 +262,34 @@
 	double a = 0;
 	timerExeFlag = YES;
 	while (timerExeFlag) {
+		double d = [UIApplication sharedApplication].backgroundTimeRemaining;
 		a +=1.0;
 		NSTimeInterval ti = [YCParam paramSingleInstance].intervalForStartStandardLocation;
-		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"a=%.1f ti=%.1f",a,ti]];
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"a=%.1f ti=%.1f bt=%.1f",a,ti,d]];
 		if (a>=ti) {
 			a =0;
-			[self monitorRegionCenter];
+			//[self monitorRegionCenter];
+			[UIUtility sendNotifyForAlart:@"测试通知" notifyName:@"didEnterRegion"];  //debug
 		}
 		[NSThread sleepForTimeInterval:1.0];
 	}
+	 */
 	 
+	/*
+ 
+	//是否启用所有闹钟
+	if([YCParam paramSingleInstance].enableOfAllLocAlarms == NO)
+		return;
 	
- */
 	timerExeFlag = YES;
 	while (timerExeFlag) {
 		[NSThread sleepForTimeInterval:1.0];
 	}
+	*/
+	
+	timerExeFlag = YES;
+	[[self significantLocationManager] startUpdatingLocation];
+	[[YCLog logSingleInstance] addlog:@"timer start startUpdatingLocation"];
 	
 }
 -(void) stopTimer

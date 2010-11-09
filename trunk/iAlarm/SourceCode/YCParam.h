@@ -21,7 +21,12 @@
 	CLLocationCoordinate2D offsetCoordinateOfMap;  //地图的偏移坐标
 	
 	
-	CLLocationDistance invalidLocationAccuracy;    //无效定位精度
+	CLLocationDistance invalidLocationAccuracy;    //无效定位精度阀值
+	
+	NSTimeInterval     timeSpanForStandardLocation;  //标准定位持续时间
+	BOOL enableOfAllLocAlarms;                        //是否启用所有闹钟
+	BOOL ignoreEdgeMoving;                           //是否忽略边缘活动
+	
 
 }
 
@@ -29,12 +34,14 @@
 @property (nonatomic,assign) CLLocationDistance distanceForProAlarm;
 @property (nonatomic,assign) CLLocationAccuracy desiredAccuracyForStartStandardLocation;
 @property (nonatomic,assign) NSTimeInterval     intervalForStartStandardLocation;
-
-
-
 @property (nonatomic,assign) BOOL enableOffset;
 @property (nonatomic,assign) CLLocationCoordinate2D offsetCoordinateOfMap;
 @property (nonatomic,assign) CLLocationDistance invalidLocationAccuracy;
+
+@property (nonatomic,assign) NSTimeInterval     timeSpanForStandardLocation;
+@property (nonatomic,assign) BOOL enableOfAllLocAlarms;    
+@property (nonatomic,assign) BOOL ignoreEdgeMoving; 
+
 
 +(YCParam*) paramSingleInstance;
 +(void)updateParam;
