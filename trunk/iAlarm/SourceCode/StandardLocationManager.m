@@ -98,7 +98,7 @@
 
 -(void) beginLocation
 {
-	//if (!running) 
+	if (!running) 
 	{
 		[[YCLog logSingleInstance] addlog:@"here is stand-beginLocation"];
 		[self.locationManager startUpdatingLocation];
@@ -109,10 +109,10 @@
 
 -(void) endLocation
 {
-	//if (running)
+	if (running)
 	{
 		[[YCLog logSingleInstance] addlog:@"here is stand-endLocation"];
-		[self.locationManager stopUpdatingHeading];
+		[self.locationManager stopUpdatingLocation];
 		running = NO;
 		[self monitorRegionCenter];
 	}

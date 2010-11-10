@@ -203,8 +203,11 @@ BOOL lo;
             }
         });
     });
+	 
+	 
 	
-	
+	//YCLocationManager * ycLocationManager = [YCLocationManager locationManagerSigleInstance];
+	//[ycLocationManager startTimer];
 	
 }
 
@@ -213,11 +216,16 @@ BOOL lo;
     /*
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
-	[[YCLog logSingleInstance] addlog:@"here is applicationWillEnterForeground"];
 	
 	[[YCLog logSingleInstance] addlog:@"here is applicationWillEnterForeground"];
+	
 	YCLocationManager * ycLocationManager = [YCLocationManager locationManagerSigleInstance];
 	[ycLocationManager stopTimer];
+	
+	UIApplication* app = [UIApplication sharedApplication];
+	[app endBackgroundTask:bgTask];
+	bgTask = UIBackgroundTaskInvalid;
+	 
 	 
 
 }

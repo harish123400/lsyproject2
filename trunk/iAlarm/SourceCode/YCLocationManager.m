@@ -98,11 +98,11 @@
 	
 	[[YCLog logSingleInstance] addlog:@"here is signi-monitorRegionCenter"];
 
-
 	CLLocation *curLocation = nil;
 	if (self.bestEffortAtLocation == nil) {
 		curLocation = self.significantLocationManager.location;
 		self.lastLocation = curLocation;
+		if(curLocation == nil) return; //定位失败
 	}else {
 		curLocation = self.bestEffortAtLocation;
 		self.lastLocation = self.bestEffortAtLocation;
@@ -154,7 +154,7 @@
 	///////////////////////////////“区域”列表///////////////////////////////
 	
 	//所有条件都不满足，停止标准定位
-	[[StandardLocationManager standardLocationManagerSigleInstance] endLocation];
+	//[[StandardLocationManager standardLocationManagerSigleInstance] endLocation];
 	
 	
 }
@@ -184,23 +184,7 @@
     }
 	
 	[self performSelector:@selector(monitorRegionCenter) withObject:nil afterDelay:3.0];
-	//[self monitorRegionCenter];
-	
-	
-	double a = 0.0;
-	while (timerExeFlag) {
-		double d = [UIApplication sharedApplication].backgroundTimeRemaining;
-		a +=1.0;
-		NSTimeInterval ti = [YCParam paramSingleInstance].intervalForStartStandardLocation;
-		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"a=%.1f ti=%.1f bt=%.1f",a,ti,d]];
-		if (a>=ti) {
-			a =0;
-			//[self monitorRegionCenter];
-			[UIUtility sendNotifyForAlart:@"测试通知" notifyName:@"didEnterRegion"];  //debug
-		}
-		[NSThread sleepForTimeInterval:1.0];
-	}
-	
+
 }
 
 
@@ -214,8 +198,8 @@
 	if ([error localizedFailureReason])
 		[notificationMsg stringByAppendingString:[error localizedFailureReason]];
 	
-	//[UIUtility sendSimpleNotifyForAlart:notificationMsg];  //debug
 	[[YCLog logSingleInstance] addlog:notificationMsg];
+	
 }
 
 
@@ -232,6 +216,7 @@
 		[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
 		
 		[self.significantLocationManager startMonitoringSignificantLocationChanges];
+		//[self.significantLocationManager startUpdatingLocation];
 		running = YES;
 	}
 }
@@ -246,6 +231,7 @@
 		myTimer = nil;
 
 		[self.significantLocationManager stopMonitoringSignificantLocationChanges];
+		//[self.significantLocationManager stopUpdatingLocation];
 		running = NO;
 	}
 }
@@ -258,38 +244,24 @@
 
 -(void) startTimer
 {
-	/*
-	double a = 0;
+	
 	timerExeFlag = YES;
-	while (timerExeFlag) {
+	while (timerExeFlag) 
+	{
+		/////把后台任务时间归零，通过:启动标准定位
 		double d = [UIApplication sharedApplication].backgroundTimeRemaining;
-		a +=1.0;
-		NSTimeInterval ti = [YCParam paramSingleInstance].intervalForStartStandardLocation;
-		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"a=%.1f ti=%.1f bt=%.1f",a,ti,d]];
-		if (a>=ti) {
-			a =0;
-			//[self monitorRegionCenter];
-			[UIUtility sendNotifyForAlart:@"测试通知" notifyName:@"didEnterRegion"];  //debug
+		[[YCLog logSingleInstance] addlog:[NSString stringWithFormat:@"backgroundTimeRemaining=%6.1f",d]];
+		if(d<50.0)
+		{
+			[[YCLog logSingleInstance] addlog:@"打开标准 startUpdatingLocation"];
+			[self.significantLocationManager startUpdatingLocation];
+			[NSThread sleepForTimeInterval:3.0];
+			[[YCLog logSingleInstance] addlog:@"关闭标准 startUpdatingLocation"];
+			[self.significantLocationManager stopUpdatingLocation];		 
 		}
-		[NSThread sleepForTimeInterval:1.0];
+
+		[NSThread sleepForTimeInterval:30.0];
 	}
-	 */
-	 
-	/*
- 
-	//是否启用所有闹钟
-	if([YCParam paramSingleInstance].enableOfAllLocAlarms == NO)
-		return;
-	
-	timerExeFlag = YES;
-	while (timerExeFlag) {
-		[NSThread sleepForTimeInterval:1.0];
-	}
-	*/
-	
-	timerExeFlag = YES;
-	[[self significantLocationManager] startUpdatingLocation];
-	[[YCLog logSingleInstance] addlog:@"timer start startUpdatingLocation"];
 	
 }
 -(void) stopTimer
