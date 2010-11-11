@@ -9,7 +9,7 @@
 #import "SettingViewController.h"
 #import "YCParam.h"
 #import "YCDeviceStatus.h"
-#import "RegionCenter.h"
+#import "RegionsCenter.h"
 #import "DataUtility.h"
 #import "YCAlarmEntity.h"
 
@@ -71,7 +71,7 @@
 	NSArray *alarms = [DataUtility alarmArray];
 	
 	
-	NSArray *regions = [RegionCenter regionCenterSingleInstance].regions;
+	NSArray *regions = [RegionsCenter regionCenterSingleInstance].regions;
 	NSMutableString *regionsStr = [NSMutableString stringWithString:@""];
 	for (NSUInteger i=0; i<regions.count; i++) 
 	{
@@ -93,7 +93,7 @@
 	regionsView.text = regionsStr;
 	 
 	
-	NSArray *lastRegions = [[RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation allValues];
+	NSArray *lastRegions = [[RegionsCenter regionCenterSingleInstance].regionsForContainsLastLocation allValues];
 	NSMutableString *lastRegionsStr = [NSMutableString stringWithString:@""];
 	for (NSUInteger i=0; i<lastRegions.count; i++) 
 	{

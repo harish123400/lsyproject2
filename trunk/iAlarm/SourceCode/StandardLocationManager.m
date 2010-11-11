@@ -8,7 +8,7 @@
 
 #import "StandardLocationManager.h"
 #import "YCParam.h"
-#import "RegionCenter.h"
+#import "RegionsCenter.h"
 #import "YCLocationManager.h"
 #import "UIUtility.h"
 #import "LocationUtility.h"
@@ -57,8 +57,8 @@
 	
 	CLLocation *curLocation = self.lastLocation;
 	
-	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
-	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
+	NSMutableArray *regions = [RegionsCenter regionCenterSingleInstance].regions;
+	NSMutableDictionary *regionsContainsLastLocation = [RegionsCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 	YCLocationManager* yclm = [YCLocationManager locationManagerSigleInstance];
 	
 	///////////////////////////////“区域”列表///////////////////////////////

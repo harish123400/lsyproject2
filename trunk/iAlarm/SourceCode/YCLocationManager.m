@@ -8,7 +8,7 @@
 
 #import "YCLocationManager.h"
 #import "LocationUtility.h"
-#import "RegionCenter.h"
+#import "RegionsCenter.h"
 #import "YCLocationManagerDelegate.h"
 #import "StandardLocationManager.h"
 #import "YCParam.h"
@@ -59,14 +59,14 @@
 {
 
 	//加入到列表中
-	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
+	NSMutableArray *regions = [RegionsCenter regionCenterSingleInstance].regions;
 	[regions addObject:region];						   
 	
 	//判断当前位置是否在region中
 	CLLocation *curLocation = significantLocationManager.location;
 	BOOL isContain = [region containsCoordinate:curLocation.coordinate];
 	if (isContain) {
-		NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
+		NSMutableDictionary *regionsContainsLastLocation = [RegionsCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 		[regionsContainsLastLocation setObject:region forKey:region.identifier];
 	}
 	
@@ -76,20 +76,20 @@
 - (void)stopMonitoringForRegion:(CLRegion *)region
 {
 	//从当前位置列表中删除region
-	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
+	NSMutableDictionary *regionsContainsLastLocation = [RegionsCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 	[regionsContainsLastLocation removeObjectForKey:region.identifier];
 	
 	//从列表中删除region
-	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
+	NSMutableArray *regions = [RegionsCenter regionCenterSingleInstance].regions;
 	[regions removeObject:region];
 	
 }
 
 - (void)removeAllRegionMonitored
 {
-	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
+	NSMutableArray *regions = [RegionsCenter regionCenterSingleInstance].regions;
 	[regions removeAllObjects];
-	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
+	NSMutableDictionary *regionsContainsLastLocation = [RegionsCenter regionCenterSingleInstance].regionsForContainsLastLocation;
 	[regionsContainsLastLocation removeAllObjects];
 }
 
@@ -119,8 +119,8 @@
 
 
 	//CLLocationSpeed curSpeed = curLocation.speed;
-	NSMutableDictionary *regionsContainsLastLocation = [RegionCenter regionCenterSingleInstance].regionsForContainsLastLocation;
-	NSMutableArray *regions = [RegionCenter regionCenterSingleInstance].regions;
+	NSMutableDictionary *regionsContainsLastLocation = [RegionsCenter regionCenterSingleInstance].regionsForContainsLastLocation;
+	NSMutableArray *regions = [RegionsCenter regionCenterSingleInstance].regions;
 	
 	
 	///////////////////////////////“最后所在区域”列表///////////////////////////////

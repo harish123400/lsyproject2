@@ -10,7 +10,7 @@
 #import "DataUtility.h"
 #import "YCAlarmEntity.h"
 #import "YCRepeatType.h"
-#import "RegionCenter.h"
+#import "RegionsCenter.h"
 #import "YCSound.h"
 #import "UIUtility.h"
 
@@ -49,7 +49,7 @@
 	if ([alarm.repeatType.repeatTypeId isEqualToString:@"r002"]) 
 	{
 		alarm.enabling = NO;
-		[[[RegionCenter regionCenterSingleInstance] regions]removeObject:alarm];
+		[[[RegionsCenter regionCenterSingleInstance] regions]removeObject:alarm];
 	}
 	
 	NSString *arrivedString = NSLocalizedString(@"已经离开!",@"");
