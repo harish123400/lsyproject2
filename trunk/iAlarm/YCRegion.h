@@ -14,6 +14,8 @@
 	
 	YCAlarmEntity *alarm;
 	CLRegion *clRegion;
+	
+	//NSData *lastNotifyTimeStamp;  //最后的时间
 }
 
 @property (nonatomic,retain) YCAlarmEntity *alarm;

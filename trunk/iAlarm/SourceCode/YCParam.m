@@ -25,7 +25,9 @@
 
 @synthesize timeSpanForStandardLocation;  
 @synthesize enableOfAllLocAlarms;                        
-@synthesize ignoreEdgeMoving;                           
+@synthesize ignoreEdgeMoving; 
+@synthesize edgeDistance;
+@synthesize closeLeaveNotify;
 
 
 +(YCParam*) paramSingleInstance
@@ -33,18 +35,20 @@
 	static YCParam* obj = nil;
 	if (obj == nil) {
 		obj = [[YCParam alloc] init];
-		obj.radiusForAlarm = 800.0;
+		obj.radiusForAlarm = 1200.0;
 		obj.distanceForProAlarm = 2000.0;
 		obj.desiredAccuracyForStartStandardLocation = kCLLocationAccuracyNearestTenMeters;
-		obj.intervalForStartStandardLocation = 90.0;
+		obj.intervalForStartStandardLocation = 60.0;
 		obj.enableOffset = NO;
 		CLLocationCoordinate2D tmp  = {0.0,0.0};
 		obj.offsetCoordinateOfMap = tmp;
-		obj.invalidLocationAccuracy = 1000.0;
+		obj.invalidLocationAccuracy = 1200.0;
 		
 		obj.timeSpanForStandardLocation = 3.0;
 		obj.enableOfAllLocAlarms = YES;
 		obj.ignoreEdgeMoving = YES;
+		obj.edgeDistance = 150;
+		obj.closeLeaveNotify = NO;
 		
 		[obj retain];
 	}

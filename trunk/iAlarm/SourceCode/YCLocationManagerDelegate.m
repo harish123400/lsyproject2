@@ -13,32 +13,15 @@
 #import "RegionsCenter.h"
 #import "YCSound.h"
 #import "UIUtility.h"
+#import "YCParam.h"
 
 
 @implementation YCLocationManagerDelegate
 
+#define karrivedString NSLocalizedString(@"%@即将到达!\n大约距离:%.0f米",@"")
+#define kleavedString NSLocalizedString(@"%@已经离开!\n大约距离:%.0f米",@"")
 - (void)locationManager:(YCLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
-	NSArray *alarms = [DataUtility alarmArray];
-	NSString *alarmId = region.identifier;
-	YCAlarmEntity *alarm = [DataUtility alarmArray:alarms alarmId:alarmId];
-	NSString *alarmName = alarm.alarmName;
-	NSString *soundName = alarm.sound.soundName;
-	
-	NSString *arrivedString = NSLocalizedString(@"已经到了!",@"");
-	NSString *notificationMsg = [[NSString alloc] initWithFormat:@"%@%@",alarmName,arrivedString];
-	
-	[UIUtility sendNotify:notificationMsg 
-				notifyName:@"didEnterRegion" 
-				 fireDate:nil
-		   repeatInterval:0 
-				soundName:soundName];
-
-}
-
-- (void)locationManager:(YCLocationManager *)manager didExitRegion:(CLRegion *)region
-{
-
 	NSArray *alarms = [DataUtility alarmArray];
 	NSString *alarmId = region.identifier;
 	YCAlarmEntity *alarm = [DataUtility alarmArray:alarms alarmId:alarmId];
@@ -52,14 +35,48 @@
 		[[[RegionsCenter regionCenterSingleInstance] regions]removeObject:alarm];
 	}
 	
-	NSString *arrivedString = NSLocalizedString(@"已经离开!",@"");
-	NSString *notificationMsg = [[NSString alloc] initWithFormat:@"%@%@",alarmName,arrivedString];
+
+	CLLocation *curLocation = manager.significantLocationManager.location;
+	CLLocation *regLocation = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
+	CLLocationDistance distance = [curLocation distanceFromLocation:regLocation];
+	[regLocation release];
+	
+	//NSString *arrivedString = NSLocalizedString(@"%@即将到达!\n大约距离:%.0f",@"");
+	NSString *notificationMsg = [[NSString alloc] initWithFormat:karrivedString,alarmName,distance];
+	
+	[UIUtility sendNotify:notificationMsg 
+				notifyName:@"didEnterRegion" 
+				 fireDate:nil
+		   repeatInterval:0 
+				soundName:soundName];
+	[notificationMsg release];
+
+}
+
+- (void)locationManager:(YCLocationManager *)manager didExitRegion:(CLRegion *)region
+{
+	//关闭离开通知
+	if([YCParam paramSingleInstance].closeLeaveNotify) return;
+
+	NSArray *alarms = [DataUtility alarmArray];
+	NSString *alarmId = region.identifier;
+	YCAlarmEntity *alarm = [DataUtility alarmArray:alarms alarmId:alarmId];
+	NSString *alarmName = alarm.alarmName;
+	NSString *soundName = alarm.sound.soundName;
+	
+	CLLocation *curLocation = manager.significantLocationManager.location;
+	CLLocation *regLocation = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
+	CLLocationDistance distance = [curLocation distanceFromLocation:regLocation];
+	[regLocation release];
+	
+	NSString *notificationMsg = [[NSString alloc] initWithFormat:kleavedString,alarmName,distance];
 	
 	[UIUtility sendNotify:notificationMsg 
 				notifyName:@"didExitRegion" 
 				 fireDate:nil
 		   repeatInterval:0 
 				soundName:soundName];
+	[notificationMsg release];
 	
 }
 

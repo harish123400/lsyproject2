@@ -216,7 +216,6 @@
 		[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
 		
 		[self.significantLocationManager startMonitoringSignificantLocationChanges];
-		//[self.significantLocationManager startUpdatingLocation];
 		running = YES;
 	}
 }
@@ -231,7 +230,6 @@
 		myTimer = nil;
 
 		[self.significantLocationManager stopMonitoringSignificantLocationChanges];
-		//[self.significantLocationManager stopUpdatingLocation];
 		running = NO;
 	}
 }

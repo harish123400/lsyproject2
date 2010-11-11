@@ -7,6 +7,7 @@
 //
 
 #import "LocationUtility.h"
+#import "YCParam.h"
 //#import "StandardManagerDelegate.h"
 //#import "SignificantManagerDelegate.h"
 
@@ -110,10 +111,18 @@
 	for (NSUInteger i = 0; i< regions.count; i++) {
 		CLRegion * region = [regions objectAtIndex:i];
 		
+		//是否是边缘活动
+		YCParam *parma = [YCParam paramSingleInstance];
+		if(parma.ignoreEdgeMoving)
+		{
+			BOOL edge =[LocationUtility moveInEdgeOfRegion:region location:theLocation];
+			if (edge) continue;
+		}
+		
 		//区域是否在“包含最后区域”列表中
 		BOOL include = [LocationUtility includeRegion:region atRegions:noRegions];
 		if(include) continue;
-		
+				
 		BOOL isContain = [region containsCoordinate:theLocation.coordinate];
 		if (isContain) [array addObject:region];
 		
@@ -129,11 +138,64 @@
 	for (NSUInteger i = 0; i< regions.count; i++) {
 		CLRegion * region = [regions objectAtIndex:i];
 		
+		//是否是边缘活动
+		YCParam *parma = [YCParam paramSingleInstance];
+		if(parma.ignoreEdgeMoving)
+		{
+			BOOL edge =[LocationUtility moveInEdgeOfRegion:region location:theLocation];
+			if (edge) continue;
+		}
+		
 		BOOL isContain = [region containsCoordinate:theLocation.coordinate];
 		if (!isContain) [array addObject:region];
 	}
 	
 	return array;
+}
+
++(BOOL)moveInEdgeOfRegion:(CLRegion*)theRegion location:(CLLocation*)theLocation
+{
+	//取得内外边缘的半径
+	CLLocationDistance radius = theRegion.radius;
+	CLLocationDistance radiusOuter = radius + [YCParam paramSingleInstance].edgeDistance;
+	CLLocationDistance radiusInner = radius - [YCParam paramSingleInstance].edgeDistance;
+	if(radiusInner <0.0) radiusInner = 0.0;
+	
+	/*
+	//使用静态变量，减少内存的分配释放次数
+	static CLRegion* regionOuter = nil;
+	static CLRegion* regionInner = nil;
+	if (regionOuter == nil) 
+	{
+		regionOuter = [[CLRegion alloc] init];
+		regionOuter.identifier = @"regionOuter";
+	}
+	if (regionInner == nil) 
+	{
+		regionInner = [[CLRegion alloc] init];
+		regionInner.identifier = @"regionInner";
+	}
+	
+	regionOuter.center = theRegion.center;
+	regionOuter.radius = radiusOuter;
+	regionInner.center = theRegion.center;
+	regionInner.radius = radiusInner;
+	 */
+	
+	CLRegion* regionOuter = nil;
+	CLRegion* regionInner = nil;
+	regionOuter = [[CLRegion alloc] initCircularRegionWithCenter:theRegion.center radius:radiusOuter identifier:@"regionOuter"];
+	regionInner = [[CLRegion alloc] initCircularRegionWithCenter:theRegion.center radius:radiusInner identifier:@"regionInner"];
+
+	BOOL isContainOuter = [regionOuter containsCoordinate:theLocation.coordinate];
+	BOOL isContainInner = [regionInner containsCoordinate:theLocation.coordinate];
+	
+	[regionOuter release];
+	[regionInner release];	
+	
+	//在两个区域间的点，就是边缘点
+	return (isContainOuter && !isContainInner);
+	
 }
 
 

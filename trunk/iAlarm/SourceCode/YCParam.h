@@ -26,7 +26,10 @@
 	NSTimeInterval     timeSpanForStandardLocation;  //标准定位持续时间
 	BOOL enableOfAllLocAlarms;                        //是否启用所有闹钟
 	BOOL ignoreEdgeMoving;                           //是否忽略边缘活动
+	CLLocationDistance edgeDistance;                 //边缘的距离
 	
+	
+	BOOL closeLeaveNotify;                           //关闭离开通知
 
 }
 
@@ -41,6 +44,8 @@
 @property (nonatomic,assign) NSTimeInterval     timeSpanForStandardLocation;
 @property (nonatomic,assign) BOOL enableOfAllLocAlarms;    
 @property (nonatomic,assign) BOOL ignoreEdgeMoving; 
+@property (nonatomic,assign) CLLocationDistance edgeDistance;
+@property (nonatomic,assign) BOOL closeLeaveNotify;
 
 
 +(YCParam*) paramSingleInstance;

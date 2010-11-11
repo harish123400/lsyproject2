@@ -38,6 +38,10 @@
 //返回：符合条件的"区域列表"
 +(NSArray*) noContainsLocation:(CLLocation*)theLocation atRegions:(NSArray*)regions;
 
+//边缘活动
+//返回:YES:活动在区域的边缘
++(BOOL)moveInEdgeOfRegion:(CLRegion*)theRegion location:(CLLocation*)theLocation;
+
 
 
 

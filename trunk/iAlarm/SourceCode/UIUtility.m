@@ -343,7 +343,7 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	}
 	
 	if(cancelButtonTitle ==nil)
-		alertTitle = @"OK";
+		cancelButtonTitle = @"OK";
 	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
 													message:alertBody 
