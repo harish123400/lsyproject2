@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
 
 @interface YCParam : NSObject {
@@ -30,6 +31,7 @@
 	
 	
 	BOOL closeLeaveNotify;                           //关闭离开通知
+	MKCoordinateSpan defaultMapSpan;                 //默认的地图显示比例
 
 }
 
@@ -46,7 +48,7 @@
 @property (nonatomic,assign) BOOL ignoreEdgeMoving; 
 @property (nonatomic,assign) CLLocationDistance edgeDistance;
 @property (nonatomic,assign) BOOL closeLeaveNotify;
-
+@property (nonatomic,assign) MKCoordinateSpan defaultMapSpan;
 
 +(YCParam*) paramSingleInstance;
 +(void)updateParam;

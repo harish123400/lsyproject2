@@ -25,6 +25,7 @@
 #import "CheckmarkDisclosureIndicatorCell.h"
 #import "YCLog.h"
 #import "YCParam.h"
+#import "AlarmPositionMapViewController.h"
 
 
 @implementation AlarmNewViewController
@@ -364,6 +365,19 @@
 		return;
 	ctler.parentController = self;
 	ctler.alarm = alarm;
+	
+	//地图特殊处理
+	if ([ctler isKindOfClass:[AlarmPositionMapViewController class]]) 
+	{
+		NSArray *alarmsTemp = [[NSArray alloc] initWithObjects:ctler.alarm,nil];
+		((AlarmPositionMapViewController*)ctler).alarms = alarmsTemp;
+		[alarmsTemp release];
+		//使用闹钟地址作为中心
+		((AlarmPositionMapViewController*)ctler).centerWithcurrent = NO; 
+		((AlarmPositionMapViewController*)ctler).centerCoord = ctler.alarm.coordinate;
+		
+	} 
+	
 	[self.navigationController pushViewController:ctler animated:YES];
 	///////nav 导航///////
 

@@ -10,11 +10,18 @@
 #import "YCAnnotation.h"
 #import "YCAlarmEntity.h"
 #import "UIUtility.h"
+#import "YCParam.h"
+#import "YCLog.h"
 
 
 @implementation AlarmPositionMapViewController
 
 @synthesize mapView;
+@synthesize maskView;
+@synthesize activityIndicator;
+@synthesize centerWithcurrent;
+@synthesize alarms;
+@synthesize centerCoord;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -30,128 +37,46 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	mapView.delegate = self;
 	
-
-	
+	//不使用当前坐标作为中心
+	if (!self.centerWithcurrent)
+	{
+		[self performSelector:@selector(showMapByDefaultSpanAndCenter) withObject:nil afterDelay:0.5];
+	}
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-
-	mapView.delegate = self;
-	
-	//CLLocationCoordinate2D tmp = {41.7723,123.3865};
-	//CLLocationCoordinate2D tmp = {41.774689,123.392563};
-	//alarm.coordinate = tmp;
+/*
 	YCAnnotation *lastAnnotation = [[[YCAnnotation alloc] initWithCoordinate:alarm.coordinate addressDictionary:nil] autorelease];
 	lastAnnotation.title = alarm.alarmName;
 	lastAnnotation.subtitle = alarm.position;
 	lastAnnotation.isCurrentLocation = FALSE;
 	[mapView addAnnotation:lastAnnotation];
 	[self.mapView addAnnotation:lastAnnotation];
+ */
 	
+	//关掉覆盖视图
+	[UIView beginAnimations:@"Unmask" context:NULL];
+	[UIView setAnimationDuration:1.25];
+	self.maskView.alpha = 0.0f;
+	[UIView commitAnimations];
+	[self.activityIndicator stopAnimating];
+	
+	//设置当前位置为屏幕中心
+	[self.mapView setCenterCoordinate:self->centerCoord animated:YES];
+
 }
 
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+-(void)viewWillAppear:(BOOL)animated
 {
-	for (NSUInteger i=0; i<views.count; i++) {
-		id viewo = [views objectAtIndex:i];
-		if ([viewo isKindOfClass: [MKUserLocation class]]) {
-			//设置比例尺
-			MKCoordinateSpan span = {0.02,0.02};
-			MKCoordinateRegion region;
-			region.span = span;
-			
-			
-			
-			region.center = self.mapView.userLocation.coordinate;
-			[self.mapView setRegion:region animated:YES];
-			
-			//设置当前位置为屏幕中心
-			CLLocation *location1 = self.mapView.userLocation.location;
-			[self.mapView setCenterCoordinate:location1.coordinate animated:YES];
-			NSLog(@"map1 : latitude %+.6f, longitude %+.6f horizontalAccuracy %+.6f\n",
-				  location1.coordinate.latitude,
-				  location1.coordinate.longitude,
-				  location1.horizontalAccuracy);
-		}
-		
-	}
+	//打开覆盖视图
+	self.maskView.alpha = 1.0f;
+	[self.activityIndicator startAnimating];
 	
 }
- 
 
-- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
-	//static NSString * kMyFirstId = @"kMyFirstId";
-	//MKPinAnnotationView* pinView = (MKPinAnnotationView *)
-	//[mapView dequeueReusableAnnotationViewWithIdentifier:kMyFirstId];
-	//[mapView dequeueReusableAnnotationViewWithIdentifier:kMyFirstId];
-	
-	//MKPinAnnotationView* pinView = (MKPinAnnotationView *)
-	/*
-	if ([annotation isKindOfClass:[MKUserLocation class]])
-	{
-
-		return nil;
-        
-	}
-	 */
-	
-	if ([annotation isKindOfClass: [MKUserLocation class]]) {
-		//设置比例尺
-		MKCoordinateSpan span = {0.02,0.02};
-		MKCoordinateRegion region;
-		region.span = span;
-		
-		
-		
-		region.center = self.mapView.userLocation.coordinate;
-		[self.mapView setRegion:region animated:YES];
-		
-		//设置当前位置为屏幕中心
-		CLLocation *location1 = self.mapView.userLocation.location;
-		[self.mapView setCenterCoordinate:location1.coordinate animated:YES];
-		NSLog(@"map : latitude %+.6f, longitude %+.6f horizontalAccuracy %+.6f\n",
-			  location1.coordinate.latitude,
-			  location1.coordinate.longitude,
-			  location1.horizontalAccuracy);
-		NSLog(@"map1 : latitude %@, longitude %@ horizontalAccuracy %+.6f howRecent %f\n",
-			  [UIUtility convertLatitude:location1.coordinate.latitude decimal:3],
-			  [UIUtility convertLatitude:location1.coordinate.longitude decimal:3],
-			  location1.horizontalAccuracy
-			  );
-	}
-	
-	return nil;
-	
-	
-	
-	/*
-	MKPinAnnotationView* pinView;
-	
-	pinView =  (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:kMyFirstId];
-	
-	
-	if (!pinView) {
-		pinView = (MKPinAnnotationView *)[[MyAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:kMyFirstId];
-		pinView.pinColor = MKPinAnnotationColorRed;
-		
-		pinView.animatesDrop = YES;
-		pinView.canShowCallout = YES;
-		pinView.draggable = TRUE;
-		
-	}else {
-		pinView.annotation = annotation;
-		
-	}
-	 
-	
-	
-	return pinView;
-	 */
-	
-}
 
 
 /*
@@ -162,6 +87,124 @@
 }
 */
 
+#pragma mark - 
+#pragma mark - MKMapViewDelegate
+/*
+- (void)mapViewDidStopLocatingUser:(MKMapView *)mapView
+{
+	NSLog(@"mapViewDidStopLocatingUser");
+}
+ */
+
+/*
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+	
+	for (NSUInteger i=0; i<views.count; i++) {
+		id viewo = [views objectAtIndex:i];
+		if ([viewo isKindOfClass: [MKUserLocation class]]) 
+		{
+			//设置当前位置为屏幕中心
+			CLLocation *location1 = self.mapView.userLocation.location;
+			[self.mapView setCenterCoordinate:location1.coordinate animated:YES];
+
+			
+
+			
+			
+			//设置比例尺
+			MKCoordinateSpan span = {0.02,0.02};
+			MKCoordinateRegion region;
+			region.span = span;
+			
+			region.center = self.mapView.userLocation.coordinate;
+			[self.mapView setRegion:region animated:YES];
+			
+
+		}
+		
+	}
+	
+}
+
+ */
+
+//设置地图的显示比例及中心点
+- (void) setMapRegionWithSpan:(MKCoordinateSpan)span 
+				   coordinate:(CLLocationCoordinate2D)coordinate 
+					 animated:(BOOL)animated
+{
+	MKCoordinateRegion region;
+	region.span = span;
+	region.center = coordinate;
+	[self.mapView setRegion:region animated:animated];
+}
+
+//使用默认的span和中心坐标，来显示地图
+- (void) showMapByDefaultSpanAndCenter
+{
+	[[YCLog logSingleInstance] addlog:@"showMapByDefaultSpanAndCurLocation"];
+	
+	//先缩小取得地图数据
+	[self setMapRegionWithSpan:[YCParam paramSingleInstance].defaultMapSpan 
+					coordinate:self->centerCoord
+					  animated:NO];
+	
+	//放大
+	MKCoordinateSpan tmp = {10.0,10.0};
+	[self setMapRegionWithSpan:tmp 
+					coordinate:self->centerCoord
+					  animated:NO];
+	
+	//关掉覆盖视图
+	[UIView beginAnimations:@"Unmask" context:NULL];
+	[UIView setAnimationDuration:1.25];
+	self.maskView.alpha = 0.0f;
+	[UIView commitAnimations];
+	[self.activityIndicator stopAnimating];
+	
+	
+	//动画缩小到当前位置
+	[self setMapRegionWithSpan:[YCParam paramSingleInstance].defaultMapSpan 
+					coordinate:self->centerCoord
+					  animated:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+	[[YCLog logSingleInstance] addlog:@"mapView:viewForAnnotation"];
+	
+	if ([annotation isKindOfClass: [MKUserLocation class]]) 
+	{
+		//使用当前坐标作为中心
+		if (self.centerWithcurrent) 
+		{
+			self->centerCoord = self.mapView.userLocation.location.coordinate;
+			[self showMapByDefaultSpanAndCenter];
+		}
+
+		return nil;
+	}
+	 
+	return nil;
+	
+
+		
+}
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+	[[YCLog logSingleInstance] addlog:@"加载地图完成"];
+
+}
+
+- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
+{
+	[[YCLog logSingleInstance] addlog:@"加载地图错误"];
+}
+
+#pragma mark -
+#pragma mark Memory management
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
@@ -179,6 +222,9 @@
 - (void)dealloc {
     [super dealloc];
 }
+
+
+
 
 
 @end

@@ -22,7 +22,8 @@
 {
 	CATransition *transition = [CATransition animation];
 	transition.duration = duration;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]; 
+    //transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+	transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
 	transition.type = type; 
     transition.subtype = subtype;
 	

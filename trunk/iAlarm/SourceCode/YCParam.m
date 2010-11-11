@@ -28,6 +28,7 @@
 @synthesize ignoreEdgeMoving; 
 @synthesize edgeDistance;
 @synthesize closeLeaveNotify;
+@synthesize defaultMapSpan;
 
 
 +(YCParam*) paramSingleInstance
@@ -49,6 +50,8 @@
 		obj.ignoreEdgeMoving = YES;
 		obj.edgeDistance = 150;
 		obj.closeLeaveNotify = NO;
+		MKCoordinateSpan tmpSpan = {0.02,0.02};
+		obj.defaultMapSpan = tmpSpan;
 		
 		[obj retain];
 	}
