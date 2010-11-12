@@ -34,7 +34,7 @@
 #define kDesCellAlarmTypeL          1     
 #define kDesCellAlarmTypeT          2 
 #define kDesCellCurrentLoc          3
-#define kDesCellMapLoc              4
+#define kDesCellCurMapLoc           4
 #define kDesCellRepeat              5
 #define kDesCellRing                6
 #define kDesCellVibrate             7
@@ -42,6 +42,7 @@
 #define kDesCellDebugCoordinate     9
 #define kDesCellPosition           10
 #define kDesCellPositionEdit       12
+
 //////////TableCell的业务种类//////////
 
 @class YCAlarmEntity;

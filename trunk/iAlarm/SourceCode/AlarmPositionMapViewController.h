@@ -24,10 +24,16 @@
 
 	MKCoordinateRegion defaultMapRegion;
 	BOOL isFirstShow;
-	BOOL isCenterWithcurrent;     //是否以当前位置为地图中心
 	BOOL isAlreadyCenterCoord;    //中心坐标是否准备好
 
 	NSArray *alarms;            //需要在地图上显示的
+	
+	BOOL enablingNeting;        //网络是否可用
+	BOOL enablingLocation;      //定位是否可用
+	
+	NSMutableArray *mapAnnotations;  //地图标签集合
+	
+	BOOL isInTab;                  //视图是在Tab上显示的
 	
 }
 
@@ -35,7 +41,20 @@
 @property (nonatomic,retain) IBOutlet UIView *maskView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic,assign) BOOL isCenterWithcurrent;
+//@property (nonatomic,assign) BOOL isCenterWithcurrent;
 @property (nonatomic,retain) NSArray *alarms;
 
+@property (nonatomic,assign) BOOL enablingNeting;
+@property (nonatomic,assign) BOOL enablingLocation;
+
+@property (nonatomic, retain) NSMutableArray *mapAnnotations;
+
+//缓存地图数据
+-(void)cacheMapData;
+//显示覆盖视图
+-(void)showMaskView;
+//关掉覆盖视图
+-(void)closeMaskViewWithAnimated:(BOOL)animated;
+//显示地图
+-(void)showMapView;
 @end

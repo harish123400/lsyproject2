@@ -12,6 +12,7 @@
 #import "UIUtility.h"
 #import "YCParam.h"
 #import "YCLog.h"
+#import "AlarmMapSpecifyViewController.h"
 
 
 @implementation AlarmPositionMapViewController
@@ -19,12 +20,52 @@
 @synthesize mapView;
 @synthesize maskView;
 @synthesize activityIndicator;
-@synthesize isCenterWithcurrent;
 @synthesize alarms;
+@synthesize enablingNeting;        
+@synthesize enablingLocation;    
+@synthesize mapAnnotations;
 
 
 #pragma mark - 
 #pragma mark - UI元素操作
+
+-(void)addAnnotation
+{
+	[self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
+	
+	NSMutableArray *array = [[NSMutableArray alloc] init];
+	for (NSUInteger i =0; i<self.alarms.count; i++) 
+	{
+		YCAlarmEntity *alarmTemp = [self.alarms objectAtIndex:i];
+		YCAnnotation *annotation = [[YCAnnotation alloc] initWithCoordinate:alarmTemp.coordinate addressDictionary:nil];
+		annotation.title = alarmTemp.alarmName;
+		annotation.subtitle = alarmTemp.position;
+		if ([alarmTemp.alarmId isEqualToString:self.alarm.alarmId]) 
+		{
+			if ([self isKindOfClass:[AlarmMapSpecifyViewController class]]) 
+			{
+				annotation.annotationType = YCMapAnnotationTypeStandard;
+			}else {
+				if(isInTab)
+					annotation.annotationType = YCMapAnnotationTypeMovingTarget;
+				else 
+					annotation.annotationType = YCMapAnnotationTypeLocating;
+			}
+		}else {
+			annotation.annotationType = YCMapAnnotationTypeStandard;
+		}
+
+
+		
+		[array addObject:annotation];
+		[annotation release];
+	}
+	self.mapAnnotations = array;
+	[array release];
+	
+	[self.mapView addAnnotations:mapAnnotations];
+	
+}
 
 //显示覆盖视图
 -(void)showMaskView
@@ -73,18 +114,15 @@
 //显示地图
 -(void)showMapView
 {
-	[[YCLog logSingleInstance] addlog:@"showMapView"];
-	
+
 	if (self->isAlreadyCenterCoord) 
 	{
-		
 		[myTimer invalidate];
 		[myTimer release];
 		myTimer = nil;
 		
 		//关掉覆盖视图
 		[self closeMaskViewWithAnimated:YES];
-		//[NSThread sleepForTimeInterval:0.5];
 		if (self->isFirstShow)
 		{
 			//第一次显示，按默认比例显示到当前位置
@@ -97,78 +135,43 @@
 			[[YCLog logSingleInstance] addlog:@"showMapView Not fisrt"];
 		}
 		
+		[self addAnnotation];
 	}
 
 }
 
 
+#pragma mark -
+#pragma mark View lifecycle
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
+- (void)viewDidLoad 
+{
     [super viewDidLoad];
 	mapView.delegate = self;
 	self->isFirstShow = YES;
 	self->defaultMapRegion.span = [YCParam paramSingleInstance].defaultMapSpan;
 	
-	
-	//不使用当前坐标作为中心
-	if (!self.isCenterWithcurrent)
-	{
-		self->defaultMapRegion.center = self.alarm.coordinate;
-		[self performSelector:@selector(cacheMapData) withObject:nil afterDelay:0.5];
-	}
+	self.enablingLocation = YES; // debug - TODO;
+	self.enablingNeting = YES;  // debug - TODO;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	[self showMaskView];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-/*
-	YCAnnotation *lastAnnotation = [[[YCAnnotation alloc] initWithCoordinate:alarm.coordinate addressDictionary:nil] autorelease];
-	lastAnnotation.title = alarm.alarmName;
-	lastAnnotation.subtitle = alarm.position;
-	lastAnnotation.isCurrentLocation = FALSE;
-	[mapView addAnnotation:lastAnnotation];
-	[self.mapView addAnnotation:lastAnnotation];
- */
+
+	[super viewDidAppear:animated];
 	
 	NSTimeInterval ti = 0.2;
 	myTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(showMapView) userInfo:nil repeats:YES] retain];
 	[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
 	
 }
-
--(void)viewWillAppear:(BOOL)animated
-{
-	if (!self.isCenterWithcurrent)
-	{
-		self->isAlreadyCenterCoord = YES;
-	}else {
-		if (self.mapView.userLocation.location)
-		{
-			//self->centerCoord = self.mapView.userLocation.location.coordinate;
-			self->defaultMapRegion.center = self.mapView.userLocation.location.coordinate;
-		}else {
-			[[YCLog logSingleInstance] addlog:@"地图当前位置＝＝nil"];
-		}
-
-	}
-
-	[self showMaskView];
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-	//self->currentMapRegion = self.mapView.region;
-	//NSString *s = [NSString stringWithFormat:@"span:%.4f %.4f",self->currentSpan.latitudeDelta,self->currentSpan.longitudeDelta];
-	//[[YCLog logSingleInstance] addlog:s];
-}
-
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 
 
@@ -215,33 +218,62 @@
 }
 
  */
-
-
-
-
+- (void)showDetails:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-	[[YCLog logSingleInstance] addlog:@"mapView:viewForAnnotation"];
 	
-	if ([annotation isKindOfClass: [MKUserLocation class]]) 
+	static NSString* pinViewAnnotationIdentifier = @"pinViewAnnotationIdentifier";
+	MKPinAnnotationView* pinView = (MKPinAnnotationView *)
+	[mapView dequeueReusableAnnotationViewWithIdentifier:pinViewAnnotationIdentifier];
+	
+	if (!pinView)
 	{
-		//使用当前坐标作为中心
-		if (self.isCenterWithcurrent) 
-		{
-			self->defaultMapRegion.center = self.mapView.userLocation.location.coordinate;
-			self->isAlreadyCenterCoord = YES;
-			if (self->isFirstShow) [self cacheMapData];	//仅第一显示需要		
-		}
-
-		return nil;
-	}
-	 
-	return nil;
-	
-
+		pinView = [[[MKPinAnnotationView alloc]
+											   initWithAnnotation:annotation reuseIdentifier:pinViewAnnotationIdentifier] autorelease];
 		
+		pinView.animatesDrop = YES;
+		pinView.canShowCallout = YES;
+		
+		UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+		[rightButton addTarget:self
+						action:@selector(showDetails:)
+			  forControlEvents:UIControlEventTouchUpInside];
+		pinView.rightCalloutAccessoryView = rightButton;
+		
+	}
+	
+	UIImageView *sfIconView = nil;
+	switch (((YCAnnotation*)annotation).annotationType) 
+	{
+		case YCMapAnnotationTypeStandard:
+			pinView.pinColor = MKPinAnnotationColorRed;
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			break;
+		case YCMapAnnotationTypeLocating:
+			pinView.pinColor = MKPinAnnotationColorPurple;
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			break;
+		case YCMapAnnotationTypeMovingTarget:
+			pinView.pinColor = MKPinAnnotationColorGreen;
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			break;
+		default:
+			pinView.pinColor = MKPinAnnotationColorRed;
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			break;
+	}
+	pinView.leftCalloutAccessoryView = sfIconView;
+	[sfIconView release];
+	pinView.annotation = annotation;
+	
+	return pinView;
+	
 }
+
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {

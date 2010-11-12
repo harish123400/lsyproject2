@@ -42,7 +42,7 @@
 	{
 	cellDescriptionIds = [[NSMutableArray alloc] init];
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellCurrentLoc]];      //当前位置
-	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellMapLoc]];          //地图
+	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellCurMapLoc]];          //地图
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellPosition]];        //位置
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellRepeat]];          //重复
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellRing]];            //声音
@@ -323,7 +323,7 @@
 	
 
 	///////地址类型的单选 ///////
-	if (des.cellBusinessType == kDesCellCurrentLoc || des.cellBusinessType == kDesCellMapLoc) 
+	if (des.cellBusinessType == kDesCellCurrentLoc || des.cellBusinessType == kDesCellCurMapLoc) 
 	{
 		int newRow = [indexPath row];
 		int oldRow = (lastIndexPathPosition != nil) ? [lastIndexPathPosition row] : -1;
@@ -371,9 +371,7 @@
 	{
 		NSArray *alarmsTemp = [[NSArray alloc] initWithObjects:ctler.alarm,nil];
 		((AlarmPositionMapViewController*)ctler).alarms = alarmsTemp;
-		[alarmsTemp release];
-		//使用闹钟地址作为中心
-		((AlarmPositionMapViewController*)ctler).isCenterWithcurrent = NO; 		
+		[alarmsTemp release];		
 	} 
 	
 	[self.navigationController pushViewController:ctler animated:YES];
