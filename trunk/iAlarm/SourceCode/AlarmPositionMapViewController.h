@@ -15,12 +15,18 @@
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
 <MKMapViewDelegate,CLLocationManagerDelegate>
 {
+	NSTimer *myTimer;
+	
 	MKMapView* mapView;
 	UIView *maskView;
 	UIActivityIndicatorView *activityIndicator;
 	
-	CLLocationCoordinate2D centerCoord; //地图中心坐标
-	BOOL centerWithcurrent;     //是否以当前位置为地图中心
+
+	MKCoordinateRegion defaultMapRegion;
+	BOOL isFirstShow;
+	BOOL isCenterWithcurrent;     //是否以当前位置为地图中心
+	BOOL isAlreadyCenterCoord;    //中心坐标是否准备好
+
 	NSArray *alarms;            //需要在地图上显示的
 	
 }
@@ -29,8 +35,7 @@
 @property (nonatomic,retain) IBOutlet UIView *maskView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (nonatomic,assign) CLLocationCoordinate2D centerCoord;
-@property (nonatomic,assign) BOOL centerWithcurrent;
+@property (nonatomic,assign) BOOL isCenterWithcurrent;
 @property (nonatomic,retain) NSArray *alarms;
 
 @end

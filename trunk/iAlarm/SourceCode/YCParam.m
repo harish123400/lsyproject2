@@ -18,17 +18,18 @@
 @synthesize distanceForProAlarm;
 @synthesize desiredAccuracyForStartStandardLocation;
 @synthesize intervalForStartStandardLocation;
-
-@synthesize enableOffset;
-@synthesize offsetCoordinateOfMap;
 @synthesize invalidLocationAccuracy;
-
 @synthesize timeSpanForStandardLocation;  
 @synthesize enableOfAllLocAlarms;                        
 @synthesize ignoreEdgeMoving; 
 @synthesize edgeDistance;
 @synthesize closeLeaveNotify;
 @synthesize defaultMapSpan;
+
+@synthesize enableOffset;
+@synthesize offsetCoordinateOfMap;
+@synthesize lastTimeStampOfOffset;                 
+@synthesize validDistanceOfOffset; 
 
 
 +(YCParam*) paramSingleInstance
@@ -40,9 +41,7 @@
 		obj.distanceForProAlarm = 2000.0;
 		obj.desiredAccuracyForStartStandardLocation = kCLLocationAccuracyNearestTenMeters;
 		obj.intervalForStartStandardLocation = 60.0;
-		obj.enableOffset = NO;
-		CLLocationCoordinate2D tmp  = {0.0,0.0};
-		obj.offsetCoordinateOfMap = tmp;
+
 		obj.invalidLocationAccuracy = 1200.0;
 		
 		obj.timeSpanForStandardLocation = 3.0;
@@ -50,14 +49,19 @@
 		obj.ignoreEdgeMoving = YES;
 		obj.edgeDistance = 150;
 		obj.closeLeaveNotify = NO;
-		MKCoordinateSpan tmpSpan = {0.02,0.02};
+		MKCoordinateSpan tmpSpan = {0.0112872,0.0109863};
 		obj.defaultMapSpan = tmpSpan;
+		
+		obj.enableOffset = NO;
+		CLLocationCoordinate2D tmp  = {0.0,0.0};
+		obj.offsetCoordinateOfMap = tmp;
+		obj.lastTimeStampOfOffset = nil;
+		obj.validDistanceOfOffset = 5000.0;
 		
 		[obj retain];
 	}
 	
 	return obj;
-	
 }
 
 +(void)updateParam
@@ -75,6 +79,7 @@
 }
 
 - (void)dealloc {
+	[lastTimeStampOfOffset release];
     [super dealloc];
 }
 

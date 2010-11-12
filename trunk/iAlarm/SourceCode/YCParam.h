@@ -18,10 +18,6 @@
 	CLLocationAccuracy desiredAccuracyForStartStandardLocation; //Standard Location服务的精度
 	NSTimeInterval     intervalForStartStandardLocation;        //过了多久，启动Standard Location服务
 	
-	BOOL enableOffset;                             //是否启用偏移坐标
-	CLLocationCoordinate2D offsetCoordinateOfMap;  //地图的偏移坐标
-	
-	
 	CLLocationDistance invalidLocationAccuracy;    //无效定位精度阀值
 	
 	NSTimeInterval     timeSpanForStandardLocation;  //标准定位持续时间
@@ -32,6 +28,11 @@
 	
 	BOOL closeLeaveNotify;                           //关闭离开通知
 	MKCoordinateSpan defaultMapSpan;                 //默认的地图显示比例
+	
+	BOOL enableOffset;                             //是否启用偏移坐标
+	CLLocationCoordinate2D offsetCoordinateOfMap;  //地图的偏移坐标
+	NSData *lastTimeStampOfOffset;                 //取偏移量时间
+	CLLocationDistance validDistanceOfOffset;      //偏移量的有效距离
 
 }
 
@@ -39,8 +40,6 @@
 @property (nonatomic,assign) CLLocationDistance distanceForProAlarm;
 @property (nonatomic,assign) CLLocationAccuracy desiredAccuracyForStartStandardLocation;
 @property (nonatomic,assign) NSTimeInterval     intervalForStartStandardLocation;
-@property (nonatomic,assign) BOOL enableOffset;
-@property (nonatomic,assign) CLLocationCoordinate2D offsetCoordinateOfMap;
 @property (nonatomic,assign) CLLocationDistance invalidLocationAccuracy;
 
 @property (nonatomic,assign) NSTimeInterval     timeSpanForStandardLocation;
@@ -49,6 +48,11 @@
 @property (nonatomic,assign) CLLocationDistance edgeDistance;
 @property (nonatomic,assign) BOOL closeLeaveNotify;
 @property (nonatomic,assign) MKCoordinateSpan defaultMapSpan;
+
+@property (nonatomic,assign) BOOL enableOffset;
+@property (nonatomic,assign) CLLocationCoordinate2D offsetCoordinateOfMap;
+@property (nonatomic,retain) NSData *lastTimeStampOfOffset;                 
+@property (nonatomic,assign) CLLocationDistance validDistanceOfOffset;      
 
 +(YCParam*) paramSingleInstance;
 +(void)updateParam;

@@ -19,30 +19,102 @@
 @synthesize mapView;
 @synthesize maskView;
 @synthesize activityIndicator;
-@synthesize centerWithcurrent;
+@synthesize isCenterWithcurrent;
 @synthesize alarms;
-@synthesize centerCoord;
 
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        // Custom initialization
-    }
-    return self;
+
+#pragma mark - 
+#pragma mark - UI元素操作
+
+//显示覆盖视图
+-(void)showMaskView
+{
+	self.maskView.alpha = 1.0f;
+	[self.activityIndicator startAnimating];
 }
-*/
+
+//关掉覆盖视图
+-(void)closeMaskViewWithAnimated:(BOOL)animated
+{
+	if (animated) 
+	{
+		[self.activityIndicator stopAnimating];
+		[UIView beginAnimations:@"Unmask" context:NULL];
+		[UIView setAnimationDuration:0.5];
+		self.maskView.alpha = 0.0f;
+		[UIView commitAnimations];
+	}else {
+		[self.activityIndicator stopAnimating];
+		self.maskView.alpha = 0.0f;
+	}
+	
+}
+
+//缓存地图数据
+-(void)cacheMapData
+{
+	[[YCLog logSingleInstance] addlog:@"cacheMapData"];
+	
+	
+	//先缩小取得地图数据
+	[self.mapView setRegion:self->defaultMapRegion animated:NO];
+	
+	//放大
+	MKCoordinateRegion regionTmp;
+	MKCoordinateSpan spanTmp = {10.0,10.0};
+	regionTmp.span = spanTmp;
+	regionTmp.center = self->defaultMapRegion.center;
+	[self.mapView setRegion:regionTmp animated:NO];
+	
+
+}
+
+
+//显示地图
+-(void)showMapView
+{
+	[[YCLog logSingleInstance] addlog:@"showMapView"];
+	
+	if (self->isAlreadyCenterCoord) 
+	{
+		
+		[myTimer invalidate];
+		[myTimer release];
+		myTimer = nil;
+		
+		//关掉覆盖视图
+		[self closeMaskViewWithAnimated:YES];
+		//[NSThread sleepForTimeInterval:0.5];
+		if (self->isFirstShow)
+		{
+			//第一次显示，按默认比例显示到当前位置
+			[self.mapView setRegion:self->defaultMapRegion animated:YES];
+			self->isFirstShow = NO;
+			[[YCLog logSingleInstance] addlog:@"showMapView fisrt"];
+		}else {
+			//非第一显示，仅设置屏幕中心
+			[self.mapView setCenterCoordinate:self->defaultMapRegion.center animated:YES];
+			[[YCLog logSingleInstance] addlog:@"showMapView Not fisrt"];
+		}
+		
+	}
+
+}
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 	mapView.delegate = self;
+	self->isFirstShow = YES;
+	self->defaultMapRegion.span = [YCParam paramSingleInstance].defaultMapSpan;
+	
 	
 	//不使用当前坐标作为中心
-	if (!self.centerWithcurrent)
+	if (!self.isCenterWithcurrent)
 	{
-		[self performSelector:@selector(showMapByDefaultSpanAndCenter) withObject:nil afterDelay:0.5];
+		self->defaultMapRegion.center = self.alarm.coordinate;
+		[self performSelector:@selector(cacheMapData) withObject:nil afterDelay:0.5];
 	}
 }
 
@@ -57,26 +129,37 @@
 	[self.mapView addAnnotation:lastAnnotation];
  */
 	
-	//关掉覆盖视图
-	[UIView beginAnimations:@"Unmask" context:NULL];
-	[UIView setAnimationDuration:1.25];
-	self.maskView.alpha = 0.0f;
-	[UIView commitAnimations];
-	[self.activityIndicator stopAnimating];
+	NSTimeInterval ti = 0.2;
+	myTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(showMapView) userInfo:nil repeats:YES] retain];
+	[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
 	
-	//设置当前位置为屏幕中心
-	[self.mapView setCenterCoordinate:self->centerCoord animated:YES];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-	//打开覆盖视图
-	self.maskView.alpha = 1.0f;
-	[self.activityIndicator startAnimating];
-	
+	if (!self.isCenterWithcurrent)
+	{
+		self->isAlreadyCenterCoord = YES;
+	}else {
+		if (self.mapView.userLocation.location)
+		{
+			//self->centerCoord = self.mapView.userLocation.location.coordinate;
+			self->defaultMapRegion.center = self.mapView.userLocation.location.coordinate;
+		}else {
+			[[YCLog logSingleInstance] addlog:@"地图当前位置＝＝nil"];
+		}
+
+	}
+
+	[self showMaskView];
 }
 
+-(void)viewDidDisappear:(BOOL)animated
+{
+	//self->currentMapRegion = self.mapView.region;
+	//NSString *s = [NSString stringWithFormat:@"span:%.4f %.4f",self->currentSpan.latitudeDelta,self->currentSpan.longitudeDelta];
+	//[[YCLog logSingleInstance] addlog:s];
+}
 
 
 /*
@@ -86,6 +169,10 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 */
+
+
+
+
 
 #pragma mark - 
 #pragma mark - MKMapViewDelegate
@@ -129,46 +216,9 @@
 
  */
 
-//设置地图的显示比例及中心点
-- (void) setMapRegionWithSpan:(MKCoordinateSpan)span 
-				   coordinate:(CLLocationCoordinate2D)coordinate 
-					 animated:(BOOL)animated
-{
-	MKCoordinateRegion region;
-	region.span = span;
-	region.center = coordinate;
-	[self.mapView setRegion:region animated:animated];
-}
 
-//使用默认的span和中心坐标，来显示地图
-- (void) showMapByDefaultSpanAndCenter
-{
-	[[YCLog logSingleInstance] addlog:@"showMapByDefaultSpanAndCurLocation"];
-	
-	//先缩小取得地图数据
-	[self setMapRegionWithSpan:[YCParam paramSingleInstance].defaultMapSpan 
-					coordinate:self->centerCoord
-					  animated:NO];
-	
-	//放大
-	MKCoordinateSpan tmp = {10.0,10.0};
-	[self setMapRegionWithSpan:tmp 
-					coordinate:self->centerCoord
-					  animated:NO];
-	
-	//关掉覆盖视图
-	[UIView beginAnimations:@"Unmask" context:NULL];
-	[UIView setAnimationDuration:1.25];
-	self.maskView.alpha = 0.0f;
-	[UIView commitAnimations];
-	[self.activityIndicator stopAnimating];
-	
-	
-	//动画缩小到当前位置
-	[self setMapRegionWithSpan:[YCParam paramSingleInstance].defaultMapSpan 
-					coordinate:self->centerCoord
-					  animated:YES];
-}
+
+
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
@@ -177,10 +227,11 @@
 	if ([annotation isKindOfClass: [MKUserLocation class]]) 
 	{
 		//使用当前坐标作为中心
-		if (self.centerWithcurrent) 
+		if (self.isCenterWithcurrent) 
 		{
-			self->centerCoord = self.mapView.userLocation.location.coordinate;
-			[self showMapByDefaultSpanAndCenter];
+			self->defaultMapRegion.center = self.mapView.userLocation.location.coordinate;
+			self->isAlreadyCenterCoord = YES;
+			if (self->isFirstShow) [self cacheMapData];	//仅第一显示需要		
 		}
 
 		return nil;

@@ -180,8 +180,7 @@
 		((AlarmPositionMapViewController*)ctler).alarms = alarmsTemp;
 		[alarmsTemp release];
 		//使用闹钟地址作为中心
-		((AlarmPositionMapViewController*)ctler).centerWithcurrent = NO; 
-		((AlarmPositionMapViewController*)ctler).centerCoord = ctler.alarm.coordinate;
+		((AlarmPositionMapViewController*)ctler).isCenterWithcurrent = NO; 
 		
 	} 
 	[self.navigationController pushViewController:ctler animated:YES];
