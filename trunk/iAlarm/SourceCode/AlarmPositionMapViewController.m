@@ -25,9 +25,26 @@
 @synthesize enablingLocation;    
 @synthesize mapAnnotations;
 
+#pragma mark -
+#pragma mark Event
+-(IBAction)currentLocationButtonPressed:(id)sender
+{
+	
+}
 
 #pragma mark - 
 #pragma mark - UI元素操作
+
+-(void)selectAnnotationAtIndex:(NSUInteger)index
+{
+	[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:index] animated:YES];
+}
+
+-(void)selectAnnotation
+{
+	[self selectAnnotationAtIndex:0];
+}
+
 
 -(void)addAnnotation
 {
@@ -128,15 +145,18 @@
 			//第一次显示，按默认比例显示到当前位置
 			[self.mapView setRegion:self->defaultMapRegion animated:YES];
 			self->isFirstShow = NO;
+			[self performSelector:@selector(selectAnnotation) withObject:nil afterDelay:2.5];
 			[[YCLog logSingleInstance] addlog:@"showMapView fisrt"];
 		}else {
 			//非第一显示，仅设置屏幕中心
 			[self.mapView setCenterCoordinate:self->defaultMapRegion.center animated:YES];
+			[self performSelector:@selector(selectAnnotation) withObject:nil afterDelay:1.0];
 			[[YCLog logSingleInstance] addlog:@"showMapView Not fisrt"];
 		}
 		
 		[self addAnnotation];
 	}
+	
 
 }
 
@@ -170,6 +190,7 @@
 	NSTimeInterval ti = 0.2;
 	myTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(showMapView) userInfo:nil repeats:YES] retain];
 	[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
+	
 	
 }
 
@@ -250,10 +271,12 @@
 	switch (((YCAnnotation*)annotation).annotationType) 
 	{
 		case YCMapAnnotationTypeStandard:
+			pinView.draggable = YES;
 			pinView.pinColor = MKPinAnnotationColorRed;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
 			break;
 		case YCMapAnnotationTypeLocating:
+			pinView.draggable = YES;
 			pinView.pinColor = MKPinAnnotationColorPurple;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
 			break;
@@ -269,6 +292,7 @@
 	pinView.leftCalloutAccessoryView = sfIconView;
 	[sfIconView release];
 	pinView.annotation = annotation;
+
 	
 	return pinView;
 	

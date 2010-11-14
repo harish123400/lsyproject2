@@ -41,6 +41,8 @@
 @property (nonatomic,retain) IBOutlet UIView *maskView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
+-(IBAction)currentLocationButtonPressed:(id)sender;
+
 //@property (nonatomic,assign) BOOL isCenterWithcurrent;
 @property (nonatomic,retain) NSArray *alarms;
 
@@ -57,4 +59,6 @@
 -(void)closeMaskViewWithAnimated:(BOOL)animated;
 //显示地图
 -(void)showMapView;
+
+
 @end
