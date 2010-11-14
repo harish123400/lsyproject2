@@ -17,6 +17,9 @@
 
 @implementation AlarmPositionMapViewController
 
+
+#pragma mark -
+#pragma mark 属性
 @synthesize mapView;
 @synthesize maskView;
 @synthesize activityIndicator;
@@ -24,6 +27,18 @@
 @synthesize enablingNeting;        
 @synthesize enablingLocation;    
 @synthesize mapAnnotations;
+
+
+- (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
+{
+    if (reverseGeocoder) {
+		[reverseGeocoder release];
+	}
+	reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:coordinate];
+	
+	return reverseGeocoder;
+}
+
 
 #pragma mark -
 #pragma mark Event
@@ -57,6 +72,7 @@
 		YCAnnotation *annotation = [[YCAnnotation alloc] initWithCoordinate:alarmTemp.coordinate addressDictionary:nil];
 		annotation.title = alarmTemp.alarmName;
 		annotation.subtitle = alarmTemp.position;
+		annotation.coordinate = alarmTemp.coordinate;
 		if ([alarmTemp.alarmId isEqualToString:self.alarm.alarmId]) 
 		{
 			if ([self isKindOfClass:[AlarmMapSpecifyViewController class]]) 
@@ -64,9 +80,13 @@
 				annotation.annotationType = YCMapAnnotationTypeStandard;
 			}else {
 				if(isInTab)
+				{
 					annotation.annotationType = YCMapAnnotationTypeMovingTarget;
-				else 
+				}else{
 					annotation.annotationType = YCMapAnnotationTypeLocating;
+					annotation.title = NSLocalizedString(@"Drag to Move Pin",@"使用地图定位，图钉的开始提示");
+					annotation.subtitle = @"";
+				}
 			}
 		}else {
 			annotation.annotationType = YCMapAnnotationTypeStandard;
@@ -293,8 +313,33 @@
 	[sfIconView release];
 	pinView.annotation = annotation;
 
+	pinView.draggable = YES;
 	
 	return pinView;
+	
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState 
+{
+	switch (newState) 
+	{
+		case MKAnnotationViewDragStateStarting:  //开始拖拽的－紫色
+			((MKPinAnnotationView *)annotationView).pinColor = MKPinAnnotationColorPurple;
+			break;
+		case MKAnnotationViewDragStateEnding:   //结束拖拽－显示地址
+			//坐标
+			self.alarm.coordinate = annotationView.annotation.coordinate;
+			//反转坐标－地址
+			reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
+			reverseGeocoder.delegate = self;
+			[reverseGeocoder start];
+			break;
+		default:
+			break;
+
+	}
+	
+	self->dragingAnnotation = annotationView.annotation;
 	
 }
 
@@ -308,6 +353,31 @@
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
 {
 	[[YCLog logSingleInstance] addlog:@"加载地图错误"];
+}
+
+#pragma mark -
+#pragma mark MKReverseGeocoderDelegate
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
+{
+	
+	NSString * locality = placemark.locality; //城市
+	NSString * thoroughfare = placemark.thoroughfare; //街道
+	NSString * subthoroughfare = placemark.subThoroughfare;//街道号
+	
+	self.alarm.position = [[[NSString alloc] initWithFormat:@"%@%@,%@",thoroughfare,subthoroughfare,locality] autorelease];
+	if (!self.alarm.nameChanged) {
+		self.alarm.alarmName = [[[NSString alloc] initWithFormat:@"%@",thoroughfare] autorelease];
+	}
+	
+	self->dragingAnnotation.title = self.alarm.alarmName;
+	self->dragingAnnotation.subtitle = self.alarm.position;
+	//self->dragingAnnotation = alarmTemp.coordinate;
+	
+}
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
+{
+
 }
 
 #pragma mark -

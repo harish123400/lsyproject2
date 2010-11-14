@@ -22,9 +22,10 @@ typedef NSUInteger YCMapAnnotationType;
 	
 	YCMapAnnotationType annotationType;
 }
-
+@property (nonatomic, readwrite,assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic,retain) NSString *subtitle;
 @property (nonatomic,retain) NSString *title;
+
 @property (nonatomic) BOOL isCurrentLocation;
 @property (nonatomic) YCMapAnnotationType annotationType;
 

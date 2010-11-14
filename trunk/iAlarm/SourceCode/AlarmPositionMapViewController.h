@@ -9,11 +9,12 @@
 #import "AlarmModifyViewController.h"
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 
-
+@class YCAnnotation;
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
-<MKMapViewDelegate,CLLocationManagerDelegate>
+<MKMapViewDelegate,MKReverseGeocoderDelegate>
 {
 	NSTimer *myTimer;
 	
@@ -34,6 +35,10 @@
 	NSMutableArray *mapAnnotations;  //地图标签集合
 	
 	BOOL isInTab;                  //视图是在Tab上显示的
+	
+	MKReverseGeocoder *reverseGeocoder;
+	
+	YCAnnotation *dragingAnnotation; 
 	
 }
 

@@ -10,10 +10,13 @@
 
 
 @implementation YCAnnotation
+
+@synthesize coordinate;
 @synthesize subtitle;
 @synthesize title;
 @synthesize isCurrentLocation;
 @synthesize annotationType;
+
 
 
 @end
