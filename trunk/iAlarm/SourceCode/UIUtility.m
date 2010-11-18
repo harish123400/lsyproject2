@@ -8,6 +8,7 @@
 
 #import "UIUtility.h"
 #import <QuartzCore/QuartzCore.h>
+#import <MapKit/MapKit.h>
 
 
 
@@ -354,6 +355,26 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	
 	[alert show];
 	[alert release];
+}
+
++(NSString*)positionStringFromPlacemark:(MKPlacemark*)placemark
+{
+	NSString * locality = placemark.locality; //城市
+	NSString * thoroughfare = placemark.thoroughfare; //街道
+	NSString * subthoroughfare = placemark.subThoroughfare;//街道号
+	if (locality ==nil) locality=@"";
+	if (thoroughfare ==nil) thoroughfare=@"";
+	if (subthoroughfare ==nil) subthoroughfare=@"";
+	
+	NSString *string = [[[NSString alloc] initWithFormat:@"%@%@ %@",thoroughfare,subthoroughfare,locality] autorelease];
+	
+	return string;
+}
+
++(NSString*)titleStringFromPlacemark:(MKPlacemark*)placemark
+{
+	NSString * thoroughfare = placemark.thoroughfare; //街道
+	return thoroughfare;
 }
 
 

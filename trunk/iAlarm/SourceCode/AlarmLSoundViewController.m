@@ -35,11 +35,7 @@
 -(IBAction) backButtonPressed:(id)sender
 {	
 	self.alarm.ring = self.ringSwitch.on;
-	
-	self.parentController.cellDescriptions = 
-	[YCCellDescription makeCellDescriptions:self.parentController.cellDescriptionIds alarm:self.alarm];
-
-	[self.parentController.tableView reloadData];
+	[self.parentController reflashView];
 }
 
 

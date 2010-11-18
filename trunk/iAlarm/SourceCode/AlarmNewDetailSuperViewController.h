@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YCNavSuperControllerProtocol.h"
 
 @class YCAlarmEntity;
 
-@interface AlarmNewDetailSuperViewController : UITableViewController {
+@interface AlarmNewDetailSuperViewController : UITableViewController<YCNavSuperControllerProtocol> {
 	YCAlarmEntity *alarm;
 	
 	UITableViewController *parentController; //父控制器

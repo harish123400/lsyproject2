@@ -7,6 +7,7 @@
 //
 
 #import "AlarmModifyTableViewController.h"
+#import "YCAlarmEntity.h"
 
 
 @implementation AlarmModifyTableViewController
@@ -45,6 +46,23 @@
 	[alarm release];
 	alarm = newObj;
 	[alarm retain];
+}
+
+
+-(IBAction)doneButtonPressed:(id)sender
+{	
+	//子类覆盖
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+								   initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+								   target:self 
+								   action:@selector(doneButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+	self.navigationItem.rightBarButtonItem.enabled = NO;
+    [doneButton release];
 }
 
 

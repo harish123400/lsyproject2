@@ -18,7 +18,7 @@ enum {
 typedef NSUInteger YCMapAnnotationType;
 
 @interface YCAnnotation : MKPlacemark {
-	BOOL isCurrentLocation; //当前位置
+	BOOL isCurrent; //当前
 	
 	YCMapAnnotationType annotationType;
 }
@@ -26,7 +26,7 @@ typedef NSUInteger YCMapAnnotationType;
 @property (nonatomic,retain) NSString *subtitle;
 @property (nonatomic,retain) NSString *title;
 
-@property (nonatomic) BOOL isCurrentLocation;
+@property (nonatomic) BOOL isCurrent;
 @property (nonatomic) YCMapAnnotationType annotationType;
 
 

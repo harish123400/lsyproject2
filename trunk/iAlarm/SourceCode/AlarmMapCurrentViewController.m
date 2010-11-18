@@ -8,6 +8,7 @@
 
 #import "AlarmMapCurrentViewController.h"
 #import "YCAlarmEntity.h"
+#import "YCDeviceStatus.h"
 
 
 @implementation AlarmMapCurrentViewController
@@ -30,8 +31,10 @@
 //显示地图
 -(void)showMapView
 {
+	YCDeviceStatus *ds = [YCDeviceStatus deviceStatusSingleInstance];
+	
 	//地图定位不可用
-	if(!self.enablingLocation || !self.enablingNeting) 
+	if(!ds.enabledLocation || !ds.connectedToInternet) 
 	{
 		int tmp = (int)self.alarm.coordinate.latitude;
 		if (tmp !=0 ) //闹钟坐标有效，使用闹钟地址

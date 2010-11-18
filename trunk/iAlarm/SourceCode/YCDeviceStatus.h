@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 
+@class Reachability;
 @interface YCDeviceStatus : NSObject {
 
 	BOOL significantService; //SignificantService 服务是否启动
@@ -26,8 +27,9 @@
 	CLLocation *currentLocation;  //当前定位位置
 	CLLocationSpeed currentLocationSpeed; //当前速度;
 	
-	NSArray *debugLog;  
 	
+	BOOL connectedToInternet;
+	BOOL enabledLocation;
 	
 	
 }
@@ -45,8 +47,9 @@
 @property (nonatomic,retain,readonly) CLLocation *currentLocation;
 @property (nonatomic,assign,readonly) CLLocationSpeed currentLocationSpeed;
 
-@property (nonatomic,retain,readonly) NSArray *debugLog;
--(void)addlog:(NSString*) log;
+@property (nonatomic,assign,readonly) BOOL connectedToInternet;
+@property (nonatomic,assign,readonly) BOOL enabledLocation;
+
 
 
 +(YCDeviceStatus*) deviceStatusSingleInstance;

@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
+#define kDefaultLocationAlarmName NSLocalizedString(@"Location Alarm",@"默认的空间闹钟的名字")
 
+@class MKPlacemark;
 @interface UIUtility : NSObject {
 	
 }
@@ -51,8 +53,13 @@
 		 cancelButtonTitle:(NSString*)cancelButtonTitle
 				  delegate:(id)delegate;
 
+//从地址信息提取地址字符串
++(NSString*)positionStringFromPlacemark:(MKPlacemark*)placemark;
++(NSString*)titleStringFromPlacemark:(MKPlacemark*)placemark;
+
 @end
 
 
 CGColorRef CreateDeviceGrayColor(CGFloat w, CGFloat a);
 CGColorRef CreateDeviceRGBColor(CGFloat r, CGFloat g, CGFloat b, CGFloat a);
+

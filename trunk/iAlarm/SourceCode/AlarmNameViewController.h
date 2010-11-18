@@ -17,9 +17,8 @@
 
 @property(nonatomic,retain) IBOutlet UITextField *alarmNameTextField;
 
-
--(IBAction) backButtonPressed:(id)sender;
 -(IBAction) textFieldDoneEditing:(id)sender;
+-(IBAction) textFieldChanged:(id)sender;
 
 
 @end

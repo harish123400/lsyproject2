@@ -18,41 +18,40 @@
 
 @synthesize alarmNameTextField;
 
-
--(IBAction) backButtonPressed:(id)sender
+-(IBAction)doneButtonPressed:(id)sender
 {	
+	/////////覆盖父类
+	///
 	//闹钟名是否为空
 	if ([self.alarmNameTextField.text length] != 0) {
 		//手工改动了闹钟的名字
-		if ([self.alarm.alarmName compare:self.alarmNameTextField.text] != NSOrderedSame) {
+		if (![self.alarm.alarmName isEqualToString:self.alarmNameTextField.text])
+		{
 			self.alarm.nameChanged = YES;
 			self.alarm.alarmName = self.alarmNameTextField.text;
+			[self.parentController reflashView];
 		}
 		
-		self.parentController.cellDescriptions = 
-		[YCCellDescription makeCellDescriptions:self.parentController.cellDescriptionIds alarm:self.alarm];
 	}
-
-	[self.parentController.tableView reloadData];
-	
 	[self.alarmNameTextField keyboardAppearance];
-	
+	[self.navigationController popViewControllerAnimated:YES];
 }
 
 -(IBAction) textFieldDoneEditing:(id)sender
 {
-	[self.navigationController popViewControllerAnimated:YES];
+	[self doneButtonPressed:nil];
 }
 
-/*
- // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        // Custom initialization
-    }
-    return self;
+-(IBAction) textFieldChanged:(id)sender
+{
+	if ( [self.alarm.alarmName isEqualToString:self.alarmNameTextField.text] //手工改动了闹钟的名字
+		|| [self.alarmNameTextField.text length] == 0) //闹钟名是否为空
+	{
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	}else {
+		self.navigationItem.rightBarButtonItem.enabled = YES;
+	}
 }
-*/
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -65,7 +64,6 @@
 	alarmNameTextField.textColor = [UIUtility checkedCellTextColor];
 	[alarmNameTextField becomeFirstResponder];  //调用键盘
 	self.alarmNameTextField.enablesReturnKeyAutomatically = YES; //闹钟名为空，Done按钮不可用
-	
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,20 +74,6 @@
 	//self.navigationItem.backBarButtonItem.action = @selector(backButtonPressed:);
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[self backButtonPressed:nil];
-}
-
-
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -107,11 +91,12 @@
 
 
 - (void)dealloc {
-	
+	/*
 	////分类的数据////
 	[self.parentViewController release];
 	[self.alarm release];
 	////分类的数据////
+	 */
 	
 	[self.alarmNameTextField release];
     [super dealloc];

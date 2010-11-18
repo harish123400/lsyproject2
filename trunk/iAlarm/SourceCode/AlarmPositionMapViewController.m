@@ -13,6 +13,7 @@
 #import "YCParam.h"
 #import "YCLog.h"
 #import "AlarmMapSpecifyViewController.h"
+#import "AlarmNameViewController.h"
 
 
 @implementation AlarmPositionMapViewController
@@ -20,14 +21,16 @@
 
 #pragma mark -
 #pragma mark 属性
+
 @synthesize mapView;
 @synthesize maskView;
 @synthesize activityIndicator;
 @synthesize alarms;
-@synthesize enablingNeting;        
-@synthesize enablingLocation;    
+@synthesize newAlarm; 
 @synthesize mapAnnotations;
-
+@synthesize currentLocationBarItem;
+@synthesize annotationManipulating;
+@synthesize alarmTemp;
 
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
 {
@@ -44,20 +47,34 @@
 #pragma mark Event
 -(IBAction)currentLocationButtonPressed:(id)sender
 {
-	
+	if (self.mapView.userLocation.location)
+	{
+		self->isCurrentLocationAtCenterRegion = YES;
+		//设置屏幕中心
+		CLLocationCoordinate2D coordOfCurrent = self.mapView.userLocation.location.coordinate;
+		//[self.mapView setCenterCoordinate:coordOfCurrent animated:YES];
+
+		self->defaultMapRegion.center = coordOfCurrent;
+		[self.mapView setRegion:self->defaultMapRegion animated:YES];
+	}
+}
+
+-(IBAction)doneButtonPressed:(id)sender
+{	
+	//覆盖父类
+	self.alarm.coordinate = self.annotationManipulating.coordinate;
+	self.alarm.alarmName = self.annotationManipulating.title;
+	self.alarm.position = self.annotationManipulating.subtitle;
+	[self.parentController reflashView];
+	[self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 
 #pragma mark - UI元素操作
 
--(void)selectAnnotationAtIndex:(NSUInteger)index
+-(void)selectAnnotationAtIndex:(NSNumber*)index
 {
-	[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:index] animated:YES];
-}
-
--(void)selectAnnotation
-{
-	[self selectAnnotationAtIndex:0];
+	[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:[index intValue]] animated:YES];
 }
 
 
@@ -68,32 +85,30 @@
 	NSMutableArray *array = [[NSMutableArray alloc] init];
 	for (NSUInteger i =0; i<self.alarms.count; i++) 
 	{
-		YCAlarmEntity *alarmTemp = [self.alarms objectAtIndex:i];
-		YCAnnotation *annotation = [[YCAnnotation alloc] initWithCoordinate:alarmTemp.coordinate addressDictionary:nil];
-		annotation.title = alarmTemp.alarmName;
-		annotation.subtitle = alarmTemp.position;
-		annotation.coordinate = alarmTemp.coordinate;
-		if ([alarmTemp.alarmId isEqualToString:self.alarm.alarmId]) 
+		YCAlarmEntity *temp = [self.alarms objectAtIndex:i];
+		YCAnnotation *annotation = [[YCAnnotation alloc] initWithCoordinate:temp.coordinate addressDictionary:nil];
+		annotation.title = temp.alarmName;
+		annotation.subtitle = temp.position;
+		annotation.coordinate = temp.coordinate;
+
+		if ([self isKindOfClass:[AlarmMapSpecifyViewController class]]) 
 		{
-			if ([self isKindOfClass:[AlarmMapSpecifyViewController class]]) 
+			annotation.annotationType = YCMapAnnotationTypeLocating;
+			if(self.newAlarm)  //AlarmNew
 			{
-				annotation.annotationType = YCMapAnnotationTypeStandard;
-			}else {
-				if(isInTab)
-				{
-					annotation.annotationType = YCMapAnnotationTypeMovingTarget;
-				}else{
-					annotation.annotationType = YCMapAnnotationTypeLocating;
-					annotation.title = NSLocalizedString(@"Drag to Move Pin",@"使用地图定位，图钉的开始提示");
-					annotation.subtitle = @"";
-				}
+				annotation.title = NSLocalizedString(@"Drag to Move Pin",@"使用地图定位，图钉的开始提示");
+				annotation.subtitle = @"";
 			}
 		}else {
-			annotation.annotationType = YCMapAnnotationTypeStandard;
+			if([temp.alarmId isEqualToString:self.alarm.alarmId])
+			{
+				annotation.annotationType = YCMapAnnotationTypeMovingTarget;
+			}else{
+				annotation.annotationType = YCMapAnnotationTypeStandard;
+			}
 		}
 
 
-		
 		[array addObject:annotation];
 		[annotation release];
 	}
@@ -165,18 +180,14 @@
 			//第一次显示，按默认比例显示到当前位置
 			[self.mapView setRegion:self->defaultMapRegion animated:YES];
 			self->isFirstShow = NO;
-			[self performSelector:@selector(selectAnnotation) withObject:nil afterDelay:2.5];
-			[[YCLog logSingleInstance] addlog:@"showMapView fisrt"];
+			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:0] afterDelay:2.0];
 		}else {
 			//非第一显示，仅设置屏幕中心
-			[self.mapView setCenterCoordinate:self->defaultMapRegion.center animated:YES];
-			[self performSelector:@selector(selectAnnotation) withObject:nil afterDelay:1.0];
-			[[YCLog logSingleInstance] addlog:@"showMapView Not fisrt"];
+			//[self.mapView setCenterCoordinate:self->defaultMapRegion.center animated:YES];
+			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:0] afterDelay:1.0];
 		}
-		
-		[self addAnnotation];
-	}
 	
+	}
 
 }
 
@@ -190,15 +201,17 @@
     [super viewDidLoad];
 	mapView.delegate = self;
 	self->isFirstShow = YES;
+	//Done按钮
+	self.navigationItem.rightBarButtonItem.enabled = NO;
 	self->defaultMapRegion.span = [YCParam paramSingleInstance].defaultMapSpan;
+	[self addAnnotation];
 	
-	self.enablingLocation = YES; // debug - TODO;
-	self.enablingNeting = YES;  // debug - TODO;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	self.title = NSLocalizedString(@"位置",@"视图标题");
 	[self showMaskView];
 }
 
@@ -211,58 +224,31 @@
 	myTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(showMapView) userInfo:nil repeats:YES] retain];
 	[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
 	
-	
 }
-
-
-
 
 
 #pragma mark - 
 #pragma mark - MKMapViewDelegate
-/*
-- (void)mapViewDidStopLocatingUser:(MKMapView *)mapView
-{
-	NSLog(@"mapViewDidStopLocatingUser");
-}
- */
 
-/*
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
-{
-	
-	for (NSUInteger i=0; i<views.count; i++) {
-		id viewo = [views objectAtIndex:i];
-		if ([viewo isKindOfClass: [MKUserLocation class]]) 
-		{
-			//设置当前位置为屏幕中心
-			CLLocation *location1 = self.mapView.userLocation.location;
-			[self.mapView setCenterCoordinate:location1.coordinate animated:YES];
 
-			
-
-			
-			
-			//设置比例尺
-			MKCoordinateSpan span = {0.02,0.02};
-			MKCoordinateRegion region;
-			region.span = span;
-			
-			region.center = self.mapView.userLocation.coordinate;
-			[self.mapView setRegion:region animated:YES];
-			
-
-		}
-		
-	}
-	
-}
-
- */
 - (void)showDetails:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+	//back按钮
+	self.title = nil;
+	
+	//取得当前操作的Annotation
+	MKAnnotationView *annotationView = (MKAnnotationView *)((UIView*)sender).superview.superview;
+	self.annotationManipulating = annotationView.annotation;
+	
+	AlarmNameViewController *nameViewCtl = [[AlarmNameViewController alloc] initWithNibName:@"AlarmNameViewController" bundle:nil];
+    self.alarmTemp = [self.alarm copy];
+	nameViewCtl.alarm = self.alarmTemp;
+	nameViewCtl.alarm.alarmName = self.annotationManipulating.title;
+	nameViewCtl.parentController = self;
+	[self.navigationController pushViewController:nameViewCtl animated:YES];
+	[nameViewCtl release];
 }
+
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
@@ -291,7 +277,6 @@
 	switch (((YCAnnotation*)annotation).annotationType) 
 	{
 		case YCMapAnnotationTypeStandard:
-			pinView.draggable = YES;
 			pinView.pinColor = MKPinAnnotationColorRed;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
 			break;
@@ -312,8 +297,6 @@
 	pinView.leftCalloutAccessoryView = sfIconView;
 	[sfIconView release];
 	pinView.annotation = annotation;
-
-	pinView.draggable = YES;
 	
 	return pinView;
 	
@@ -321,6 +304,7 @@
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState 
 {
+	self.annotationManipulating = annotationView.annotation;
 	switch (newState) 
 	{
 		case MKAnnotationViewDragStateStarting:  //开始拖拽的－紫色
@@ -332,52 +316,65 @@
 			//反转坐标－地址
 			reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
 			reverseGeocoder.delegate = self;
+			((YCAnnotation*) annotationView.annotation).subtitle = @"";
 			[reverseGeocoder start];
+			//激活Done按钮
+			self.navigationItem.rightBarButtonItem.enabled = YES;
 			break;
 		default:
 			break;
 
 	}
-	
-	self->dragingAnnotation = annotationView.annotation;
-	
-}
-
-
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-	[[YCLog logSingleInstance] addlog:@"加载地图完成"];
 
 }
 
-- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-	[[YCLog logSingleInstance] addlog:@"加载地图错误"];
+	//设置当前位置bar按钮风格
+	if (self->isCurrentLocationAtCenterRegion) 
+	{
+		[[YCLog logSingleInstance] addlog:@"isCurrentLocationAtCenterRegion == YES"];
+		self.currentLocationBarItem.style =  UIBarButtonItemStyleDone;
+		self->isCurrentLocationAtCenterRegion = NO;
+	}else {
+		[[YCLog logSingleInstance] addlog:@"isCurrentLocationAtCenterRegion == NO"];
+		self.currentLocationBarItem.style =  UIBarButtonItemStyleBordered;
+	}
+
 }
 
 #pragma mark -
 #pragma mark MKReverseGeocoderDelegate
+
+-(void)resetAnnotation:(NSString*)subtitle
+{
+	self.annotationManipulating.subtitle = subtitle;
+}
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
 {
+	NSString *title = [UIUtility titleStringFromPlacemark:placemark];
+	NSString *position = [UIUtility positionStringFromPlacemark:placemark];
 	
-	NSString * locality = placemark.locality; //城市
-	NSString * thoroughfare = placemark.thoroughfare; //街道
-	NSString * subthoroughfare = placemark.subThoroughfare;//街道号
-	
-	self.alarm.position = [[[NSString alloc] initWithFormat:@"%@%@,%@",thoroughfare,subthoroughfare,locality] autorelease];
 	if (!self.alarm.nameChanged) {
-		self.alarm.alarmName = [[[NSString alloc] initWithFormat:@"%@",thoroughfare] autorelease];
+		if (title == nil) 
+			title = kDefaultLocationAlarmName;
+		self->alarm.alarmName = title;
 	}
-	
-	self->dragingAnnotation.title = self.alarm.alarmName;
-	self->dragingAnnotation.subtitle = self.alarm.position;
-	//self->dragingAnnotation = alarmTemp.coordinate;
+	self.annotationManipulating.title = self->alarm.alarmName;
+	self.annotationManipulating.subtitle = @"";
+	[self performSelector:@selector(resetAnnotation:) withObject:position afterDelay:0.5]; //延时生成，获得动画效果
 	
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
 {
-
+	double lat = geocoder.coordinate.latitude;
+	double lon = geocoder.coordinate.longitude;
+	NSString *latstr = [UIUtility convertLatitude:lat decimal:0];
+	NSString *lonstr = [UIUtility convertLongitude:lon decimal:0];
+	NSString *position = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
+	self.annotationManipulating.subtitle = @"";
+	[self performSelector:@selector(resetAnnotation:) withObject:position afterDelay:0.5]; //延时生成，获得动画效果
 }
 
 #pragma mark -
@@ -400,6 +397,15 @@
     [super dealloc];
 }
 
+
+#pragma mark -
+#pragma mark YCNavSuperControllerProtocol
+-(void)reflashView
+{
+	self.annotationManipulating.title = self.alarmTemp.alarmName;
+	//激活Done按钮
+	self.navigationItem.rightBarButtonItem.enabled = YES;
+}
 
 
 

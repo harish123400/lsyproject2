@@ -19,6 +19,7 @@
 #import "AlarmMapCurrentViewController.h"
 #import "AlarmMapSpecifyViewController.h"
 #import "UIUtility.h"
+#import "YCAlarmEntity.h"
 
 
 @implementation YCCellDescription
@@ -175,7 +176,8 @@
 			celldes.image = nil;
 			celldes.text = NSLocalizedString(@"位置",@"编辑页面的位置的标签");
 			celldes.detailText = alarm.position;
-			celldes.navActionTarget = [YCCellDescription viewController:kAlarmMapSpecifyViewController];
+			//celldes.navActionTarget = [YCCellDescription viewController:kAlarmMapSpecifyViewController];
+			celldes.navActionTarget = [[[AlarmMapSpecifyViewController alloc] initWithNibName:@"AlarmPositionMapViewController" bundle:nil] autorelease];
 			celldes.cellType = kDefaultCellType;
 			celldes.typeData = nil;
 			celldes.ctlTag = kPositionCellTag;

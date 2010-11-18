@@ -204,7 +204,7 @@
 
 
 -(void) start
-{
+{	
 	//是否启用所有闹钟
 	if([YCParam paramSingleInstance].enableOfAllLocAlarms == NO)
 		return;

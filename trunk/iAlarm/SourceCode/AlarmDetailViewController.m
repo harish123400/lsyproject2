@@ -23,6 +23,7 @@
 #import "AlarmPositionViewController.h"
 #import "LocationUtility.h"
 #import "AlarmPositionMapViewController.h"
+#import "AlarmModify.h"
 #import <CoreGraphics/CoreGraphics.h>
 //#import <CoreLocation/CoreLocation.h>
 
@@ -89,8 +90,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	self.title = NSLocalizedString(@"编辑闹钟",@"视图标题");
 	alarmTmp = [self.alarm copy];
 	
 	self.navigationItem.rightBarButtonItem = self.saveAlarmButton;
@@ -99,6 +98,12 @@
 	// 定义cell数据
 	self.cellDescriptions = [YCCellDescription makeCellDescriptions:self.cellDescriptionIds alarm:alarm];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	self.title = NSLocalizedString(@"编辑闹钟",@"视图标题");
 }
 
 
@@ -179,7 +184,12 @@
 		NSArray *alarmsTemp = [[NSArray alloc] initWithObjects:ctler.alarm,nil];
 		((AlarmPositionMapViewController*)ctler).alarms = alarmsTemp;
 		[alarmsTemp release];
+		((AlarmPositionMapViewController*)ctler).newAlarm = NO;
 	}
+	
+	//back按钮
+	self.title = nil;
+	
 	[self.navigationController pushViewController:ctler animated:YES];
 
 }
@@ -230,6 +240,13 @@
 - (void)dealloc {
 	[alarmTmp release];
     [super dealloc];
+}
+
+//与父类情况不同，alarmTemp －覆盖
+-(void)reflashView
+{
+	self.cellDescriptions = [YCCellDescription makeCellDescriptions:self.cellDescriptionIds alarm:self.alarmTmp];
+	[self.tableView reloadData];
 }
 
 

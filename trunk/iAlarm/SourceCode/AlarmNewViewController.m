@@ -26,6 +26,7 @@
 #import "YCLog.h"
 #import "YCParam.h"
 #import "AlarmPositionMapViewController.h"
+#import "AlarmModify.h"
 
 
 @implementation AlarmNewViewController
@@ -42,7 +43,7 @@
 	{
 	cellDescriptionIds = [[NSMutableArray alloc] init];
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellCurrentLoc]];      //当前位置
-	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellCurMapLoc]];          //地图
+	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellPositionEdit]];    //地图
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellPosition]];        //位置
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellRepeat]];          //重复
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellRing]];            //声音
@@ -233,9 +234,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	self.title = NSLocalizedString(@"添加闹钟",@"视图标题");
-	
+
     self.navigationItem.rightBarButtonItem = self.addAlarmButton;
     self.navigationItem.leftBarButtonItem = self.cancelAlarmButton;
 	self.addAlarmButton.enabled = NO;
@@ -246,6 +245,13 @@
 	[self performSelector:@selector(beginLocation) withObject:nil afterDelay:1.0];  //等待x秒,执行定位
 	
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	self.title = NSLocalizedString(@"添加闹钟",@"视图标题");
+}
+
 
 
 #pragma mark -
@@ -371,8 +377,12 @@
 	{
 		NSArray *alarmsTemp = [[NSArray alloc] initWithObjects:ctler.alarm,nil];
 		((AlarmPositionMapViewController*)ctler).alarms = alarmsTemp;
-		[alarmsTemp release];		
+		[alarmsTemp release];
+		((AlarmPositionMapViewController*)ctler).newAlarm = YES;
 	} 
+	
+	//back按钮
+	self.title = nil;
 	
 	[self.navigationController pushViewController:ctler animated:YES];
 	///////nav 导航///////

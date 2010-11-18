@@ -11,6 +11,7 @@
 #import "YCRepeatType.h"
 #import "YCCellDescription.h"
 #import "UIUtility.h"
+#import "YCAlarmEntity.h"
 
 
 @implementation AlarmLRepeatTypeViewController
@@ -37,9 +38,7 @@
 	if (self.lastIndexPath) {
 		YCRepeatType *rep = [DicManager repeatTypeForSortId:lastIndexPath.row];
 		alarm.repeatType = rep;
-		self.parentController.cellDescriptions = 
-		[YCCellDescription makeCellDescriptions:self.parentController.cellDescriptionIds alarm:self.alarm];
-		[self.parentController.tableView reloadData];
+		[self.parentController  reflashView];
 	}
 }
 

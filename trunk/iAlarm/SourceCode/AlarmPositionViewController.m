@@ -9,6 +9,7 @@
 #import "AlarmPositionViewController.h"
 #import "DicManager.h"
 #import "YCPositionType.h"
+#import "YCAlarmEntity.h"
 
 
 @implementation AlarmPositionViewController

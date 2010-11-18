@@ -14,7 +14,7 @@
 @synthesize coordinate;
 @synthesize subtitle;
 @synthesize title;
-@synthesize isCurrentLocation;
+@synthesize isCurrent;
 @synthesize annotationType;
 
 

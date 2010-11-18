@@ -375,6 +375,12 @@
     [super dealloc];
 }
 
+-(void)reflashView
+{
+	self.cellDescriptions = [YCCellDescription makeCellDescriptions:self.cellDescriptionIds alarm:self.alarm];
+	[self.tableView reloadData];
+}
+
 
 
 @end

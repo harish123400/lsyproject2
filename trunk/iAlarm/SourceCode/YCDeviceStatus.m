@@ -9,10 +9,10 @@
 #import "YCDeviceStatus.h"
 #import "YCLocationManager.h"
 #import "StandardLocationManager.h"
+#import "Reachability.h"
 
 
 @implementation YCDeviceStatus
-@synthesize debugLog;
 
 - (CLLocationManager *)locationManager
 {
@@ -81,30 +81,60 @@
 	return currentLocationSpeed;
 }
 
--(void)addlog:(NSString*) log
+- (BOOL) connectedToInternet
 {
-	if (debugLog == nil) {
-		debugLog = [[NSMutableArray alloc] init];
+	BOOL retVal = NO;
+	Reachability *internetReach = [Reachability reachabilityForInternetConnection];
+	if (!internetReach.connectionRequired) 
+	{
+		switch (internetReach.currentReachabilityStatus) {
+			case ReachableViaWiFi:
+			case ReachableViaWWAN:
+				retVal = YES;
+				break;
+			default:
+				retVal = NO;
+				break;
+		}
 	}
-	if (debugLog.count > 100) {
-		[(NSMutableArray*)debugLog removeObjectAtIndex:0];
-	}
-	[(NSMutableArray*)debugLog addObject:log];
+	
+	return retVal;
 }
+- (BOOL) enabledLocation
+{
+	return YES; //TODO
+}
+
+/*
+//Called by Reachability whenever status changes.
+- (void) reachabilityChanged: (NSNotification* )note
+{
+	Reachability* curReach = [note object];
+	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+	self->connectedToInternet = [curReach connectionRequired] && 
+	                            (curReach.currentReachabilityStatus == ReachableViaWiFi || ReachableViaWWAN);
+}
+ */
 
 
 +(YCDeviceStatus*) deviceStatusSingleInstance
 {
 	static YCDeviceStatus* obj = nil;
 	if (obj == nil) {
-		obj = [[YCDeviceStatus alloc] init];	
+		obj = [[YCDeviceStatus alloc] init];
 		[obj retain];
 	}
 	
 	return obj;
+	
+	/*
+	[[NSNotificationCenter defaultCenter] addObserver: obj selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+	obj->internetReach = [[Reachability reachabilityForInternetConnection] retain];
+	obj->connectedToInternet = [obj->internetReach currentReachabilityStatus];
+	[obj->internetReach startNotifier];
+	 */
+	
 }
-
-
 
 - (void)dealloc {
 	
@@ -112,8 +142,10 @@
 	[lastStandardLocation release];
 	[lastSignificantLocation release];
 	[currentLocation release];
-	[debugLog release];
     [super dealloc];
 }
+
+
+
 
 @end

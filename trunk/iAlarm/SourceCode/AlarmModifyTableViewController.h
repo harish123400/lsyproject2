@@ -7,18 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AlarmModify.h"
-#import "AlarmNewDetailSuperViewController.h"
-#import "YCAlarmEntity.h"
+#import "YCNavSuperControllerProtocol.h"
 
 @class YCAlarmEntity;
-@class AlarmNewDetailSuperViewController;
-
 @interface AlarmModifyTableViewController : UITableViewController {
-	AlarmNewDetailSuperViewController *parentController;
+	id<YCNavSuperControllerProtocol> parentController;
 	YCAlarmEntity *alarm;
 }
 
-@property(nonatomic,retain) AlarmNewDetailSuperViewController *parentController;
+@property(nonatomic,retain) id<YCNavSuperControllerProtocol> parentController;
 @property(nonatomic,retain) YCAlarmEntity *alarm;
 @end

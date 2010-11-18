@@ -25,11 +25,7 @@
 -(IBAction) backButtonPressed:(id)sender
 {	
 	self.alarm.vibrate = self.vibrateSwitch.on;
-	
-	self.parentController.cellDescriptions = 
-	[YCCellDescription makeCellDescriptions:self.parentController.cellDescriptionIds alarm:self.alarm];
-
-	[self.parentController.tableView reloadData];
+	[self.parentController  reflashView];
 }
 
 
@@ -195,11 +191,12 @@
 
 
 - (void)dealloc {
-	
+	/*
 	////分类的数据////
 	[self.parentViewController release];
 	[self.alarm release];
 	////分类的数据////
+	 */
 	
 	[vibrateSwitch release];
     [super dealloc];
