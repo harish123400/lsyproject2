@@ -152,7 +152,8 @@
 			celldes.image = nil;
 			celldes.text = obj.positionTypeName;
 			celldes.detailText = nil;
-			celldes.navActionTarget = [YCCellDescription viewController:kAlarmMapCurrentViewController];
+			//celldes.navActionTarget = [YCCellDescription viewController:kAlarmMapCurrentViewController];
+			celldes.navActionTarget = [[[AlarmPositionMapViewController alloc] initWithNibName:@"AlarmPositionMapViewController" bundle:nil] autorelease];
 			celldes.cellType = kCheckAndIndCellType;
 			celldes.typeData = [NSNumber numberWithBool:b];
 			celldes.ctlTag = 0;
@@ -177,7 +178,7 @@
 			celldes.text = NSLocalizedString(@"位置",@"编辑页面的位置的标签");
 			celldes.detailText = alarm.position;
 			//celldes.navActionTarget = [YCCellDescription viewController:kAlarmMapSpecifyViewController];
-			celldes.navActionTarget = [[[AlarmMapSpecifyViewController alloc] initWithNibName:@"AlarmPositionMapViewController" bundle:nil] autorelease];
+			celldes.navActionTarget = [[[AlarmPositionMapViewController alloc] initWithNibName:@"AlarmPositionMapViewController" bundle:nil] autorelease];
 			celldes.cellType = kDefaultCellType;
 			celldes.typeData = nil;
 			celldes.ctlTag = kPositionCellTag;

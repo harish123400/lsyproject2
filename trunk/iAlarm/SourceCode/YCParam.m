@@ -30,6 +30,7 @@
 @synthesize offsetCoordinateOfMap;
 @synthesize lastTimeStampOfOffset;                 
 @synthesize validDistanceOfOffset; 
+@synthesize lastLoadMapRegion;
 
 
 +(YCParam*) paramSingleInstance
@@ -57,6 +58,8 @@
 		obj.offsetCoordinateOfMap = tmp;
 		obj.lastTimeStampOfOffset = nil;
 		obj.validDistanceOfOffset = 5000.0;
+		
+		//obj.lastLoadMapRegion.span ;
 		
 		[obj retain];
 	}

@@ -19,10 +19,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	/*
 	self->defaultMapRegion.center = self.alarm.coordinate;
 	self->isAlreadyCenterCoord = YES;
 	if (self->isFirstShow)
 	[self performSelector:@selector(cacheMapData) withObject:nil afterDelay:0.5];
+	 */
 }
 
 
@@ -30,8 +32,8 @@
 #pragma mark MKMapViewDelegate
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    if ([annotation isKindOfClass:[MKUserLocation class]])
-        return nil;
+    //if ([annotation isKindOfClass:[MKUserLocation class]])
+    //    return nil;
 	
 	return [super mapView:theMapView viewForAnnotation:annotation];
 }

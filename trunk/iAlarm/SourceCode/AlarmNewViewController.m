@@ -43,7 +43,7 @@
 	{
 	cellDescriptionIds = [[NSMutableArray alloc] init];
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellCurrentLoc]];      //当前位置
-	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellPositionEdit]];    //地图
+	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellCurMapLoc]];       //地图
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellPosition]];        //位置
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellRepeat]];          //重复
 	[(NSMutableArray*)cellDescriptionIds addObject:[NSNumber numberWithInteger:kDesCellRing]];            //声音

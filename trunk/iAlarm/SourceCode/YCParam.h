@@ -33,6 +33,8 @@
 	CLLocationCoordinate2D offsetCoordinateOfMap;  //地图的偏移坐标
 	NSData *lastTimeStampOfOffset;                 //取偏移量时间
 	CLLocationDistance validDistanceOfOffset;      //偏移量的有效距离
+	
+	MKCoordinateRegion lastLoadMapRegion;          //上一次使用地图的区域
 
 }
 
@@ -52,7 +54,9 @@
 @property (nonatomic,assign) BOOL enableOffset;
 @property (nonatomic,assign) CLLocationCoordinate2D offsetCoordinateOfMap;
 @property (nonatomic,retain) NSData *lastTimeStampOfOffset;                 
-@property (nonatomic,assign) CLLocationDistance validDistanceOfOffset;      
+@property (nonatomic,assign) CLLocationDistance validDistanceOfOffset;
+
+@property (nonatomic,assign) MKCoordinateRegion lastLoadMapRegion;
 
 +(YCParam*) paramSingleInstance;
 +(void)updateParam;
