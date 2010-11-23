@@ -29,8 +29,11 @@
 @synthesize newAlarm; 
 @synthesize mapAnnotations;
 @synthesize currentLocationBarItem;
+@synthesize currentPinBarItem;
 @synthesize annotationManipulating;
 @synthesize alarmTemp;
+@synthesize searchBar;
+@synthesize searchBarItem;
 
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
 {
@@ -38,6 +41,7 @@
 		[reverseGeocoder release];
 	}
 	reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:coordinate];
+	reverseGeocoder.delegate = self;
 	
 	return reverseGeocoder;
 }
@@ -123,6 +127,14 @@
 	return YES;
 }
 
+//选中Annotation －显示的标题
+-(void)selectAnnotationAtIndex:(NSNumber*)index
+{
+	NSInteger nIndex = [index intValue];
+	if(nIndex >=0 && nIndex < self.mapAnnotations.count)
+		[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:[index intValue]] animated:YES];
+}
+
 
 //显示地图
 -(void)showMapView
@@ -136,14 +148,14 @@
 		[self setRegion:[YCParam paramSingleInstance].lastLoadMapRegion animated:YES];
 	}
 	
-	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:0] afterDelay:1.5];
+	NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
+	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
+	
+	//显示完成后，把maskview的触摸事件绑定
+	[self.maskView addTarget:self action:@selector(cancelSearchButtonPressed:) forControlEvents:UIControlEventTouchDown];
 }
 
 
--(void)selectAnnotationAtIndex:(NSNumber*)index
-{
-	[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:[index intValue]] animated:YES];
-}
 
 
 -(void)addAnnotation
@@ -161,12 +173,15 @@
 		
 		if ([self isKindOfClass:[AlarmPositionMapViewController class]]) 
 		{
-			annotation.annotationType = YCMapAnnotationTypeLocating;
 			if(self.newAlarm)  //AlarmNew
 			{
 				annotation.title = NSLocalizedString(@"Drag to Move Pin",@"使用地图定位，图钉的开始提示");
 				annotation.subtitle = @"";
+				annotation.annotationType = YCMapAnnotationTypeLocating;
+			}else {
+				annotation.annotationType = YCMapAnnotationTypeStandardEnabledDrag;
 			}
+
 		}else {
 			if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
 			{
@@ -176,12 +191,16 @@
 			}
 		}
 		
+		if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
+			self.annotationManipulating = annotation;
+		
 		
 		[array addObject:annotation];
 		[annotation release];
 	}
 	self.mapAnnotations = array;
 	[array release];
+	
 	
 	[self.mapView addAnnotations:mapAnnotations];
 	
@@ -193,19 +212,61 @@
 
 #pragma mark -
 #pragma mark Event
+
+
+-(void)setDoneStyleToBarButtonItem:(UIBarButtonItem*)buttonItem
+{
+	buttonItem.style =  UIBarButtonItemStyleDone;
+}
+
 -(IBAction)currentLocationButtonPressed:(id)sender
 {
+	/*
 	if (self.mapView.userLocation.location)
 	{
 		self->isCurrentLocationAtCenterRegion = YES;
-		//设置屏幕中心
+		//设置屏幕中心，与范围
 		CLLocationCoordinate2D coordOfCurrent = self.mapView.userLocation.location.coordinate;
-		//[self.mapView setCenterCoordinate:coordOfCurrent animated:YES];
-
 		self->defaultMapRegion.center = coordOfCurrent;
 		[self setRegion:self->defaultMapRegion animated:YES];
 	}
+	 */
+	if (self.mapView.userLocation.location)
+	{
+		self->isCurrentLocationAtCenterRegion = YES;
+		//设置屏幕中心，与范围
+		CLLocationCoordinate2D coordOfCurrent = self.mapView.userLocation.location.coordinate;
+		self->defaultMapRegion.center = coordOfCurrent;
+		[self setRegion:self->defaultMapRegion animated:YES];
+		[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentLocationBarItem afterDelay:0.2];
+	}
 }
+-(IBAction)currentPinButtonPressed:(id)sender
+{	
+	if ([self isValidCoordinate:self.annotationManipulating.coordinate])
+	{
+		//仅仅设置中心
+		[self.mapView setCenterCoordinate:self.annotationManipulating.coordinate animated:YES];
+		[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.2];
+	}
+}
+
+-(IBAction)resetPinButtonPressed:(id)sender
+{
+	[self.mapView removeAnnotation:self.annotationManipulating];
+	self.annotationManipulating.coordinate = self.mapView.region.center;
+	[self.mapView addAnnotation:self.annotationManipulating];
+	//反转坐标－地址
+	((YCAnnotation*) self.annotationManipulating).subtitle = @"";
+	reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
+	[reverseGeocoder start];
+	//选中
+	NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
+	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
+	
+}
+
+
 
 -(IBAction)doneButtonPressed:(id)sender
 {	
@@ -219,6 +280,23 @@
 
 
 
+-(IBAction)searchButtonPressed:(id)sender
+{
+	self.maskView.alpha = 0.90;
+	self.maskView.backgroundColor = [UIColor darkGrayColor];
+	
+	self.searchBar.hidden = NO;
+	self.maskView.hidden = NO;
+	[self.searchBar becomeFirstResponder];  //search bar调用键盘
+}
+
+-(IBAction)cancelSearchButtonPressed:(id)sender
+{
+	self.searchBar.hidden = YES;
+	self.maskView.hidden = YES;
+	[self.searchBar resignFirstResponder];  //search bar放弃键盘
+}
+
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -231,14 +309,19 @@
 	self->isFirstShow = YES;
 	self.navigationItem.rightBarButtonItem.enabled = NO;//Done按钮
 	
+	//search bar
+	self.searchBar.delegate = self;
+	self.searchBar.hidden = YES;
+	
 	//判断闹钟坐标是否有效
 	if (![self isValidCoordinate:self.alarm.coordinate]) 
 		self.alarm.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
 	
 	self.alarmTemp = [self.alarm copy];
 	
-	self->defaultMapRegion.span = [YCParam paramSingleInstance].defaultMapSpan;
-	self->defaultMapRegion.center = self.alarmTemp.coordinate;
+	//self->defaultMapRegion.span = [YCParam paramSingleInstance].defaultMapSpan;
+	//self->defaultMapRegion.center = self.alarmTemp.coordinate;
+	self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,1500.0,1500.0);
 
 	[self showMaskView];
 	[self addAnnotation];
@@ -250,6 +333,7 @@
 {
 	[super viewWillAppear:animated];
 	self.title = NSLocalizedString(@"位置",@"视图标题");
+	[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.5];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -329,6 +413,11 @@
 			pinView.pinColor = MKPinAnnotationColorRed;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
 			break;
+		case YCMapAnnotationTypeStandardEnabledDrag:
+			pinView.draggable = YES;
+			pinView.pinColor = MKPinAnnotationColorRed;
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			break;
 		case YCMapAnnotationTypeLocating:
 			pinView.draggable = YES;
 			pinView.pinColor = MKPinAnnotationColorPurple;
@@ -363,9 +452,8 @@
 			//坐标
 			self.alarmTemp.coordinate = annotationView.annotation.coordinate;
 			//反转坐标－地址
-			reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
-			reverseGeocoder.delegate = self;
 			((YCAnnotation*) annotationView.annotation).subtitle = @"";
+			reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
 			[reverseGeocoder start];
 			//激活Done按钮
 			self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -377,8 +465,16 @@
 
 }
 
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
+{
+	self.currentLocationBarItem.style =  UIBarButtonItemStyleBordered;
+	self.currentPinBarItem.style =  UIBarButtonItemStyleBordered;
+}
+
+/*
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
+	
 	//设置当前位置bar按钮风格
 	if (self->isCurrentLocationAtCenterRegion) 
 	{
@@ -387,8 +483,9 @@
 	}else {
 		self.currentLocationBarItem.style =  UIBarButtonItemStyleBordered;
 	}
-
+	 
 }
+ */
 
 #pragma mark -
 #pragma mark MKReverseGeocoderDelegate
@@ -460,6 +557,27 @@
 	self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
+#pragma mark -
+#pragma mark UISearchBarDelegate
+- (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
+	
+	NSLog(@"Searching for: %@", theSearchBar.text);
+	/*
+	if(forwardGeocoder == nil)
+	{
+		forwardGeocoder = [[BSForwardGeocoder alloc] initWithDelegate:self];
+	}
+	
+	// Forward geocode!
+	[forwardGeocoder findLocation:searchBar.text];
+	 */
+	
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)theSearchBar
+{
+	[self cancelSearchButtonPressed:theSearchBar];
+}
 
 
 

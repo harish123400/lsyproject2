@@ -16,13 +16,14 @@
 @class YCAnnotation;
 @class AlarmNameViewController;
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
-<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol>
+<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,UISearchBarDelegate>
 {
 	NSTimer *myTimer;
 	
 	MKMapView* mapView;
-	UIView *maskView;
+	UIControl *maskView;
 	UIActivityIndicatorView *activityIndicator;
+	IBOutlet UISearchBar *searchBar;
 	
 
 	MKCoordinateRegion defaultMapRegion;
@@ -43,8 +44,11 @@
 	//YCAnnotation *dragingAnnotation; 
 	
 	UIBarButtonItem *currentLocationBarItem;
+	UIBarButtonItem *currentPinBarItem;
+	UIBarButtonItem *searchBarItem;
 	
 	BOOL isCurrentLocationAtCenterRegion;   //当前位置在中心
+	BOOL isCurrentPinAtCenterRegion;        //当前图钉在中心
 	
 	BOOL newAlarm;  //新创建的Alarm
 	
@@ -57,11 +61,13 @@
 }
 
 @property (nonatomic,retain) IBOutlet MKMapView* mapView;
-@property (nonatomic,retain) IBOutlet UIView *maskView;
+@property (nonatomic,retain) IBOutlet UIControl *maskView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentLocationBarItem;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *currentPinBarItem;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *searchBarItem;
+@property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
 
--(IBAction)currentLocationButtonPressed:(id)sender;
 
 //@property (nonatomic,assign) BOOL isCenterWithcurrent;
 @property (nonatomic,retain) NSArray *alarms;
@@ -76,6 +82,12 @@
 
 @property (nonatomic,retain) YCAlarmEntity *alarmTemp;
 
+
+-(IBAction)currentLocationButtonPressed:(id)sender;
+-(IBAction)resetPinButtonPressed:(id)sender;
+-(IBAction)currentPinButtonPressed:(id)sender;
+-(IBAction)searchButtonPressed:(id)sender;
+-(IBAction)cancelSearchButtonPressed:(id)sender;
 
 //缓存地图数据
 -(void)cacheMapData;

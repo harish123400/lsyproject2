@@ -29,10 +29,14 @@
 		{
 			self.alarm.nameChanged = YES;
 			self.alarm.alarmName = self.alarmNameTextField.text;
-			[self.parentController reflashView];
 		}
 		
+	}else {
+		self.alarm.nameChanged = NO;
+		self.alarm.alarmName = kDefaultLocationAlarmName;
 	}
+	
+	[self.parentController reflashView];
 	[self.alarmNameTextField keyboardAppearance];
 	[self.navigationController popViewControllerAnimated:YES];
 }
@@ -45,7 +49,7 @@
 -(IBAction) textFieldChanged:(id)sender
 {
 	if ( [self.alarm.alarmName isEqualToString:self.alarmNameTextField.text] //手工改动了闹钟的名字
-		|| [self.alarmNameTextField.text length] == 0) //闹钟名是否为空
+		)//|| [self.alarmNameTextField.text length] == 0) //闹钟名是否为空
 	{
 		self.navigationItem.rightBarButtonItem.enabled = NO;
 	}else {
@@ -63,7 +67,7 @@
 	alarmNameTextField.borderStyle = UITextBorderStyleRoundedRect;
 	alarmNameTextField.textColor = [UIUtility checkedCellTextColor];
 	[alarmNameTextField becomeFirstResponder];  //调用键盘
-	self.alarmNameTextField.enablesReturnKeyAutomatically = YES; //闹钟名为空，Done按钮不可用
+	self.alarmNameTextField.enablesReturnKeyAutomatically = NO; 
 }
 
 - (void)viewWillAppear:(BOOL)animated
