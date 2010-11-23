@@ -34,7 +34,7 @@
 @synthesize alarmTemp;
 @synthesize searchBar;
 @synthesize searchBarItem;
-
+@synthesize forwardGeocoder;
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
 {
     if (reverseGeocoder) {
@@ -152,7 +152,7 @@
 	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
 	
 	//显示完成后，把maskview的触摸事件绑定
-	[self.maskView addTarget:self action:@selector(cancelSearchButtonPressed:) forControlEvents:UIControlEventTouchDown];
+	[self.maskView addTarget:self action:@selector(hideSearchBar:) forControlEvents:UIControlEventTouchDown];
 }
 
 
@@ -282,18 +282,39 @@
 
 -(IBAction)searchButtonPressed:(id)sender
 {
+	/*
 	self.maskView.alpha = 0.90;
 	self.maskView.backgroundColor = [UIColor darkGrayColor];
 	
 	self.searchBar.hidden = NO;
 	self.maskView.hidden = NO;
 	[self.searchBar becomeFirstResponder];  //search bar调用键盘
+	 */
+	
+	
+	self.maskView.backgroundColor = [UIColor darkGrayColor];
+	[UIView beginAnimations:@"showsearchBar" context:NULL];
+	[UIView setAnimationDuration:0.75];
+	self.searchBar.alpha = 1.0f;
+	self.maskView.alpha = 0.9f;
+	[UIView commitAnimations];
+	[self.searchBar becomeFirstResponder];  //search bar调用键盘
 }
 
--(IBAction)cancelSearchButtonPressed:(id)sender
+-(IBAction)hideSearchBar:(id)sender
 {
+	/*
 	self.searchBar.hidden = YES;
 	self.maskView.hidden = YES;
+	[self.searchBar resignFirstResponder];  //search bar放弃键盘
+	 */
+	
+	
+	[UIView beginAnimations:@"hideSearchBar" context:NULL];
+	[UIView setAnimationDuration:0.75];
+	self.searchBar.alpha = 0.0f;
+	self.maskView.alpha = 0.0f;
+	[UIView commitAnimations];
 	[self.searchBar resignFirstResponder];  //search bar放弃键盘
 }
 
@@ -311,7 +332,7 @@
 	
 	//search bar
 	self.searchBar.delegate = self;
-	self.searchBar.hidden = YES;
+	self.searchBar.alpha = 0.0f;
 	
 	//判断闹钟坐标是否有效
 	if (![self isValidCoordinate:self.alarm.coordinate]) 
@@ -490,15 +511,34 @@
 #pragma mark -
 #pragma mark MKReverseGeocoderDelegate
 
--(void)resetAnnotation:(NSString*)subtitle
+-(void)resetAnnotationWithSubtitle:(NSString*)subtitle
 {
 	self.annotationManipulating.subtitle = subtitle;
 }
+
+-(void) setannotationManipulatingWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title subtitle:(NSString*)subtitle
+{
+	if (!self.alarmTemp.nameChanged) {
+		if (title == nil) 
+			title = kDefaultLocationAlarmName;
+		self.alarmTemp.alarmName = title;
+	}
+	self.alarmTemp.coordinate = coordinate;
+	self.alarmTemp.position = subtitle;
+	
+	self.annotationManipulating.coordinate = self.alarmTemp.coordinate;
+	self.annotationManipulating.title = self.alarmTemp.alarmName;
+	self.annotationManipulating.subtitle = @"";
+	[self performSelector:@selector(resetAnnotationWithSubtitle:) withObject:self.alarmTemp.position afterDelay:0.5]; //延时生成，获得动画效果
+	
+}
+
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
 {
 	NSString *title = [UIUtility titleStringFromPlacemark:placemark];
-	NSString *position = [UIUtility positionStringFromPlacemark:placemark];
+	NSString *subtitle = [UIUtility positionStringFromPlacemark:placemark];
 	
+	/*
 	if (!self.alarmTemp.nameChanged) {
 		if (title == nil) 
 			title = kDefaultLocationAlarmName;
@@ -509,7 +549,8 @@
 	self.annotationManipulating.title = self.alarmTemp.alarmName;
 	self.annotationManipulating.subtitle = @"";
 	[self performSelector:@selector(resetAnnotation:) withObject:self.alarmTemp.position afterDelay:0.5]; //延时生成，获得动画效果
-	
+	*/
+	[self setannotationManipulatingWithCoordinate:placemark.coordinate title:title subtitle:subtitle];
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
@@ -518,13 +559,17 @@
 	double lon = geocoder.coordinate.longitude;
 	NSString *latstr = [UIUtility convertLatitude:lat decimal:0];
 	NSString *lonstr = [UIUtility convertLongitude:lon decimal:0];
-	NSString *position = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
+	NSString *subtitle = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
 	
-	self.alarmTemp.position = position;
+	/*
+	self.alarmTemp.position = subtitle;
 	
 	self.annotationManipulating.title = self.alarmTemp.alarmName;
 	self.annotationManipulating.subtitle = @"";
 	[self performSelector:@selector(resetAnnotation:) withObject:position afterDelay:0.5]; //延时生成，获得动画效果
+	 */
+	
+	[self setannotationManipulatingWithCoordinate:geocoder.coordinate title:nil subtitle:subtitle];
 }
 
 #pragma mark -
@@ -562,7 +607,7 @@
 - (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
 	
 	NSLog(@"Searching for: %@", theSearchBar.text);
-	/*
+	
 	if(forwardGeocoder == nil)
 	{
 		forwardGeocoder = [[BSForwardGeocoder alloc] initWithDelegate:self];
@@ -570,14 +615,97 @@
 	
 	// Forward geocode!
 	[forwardGeocoder findLocation:searchBar.text];
-	 */
 	
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)theSearchBar
 {
-	[self cancelSearchButtonPressed:theSearchBar];
+	[self hideSearchBar:theSearchBar];
 }
+
+#pragma mark -
+#pragma mark BSForwardGeocoderDelegate
+-(void)forwardGeocoderError:(NSString *)errorMessage
+{
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" 
+													message:errorMessage
+												   delegate:nil 
+										  cancelButtonTitle:@"OK" 
+										  otherButtonTitles: nil];
+	[alert show];
+	[alert release];
+	
+}
+
+-(void)forwardGeocoderFoundLocation
+{
+	if(forwardGeocoder.status == G_GEO_SUCCESS)
+	{
+		
+		[self hideSearchBar:nil];
+		int searchResults = [forwardGeocoder.results count];
+		if(searchResults >= 1)
+		{
+			BSKmlResult *place = [forwardGeocoder.results objectAtIndex:0];  /////只用第一个
+			
+			//先删除原来的annotation
+			[self.mapView removeAnnotation:self.annotationManipulating];
+			// Zoom into the location		
+			[self.mapView setRegion:place.coordinateRegion animated:TRUE];
+			
+			
+			NSString *title = nil;
+			if (place.address == nil || [place.address length] ==0) 
+				title = self.searchBar.text;
+			else 
+				title = place.address;
+			[self setannotationManipulatingWithCoordinate:place.coordinate title:title subtitle:@" "];
+			//再加上
+			[self.mapView addAnnotation:self.annotationManipulating];
+			
+			//选中
+			NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
+			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
+
+		}
+		
+		
+	}
+	else {
+		NSString *message = @"";
+		
+		switch (forwardGeocoder.status) {
+			case G_GEO_BAD_KEY:
+				message = @"The API key is invalid.";
+				break;
+				
+			case G_GEO_UNKNOWN_ADDRESS:
+				message = [NSString stringWithFormat:@"Could not find %@", forwardGeocoder.searchQuery];
+				break;
+				
+			case G_GEO_TOO_MANY_QUERIES:
+				message = @"Too many queries has been made for this API key.";
+				break;
+				
+			case G_GEO_SERVER_ERROR:
+				message = @"Server error, please try again.";
+				break;
+				
+				
+			default:
+				break;
+		}
+		
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Information" 
+														message:message
+													   delegate:nil 
+											  cancelButtonTitle:@"OK" 
+											  otherButtonTitles: nil];
+		[alert show];
+		[alert release];
+	}
+}
+
 
 
 

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="14"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -118,7 +118,7 @@
 							<object class="IBUIBarButtonItem" id="229743336">
 								<string key="IBUITitle">搜索</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">170</float>
+								<float key="IBUIWidth">152</float>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="251212599"/>
 							</object>
@@ -140,7 +140,7 @@
 							</object>
 							<object class="IBUIBarButtonItem" id="684572105">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">7</float>
+								<float key="IBUIWidth">10</float>
 								<reference key="IBUIToolbar" ref="251212599"/>
 								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
@@ -530,9 +530,9 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>cancelSearchButtonPressed:</string>
 							<string>currentLocationButtonPressed:</string>
 							<string>currentPinButtonPressed:</string>
+							<string>hideSearchBar:</string>
 							<string>resetPinButtonPressed:</string>
 							<string>searchButtonPressed:</string>
 						</object>
@@ -549,24 +549,24 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>cancelSearchButtonPressed:</string>
 							<string>currentLocationButtonPressed:</string>
 							<string>currentPinButtonPressed:</string>
+							<string>hideSearchBar:</string>
 							<string>resetPinButtonPressed:</string>
 							<string>searchButtonPressed:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">cancelSearchButtonPressed:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">currentLocationButtonPressed:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">currentPinButtonPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">hideSearchBar:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

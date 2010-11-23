@@ -8,6 +8,7 @@
 
 #import "AlarmModifyViewController.h"
 #import "YCNavSuperControllerProtocol.h"
+#import "BSForwardGeocoder.h"
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -16,7 +17,7 @@
 @class YCAnnotation;
 @class AlarmNameViewController;
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
-<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,UISearchBarDelegate>
+<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,UISearchBarDelegate,BSForwardGeocoderDelegate>
 {
 	NSTimer *myTimer;
 	
@@ -56,6 +57,8 @@
 	
 	YCAlarmEntity *alarmTemp;
 	
+	BSForwardGeocoder *forwardGeocoder;
+	
 	
 	
 }
@@ -82,12 +85,14 @@
 
 @property (nonatomic,retain) YCAlarmEntity *alarmTemp;
 
+@property (nonatomic, retain) BSForwardGeocoder *forwardGeocoder;
+
 
 -(IBAction)currentLocationButtonPressed:(id)sender;
 -(IBAction)resetPinButtonPressed:(id)sender;
 -(IBAction)currentPinButtonPressed:(id)sender;
 -(IBAction)searchButtonPressed:(id)sender;
--(IBAction)cancelSearchButtonPressed:(id)sender;
+-(IBAction)hideSearchBar:(id)sender;
 
 //缓存地图数据
 -(void)cacheMapData;
