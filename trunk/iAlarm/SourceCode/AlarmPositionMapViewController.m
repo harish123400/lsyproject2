@@ -132,7 +132,7 @@
 {
 	NSInteger nIndex = [index intValue];
 	if(nIndex >=0 && nIndex < self.mapAnnotations.count)
-		[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:[index intValue]] animated:YES];
+		[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:nIndex] animated:YES];
 }
 
 
@@ -511,12 +511,16 @@
 #pragma mark -
 #pragma mark MKReverseGeocoderDelegate
 
+/*
 -(void)resetAnnotationWithSubtitle:(NSString*)subtitle
 {
 	self.annotationManipulating.subtitle = subtitle;
 }
+ */
 
--(void) setannotationManipulatingWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title subtitle:(NSString*)subtitle
+-(void) setannotationManipulatingWithCoordinate:(CLLocationCoordinate2D)coordinate 
+										  title:(NSString*)title subtitle:(NSString*)subtitle
+									   animated:(BOOL)animated;
 {
 	if (!self.alarmTemp.nameChanged) {
 		if (title == nil) 
@@ -528,8 +532,16 @@
 	
 	self.annotationManipulating.coordinate = self.alarmTemp.coordinate;
 	self.annotationManipulating.title = self.alarmTemp.alarmName;
-	self.annotationManipulating.subtitle = @"";
-	[self performSelector:@selector(resetAnnotationWithSubtitle:) withObject:self.alarmTemp.position afterDelay:0.5]; //延时生成，获得动画效果
+	
+	if (animated)
+	{
+		self.annotationManipulating.subtitle = @"";
+		//[self performSelector:@selector(resetAnnotationWithSubtitle:) withObject:self.alarmTemp.position afterDelay:0.5]; //延时生成，获得动画效果
+		[self.annotationManipulating performSelector:@selector(setSubtitle:) withObject:self.alarmTemp.position afterDelay:0.5];//延时生成，获得动画效果
+	}
+	else 
+		self.annotationManipulating.subtitle = self.alarmTemp.position;
+		
 	
 }
 
@@ -550,7 +562,7 @@
 	self.annotationManipulating.subtitle = @"";
 	[self performSelector:@selector(resetAnnotation:) withObject:self.alarmTemp.position afterDelay:0.5]; //延时生成，获得动画效果
 	*/
-	[self setannotationManipulatingWithCoordinate:placemark.coordinate title:title subtitle:subtitle];
+	[self setannotationManipulatingWithCoordinate:placemark.coordinate title:title subtitle:subtitle animated:YES];
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
@@ -569,7 +581,7 @@
 	[self performSelector:@selector(resetAnnotation:) withObject:position afterDelay:0.5]; //延时生成，获得动画效果
 	 */
 	
-	[self setannotationManipulatingWithCoordinate:geocoder.coordinate title:nil subtitle:subtitle];
+	[self setannotationManipulatingWithCoordinate:geocoder.coordinate title:nil subtitle:subtitle animated:YES];
 }
 
 #pragma mark -
@@ -606,8 +618,6 @@
 #pragma mark UISearchBarDelegate
 - (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
 	
-	NSLog(@"Searching for: %@", theSearchBar.text);
-	
 	if(forwardGeocoder == nil)
 	{
 		forwardGeocoder = [[BSForwardGeocoder alloc] initWithDelegate:self];
@@ -639,37 +649,62 @@
 
 -(void)forwardGeocoderFoundLocation
 {
-	if(forwardGeocoder.status == G_GEO_SUCCESS)
+	NSUInteger searchResults = [forwardGeocoder.results count];
+	
+	if(forwardGeocoder.status == G_GEO_SUCCESS && searchResults > 0)
 	{
 		
-		[self hideSearchBar:nil];
-		int searchResults = [forwardGeocoder.results count];
-		if(searchResults >= 1)
+		[self hideSearchBar:nil];  //隐藏Search bar
+		
+		//离当前位置最近的元素
+		CLLocationDistance distanceOfNearest = 900000000000.0;
+		NSUInteger indexOfNearest =0;
+		
+		for(NSUInteger i = 0; i < searchResults; i++)
 		{
-			BSKmlResult *place = [forwardGeocoder.results objectAtIndex:0];  /////只用第一个
+			BSKmlResult *placeTmp = [forwardGeocoder.results objectAtIndex:i];
+			//NSLog(@"address=%@",placeTmp.address);
 			
-			//先删除原来的annotation
-			[self.mapView removeAnnotation:self.annotationManipulating];
-			// Zoom into the location		
-			[self.mapView setRegion:place.coordinateRegion animated:TRUE];
+			//找出个离当前位置最近的
+			CLLocation *currentLocation = self.mapView.userLocation.location;
+			if (currentLocation) 
+			{
+				CLLocation *locTmp = [[CLLocation alloc] initWithLatitude:placeTmp.coordinate.latitude longitude:placeTmp.coordinate.longitude];
+				CLLocationDistance distanceTmp = [currentLocation distanceFromLocation:locTmp];
+				if (distanceTmp  < distanceOfNearest) 
+				{
+					distanceOfNearest = distanceTmp;
+					indexOfNearest = i;
+				}
+			}
 			
-			
-			NSString *title = nil;
-			if (place.address == nil || [place.address length] ==0) 
-				title = self.searchBar.text;
-			else 
-				title = place.address;
-			[self setannotationManipulatingWithCoordinate:place.coordinate title:title subtitle:@" "];
-			//再加上
-			[self.mapView addAnnotation:self.annotationManipulating];
-			
-			//选中
-			NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
-			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
-
 		}
 		
+
+		BSKmlResult *place = [forwardGeocoder.results objectAtIndex:indexOfNearest];  /////用最近的
+	
 		
+		//先删除原来的annotation
+		[self.mapView removeAnnotation:self.annotationManipulating];
+		
+		// Zoom into the location		
+		[self.mapView setRegion:place.coordinateRegion animated:YES];
+		
+		NSString *title = nil;
+		if (place.address == nil || [place.address length] ==0) 
+			title = self.searchBar.text;
+		else 
+			title = place.address;
+		[self setannotationManipulatingWithCoordinate:place.coordinate title:title subtitle:@" " animated:NO];
+		
+		//再加上
+		[self.mapView addAnnotation:self.annotationManipulating];
+		
+		//选中
+		NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
+		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:2.5];
+	
+
 	}
 	else {
 		NSString *message = @"";
