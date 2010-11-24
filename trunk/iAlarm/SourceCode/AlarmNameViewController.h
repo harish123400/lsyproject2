@@ -13,9 +13,11 @@
 @interface AlarmNameViewController : AlarmModifyViewController {
 	
 	UITextField *alarmNameTextField;
+	UILabel *alarmPositionLabel;
 }
 
 @property(nonatomic,retain) IBOutlet UITextField *alarmNameTextField;
+@property(nonatomic,retain) IBOutlet UILabel *alarmPositionLabel;
 
 -(IBAction) textFieldDoneEditing:(id)sender;
 -(IBAction) textFieldChanged:(id)sender;

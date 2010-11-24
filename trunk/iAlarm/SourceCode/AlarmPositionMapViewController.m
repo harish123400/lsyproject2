@@ -292,11 +292,11 @@
 	 */
 	
 	
-	self.maskView.backgroundColor = [UIColor darkGrayColor];
+	self.maskView.backgroundColor = [UIColor blackColor];
 	[UIView beginAnimations:@"showsearchBar" context:NULL];
 	[UIView setAnimationDuration:0.75];
 	self.searchBar.alpha = 1.0f;
-	self.maskView.alpha = 0.9f;
+	self.maskView.alpha = 0.8f;
 	[UIView commitAnimations];
 	[self.searchBar becomeFirstResponder];  //search bar调用键盘
 }

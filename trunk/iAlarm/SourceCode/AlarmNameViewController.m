@@ -17,6 +17,7 @@
 
 
 @synthesize alarmNameTextField;
+@synthesize alarmPositionLabel;
 
 -(IBAction)doneButtonPressed:(id)sender
 {	
@@ -72,7 +73,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	alarmNameTextField.text = alarm.alarmName;
+	self.alarmNameTextField.text = alarm.alarmName;
+	self.alarmPositionLabel.text = alarm.position;
 	[self.view reloadInputViews];
 	//不好用，没道理
 	//self.navigationItem.backBarButtonItem.action = @selector(backButtonPressed:);
