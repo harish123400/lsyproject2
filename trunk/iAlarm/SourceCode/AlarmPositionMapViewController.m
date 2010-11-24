@@ -274,6 +274,7 @@
 	self.alarm.coordinate = self.alarmTemp.coordinate;
 	self.alarm.alarmName = self.alarmTemp.alarmName;
 	self.alarm.position = self.alarmTemp.position;
+	self.alarm.nameChanged = self.alarmTemp.nameChanged;
 	[self.parentController reflashView];
 	[self.navigationController popViewControllerAnimated:YES];
 }
@@ -468,6 +469,7 @@
 	{
 		case MKAnnotationViewDragStateStarting:  //开始拖拽的－紫色
 			((MKPinAnnotationView *)annotationView).pinColor = MKPinAnnotationColorPurple;
+			((YCAnnotation *)annotationView.annotation).annotationType = YCMapAnnotationTypeLocating;
 			break;
 		case MKAnnotationViewDragStateEnding:   //结束拖拽－显示地址
 			//坐标
@@ -518,12 +520,12 @@
 }
  */
 
--(void) setannotationManipulatingWithCoordinate:(CLLocationCoordinate2D)coordinate 
+-(void) setAnnotationManipulatingWithCoordinate:(CLLocationCoordinate2D)coordinate 
 										  title:(NSString*)title subtitle:(NSString*)subtitle
 									   animated:(BOOL)animated;
 {
 	if (!self.alarmTemp.nameChanged) {
-		if (title == nil) 
+		if (title == nil || [title length] == 0) 
 			title = kDefaultLocationAlarmName;
 		self.alarmTemp.alarmName = title;
 	}
@@ -541,6 +543,9 @@
 	}
 	else 
 		self.annotationManipulating.subtitle = self.alarmTemp.position;
+	
+	//激活Done按钮
+	self.navigationItem.rightBarButtonItem.enabled = YES;
 		
 	
 }
@@ -562,7 +567,7 @@
 	self.annotationManipulating.subtitle = @"";
 	[self performSelector:@selector(resetAnnotation:) withObject:self.alarmTemp.position afterDelay:0.5]; //延时生成，获得动画效果
 	*/
-	[self setannotationManipulatingWithCoordinate:placemark.coordinate title:title subtitle:subtitle animated:YES];
+	[self setAnnotationManipulatingWithCoordinate:placemark.coordinate title:title subtitle:subtitle animated:YES];
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
@@ -581,7 +586,7 @@
 	[self performSelector:@selector(resetAnnotation:) withObject:position afterDelay:0.5]; //延时生成，获得动画效果
 	 */
 	
-	[self setannotationManipulatingWithCoordinate:geocoder.coordinate title:nil subtitle:subtitle animated:YES];
+	[self setAnnotationManipulatingWithCoordinate:geocoder.coordinate title:nil subtitle:subtitle animated:YES];
 }
 
 #pragma mark -
@@ -690,12 +695,9 @@
 		// Zoom into the location		
 		[self.mapView setRegion:place.coordinateRegion animated:YES];
 		
-		NSString *title = nil;
-		if (place.address == nil || [place.address length] ==0) 
-			title = self.searchBar.text;
-		else 
-			title = place.address;
-		[self setannotationManipulatingWithCoordinate:place.coordinate title:title subtitle:@" " animated:NO];
+		NSString *title = self.searchBar.text;
+		NSString *subtitle = place.address!=nil ? place.address: @" " ;
+		[self setAnnotationManipulatingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
 		
 		//再加上
 		[self.mapView addAnnotation:self.annotationManipulating];
