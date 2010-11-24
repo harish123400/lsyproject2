@@ -69,6 +69,8 @@
 	alarmNameTextField.textColor = [UIUtility checkedCellTextColor];
 	[alarmNameTextField becomeFirstResponder];  //调用键盘
 	self.alarmNameTextField.enablesReturnKeyAutomatically = NO; 
+	
+	self.alarmPositionLabel.font = [UIFont systemFontOfSize:15];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -34,7 +34,9 @@
 @synthesize alarmTemp;
 @synthesize searchBar;
 @synthesize searchBarItem;
+@synthesize resetPinBarItem;
 @synthesize forwardGeocoder;
+
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
 {
     if (reverseGeocoder) {
@@ -216,7 +218,7 @@
 
 -(void)setDoneStyleToBarButtonItem:(UIBarButtonItem*)buttonItem
 {
-	buttonItem.style =  UIBarButtonItemStyleDone;
+	//buttonItem.style =  UIBarButtonItemStyleDone;
 }
 
 -(IBAction)currentLocationButtonPressed:(id)sender
@@ -433,25 +435,25 @@
 	{
 		case YCMapAnnotationTypeStandard:
 			pinView.pinColor = MKPinAnnotationColorRed;
-			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeStandardEnabledDrag:
 			pinView.draggable = YES;
 			pinView.pinColor = MKPinAnnotationColorRed;
-			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeLocating:
 			pinView.draggable = YES;
 			pinView.pinColor = MKPinAnnotationColorPurple;
-			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeMovingTarget:
 			pinView.pinColor = MKPinAnnotationColorGreen;
-			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		default:
 			pinView.pinColor = MKPinAnnotationColorRed;
-			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmarkicon.png"]];
+			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 	}
 	pinView.leftCalloutAccessoryView = sfIconView;
@@ -490,8 +492,8 @@
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
 {
-	self.currentLocationBarItem.style =  UIBarButtonItemStyleBordered;
-	self.currentPinBarItem.style =  UIBarButtonItemStyleBordered;
+	//self.currentLocationBarItem.style =  UIBarButtonItemStyleBordered;
+	//self.currentPinBarItem.style =  UIBarButtonItemStyleBordered;
 }
 
 /*

@@ -47,6 +47,7 @@
 	UIBarButtonItem *currentLocationBarItem;
 	UIBarButtonItem *currentPinBarItem;
 	UIBarButtonItem *searchBarItem;
+	UIBarButtonItem *resetPinBarItem;
 	
 	BOOL isCurrentLocationAtCenterRegion;   //当前位置在中心
 	BOOL isCurrentPinAtCenterRegion;        //当前图钉在中心
@@ -69,6 +70,7 @@
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentLocationBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentPinBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *searchBarItem;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *resetPinBarItem;
 @property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
 
 
