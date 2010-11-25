@@ -313,9 +313,9 @@
 	CATransition *animation = [CATransition animation];
 	//相关参数设置
 	[animation setDelegate:self];
-	[animation setDuration:0.85f];
-	[animation setTimingFunction:UIViewAnimationCurveEaseInOut];
-	[animation setType:kCATransitionMoveIn];
+	[animation setDuration:0.4f];
+	animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+	[animation setType:kCATransitionPush];
 	//向上卷的参数
 	if(!isCurl)
 	{
