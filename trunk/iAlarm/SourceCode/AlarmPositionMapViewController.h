@@ -23,6 +23,7 @@
 	
 	MKMapView* mapView;
 	UIControl *maskView;
+	UIControl *curlView;
 	UIActivityIndicatorView *activityIndicator;
 	IBOutlet UISearchBar *searchBar;
 	
@@ -48,6 +49,7 @@
 	UIBarButtonItem *currentPinBarItem;
 	UIBarButtonItem *searchBarItem;
 	UIBarButtonItem *resetPinBarItem;
+	UIBarButtonItem *pageCurlBarItem;
 	
 	BOOL isCurrentLocationAtCenterRegion;   //当前位置在中心
 	BOOL isCurrentPinAtCenterRegion;        //当前图钉在中心
@@ -66,12 +68,14 @@
 
 @property (nonatomic,retain) IBOutlet MKMapView* mapView;
 @property (nonatomic,retain) IBOutlet UIControl *maskView;
+@property (nonatomic,retain) IBOutlet UIControl *curlView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentLocationBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentPinBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *searchBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *resetPinBarItem;
 @property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *pageCurlBarItem;
 
 
 //@property (nonatomic,assign) BOOL isCenterWithcurrent;
@@ -95,6 +99,7 @@
 -(IBAction)currentPinButtonPressed:(id)sender;
 -(IBAction)searchButtonPressed:(id)sender;
 -(IBAction)hideSearchBar:(id)sender;
+-(IBAction)pageCurlButtonPressed:(id)sender;
 
 //缓存地图数据
 -(void)cacheMapData;

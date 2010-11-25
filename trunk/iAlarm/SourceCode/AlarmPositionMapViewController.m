@@ -24,6 +24,7 @@
 
 @synthesize mapView;
 @synthesize maskView;
+@synthesize curlView;
 @synthesize activityIndicator;
 @synthesize alarms;
 @synthesize newAlarm; 
@@ -36,6 +37,7 @@
 @synthesize searchBarItem;
 @synthesize resetPinBarItem;
 @synthesize forwardGeocoder;
+@synthesize pageCurlBarItem;
 
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
 {
@@ -219,6 +221,7 @@
 -(void)setDoneStyleToBarButtonItem:(UIBarButtonItem*)buttonItem
 {
 	//buttonItem.style =  UIBarButtonItemStyleDone;
+	//buttonItem.enabled = NO;
 }
 
 -(IBAction)currentLocationButtonPressed:(id)sender
@@ -321,6 +324,48 @@
 	[self.searchBar resignFirstResponder];  //search bar放弃键盘
 }
 
+-(IBAction)pageCurlButtonPressed:(id)sender
+{
+	static BOOL isCurl = NO;
+	
+	//创建CATransition对象
+	CATransition *animation = [CATransition animation];
+	//相关参数设置
+	[animation setDelegate:self];
+	[animation setDuration:0.35f];
+	[animation setTimingFunction:UIViewAnimationCurveEaseInOut];
+	[animation setType:kCATransitionMoveIn];
+	//向上卷的参数
+	if(!isCurl)
+	{
+		//设置动画类型为pageCurl，并只卷一半
+		[animation setType:@"pageCurl"];   
+		animation.endProgress=0.65;
+	}
+	//向下卷的参数
+	else
+	{
+		//设置动画类型为pageUnCurl，并从一半开始向下卷
+		[animation setType:@"pageUnCurl"];
+		animation.startProgress=0.35;
+	}
+	//卷的过程完成后停止，并且不从层中移除动画
+	[animation setFillMode:kCAFillModeForwards];
+	[animation setSubtype:kCATransitionFromBottom];
+	[animation setRemovedOnCompletion:NO];
+	
+	isCurl=!isCurl;
+	
+	[self.view exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
+	[[self.view layer] addAnimation:animation forKey:@"pageCurlAnimation"];
+	
+	if (isCurl) 
+		self.pageCurlBarItem.style = UIBarButtonItemStyleDone;
+	else 
+		self.pageCurlBarItem.style = UIBarButtonItemStyleBordered;
+
+}
+
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -332,6 +377,10 @@
 	mapView.delegate = self;
 	self->isFirstShow = YES;
 	self.navigationItem.rightBarButtonItem.enabled = NO;//Done按钮
+	
+	//curview
+	[self.view insertSubview:self.curlView belowSubview:self.mapView];
+	
 	
 	//search bar
 	self.searchBar.delegate = self;
@@ -644,14 +693,10 @@
 #pragma mark BSForwardGeocoderDelegate
 -(void)forwardGeocoderError:(NSString *)errorMessage
 {
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" 
-													message:errorMessage
-												   delegate:nil 
-										  cancelButtonTitle:@"OK" 
-										  otherButtonTitles: nil];
-	[alert show];
-	[alert release];
-	
+	[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
+					alertTitle:kAlertTitleWhenSearchMap 
+			 cancelButtonTitle:kAlertBtnOK 
+					  delegate:nil];
 }
 
 -(void)forwardGeocoderFoundLocation
@@ -711,23 +756,34 @@
 
 	}
 	else {
-		NSString *message = @"";
 		
 		switch (forwardGeocoder.status) {
 			case G_GEO_BAD_KEY:
-				message = @"The API key is invalid.";
+				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
+								alertTitle:kAlertTitleWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnOK 
+								  delegate:nil];
 				break;
 				
 			case G_GEO_UNKNOWN_ADDRESS:
-				message = [NSString stringWithFormat:@"Could not find %@", forwardGeocoder.searchQuery];
+				[UIUtility simpleAlertBody:kAlertMsgNoResultsWhenSearchMap 
+								alertTitle:kAlertTitleWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnOK 
+								  delegate:nil];
 				break;
 				
 			case G_GEO_TOO_MANY_QUERIES:
-				message = @"Too many queries has been made for this API key.";
+				[UIUtility simpleAlertBody:kAlertMsgTooManyQueriesWhenSearchMap 
+								alertTitle:kAlertTitleWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnOK 
+								  delegate:nil];
 				break;
 				
 			case G_GEO_SERVER_ERROR:
-				message = @"Server error, please try again.";
+				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
+								alertTitle:kAlertTitleWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnOK 
+								  delegate:nil];
 				break;
 				
 				
@@ -735,13 +791,6 @@
 				break;
 		}
 		
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Information" 
-														message:message
-													   delegate:nil 
-											  cancelButtonTitle:@"OK" 
-											  otherButtonTitles: nil];
-		[alert show];
-		[alert release];
 	}
 }
 

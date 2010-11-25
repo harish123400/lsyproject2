@@ -6,10 +6,12 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "LocalizedString.h"
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
-#define kDefaultLocationAlarmName NSLocalizedString(@"Location Alarm",@"默认的空间闹钟的名字")
+
+
 
 @class MKPlacemark;
 @interface UIUtility : NSObject {
