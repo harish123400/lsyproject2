@@ -25,6 +25,7 @@
 @synthesize mapView;
 @synthesize maskView;
 @synthesize curlView;
+@synthesize curlbackgroundView;
 @synthesize activityIndicator;
 @synthesize alarms;
 @synthesize newAlarm; 
@@ -38,6 +39,7 @@
 @synthesize resetPinBarItem;
 @synthesize forwardGeocoder;
 @synthesize pageCurlBarItem;
+@synthesize mapTypeSegmented;
 
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
 {
@@ -218,60 +220,12 @@
 #pragma mark Event
 
 
+
 -(void)setDoneStyleToBarButtonItem:(UIBarButtonItem*)buttonItem
 {
 	//buttonItem.style =  UIBarButtonItemStyleDone;
 	//buttonItem.enabled = NO;
 }
-
--(IBAction)currentLocationButtonPressed:(id)sender
-{
-	/*
-	if (self.mapView.userLocation.location)
-	{
-		self->isCurrentLocationAtCenterRegion = YES;
-		//设置屏幕中心，与范围
-		CLLocationCoordinate2D coordOfCurrent = self.mapView.userLocation.location.coordinate;
-		self->defaultMapRegion.center = coordOfCurrent;
-		[self setRegion:self->defaultMapRegion animated:YES];
-	}
-	 */
-	if (self.mapView.userLocation.location)
-	{
-		self->isCurrentLocationAtCenterRegion = YES;
-		//设置屏幕中心，与范围
-		CLLocationCoordinate2D coordOfCurrent = self.mapView.userLocation.location.coordinate;
-		self->defaultMapRegion.center = coordOfCurrent;
-		[self setRegion:self->defaultMapRegion animated:YES];
-		[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentLocationBarItem afterDelay:0.2];
-	}
-}
--(IBAction)currentPinButtonPressed:(id)sender
-{	
-	if ([self isValidCoordinate:self.annotationManipulating.coordinate])
-	{
-		//仅仅设置中心
-		[self.mapView setCenterCoordinate:self.annotationManipulating.coordinate animated:YES];
-		[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.2];
-	}
-}
-
--(IBAction)resetPinButtonPressed:(id)sender
-{
-	[self.mapView removeAnnotation:self.annotationManipulating];
-	self.annotationManipulating.coordinate = self.mapView.region.center;
-	[self.mapView addAnnotation:self.annotationManipulating];
-	//反转坐标－地址
-	((YCAnnotation*) self.annotationManipulating).subtitle = @"";
-	reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
-	[reverseGeocoder start];
-	//选中
-	NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
-	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
-	
-}
-
-
 
 -(IBAction)doneButtonPressed:(id)sender
 {	
@@ -285,18 +239,53 @@
 }
 
 
+-(IBAction)currentLocationButtonPressed:(id)sender
+{
+	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	if (self.mapView.userLocation.location)
+	{
+		self->isCurrentLocationAtCenterRegion = YES;
+		//设置屏幕中心，与范围
+		CLLocationCoordinate2D coordOfCurrent = self.mapView.userLocation.location.coordinate;
+		self->defaultMapRegion.center = coordOfCurrent;
+		[self setRegion:self->defaultMapRegion animated:YES];
+		[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentLocationBarItem afterDelay:0.2];
+	}
+}
+-(IBAction)currentPinButtonPressed:(id)sender
+{	
+	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	if ([self isValidCoordinate:self.annotationManipulating.coordinate])
+	{
+		//仅仅设置中心
+		[self.mapView setCenterCoordinate:self.annotationManipulating.coordinate animated:YES];
+		[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.2];
+	}
+}
+
+-(IBAction)resetPinButtonPressed:(id)sender
+{
+	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	[self.mapView removeAnnotation:self.annotationManipulating];
+	self.annotationManipulating.coordinate = self.mapView.region.center;
+	[self.mapView addAnnotation:self.annotationManipulating];
+	//反转坐标－地址
+	((YCAnnotation*) self.annotationManipulating).subtitle = @"";
+	reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
+	[reverseGeocoder start];
+	//选中
+	NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
+	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
+	
+}
 
 -(IBAction)searchButtonPressed:(id)sender
 {
-	/*
-	self.maskView.alpha = 0.90;
-	self.maskView.backgroundColor = [UIColor darkGrayColor];
-	
-	self.searchBar.hidden = NO;
-	self.maskView.hidden = NO;
-	[self.searchBar becomeFirstResponder];  //search bar调用键盘
-	 */
-	
+
+	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
 	
 	self.maskView.backgroundColor = [UIColor blackColor];
 	[UIView beginAnimations:@"showsearchBar" context:NULL];
@@ -309,13 +298,6 @@
 
 -(IBAction)hideSearchBar:(id)sender
 {
-	/*
-	self.searchBar.hidden = YES;
-	self.maskView.hidden = YES;
-	[self.searchBar resignFirstResponder];  //search bar放弃键盘
-	 */
-	
-	
 	[UIView beginAnimations:@"hideSearchBar" context:NULL];
 	[UIView setAnimationDuration:0.75];
 	self.searchBar.alpha = 0.0f;
@@ -326,13 +308,12 @@
 
 -(IBAction)pageCurlButtonPressed:(id)sender
 {
-	static BOOL isCurl = NO;
 	
 	//创建CATransition对象
 	CATransition *animation = [CATransition animation];
 	//相关参数设置
 	[animation setDelegate:self];
-	[animation setDuration:0.35f];
+	[animation setDuration:0.85f];
 	[animation setTimingFunction:UIViewAnimationCurveEaseInOut];
 	[animation setType:kCATransitionMoveIn];
 	//向上卷的参数
@@ -341,6 +322,8 @@
 		//设置动画类型为pageCurl，并只卷一半
 		[animation setType:@"pageCurl"];   
 		animation.endProgress=0.65;
+		
+		self.pageCurlBarItem.style = UIBarButtonItemStyleDone;
 	}
 	//向下卷的参数
 	else
@@ -348,22 +331,39 @@
 		//设置动画类型为pageUnCurl，并从一半开始向下卷
 		[animation setType:@"pageUnCurl"];
 		animation.startProgress=0.35;
+		
+		self.pageCurlBarItem.style = UIBarButtonItemStyleBordered;
 	}
 	//卷的过程完成后停止，并且不从层中移除动画
 	[animation setFillMode:kCAFillModeForwards];
 	[animation setSubtype:kCATransitionFromBottom];
 	[animation setRemovedOnCompletion:NO];
 	
-	isCurl=!isCurl;
 	
-	[self.view exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
-	[[self.view layer] addAnimation:animation forKey:@"pageCurlAnimation"];
-	
-	if (isCurl) 
-		self.pageCurlBarItem.style = UIBarButtonItemStyleDone;
-	else 
-		self.pageCurlBarItem.style = UIBarButtonItemStyleBordered;
+	[self.curlbackgroundView exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
+	[[self.curlbackgroundView layer] addAnimation:animation forKey:@"pageCurlAnimation"];
 
+	isCurl=!isCurl;
+
+}
+
+-(IBAction)mapTypeSegmentedChanged:(id)sender;
+{
+	switch ([sender selectedSegmentIndex]) 
+	{
+		case 0:
+			self.mapView.mapType = MKMapTypeStandard;
+			break;
+		case 1:
+			self.mapView.mapType = MKMapTypeSatellite;
+			break;
+		case 2:
+			self.mapView.mapType = MKMapTypeHybrid;
+			break;
+		default:
+			break;
+	}
+    [self pageCurlButtonPressed:nil];
 }
 
 
@@ -379,8 +379,13 @@
 	self.navigationItem.rightBarButtonItem.enabled = NO;//Done按钮
 	
 	//curview
-	[self.view insertSubview:self.curlView belowSubview:self.mapView];
+	//[self.view insertSubview:self.curlView belowSubview:self.mapView];
+	//[self.view insertSubview:self.curlView atIndex:1];
 	
+	//Map type segmented
+	[self.mapTypeSegmented setTitle:kMapTypeNameStandard forSegmentAtIndex:0];
+	[self.mapTypeSegmented setTitle:KMapTypeNameSatellite forSegmentAtIndex:1];
+	[self.mapTypeSegmented setTitle:KMapTypeNameHybrid forSegmentAtIndex:2];
 	
 	//search bar
 	self.searchBar.delegate = self;

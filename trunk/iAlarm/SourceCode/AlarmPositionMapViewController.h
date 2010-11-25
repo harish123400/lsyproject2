@@ -24,6 +24,7 @@
 	MKMapView* mapView;
 	UIControl *maskView;
 	UIControl *curlView;
+	UIView *curlbackgroundView;
 	UIActivityIndicatorView *activityIndicator;
 	IBOutlet UISearchBar *searchBar;
 	
@@ -62,6 +63,10 @@
 	
 	BSForwardGeocoder *forwardGeocoder;
 	
+	BOOL isCurl;  //是否已经半卷
+	
+	UISegmentedControl *mapTypeSegmented;
+	
 	
 	
 }
@@ -69,6 +74,7 @@
 @property (nonatomic,retain) IBOutlet MKMapView* mapView;
 @property (nonatomic,retain) IBOutlet UIControl *maskView;
 @property (nonatomic,retain) IBOutlet UIControl *curlView;
+@property (nonatomic,retain) IBOutlet UIView *curlbackgroundView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentLocationBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentPinBarItem;
@@ -76,6 +82,7 @@
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *resetPinBarItem;
 @property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *pageCurlBarItem;
+@property (nonatomic,retain) IBOutlet UISegmentedControl *mapTypeSegmented;
 
 
 //@property (nonatomic,assign) BOOL isCenterWithcurrent;
@@ -100,6 +107,8 @@
 -(IBAction)searchButtonPressed:(id)sender;
 -(IBAction)hideSearchBar:(id)sender;
 -(IBAction)pageCurlButtonPressed:(id)sender;
+-(IBAction)mapTypeSegmentedChanged:(id)sender;
+
 
 //缓存地图数据
 -(void)cacheMapData;
