@@ -27,19 +27,22 @@
 @synthesize curlView;
 @synthesize curlbackgroundView;
 @synthesize activityIndicator;
+@synthesize searchBar;
+@synthesize mapTypeSegmented;
+@synthesize currentLocationBarItem;
+@synthesize currentPinBarItem;
+@synthesize searchBarItem;
+@synthesize resetPinBarItem;
+@synthesize pageCurlBarItem;
+
+@synthesize forwardGeocoder;
+
+@synthesize annotationManipulating;
 @synthesize alarms;
 @synthesize newAlarm; 
 @synthesize mapAnnotations;
-@synthesize currentLocationBarItem;
-@synthesize currentPinBarItem;
-@synthesize annotationManipulating;
 @synthesize alarmTemp;
-@synthesize searchBar;
-@synthesize searchBarItem;
-@synthesize resetPinBarItem;
-@synthesize forwardGeocoder;
-@synthesize pageCurlBarItem;
-@synthesize mapTypeSegmented;
+
 
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
 {
@@ -729,21 +732,38 @@
 #pragma mark -
 #pragma mark Memory management
 - (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	self.mapView = nil;            
+	self.maskView = nil;                           
+	self.curlView;                           
+	self.curlbackgroundView = nil;                    
+	self.activityIndicator = nil;         
+	self.searchBar = nil;
+	self.mapTypeSegmented = nil;          
+	self.currentLocationBarItem = nil;       
+	self.currentPinBarItem = nil;            
+	self.searchBarItem = nil;                
+	self.resetPinBarItem = nil;              
+	self.pageCurlBarItem = nil;              
+
 }
 
 
 - (void)dealloc {
     [super dealloc];
+	[self->myTimer release];
+	[self->reverseGeocoder release];
+	[self.forwardGeocoder release];
+	[self.alarms release];                       
+	[self.mapAnnotations release];        
+	[self.alarmTemp release];
+	[self.annotationManipulating release];  
 }
 
 

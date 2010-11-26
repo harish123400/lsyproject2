@@ -12,6 +12,7 @@
 #import "YCLocationManager.h"
 #import "YCLog.h"
 #import "UIUtility.h"
+#import "AlarmPositionMapViewController.h"
 
 
 @implementation iAlarmAppDelegate
@@ -280,6 +281,19 @@ BOOL lo;
     [tabBarController release];
     [window release];
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark UITabBarControllerDelegate
+
+- (void)tabBarController:(UITabBarController *)tabBarController 
+ didSelectViewController:(UIViewController *)viewController
+{
+	if ([viewController isKindOfClass:[AlarmPositionMapViewController class]]) 
+	{
+		((AlarmPositionMapViewController*)viewController).alarms = [DataUtility alarmArray];
+		((AlarmPositionMapViewController*)viewController).alarm = [DataUtility createAlarm];
+	}
 }
 
 @end

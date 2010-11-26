@@ -21,53 +21,34 @@
 {
 	NSTimer *myTimer;
 	
-	MKMapView* mapView;
-	UIControl *maskView;
-	UIControl *curlView;
-	UIView *curlbackgroundView;
-	UIActivityIndicatorView *activityIndicator;
-	IBOutlet UISearchBar *searchBar;
-	
-
-	MKCoordinateRegion defaultMapRegion;
-	BOOL isFirstShow;
-	BOOL isAlreadyCenterCoord;    //中心坐标是否准备好
-
-	NSArray *alarms;            //需要在地图上显示的
-	
-	//BOOL enablingNeting;        //网络是否可用
-	//BOOL enablingLocation;      //定位是否可用
-	
-	NSMutableArray *mapAnnotations;  //地图标签集合
-	
-	//BOOL isInTab;                  //视图是在Tab上显示的
-	
 	MKReverseGeocoder *reverseGeocoder;
+	BSForwardGeocoder *forwardGeocoder;
 	
-	//YCAnnotation *dragingAnnotation; 
+	IBOutlet MKMapView* mapView;            
+	IBOutlet UIControl *maskView;                           //覆盖View
+	IBOutlet UIControl *curlView;                           //地图卷起后，显示的view
+	IBOutlet UIView *curlbackgroundView;                    //maskView,curlView的背景view。做卷起动画时候需要
+	IBOutlet UIActivityIndicatorView *activityIndicator;    //覆盖View上的等待指示器
+	IBOutlet UISearchBar *searchBar;
+	IBOutlet UISegmentedControl *mapTypeSegmented;          //curlView上的按钮控件
+	IBOutlet UIBarButtonItem *currentLocationBarItem;       //地图转到－>当前位置
+	IBOutlet UIBarButtonItem *currentPinBarItem;            //地图转到－>当前图钉
+	IBOutlet UIBarButtonItem *searchBarItem;                //显示搜索bar
+	IBOutlet UIBarButtonItem *resetPinBarItem;              //重放当前图钉
+	IBOutlet UIBarButtonItem *pageCurlBarItem;              //卷起地图
 	
-	UIBarButtonItem *currentLocationBarItem;
-	UIBarButtonItem *currentPinBarItem;
-	UIBarButtonItem *searchBarItem;
-	UIBarButtonItem *resetPinBarItem;
-	UIBarButtonItem *pageCurlBarItem;
-	
+	BOOL newAlarm;                //新创建的Alarm
+	BOOL isFirstShow;             //第一次显示
+	BOOL isAlreadyCenterCoord;    //中心坐标是否准备好
+	BOOL isCurl;                  //是否已经半卷
 	BOOL isCurrentLocationAtCenterRegion;   //当前位置在中心
 	BOOL isCurrentPinAtCenterRegion;        //当前图钉在中心
 	
-	BOOL newAlarm;  //新创建的Alarm
-	
-	YCAnnotation *annotationManipulating;  //正在操作的
-	
+	MKCoordinateRegion defaultMapRegion;   //地图的可视范围，设置该变量方便代码编写
+	NSArray *alarms;                       //需要在地图上显示的
+	NSMutableArray *mapAnnotations;        //地图标签集合
 	YCAlarmEntity *alarmTemp;
-	
-	BSForwardGeocoder *forwardGeocoder;
-	
-	BOOL isCurl;  //是否已经半卷
-	
-	UISegmentedControl *mapTypeSegmented;
-	
-	
+	YCAnnotation *annotationManipulating;  //正在操作的
 	
 }
 
@@ -76,29 +57,20 @@
 @property (nonatomic,retain) IBOutlet UIControl *curlView;
 @property (nonatomic,retain) IBOutlet UIView *curlbackgroundView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
+@property (nonatomic,retain) IBOutlet UISegmentedControl *mapTypeSegmented;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentLocationBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentPinBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *searchBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *resetPinBarItem;
-@property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *pageCurlBarItem;
-@property (nonatomic,retain) IBOutlet UISegmentedControl *mapTypeSegmented;
-
-
-//@property (nonatomic,assign) BOOL isCenterWithcurrent;
-@property (nonatomic,retain) NSArray *alarms;
-
-//@property (nonatomic,assign) BOOL enablingNeting;
-//@property (nonatomic,assign) BOOL enablingLocation;
-
-@property (nonatomic,retain) NSMutableArray *mapAnnotations;
-@property (nonatomic,assign) BOOL newAlarm;
-
-@property (nonatomic,retain) YCAnnotation *annotationManipulating;
-
-@property (nonatomic,retain) YCAlarmEntity *alarmTemp;
 
 @property (nonatomic, retain) BSForwardGeocoder *forwardGeocoder;
+@property (nonatomic,assign) BOOL newAlarm;
+@property (nonatomic,retain) NSArray *alarms;
+@property (nonatomic,retain) NSMutableArray *mapAnnotations;
+@property (nonatomic,retain) YCAnnotation *annotationManipulating;
+@property (nonatomic,retain) YCAlarmEntity *alarmTemp;
 
 
 -(IBAction)currentLocationButtonPressed:(id)sender;
@@ -109,15 +81,19 @@
 -(IBAction)pageCurlButtonPressed:(id)sender;
 -(IBAction)mapTypeSegmentedChanged:(id)sender;
 
+/////////////////////////////////////////////
+//private函数
 
-//缓存地图数据
+////缓存地图数据
 -(void)cacheMapData;
-//显示覆盖视图
+////显示覆盖视图
 -(void)showMaskView;
-//关掉覆盖视图
+////关掉覆盖视图
 -(void)closeMaskViewWithAnimated:(BOOL)animated;
-//显示地图
+////显示地图
 -(void)showMapView;
+
+/////////////////////////////////////////////
 
 
 @end

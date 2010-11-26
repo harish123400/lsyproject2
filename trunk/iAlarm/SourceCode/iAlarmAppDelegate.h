@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface iAlarmAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate> {
+@interface iAlarmAppDelegate : NSObject 
+<UIApplicationDelegate, UITabBarControllerDelegate, UITabBarControllerDelegate> 
+{
     UIWindow *window;
     UITabBarController *tabBarController;
 	UIBackgroundTaskIdentifier	bgTask;
