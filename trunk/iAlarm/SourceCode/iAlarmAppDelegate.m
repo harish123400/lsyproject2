@@ -131,6 +131,8 @@
     [window addSubview:tabBarController.view];
     [window makeKeyAndVisible];
 	
+	//tabBarController.selectedIndex = 3;
+	
 	YCLocationManager * ycLocationManager = [YCLocationManager locationManagerSigleInstance];
 	[ycLocationManager start];
 	[self resetMonitoredRegions];

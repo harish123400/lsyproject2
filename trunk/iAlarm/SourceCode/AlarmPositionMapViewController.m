@@ -133,7 +133,7 @@
 	return YES;
 }
 
-//选中Annotation －显示的标题
+//选中Annotation －显示标题
 -(void)selectAnnotationAtIndex:(NSNumber*)index
 {
 	NSInteger nIndex = [index intValue];
@@ -223,8 +223,7 @@
 
 -(void)setDoneStyleToBarButtonItem:(UIBarButtonItem*)buttonItem
 {
-	//buttonItem.style =  UIBarButtonItemStyleDone;
-	//buttonItem.enabled = NO;
+	buttonItem.style =  UIBarButtonItemStyleDone;
 }
 
 -(IBAction)doneButtonPressed:(id)sender
@@ -250,7 +249,7 @@
 		CLLocationCoordinate2D coordOfCurrent = self.mapView.userLocation.location.coordinate;
 		self->defaultMapRegion.center = coordOfCurrent;
 		[self setRegion:self->defaultMapRegion animated:YES];
-		[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentLocationBarItem afterDelay:0.2];
+		//[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentLocationBarItem afterDelay:0.2];
 	}
 }
 -(IBAction)currentPinButtonPressed:(id)sender
@@ -261,7 +260,7 @@
 	{
 		//仅仅设置中心
 		[self.mapView setCenterCoordinate:self.annotationManipulating.coordinate animated:YES];
-		[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.2];
+		//[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.2];
 	}
 }
 
@@ -276,10 +275,6 @@
 	((YCAnnotation*) self.annotationManipulating).subtitle = @"";
 	reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
 	[reverseGeocoder start];
-	//选中
-	NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
-	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
-	
 }
 
 -(IBAction)searchButtonPressed:(id)sender
@@ -315,13 +310,13 @@
 	[animation setDelegate:self];
 	[animation setDuration:0.4f];
 	animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-	[animation setType:kCATransitionPush];
+	
 	//向上卷的参数
 	if(!isCurl)
 	{
 		//设置动画类型为pageCurl，并只卷一半
-		[animation setType:@"pageCurl"];   
-		animation.endProgress=0.65;
+		[animation setType:@"pageCurl"];
+		animation.endProgress=0.70;
 		
 		self.pageCurlBarItem.style = UIBarButtonItemStyleDone;
 	}
@@ -330,12 +325,13 @@
 	{
 		//设置动画类型为pageUnCurl，并从一半开始向下卷
 		[animation setType:@"pageUnCurl"];
-		animation.startProgress=0.35;
+		animation.startProgress=0.30;
 		
 		self.pageCurlBarItem.style = UIBarButtonItemStyleBordered;
 	}
 	//卷的过程完成后停止，并且不从层中移除动画
-	[animation setFillMode:kCAFillModeForwards];
+	//[animation setFillMode:kCAFillModeForwards];
+	[animation setFillMode: @"extended"];
 	[animation setSubtype:kCATransitionFromBottom];
 	[animation setRemovedOnCompletion:NO];
 	
@@ -378,10 +374,6 @@
 	self->isFirstShow = YES;
 	self.navigationItem.rightBarButtonItem.enabled = NO;//Done按钮
 	
-	//curview
-	//[self.view insertSubview:self.curlView belowSubview:self.mapView];
-	//[self.view insertSubview:self.curlView atIndex:1];
-	
 	//Map type segmented
 	[self.mapTypeSegmented setTitle:kMapTypeNameStandard forSegmentAtIndex:0];
 	[self.mapTypeSegmented setTitle:KMapTypeNameSatellite forSegmentAtIndex:1];
@@ -397,6 +389,7 @@
 	
 	self.alarmTemp = [self.alarm copy];
 	
+	//设置mapview的可视区域
 	//self->defaultMapRegion.span = [YCParam paramSingleInstance].defaultMapSpan;
 	//self->defaultMapRegion.center = self.alarmTemp.coordinate;
 	self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,1500.0,1500.0);
@@ -411,7 +404,7 @@
 {
 	[super viewWillAppear:animated];
 	self.title = NSLocalizedString(@"位置",@"视图标题");
-	[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.5];
+	//[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.5];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -424,20 +417,22 @@
 
 #pragma mark - 
 #pragma mark - MKMapViewDelegate
-- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
-{
-	NSLog(@"开始加载地图");
-}
 
-
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
-	NSLog(@"完成加载地图");
-}
+	for (NSUInteger i=0; i<views.count; i++) 
+	{
+		MKAnnotationView *annotationView = [views objectAtIndex:i];
+		if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) 
+		{
+			YCAnnotation *annotation = annotationView.annotation;
+			//if (annotation.annotationType == YCMapAnnotationTypeLocating) //注意:如果有多个图钉iew,能不能都选中能？
+			//选中
+			NSInteger index = [self.mapAnnotations indexOfObject:annotation];
+			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:0.5];
 
-- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
-{
-	NSLog(@"失败加载地图");
+		}
+	}
 }
 
 
@@ -550,31 +545,9 @@
 	//self.currentPinBarItem.style =  UIBarButtonItemStyleBordered;
 }
 
-/*
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-	
-	//设置当前位置bar按钮风格
-	if (self->isCurrentLocationAtCenterRegion) 
-	{
-		self.currentLocationBarItem.style =  UIBarButtonItemStyleDone;
-		self->isCurrentLocationAtCenterRegion = NO;
-	}else {
-		self.currentLocationBarItem.style =  UIBarButtonItemStyleBordered;
-	}
-	 
-}
- */
-
 #pragma mark -
 #pragma mark MKReverseGeocoderDelegate
 
-/*
--(void)resetAnnotationWithSubtitle:(NSString*)subtitle
-{
-	self.annotationManipulating.subtitle = subtitle;
-}
- */
 
 -(void) setAnnotationManipulatingWithCoordinate:(CLLocationCoordinate2D)coordinate 
 										  title:(NSString*)title subtitle:(NSString*)subtitle
@@ -611,18 +584,6 @@
 	NSString *title = [UIUtility titleStringFromPlacemark:placemark];
 	NSString *subtitle = [UIUtility positionStringFromPlacemark:placemark];
 	
-	/*
-	if (!self.alarmTemp.nameChanged) {
-		if (title == nil) 
-			title = kDefaultLocationAlarmName;
-		self.alarmTemp.alarmName = title;
-	}
-	self.alarmTemp.position = position;
-	
-	self.annotationManipulating.title = self.alarmTemp.alarmName;
-	self.annotationManipulating.subtitle = @"";
-	[self performSelector:@selector(resetAnnotation:) withObject:self.alarmTemp.position afterDelay:0.5]; //延时生成，获得动画效果
-	*/
 	[self setAnnotationManipulatingWithCoordinate:placemark.coordinate title:title subtitle:subtitle animated:YES];
 }
 
@@ -634,37 +595,8 @@
 	NSString *lonstr = [UIUtility convertLongitude:lon decimal:0];
 	NSString *subtitle = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
 	
-	/*
-	self.alarmTemp.position = subtitle;
-	
-	self.annotationManipulating.title = self.alarmTemp.alarmName;
-	self.annotationManipulating.subtitle = @"";
-	[self performSelector:@selector(resetAnnotation:) withObject:position afterDelay:0.5]; //延时生成，获得动画效果
-	 */
-	
 	[self setAnnotationManipulatingWithCoordinate:geocoder.coordinate title:nil subtitle:subtitle animated:YES];
 }
-
-#pragma mark -
-#pragma mark Memory management
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-
-- (void)dealloc {
-    [super dealloc];
-}
-
 
 #pragma mark -
 #pragma mark YCNavSuperControllerProtocol
@@ -753,14 +685,9 @@
 		
 		//再加上
 		[self.mapView addAnnotation:self.annotationManipulating];
-		
-		//选中
-		NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
-		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:2.5];
-	
+			
 
-	}
-	else {
+	}else {
 		
 		switch (forwardGeocoder.status) {
 			case G_GEO_BAD_KEY:
@@ -797,6 +724,26 @@
 		}
 		
 	}
+}
+
+#pragma mark -
+#pragma mark Memory management
+- (void)didReceiveMemoryWarning {
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+
+- (void)dealloc {
+    [super dealloc];
 }
 
 
