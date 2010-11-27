@@ -37,11 +37,12 @@
 
 @synthesize forwardGeocoder;
 
-@synthesize annotationManipulating;
 @synthesize alarms;
 @synthesize newAlarm; 
-@synthesize mapAnnotations;
 @synthesize alarmTemp;
+@synthesize mapAnnotations;
+@synthesize annotationAlarmEditing;
+@synthesize annotationManipulating;
 
 
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
@@ -89,16 +90,33 @@
 	
 	
 	//先缩小取得地图数据
-	[self.mapView setRegion:self->defaultMapRegion animated:NO];
+	//[self.mapView setRegion:self->defaultMapRegion animated:NO];
 	
 	//放大
-	MKCoordinateRegion regionTmp;
 	MKCoordinateSpan spanTmp = {90.0,90.0};
-	regionTmp.span = spanTmp;
-	regionTmp.center = self->defaultMapRegion.center;
-	[self.mapView setRegion:regionTmp animated:NO];
+	MKCoordinateRegion regionTmp = MKCoordinateRegionMake(self.mapView.region.center, spanTmp);
+	[self.mapView setRegion:regionTmp animated:YES];
 	
 }
+
+
+- (void)animateToWorld:(id/*CLLocationCoordinate2D*/)targetObj
+{   
+	CLLocationCoordinate2D target;
+	[targetObj getValue:&target];
+	
+    MKCoordinateRegion current = mapView.region;
+    MKCoordinateRegion zoomOut = { { (current.center.latitude + target.latitude)/2.0 , (current.center.longitude + target.longitude)/2.0 }, {90, 90} };
+    [mapView setRegion:zoomOut animated:YES];
+}
+
+- (void)animateToPlace:(id/*MKCoordinateRegion*/)targetObj
+{
+	MKCoordinateRegion target;
+	[targetObj getValue:&target];
+    [mapView setRegion:target animated:YES];
+}
+ 
 
 
 -(BOOL) isValidCoordinate:(CLLocationCoordinate2D)coordinate
@@ -157,7 +175,7 @@
 		[self setRegion:[YCParam paramSingleInstance].lastLoadMapRegion animated:YES];
 	}
 	
-	NSInteger index = [self.mapAnnotations indexOfObject:self.annotationManipulating];
+	NSInteger index = [self.mapAnnotations indexOfObject:self.annotationAlarmEditing];
 	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
 	
 	//显示完成后，把maskview的触摸事件绑定
@@ -201,7 +219,7 @@
 		}
 		
 		if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
-			self.annotationManipulating = annotation;
+			self.annotationAlarmEditing = annotation;
 		
 		
 		[array addObject:annotation];
@@ -259,10 +277,10 @@
 {	
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
 	
-	if ([self isValidCoordinate:self.annotationManipulating.coordinate])
+	if ([self isValidCoordinate:self.annotationAlarmEditing.coordinate])
 	{
 		//仅仅设置中心
-		[self.mapView setCenterCoordinate:self.annotationManipulating.coordinate animated:YES];
+		[self.mapView setCenterCoordinate:self.annotationAlarmEditing.coordinate animated:YES];
 		//[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.2];
 	}
 }
@@ -271,12 +289,13 @@
 {
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
 	
-	[self.mapView removeAnnotation:self.annotationManipulating];
-	self.annotationManipulating.coordinate = self.mapView.region.center;
-	[self.mapView addAnnotation:self.annotationManipulating];
+	[self.mapView removeAnnotation:self.annotationAlarmEditing];
+	self.annotationAlarmEditing.coordinate = self.mapView.region.center;
+	[self.mapView addAnnotation:self.annotationAlarmEditing];
 	//反转坐标－地址
-	((YCAnnotation*) self.annotationManipulating).subtitle = @"";
-	reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
+	self.annotationManipulating = self.annotationAlarmEditing;
+	((YCAnnotation*) self.annotationAlarmEditing).subtitle = @"";
+	reverseGeocoder = [self reverseGeocoder:self.annotationAlarmEditing.coordinate]; 
 	[reverseGeocoder start];
 }
 
@@ -421,11 +440,29 @@
 #pragma mark - 
 #pragma mark - MKMapViewDelegate
 
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+	self.annotationManipulating = userLocation;
+	reverseGeocoder = [self reverseGeocoder:userLocation.coordinate]; 
+	[reverseGeocoder start];
+	
+}
+
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
 	for (NSUInteger i=0; i<views.count; i++) 
 	{
 		MKAnnotationView *annotationView = [views objectAtIndex:i];
+		
+		//当前位置
+		if ([annotationView.annotation isKindOfClass:[MKUserLocation class]]) 
+		{
+			UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
+			annotationView.leftCalloutAccessoryView = sfIconView;
+			[sfIconView release];
+		}
+		
+		
 		if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) 
 		{
 			YCAnnotation *annotation = annotationView.annotation;
@@ -447,7 +484,7 @@
 	
 	//取得当前操作的Annotation
 	MKAnnotationView *annotationView = (MKAnnotationView *)((UIView*)sender).superview.superview;
-	self.annotationManipulating = annotationView.annotation;
+	self.annotationAlarmEditing = annotationView.annotation;
 	
 	AlarmNameViewController *nameViewCtl = [[AlarmNameViewController alloc] initWithNibName:@"AlarmNameViewController" bundle:nil];
 	nameViewCtl.alarm = self.alarmTemp;
@@ -459,8 +496,29 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+	/*
+	static NSString* curViewAnnotationIdentifier = @"curViewAnnotationIdentifier";
 	if ([annotation isKindOfClass:[MKUserLocation class]])
-        return nil;
+	{
+		NSLog(@"cur title = %@",annotation.title);
+		NSLog(@"cur subtitle = %@",annotation.subtitle);
+		annotation.subtitle = @"this is Current Location";
+		MKAnnotationView *curView = [mapView dequeueReusableAnnotationViewWithIdentifier:curViewAnnotationIdentifier];
+        if (!curView) 
+		{
+			curView = [[[MKAnnotationView alloc] 
+						initWithAnnotation:annotation reuseIdentifier:curViewAnnotationIdentifier] autorelease];
+			curView.draggable = NO;
+		}
+		//return curView;
+		return nil;
+	}
+	 */
+	
+	if ([annotation isKindOfClass:[MKUserLocation class]])
+	{
+		return nil;
+	}
 	
 	static NSString* pinViewAnnotationIdentifier = @"pinViewAnnotationIdentifier";
 	MKPinAnnotationView* pinView = (MKPinAnnotationView *)
@@ -469,7 +527,7 @@
 	if (!pinView)
 	{
 		pinView = [[[MKPinAnnotationView alloc]
-											   initWithAnnotation:annotation reuseIdentifier:pinViewAnnotationIdentifier] autorelease];
+					initWithAnnotation:annotation reuseIdentifier:pinViewAnnotationIdentifier] autorelease];
 		
 		pinView.animatesDrop = YES;
 		pinView.canShowCallout = YES;
@@ -528,10 +586,12 @@
 		case MKAnnotationViewDragStateEnding:   //结束拖拽－显示地址
 			//坐标
 			self.alarmTemp.coordinate = annotationView.annotation.coordinate;
+			
 			//反转坐标－地址
 			((YCAnnotation*) annotationView.annotation).subtitle = @"";
 			reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
 			[reverseGeocoder start];
+			
 			//激活Done按钮
 			self.navigationItem.rightBarButtonItem.enabled = YES;
 			break;
@@ -552,7 +612,7 @@
 #pragma mark MKReverseGeocoderDelegate
 
 
--(void) setAnnotationManipulatingWithCoordinate:(CLLocationCoordinate2D)coordinate 
+-(void) setAnnotationAlarmEditingWithCoordinate:(CLLocationCoordinate2D)coordinate 
 										  title:(NSString*)title subtitle:(NSString*)subtitle
 									   animated:(BOOL)animated;
 {
@@ -564,17 +624,16 @@
 	self.alarmTemp.coordinate = coordinate;
 	self.alarmTemp.position = subtitle;
 	
-	self.annotationManipulating.coordinate = self.alarmTemp.coordinate;
-	self.annotationManipulating.title = self.alarmTemp.alarmName;
+	self.annotationAlarmEditing.coordinate = self.alarmTemp.coordinate;
+	self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
 	
 	if (animated)
 	{
-		self.annotationManipulating.subtitle = @"";
-		//[self performSelector:@selector(resetAnnotationWithSubtitle:) withObject:self.alarmTemp.position afterDelay:0.5]; //延时生成，获得动画效果
-		[self.annotationManipulating performSelector:@selector(setSubtitle:) withObject:self.alarmTemp.position afterDelay:0.5];//延时生成，获得动画效果
+		self.annotationAlarmEditing.subtitle = @"";
+		[self.annotationAlarmEditing performSelector:@selector(setSubtitle:) withObject:self.alarmTemp.position afterDelay:0.5];//延时生成，获得动画效果
 	}
 	else 
-		self.annotationManipulating.subtitle = self.alarmTemp.position;
+		self.annotationAlarmEditing.subtitle = self.alarmTemp.position;
 	
 	//激活Done按钮
 	self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -583,11 +642,23 @@
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
-{
+{   
 	NSString *title = [UIUtility titleStringFromPlacemark:placemark];
 	NSString *subtitle = [UIUtility positionStringFromPlacemark:placemark];
+	CLLocationCoordinate2D coordinate = placemark.coordinate;
 	
-	[self setAnnotationManipulatingWithCoordinate:placemark.coordinate title:title subtitle:subtitle animated:YES];
+	if (self.annotationManipulating != self.annotationAlarmEditing)
+	{
+		if ([self.annotationManipulating isKindOfClass:[MKUserLocation class]])
+		{
+			//((MKUserLocation*)self.annotationManipulating).title = title;          
+			((MKUserLocation*)self.annotationManipulating).subtitle = subtitle;
+			self.annotationManipulating.coordinate = coordinate;
+		}
+	}
+	else 
+		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle animated:YES];
+	
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
@@ -596,16 +667,30 @@
 	double lon = geocoder.coordinate.longitude;
 	NSString *latstr = [UIUtility convertLatitude:lat decimal:0];
 	NSString *lonstr = [UIUtility convertLongitude:lon decimal:0];
-	NSString *subtitle = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
 	
-	[self setAnnotationManipulatingWithCoordinate:geocoder.coordinate title:nil subtitle:subtitle animated:YES];
+	NSString *title = nil;
+	NSString *subtitle = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
+	CLLocationCoordinate2D coordinate = geocoder.coordinate;
+	
+	if (self.annotationManipulating != self.annotationAlarmEditing)
+	{
+		if ([self.annotationManipulating isKindOfClass:[MKUserLocation class]])
+		{
+			//((MKUserLocation*)self.annotationManipulating).title = title;          
+			((MKUserLocation*)self.annotationManipulating).subtitle = subtitle;
+			self.annotationManipulating.coordinate = coordinate;
+		}
+	}
+	else 
+		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle animated:YES];
+	
 }
 
 #pragma mark -
 #pragma mark YCNavSuperControllerProtocol
 -(void)reflashView
 {
-	self.annotationManipulating.title = self.alarmTemp.alarmName;
+	self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
 	//激活Done按钮
 	self.navigationItem.rightBarButtonItem.enabled = YES;
 }
@@ -677,17 +762,37 @@
 	
 		
 		//先删除原来的annotation
-		[self.mapView removeAnnotation:self.annotationManipulating];
+		[self.mapView removeAnnotation:self.annotationAlarmEditing];
 		
-		// Zoom into the location		
-		[self.mapView setRegion:place.coordinateRegion animated:YES];
+		// Zoom into the location
+		//[self cacheMapData];
+		//[self.mapView setRegion:place.coordinateRegion animated:YES];
+		
+		
+		
+		//简单类型装箱
+		CLLocationCoordinate2D coordinate = place.coordinate;
+		NSValue *coordinateObj = [NSValue valueWithBytes:&coordinate objCType:@encode(CLLocationCoordinate2D)];
+		MKCoordinateRegion region = place.coordinateRegion;
+		NSValue *regionObj = [NSValue valueWithBytes:&region objCType:@encode(MKCoordinateRegion)];
+		
+		MKCoordinateRegion current = self.mapView.region;
+		if (current.span.latitudeDelta < 10)
+		{
+			[self performSelector:@selector(animateToWorld:) withObject:coordinateObj afterDelay:0.3];
+			[self performSelector:@selector(animateToPlace:) withObject:regionObj afterDelay:1.7];        
+		}
+		else
+		{
+			[self performSelector:@selector(animateToPlace:) withObject:regionObj afterDelay:0.3];        
+		}
 		
 		NSString *title = self.searchBar.text;
 		NSString *subtitle = place.address!=nil ? place.address: @" " ;
-		[self setAnnotationManipulatingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
+		[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
 		
 		//再加上
-		[self.mapView addAnnotation:self.annotationManipulating];
+		[self.mapView addAnnotation:self.annotationAlarmEditing];
 			
 
 	}else {
@@ -763,7 +868,7 @@
 	[self.alarms release];                       
 	[self.mapAnnotations release];        
 	[self.alarmTemp release];
-	[self.annotationManipulating release];  
+	[self.annotationAlarmEditing release];  
 }
 
 

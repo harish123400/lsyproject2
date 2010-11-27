@@ -48,7 +48,8 @@
 	NSArray *alarms;                       //需要在地图上显示的
 	NSMutableArray *mapAnnotations;        //地图标签集合
 	YCAlarmEntity *alarmTemp;
-	YCAnnotation *annotationManipulating;  //正在操作的
+	YCAnnotation *annotationAlarmEditing;  //编辑中的Alarm的annotation
+	id<MKAnnotation> annotationManipulating;  //正在操作的
 	
 }
 
@@ -68,9 +69,10 @@
 @property (nonatomic, retain) BSForwardGeocoder *forwardGeocoder;
 @property (nonatomic,assign) BOOL newAlarm;
 @property (nonatomic,retain) NSArray *alarms;
-@property (nonatomic,retain) NSMutableArray *mapAnnotations;
-@property (nonatomic,retain) YCAnnotation *annotationManipulating;
 @property (nonatomic,retain) YCAlarmEntity *alarmTemp;
+@property (nonatomic,retain) NSMutableArray *mapAnnotations;
+@property (nonatomic,retain) YCAnnotation *annotationAlarmEditing;
+@property (nonatomic,retain) id<MKAnnotation> annotationManipulating;
 
 
 -(IBAction)currentLocationButtonPressed:(id)sender;
