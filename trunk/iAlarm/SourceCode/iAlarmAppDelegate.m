@@ -293,6 +293,7 @@ BOOL lo;
 	{
 		((AlarmPositionMapViewController*)viewController).alarms = [DataUtility alarmArray];
 		((AlarmPositionMapViewController*)viewController).alarm = [DataUtility createAlarm];
+		((AlarmPositionMapViewController*)viewController).regionCenterWithCurrentLocation = YES;
 	}
 }
 

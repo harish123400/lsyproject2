@@ -28,6 +28,7 @@
 @synthesize curlbackgroundView;
 @synthesize activityIndicator;
 @synthesize searchBar;
+@synthesize toolBar;
 @synthesize mapTypeSegmented;
 @synthesize currentLocationBarItem;
 @synthesize currentPinBarItem;
@@ -36,7 +37,7 @@
 @synthesize pageCurlBarItem;
 
 @synthesize forwardGeocoder;
-
+@synthesize regionCenterWithCurrentLocation;
 @synthesize alarms;
 @synthesize newAlarm; 
 @synthesize alarmTemp;
@@ -54,6 +55,19 @@
 	reverseGeocoder.delegate = self;
 	
 	return reverseGeocoder;
+}
+
+-(id)locationingBarItem
+{
+	if (self->locationingBarItem == nil) 
+	{
+		CGRect frame = CGRectMake(0, 0, 20, 20);
+		UIActivityIndicatorView *progressInd = [[[UIActivityIndicatorView alloc] initWithFrame:frame] autorelease];
+		self->locationingBarItem = [[UIBarButtonItem alloc] initWithCustomView:progressInd];
+		[progressInd startAnimating];
+	}
+	
+	return self->locationingBarItem;
 }
 
 #pragma mark - 
@@ -83,40 +97,34 @@
 	
 }
 
-//缓存地图数据
--(void)cacheMapData
-{
-	[[YCLog logSingleInstance] addlog:@"cacheMapData"];
-	
-	
-	//先缩小取得地图数据
-	//[self.mapView setRegion:self->defaultMapRegion animated:NO];
-	
-	//放大
-	MKCoordinateSpan spanTmp = {90.0,90.0};
-	MKCoordinateRegion regionTmp = MKCoordinateRegionMake(self.mapView.region.center, spanTmp);
-	[self.mapView setRegion:regionTmp animated:YES];
-	
+- (void)zoomToWorld:(CLLocationCoordinate2D)target animated:(BOOL)animated
+{   
+    MKCoordinateRegion current = mapView.region;
+    MKCoordinateRegion zoomOut = { { (current.center.latitude + target.latitude)/2.0 , (current.center.longitude + target.longitude)/2.0 }, {90, 90} };
+    [self.mapView setRegion:zoomOut animated:animated];
 }
 
 
-- (void)animateToWorld:(id/*CLLocationCoordinate2D*/)targetObj
+- (void)animateToWorldWithObj:(id/*CLLocationCoordinate2D*/)targetObj
 {   
 	CLLocationCoordinate2D target;
 	[targetObj getValue:&target];
 	
-    MKCoordinateRegion current = mapView.region;
+    /*
+	MKCoordinateRegion current = mapView.region;
     MKCoordinateRegion zoomOut = { { (current.center.latitude + target.latitude)/2.0 , (current.center.longitude + target.longitude)/2.0 }, {90, 90} };
-    [mapView setRegion:zoomOut animated:YES];
+    [self.mapView setRegion:zoomOut animated:YES];
+	 */
+	[self zoomToWorld:target animated:YES];
+	
 }
 
-- (void)animateToPlace:(id/*MKCoordinateRegion*/)targetObj
+- (void)animateToPlaceWithObj:(id/*MKCoordinateRegion*/)targetObj
 {
 	MKCoordinateRegion target;
 	[targetObj getValue:&target];
-    [mapView setRegion:target animated:YES];
+    [self.mapView setRegion:target animated:YES];
 }
- 
 
 
 -(BOOL) isValidCoordinate:(CLLocationCoordinate2D)coordinate
@@ -142,17 +150,15 @@
 	return YES;
 }
 
--(BOOL)setRegion:(MKCoordinateRegion)region animated:(BOOL)animated
+-(BOOL) isValidRegion:(MKCoordinateRegion)region
 {	
-	///////////////////////
-	//对区域数据进行校验
 	if(![self isValidCoordinate:region.center]) return NO;
 	if(![self isValidSpan:region.span]) return NO;
-	///////////////////////	
-	
-	[self.mapView setRegion:region animated:animated];
 	return YES;
 }
+
+
+
 
 //选中Annotation －显示标题
 -(void)selectAnnotationAtIndex:(NSNumber*)index
@@ -162,18 +168,29 @@
 		[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:nIndex] animated:YES];
 }
 
+-(BOOL)setMapRegion:(MKCoordinateRegion)region animated:(BOOL)animated
+{	
+	[self zoomToWorld:region.center animated:animated]; //先世界地图
+	[self.mapView setRegion:region animated:YES];
+	return YES;
+}
 
+/*
 //显示地图
 -(void)showMapView
 {
 	//关掉覆盖视图
 	[self closeMaskViewWithAnimated:YES];
-	//第一次显示，按默认比例显示到当前位置
-	BOOL b = [self setRegion:self->defaultMapRegion animated:YES];
 	
-	if (!b) { //加载上一次的正确的区域
-		[self setRegion:[YCParam paramSingleInstance].lastLoadMapRegion animated:YES];
+	//第一次显示，按默认比例显示到当前位置
+	if ([self isValidRegion:self->defaultMapRegion]) //对区域数据进行校验
+	{
+		[self setMapRegion:self->defaultMapRegion animated:NO];
+	}else {
+		//加载上一次的正确的区域
+		[self setMapRegion:[YCParam paramSingleInstance].lastLoadMapRegion animated:NO];
 	}
+
 	
 	NSInteger index = [self.mapAnnotations indexOfObject:self.annotationAlarmEditing];
 	[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
@@ -181,8 +198,7 @@
 	//显示完成后，把maskview的触摸事件绑定
 	[self.maskView addTarget:self action:@selector(hideSearchBar:) forControlEvents:UIControlEventTouchDown];
 }
-
-
+ */
 
 
 -(void)addAnnotation
@@ -233,14 +249,118 @@
 	
 }
 
+////设置正在定位barItem处于定位状态
+-(void)setLocationBarItem:(BOOL)locationing
+{
+	NSMutableArray *baritems = [NSMutableArray array] ;
+	[baritems addObjectsFromArray:self.toolBar.items];
+	
+	if(locationing)
+		[baritems replaceObjectAtIndex:0 withObject:self.locationingBarItem];
+	else 
+		[baritems replaceObjectAtIndex:0 withObject:self.currentLocationBarItem];
+	
+	[self.toolBar setItems:baritems animated:YES];
+}
 
+#pragma mark -
+#pragma mark Location Notification 
+
+#define kLocationedNotification           @"kLocationedNotification"
+#define kTimeOutForLocationNotification   @"kTimeOutForLocationNotification"
+
+- (void) handle_Locationed: (id) notification 
+{
+	if(isFirstShow)
+	{
+		isFirstShow = NO;
+		//关掉覆盖视图
+		[self closeMaskViewWithAnimated:YES];
+		
+		//先到世界地图，在下来
+		[self setMapRegion:self->defaultMapRegion animated:NO];
+		
+		//选中Annotation
+		NSInteger index = [self.mapAnnotations indexOfObject:self.annotationAlarmEditing];
+		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
+		
+		//显示完成后，把maskview的触摸事件绑定
+		[self.maskView addTarget:self action:@selector(hideSearchBar:) forControlEvents:UIControlEventTouchDown];
+	}else {
+		[self.mapView setRegion:self->defaultMapRegion animated:YES];
+	}
+	
+	[self setLocationBarItem:NO];
+}
+
+
+- (void) handle_TimeOutForLocation: (id) notification 
+{
+	 [self setLocationBarItem:NO];
+	 if(isFirstShow)
+	 {
+		 isFirstShow = NO;
+		 //关掉覆盖视图
+		 [self closeMaskViewWithAnimated:YES];
+		 
+		 //显示完成后，把maskview的触摸事件绑定
+		 [self.maskView addTarget:self action:@selector(hideSearchBar:) forControlEvents:UIControlEventTouchDown];
+
+		 
+		 MKCoordinateRegion last = [YCParam paramSingleInstance].lastLoadMapRegion;
+		 if ([self isValidRegion:last]) 
+		 {
+			 self->defaultMapRegion = last;//加载上一次的正确的区域
+			[self.mapView setRegion:self->defaultMapRegion animated:YES];
+		 }//如果没有最后一次正确的加载，那么听天由命吧，估计是显示一个世界地图
+		 
+	 }
+	 
+}
+ 
+
+-(void)checkLocation
+{
+	static double timePassed = 0.0;
+	if (self.mapView.userLocation.location)
+	{
+		[myTimer invalidate];
+		[myTimer release];
+		myTimer = nil;
+		
+		self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.location.coordinate,1500.0,1500.0);
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+		[notificationCenter postNotificationName:kLocationedNotification object:self];
+	}else {
+		//Time out 
+		timePassed +=0.5;
+		if (timePassed > 10.0)  //10秒time out
+		{
+			timePassed = 0;
+			
+			[myTimer invalidate];
+			[myTimer release];
+			myTimer = nil;
+			
+			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+			[notificationCenter postNotificationName:kTimeOutForLocationNotification object:self];
+
+		}
+	}
+	
+}
+
+-(void)startCheckLocationTimer
+{
+	NSTimeInterval ti = 0.5;
+	myTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(checkLocation) userInfo:nil repeats:YES] retain];
+	[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
+}
 
 
 
 #pragma mark -
 #pragma mark Event
-
-
 
 -(void)setDoneStyleToBarButtonItem:(UIBarButtonItem*)buttonItem
 {
@@ -263,15 +383,19 @@
 {
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
 	
+	/*
 	if (self.mapView.userLocation.location)
 	{
 		self->isCurrentLocationAtCenterRegion = YES;
 		//设置屏幕中心，与范围
 		CLLocationCoordinate2D coordOfCurrent = self.mapView.userLocation.location.coordinate;
 		self->defaultMapRegion.center = coordOfCurrent;
-		[self setRegion:self->defaultMapRegion animated:YES];
+		[self.mapView setRegion:self->defaultMapRegion animated:YES];
 		//[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentLocationBarItem afterDelay:0.2];
 	}
+	 */
+	[self setLocationBarItem:YES];
+	[self startCheckLocationTimer];
 }
 -(IBAction)currentPinButtonPressed:(id)sender
 {	
@@ -352,11 +476,10 @@
 		self.pageCurlBarItem.style = UIBarButtonItemStyleBordered;
 	}
 	//卷的过程完成后停止，并且不从层中移除动画
-	//[animation setFillMode:kCAFillModeForwards];
-	[animation setFillMode: @"extended"];
+	//[animation setFillMode: @"extended"];
+	[animation setFillMode:kCAFillModeForwards];
 	[animation setSubtype:kCATransitionFromBottom];
 	[animation setRemovedOnCompletion:NO];
-	
 	
 	[self.curlbackgroundView exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
 	[[self.curlbackgroundView layer] addAnimation:animation forKey:@"pageCurlAnimation"];
@@ -388,6 +511,7 @@
 #pragma mark -
 #pragma mark View lifecycle
 
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad 
 {
@@ -411,15 +535,37 @@
 	
 	self.alarmTemp = [self.alarm copy];
 	
-	//设置mapview的可视区域
-	//self->defaultMapRegion.span = [YCParam paramSingleInstance].defaultMapSpan;
-	//self->defaultMapRegion.center = self.alarmTemp.coordinate;
-	self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,1500.0,1500.0);
+	//注册消息
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter addObserver: self
+						   selector: @selector (handle_Locationed:)
+							   name: kLocationedNotification
+							 object: nil];
+	[notificationCenter addObserver: self
+						   selector: @selector (handle_TimeOutForLocation:)
+							   name: kTimeOutForLocationNotification
+							 object: nil];
 
 	[self showMaskView];
 	[self addAnnotation];
-	[self performSelector:@selector(showMapView) withObject:nil afterDelay:0.5];
+	//[self performSelector:@selector(showMapView) withObject:nil afterDelay:0.5];
 	
+	if (self.regionCenterWithCurrentLocation) 
+	{
+		[self startCheckLocationTimer];
+	}else {
+		
+		if ([self isValidCoordinate:self.alarmTemp.coordinate]) 
+		{
+			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,1500.0,1500.0);
+			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+			[notificationCenter postNotificationName:kLocationedNotification object:self];
+		}else { //alarmTemp中的坐标无效，按当前位置显示
+			[self startCheckLocationTimer];
+		}
+
+	}
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -699,6 +845,11 @@
 #pragma mark UISearchBarDelegate
 - (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
 	
+	//判断是否已经在searching
+	if (self->searching)
+		return;
+	self->searching = YES;
+	
 	if(forwardGeocoder == nil)
 	{
 		forwardGeocoder = [[BSForwardGeocoder alloc] initWithDelegate:self];
@@ -716,16 +867,11 @@
 
 #pragma mark -
 #pragma mark BSForwardGeocoderDelegate
--(void)forwardGeocoderError:(NSString *)errorMessage
-{
-	[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
-					alertTitle:kAlertTitleWhenSearchMap 
-			 cancelButtonTitle:kAlertBtnOK 
-					  delegate:nil];
-}
 
 -(void)forwardGeocoderFoundLocation
 {
+	self->searching = NO;
+	
 	NSUInteger searchResults = [forwardGeocoder.results count];
 	
 	if(forwardGeocoder.status == G_GEO_SUCCESS && searchResults > 0)
@@ -764,35 +910,39 @@
 		//先删除原来的annotation
 		[self.mapView removeAnnotation:self.annotationAlarmEditing];
 		
-		// Zoom into the location
-		//[self cacheMapData];
-		//[self.mapView setRegion:place.coordinateRegion animated:YES];
+		//改变annotation内容
+		NSString *title = self.searchBar.text;
+		NSString *subtitle = place.address!=nil ? place.address: @" " ;
+		[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
 		
-		
-		
-		//简单类型装箱
+		////////////////////////
+		//Zoom into the location
+		////简单类型->装箱
 		CLLocationCoordinate2D coordinate = place.coordinate;
 		NSValue *coordinateObj = [NSValue valueWithBytes:&coordinate objCType:@encode(CLLocationCoordinate2D)];
 		MKCoordinateRegion region = place.coordinateRegion;
 		NSValue *regionObj = [NSValue valueWithBytes:&region objCType:@encode(MKCoordinateRegion)];
 		
+		double delay =0;
 		MKCoordinateRegion current = self.mapView.region;
 		if (current.span.latitudeDelta < 10)
 		{
-			[self performSelector:@selector(animateToWorld:) withObject:coordinateObj afterDelay:0.3];
-			[self performSelector:@selector(animateToPlace:) withObject:regionObj afterDelay:1.7];        
+			[self performSelector:@selector(animateToWorldWithObj:) withObject:coordinateObj afterDelay:0.3];
+			[self performSelector:@selector(animateToPlaceWithObj:) withObject:regionObj afterDelay:1.7];
+			delay = 1.7;
 		}
 		else
 		{
-			[self performSelector:@selector(animateToPlace:) withObject:regionObj afterDelay:0.3];        
+			[self performSelector:@selector(animateToPlaceWithObj:) withObject:regionObj afterDelay:0.3];
+			delay = 0.4;
 		}
+		//Zoom into the location
+		////////////////////////
 		
-		NSString *title = self.searchBar.text;
-		NSString *subtitle = place.address!=nil ? place.address: @" " ;
-		[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
-		
+			
 		//再加上
-		[self.mapView addAnnotation:self.annotationAlarmEditing];
+		//[self.mapView addAnnotation:self.annotationAlarmEditing];
+		[self.mapView performSelector:@selector(addAnnotation:) withObject:self.annotationAlarmEditing afterDelay:delay];
 			
 
 	}else {
@@ -834,6 +984,18 @@
 	}
 }
 
+
+-(void)forwardGeocoderError:(NSString *)errorMessage
+{
+	self->searching = NO;
+	
+	[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
+					alertTitle:kAlertTitleWhenSearchMap 
+			 cancelButtonTitle:kAlertBtnOK 
+					  delegate:nil];
+}
+
+
 #pragma mark -
 #pragma mark Memory management
 - (void)didReceiveMemoryWarning {
@@ -868,7 +1030,8 @@
 	[self.alarms release];                       
 	[self.mapAnnotations release];        
 	[self.alarmTemp release];
-	[self.annotationAlarmEditing release];  
+	[self.annotationAlarmEditing release];
+	[self.locationingBarItem release];
 }
 
 

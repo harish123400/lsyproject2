@@ -67,7 +67,7 @@
 	{
 		self->defaultMapRegion.center = self.mapView.userLocation.location.coordinate;
 		self->isAlreadyCenterCoord = YES;
-		if (self->isFirstShow) [self cacheMapData];	//仅第一显示需要		
+		//if (self->isFirstShow) [self cacheMapData];	//仅第一显示需要		
 
 		return nil;
 	}

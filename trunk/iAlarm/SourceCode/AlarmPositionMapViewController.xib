@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="14"/>
+			<integer value="126"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -195,7 +195,6 @@
 									<string key="NSResourceName">arrowAsBarItem.png</string>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">34</float>
 								<reference key="IBUIToolbar" ref="251212599"/>
 							</object>
 							<object class="IBUIBarButtonItem" id="180111545">
@@ -213,8 +212,9 @@
 							</object>
 							<object class="IBUIBarButtonItem" id="504052969">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<float key="IBUIWidth">32</float>
 								<reference key="IBUIToolbar" ref="251212599"/>
-								<int key="IBUISystemItemIdentifier">5</int>
+								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="298448049">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -223,8 +223,9 @@
 							</object>
 							<object class="IBUIBarButtonItem" id="578148541">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<float key="IBUIWidth">32</float>
 								<reference key="IBUIToolbar" ref="251212599"/>
-								<int key="IBUISystemItemIdentifier">5</int>
+								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="229743336">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -233,7 +234,7 @@
 							</object>
 							<object class="IBUIBarButtonItem" id="507184948">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">51</float>
+								<float key="IBUIWidth">52</float>
 								<reference key="IBUIToolbar" ref="251212599"/>
 								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
@@ -256,9 +257,6 @@
 				<reference key="NSSuperview"/>
 				<reference key="IBUIBackgroundColor" ref="190358262"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
-				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-			</object>
-			<object class="IBUISearchDisplayController" id="970586220">
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 		</object>
@@ -320,46 +318,6 @@
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">22</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">searchDisplayController</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="970586220"/>
-					</object>
-					<int key="connectionID">49</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">searchContentsController</string>
-						<reference key="source" ref="970586220"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">50</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">searchResultsDataSource</string>
-						<reference key="source" ref="970586220"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">51</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">searchResultsDelegate</string>
-						<reference key="source" ref="970586220"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">52</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="970586220"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">53</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -475,6 +433,14 @@
 					</object>
 					<int key="connectionID">122</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">toolBar</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="251212599"/>
+					</object>
+					<int key="connectionID">127</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -490,10 +456,10 @@
 						<reference key="object" ref="191373211"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="251212599"/>
 							<reference ref="776734379"/>
 							<reference ref="126933295"/>
 							<reference ref="197446369"/>
+							<reference ref="251212599"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -515,7 +481,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="1064192100"/>
 							<reference ref="482211354"/>
-							<reference ref="180111545"/>
 							<reference ref="504052969"/>
 							<reference ref="578148541"/>
 							<reference ref="753905175"/>
@@ -523,6 +488,7 @@
 							<reference ref="229743336"/>
 							<reference ref="298448049"/>
 							<reference ref="507184948"/>
+							<reference ref="180111545"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -547,18 +513,8 @@
 						<reference key="parent" ref="251212599"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">47</int>
-						<reference key="object" ref="970586220"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">79</int>
 						<reference key="object" ref="298448049"/>
-						<reference key="parent" ref="251212599"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">84</int>
-						<reference key="object" ref="180111545"/>
 						<reference key="parent" ref="251212599"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -635,6 +591,11 @@
 						<reference key="object" ref="507184948"/>
 						<reference key="parent" ref="251212599"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">126</int>
+						<reference key="object" ref="180111545"/>
+						<reference key="parent" ref="251212599"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -650,6 +611,7 @@
 					<string>121.IBEditorWindowLastContentRect</string>
 					<string>121.IBPluginDependency</string>
 					<string>123.IBPluginDependency</string>
+					<string>126.IBPluginDependency</string>
 					<string>14.IBPluginDependency</string>
 					<string>15.IBPluginDependency</string>
 					<string>19.IBPluginDependency</string>
@@ -662,7 +624,6 @@
 					<string>79.showNotes</string>
 					<string>8.CustomClassName</string>
 					<string>8.IBPluginDependency</string>
-					<string>84.IBPluginDependency</string>
 					<string>85.IBPluginDependency</string>
 					<string>86.IBPluginDependency</string>
 					<string>88.IBPluginDependency</string>
@@ -676,11 +637,12 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>AlarmPositionMapViewController</string>
 					<string>UIResponder</string>
-					<string>{{50, 161}, {320, 480}}</string>
+					<string>{{188, 165}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{63, 213}, {320, 372}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -735,7 +697,6 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIControl</string>
 					<string>{{126, 175}, {320, 463}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -758,7 +719,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">123</int>
+			<int key="maxID">127</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -857,6 +818,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>activityIndicator</string>
+							<string>annotationManipulating</string>
 							<string>curlView</string>
 							<string>curlbackgroundView</string>
 							<string>currentLocationBarItem</string>
@@ -868,10 +830,12 @@
 							<string>resetPinBarItem</string>
 							<string>searchBar</string>
 							<string>searchBarItem</string>
+							<string>toolBar</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIActivityIndicatorView</string>
+							<string>id</string>
 							<string>UIControl</string>
 							<string>UIView</string>
 							<string>UIBarButtonItem</string>
@@ -883,6 +847,7 @@
 							<string>UIBarButtonItem</string>
 							<string>UISearchBar</string>
 							<string>UIBarButtonItem</string>
+							<string>UIToolbar</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -890,6 +855,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>activityIndicator</string>
+							<string>annotationManipulating</string>
 							<string>curlView</string>
 							<string>curlbackgroundView</string>
 							<string>currentLocationBarItem</string>
@@ -901,12 +867,17 @@
 							<string>resetPinBarItem</string>
 							<string>searchBar</string>
 							<string>searchBarItem</string>
+							<string>toolBar</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
 								<string key="name">activityIndicator</string>
 								<string key="candidateClassName">UIActivityIndicatorView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">annotationManipulating</string>
+								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">curlView</string>
@@ -951,6 +922,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">searchBarItem</string>
 								<string key="candidateClassName">UIBarButtonItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">toolBar</string>
+								<string key="candidateClassName">UIToolbar</string>
 							</object>
 						</object>
 					</object>
