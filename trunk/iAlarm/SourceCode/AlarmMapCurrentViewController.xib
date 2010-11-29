@@ -44,17 +44,17 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUIView" id="126933295">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">274</int>
+						<int key="NSvFlags">292</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBUIView" id="781883943">
 								<reference key="NSNextResponder" ref="126933295"/>
-								<int key="NSvFlags">274</int>
+								<int key="NSvFlags">292</int>
 								<object class="NSMutableArray" key="NSSubviews">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<object class="IBUIImageView" id="246231129">
 										<reference key="NSNextResponder" ref="781883943"/>
-										<int key="NSvFlags">274</int>
+										<int key="NSvFlags">292</int>
 										<string key="NSFrameSize">{320, 416}</string>
 										<reference key="NSSuperview" ref="781883943"/>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -67,7 +67,7 @@
 									<object class="IBUISegmentedControl" id="134878850">
 										<reference key="NSNextResponder" ref="781883943"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{40, 291}, {280, 40}}</string>
+										<string key="NSFrame">{{20, 271}, {280, 40}}</string>
 										<reference key="NSSuperview" ref="781883943"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -117,7 +117,7 @@
 							</object>
 							<object class="IBMKMapView" id="28040185">
 								<reference key="NSNextResponder" ref="126933295"/>
-								<int key="NSvFlags">274</int>
+								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{320, 416}</string>
 								<reference key="NSSuperview" ref="126933295"/>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -135,7 +135,6 @@
 								<int key="NSID">2</int>
 							</object>
 						</object>
-						<bool key="IBUIClipsSubviews">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 					<object class="IBUIView" id="776734379">

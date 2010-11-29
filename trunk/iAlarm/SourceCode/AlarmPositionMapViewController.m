@@ -572,11 +572,13 @@
 	{
 		self.searchBar.hidden = YES;
 		self.toolBar.hidden = NO;
-		self.toolBar.alpha = 0.85f;
 	} else { //在tab上的地图，一直有searchbar
 		self.searchBar.hidden = NO;
-		self.toolBar.hidden = YES;
+		self.toolBar.hidden = NO;
+		self.toolBar.alpha = 0.60f;
 	}
+	
+	
 
 	
 	//判断闹钟坐标是否有效
