@@ -129,6 +129,7 @@
     // Override point for customization after application launch.
 
     // Add the tab bar controller's view to the window and display.
+	tabBarController.delegate = self;
     [window addSubview:tabBarController.view];
     [window makeKeyAndVisible];
 	
@@ -286,8 +287,7 @@ BOOL lo;
 #pragma mark -
 #pragma mark UITabBarControllerDelegate
 
-- (void)tabBarController:(UITabBarController *)tabBarController 
- didSelectViewController:(UIViewController *)viewController
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
 	if ([viewController isKindOfClass:[AlarmPositionMapViewController class]]) 
 	{
@@ -295,7 +295,9 @@ BOOL lo;
 		((AlarmPositionMapViewController*)viewController).alarm = [DataUtility createAlarm];
 		((AlarmPositionMapViewController*)viewController).regionCenterWithCurrentLocation = YES;
 	}
+	return YES;
 }
+
 
 @end
 

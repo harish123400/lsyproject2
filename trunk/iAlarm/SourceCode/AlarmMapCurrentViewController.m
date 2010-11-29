@@ -48,7 +48,7 @@
 
 	}
 	
-	[super showMapView];
+	//[super showMapView];
 	
 }
 

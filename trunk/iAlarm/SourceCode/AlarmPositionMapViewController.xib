@@ -12,7 +12,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="126"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -38,7 +37,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="191373211">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -254,7 +253,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 460}</string>
-				<reference key="NSSuperview"/>
 				<reference key="IBUIBackgroundColor" ref="190358262"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -752,10 +750,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>currentLocationButtonPressed:</string>
 							<string>currentPinButtonPressed:</string>
-							<string>hideSearchBar:</string>
 							<string>mapTypeSegmentedChanged:</string>
 							<string>pageCurlButtonPressed:</string>
 							<string>resetPinButtonPressed:</string>
+							<string>searchBarCancelButtonPressed:</string>
 							<string>searchButtonPressed:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -775,10 +773,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>currentLocationButtonPressed:</string>
 							<string>currentPinButtonPressed:</string>
-							<string>hideSearchBar:</string>
 							<string>mapTypeSegmentedChanged:</string>
 							<string>pageCurlButtonPressed:</string>
 							<string>resetPinButtonPressed:</string>
+							<string>searchBarCancelButtonPressed:</string>
 							<string>searchButtonPressed:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -792,10 +790,6 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">hideSearchBar:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">mapTypeSegmentedChanged:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -805,6 +799,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">resetPinButtonPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">searchBarCancelButtonPressed:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

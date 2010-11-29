@@ -17,7 +17,7 @@
 @class YCAnnotation;
 @class AlarmNameViewController;
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
-<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,UISearchBarDelegate,BSForwardGeocoderDelegate>
+<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,UISearchBarDelegate,BSForwardGeocoderDelegate,UIAlertViewDelegate>
 {
 	NSTimer *myTimer;
 	
@@ -46,7 +46,7 @@
 	BOOL isCurl;                  //是否已经半卷
 	BOOL isCurrentLocationAtCenterRegion;   //当前位置在中心
 	BOOL isCurrentPinAtCenterRegion;        //当前图钉在中心
-	BOOL searching;                         //数据查询中
+	//BOOL searching;                         //数据查询中
 	
 	MKCoordinateRegion defaultMapRegion;   //地图的可视范围，设置该变量方便代码编写
 	NSArray *alarms;                       //需要在地图上显示的
@@ -86,7 +86,7 @@
 -(IBAction)resetPinButtonPressed:(id)sender;
 -(IBAction)currentPinButtonPressed:(id)sender;
 -(IBAction)searchButtonPressed:(id)sender;
--(IBAction)hideSearchBar:(id)sender;
+-(IBAction)searchBarCancelButtonPressed:(id)sender;
 -(IBAction)pageCurlButtonPressed:(id)sender;
 -(IBAction)mapTypeSegmentedChanged:(id)sender;
 

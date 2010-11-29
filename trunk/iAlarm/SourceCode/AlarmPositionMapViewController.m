@@ -285,7 +285,7 @@
 		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
 		
 		//显示完成后，把maskview的触摸事件绑定
-		[self.maskView addTarget:self action:@selector(hideSearchBar:) forControlEvents:UIControlEventTouchDown];
+		[self.maskView addTarget:self action:@selector(searchBarCancelButtonPressed:) forControlEvents:UIControlEventTouchDown];
 	}else {
 		[self.mapView setRegion:self->defaultMapRegion animated:YES];
 	}
@@ -304,7 +304,7 @@
 		 [self closeMaskViewWithAnimated:YES];
 		 
 		 //显示完成后，把maskview的触摸事件绑定
-		 [self.maskView addTarget:self action:@selector(hideSearchBar:) forControlEvents:UIControlEventTouchDown];
+		 [self.maskView addTarget:self action:@selector(searchBarCancelButtonPressed:) forControlEvents:UIControlEventTouchDown];
 
 		 
 		 MKCoordinateRegion last = [YCParam paramSingleInstance].lastLoadMapRegion;
@@ -423,28 +423,69 @@
 	[reverseGeocoder start];
 }
 
+-(void)ativeOrResignSearchBar
+{
+	
+	if (self.searchBar.isFirstResponder ) 
+	{
+		[UIView beginAnimations:@"resigSsearchBar" context:NULL];
+		[UIView setAnimationDuration:0.75];
+		self.maskView.alpha = 0.0f;
+		[UIView commitAnimations];
+		[self.searchBar resignFirstResponder];  //search bar放弃键盘
+	}else {
+		self.maskView.backgroundColor = [UIColor blackColor];
+		[UIView beginAnimations:@"ativeSearchBar" context:NULL];
+		[UIView setAnimationDuration:0.75];
+		self.maskView.alpha = 0.8f;
+		[UIView commitAnimations];
+		[self.searchBar becomeFirstResponder];  //search bar调用键盘
+	}
+	
+}
+
+-(void)showOrHideSearchBar
+{
+		
+	CATransition *animation = [CATransition animation];  
+    [animation setDelegate:self];  
+    [animation setDuration:0.5f];
+	animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]; 
+    [animation setType:kCATransitionPush];
+	[animation setFillMode:kCAFillModeForwards];
+	[animation setRemovedOnCompletion:YES]; 
+	NSString *subtype = self.searchBar.hidden ? kCATransitionFromBottom:kCATransitionFromTop;
+    [animation setSubtype:subtype];
+	
+	self.searchBar.hidden = !self.searchBar.hidden;  
+    [[self.searchBar layer] addAnimation:animation forKey:@"showOrHideSearchBar"];
+
+
+}
+
+////改变搜索时候的状态，searchbar，maskview，FirstResponder。
+-(void)changeSearchStatus
+{
+	if (!regionCenterWithCurrentLocation) 
+	{
+		[self showOrHideSearchBar];
+	} //在tab上的地图，一直有searchbar
+	
+	[self ativeOrResignSearchBar];
+}
+
 -(IBAction)searchButtonPressed:(id)sender
 {
 
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
-	
-	self.maskView.backgroundColor = [UIColor blackColor];
-	[UIView beginAnimations:@"showsearchBar" context:NULL];
-	[UIView setAnimationDuration:0.75];
-	self.searchBar.alpha = 1.0f;
-	self.maskView.alpha = 0.8f;
-	[UIView commitAnimations];
-	[self.searchBar becomeFirstResponder];  //search bar调用键盘
+	[self changeSearchStatus];
+
 }
 
--(IBAction)hideSearchBar:(id)sender
+-(IBAction)searchBarCancelButtonPressed:(id)sender
 {
-	[UIView beginAnimations:@"hideSearchBar" context:NULL];
-	[UIView setAnimationDuration:0.75];
-	self.searchBar.alpha = 0.0f;
-	self.maskView.alpha = 0.0f;
-	[UIView commitAnimations];
-	[self.searchBar resignFirstResponder];  //search bar放弃键盘
+	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	[self changeSearchStatus];
 }
 
 -(IBAction)pageCurlButtonPressed:(id)sender
@@ -525,9 +566,18 @@
 	[self.mapTypeSegmented setTitle:KMapTypeNameSatellite forSegmentAtIndex:1];
 	[self.mapTypeSegmented setTitle:KMapTypeNameHybrid forSegmentAtIndex:2];
 	
-	//search bar
+	//search bar,toolbar
 	self.searchBar.delegate = self;
-	self.searchBar.alpha = 0.0f;
+	if (!regionCenterWithCurrentLocation) 
+	{
+		self.searchBar.hidden = YES;
+		self.toolBar.hidden = NO;
+		self.toolBar.alpha = 0.85f;
+	} else { //在tab上的地图，一直有searchbar
+		self.searchBar.hidden = NO;
+		self.toolBar.hidden = YES;
+	}
+
 	
 	//判断闹钟坐标是否有效
 	if (![self isValidCoordinate:self.alarm.coordinate]) 
@@ -843,12 +893,11 @@
 
 #pragma mark -
 #pragma mark UISearchBarDelegate
-- (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
+- (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar 
+{
+
+	[self changeSearchStatus];   //处理search状态
 	
-	//判断是否已经在searching
-	if (self->searching)
-		return;
-	self->searching = YES;
 	
 	if(forwardGeocoder == nil)
 	{
@@ -862,7 +911,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)theSearchBar
 {
-	[self hideSearchBar:theSearchBar];
+	[self searchBarCancelButtonPressed:theSearchBar];
 }
 
 #pragma mark -
@@ -870,14 +919,11 @@
 
 -(void)forwardGeocoderFoundLocation
 {
-	self->searching = NO;
 	
 	NSUInteger searchResults = [forwardGeocoder.results count];
 	
 	if(forwardGeocoder.status == G_GEO_SUCCESS && searchResults > 0)
 	{
-		
-		[self hideSearchBar:nil];  //隐藏Search bar
 		
 		//离当前位置最近的元素
 		CLLocationDistance distanceOfNearest = 900000000000.0;
@@ -952,28 +998,28 @@
 				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
 								alertTitle:kAlertTitleWhenSearchMap 
 						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:nil];
+								  delegate:self];
 				break;
 				
 			case G_GEO_UNKNOWN_ADDRESS:
 				[UIUtility simpleAlertBody:kAlertMsgNoResultsWhenSearchMap 
 								alertTitle:kAlertTitleWhenSearchMap 
 						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:nil];
+								  delegate:self];
 				break;
 				
 			case G_GEO_TOO_MANY_QUERIES:
 				[UIUtility simpleAlertBody:kAlertMsgTooManyQueriesWhenSearchMap 
 								alertTitle:kAlertTitleWhenSearchMap 
 						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:nil];
+								  delegate:self];
 				break;
 				
 			case G_GEO_SERVER_ERROR:
 				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
 								alertTitle:kAlertTitleWhenSearchMap 
 						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:nil];
+								  delegate:self];
 				break;
 				
 				
@@ -987,13 +1033,26 @@
 
 -(void)forwardGeocoderError:(NSString *)errorMessage
 {
-	self->searching = NO;
 	
 	[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
 					alertTitle:kAlertTitleWhenSearchMap 
 			 cancelButtonTitle:kAlertBtnOK 
-					  delegate:nil];
+					  delegate:self];
 }
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	[self changeSearchStatus];   //处理search状态
+}
+
+/*
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	//[self changeSearchStatus];   //处理search状态
+}
+ */
 
 
 #pragma mark -
