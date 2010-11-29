@@ -356,7 +356,7 @@
 #pragma mark Memory management
 - (void)dealloc 
 {
-	/*
+	
 	[alarm release];
 	[parentController release];
 	[cellDescriptionIds release];
@@ -370,7 +370,7 @@
 	[checkedTextColor release];
 	[lastIndexPathPosition release];
 	[progressInd release];
-	 */
+	 
 
     [super dealloc];
 }

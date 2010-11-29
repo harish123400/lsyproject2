@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="96"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -66,8 +66,8 @@
 									</object>
 									<object class="IBUISegmentedControl" id="134878850">
 										<reference key="NSNextResponder" ref="781883943"/>
-										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{40, 291}, {280, 40}}</string>
+										<int key="NSvFlags">258</int>
+										<string key="NSFrame">{{20, 291}, {280, 40}}</string>
 										<reference key="NSSuperview" ref="781883943"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
