@@ -105,12 +105,9 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 
 - (void)setActive:(BOOL)visible animated:(BOOL)animated
 {
-	
-	
-	[self.searchDisplayController setActive:visible animated:animated];
-
 	if (visible) 
 	{
+		[self.searchDisplayController setActive:visible animated:animated];
 		[self.searchDisplayController.searchBar becomeFirstResponder];
 		((YCSearchBar*)self.searchDisplayController.searchBar).canResignFirstResponder = NO;
 		if (self->originalSearchBarHidden) //显示或隐藏searchBar
@@ -120,12 +117,19 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 			                                                   //显示时候不用动画，maskView遮盖不了searchBar的背后区域
 		}
 	}else {
+		if (self.searchDisplayController.active) 
+			[self.searchDisplayController setActive:visible animated:animated];
+		
 		((YCSearchBar*)self.searchDisplayController.searchBar).canResignFirstResponder = YES;
 		[self.searchDisplayController.searchBar resignFirstResponder];
 		if (self->originalSearchBarHidden) //显示或隐藏searchBar
 		{
 			[self setSearchBar:self.searchDisplayController.searchBar visible:visible animated:animated]; 
 		}
+		
+		[self.filteredListContent removeAllObjects];
+		self.searchMaskView = nil;
+		self.searchTableView = nil;
 	}
 
 }
@@ -144,6 +148,8 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+	if (!self.searchDisplayController.active)
+		return 0;
 	/*
 	 If the requesting table view is the search display controller's table view, return the count of
      the filtered list, otherwise return the count of the main list.
@@ -345,10 +351,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	controller.searchBar.text = self.lastSearchString;
 	controller.searchBar.placeholder = self.originalPlaceholderString;
 	
-	if (self->originalSearchBarHidden) //显示或隐藏searchBar
-	{
-		[self setSearchBar:self.searchDisplayController.searchBar visible:NO animated:YES];
-	}
+	[self setActive:NO animated:YES];
 }
 //退出搜索时候，保持最后搜索字符串在 bar上
 /////////////////////////////////////
