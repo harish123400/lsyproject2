@@ -37,6 +37,7 @@
 @synthesize pageCurlBarItem;
 
 @synthesize forwardGeocoder;
+@synthesize searchController;
 @synthesize regionCenterWithCurrentLocation;
 @synthesize alarms;
 @synthesize newAlarm; 
@@ -315,8 +316,6 @@
 		NSInteger index = [self.mapAnnotations indexOfObject:self.annotationAlarmEditing];
 		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
 		
-		//显示完成后，把maskview的触摸事件绑定
-		[self.maskView addTarget:self action:@selector(searchBarCancelButtonPressed:) forControlEvents:UIControlEventTouchDown];
 	}else {
 		[self setMapRegion:self->defaultMapRegion FromWorld:NO animatedToWorld:NO animatedToPlace:YES];
 	}
@@ -334,10 +333,6 @@
 		 self->isFirstShow = NO;
 		 //关掉覆盖视图
 		 [self closeMaskViewWithAnimated:YES];
-		 
-		 //显示完成后，把maskview的触摸事件绑定
-		 [self.maskView addTarget:self action:@selector(searchBarCancelButtonPressed:) forControlEvents:UIControlEventTouchDown];
-
 		 
 		 MKCoordinateRegion last = [YCParam paramSingleInstance].lastLoadMapRegion;
 		 if ([self isValidRegion:last]) 
@@ -457,69 +452,13 @@
 	//[reverseGeocoder performSelector:@selector(start) withObject:nil afterDelay:0.2];
 }
 
--(void)ativeOrResignSearchBar
-{
-	
-	if (self.searchBar.isFirstResponder ) 
-	{
-		[UIView beginAnimations:@"resigSsearchBar" context:NULL];
-		[UIView setAnimationDuration:0.75];
-		self.maskView.alpha = 0.0f;
-		[UIView commitAnimations];
-		[self.searchBar resignFirstResponder];  //search bar放弃键盘
-	}else {
-		self.maskView.backgroundColor = [UIColor blackColor];
-		[UIView beginAnimations:@"ativeSearchBar" context:NULL];
-		[UIView setAnimationDuration:0.75];
-		self.maskView.alpha = 0.8f;
-		[UIView commitAnimations];
-		[self.searchBar becomeFirstResponder];  //search bar调用键盘
-	}
-	
-}
-
--(void)showOrHideSearchBar
-{
-		
-	CATransition *animation = [CATransition animation];  
-    [animation setDelegate:self];  
-    [animation setDuration:0.5f];
-	animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]; 
-    [animation setType:kCATransitionPush];
-	[animation setFillMode:kCAFillModeForwards];
-	[animation setRemovedOnCompletion:YES]; 
-	NSString *subtype = self.searchBar.hidden ? kCATransitionFromBottom:kCATransitionFromTop;
-    [animation setSubtype:subtype];
-	
-	self.searchBar.hidden = !self.searchBar.hidden;  
-    [[self.searchBar layer] addAnimation:animation forKey:@"showOrHideSearchBar"];
-
-
-}
-
-////改变搜索时候的状态，searchbar，maskview，FirstResponder。
--(void)changeSearchStatus
-{
-	if (!regionCenterWithCurrentLocation) 
-	{
-		[self showOrHideSearchBar];
-	} //在tab上的地图，一直有searchbar
-	
-	[self ativeOrResignSearchBar];
-}
 
 -(IBAction)searchButtonPressed:(id)sender
 {
 
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
-	[self changeSearchStatus];
+	[self.searchController setActive:YES animated:YES];   //处理search状态
 
-}
-
--(IBAction)searchBarCancelButtonPressed:(id)sender
-{
-	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
-	[self changeSearchStatus];
 }
 
 -(IBAction)pageCurlButtonPressed:(id)sender
@@ -614,7 +553,6 @@
 	[self.mapTypeSegmented setTitle:KMapTypeNameHybrid forSegmentAtIndex:2];
 	
 	//search bar,toolbar
-	self.searchBar.delegate = self;
 	if (!regionCenterWithCurrentLocation) 
 	{
 		self.searchBar.hidden = YES;
@@ -623,8 +561,12 @@
 		self.searchBar.hidden = NO;
 		self.toolBar.hidden = NO;
 		self.toolBar.alpha = 0.75f;
+		self.resetPinBarItem.customView.hidden = YES;
 	}
 	[self setToolBarItemsEnabled:NO];
+	
+	self.searchController = [[YCSearchController alloc] initWithDelegate:self
+												 searchDisplayController:self.searchDisplayController];
 	
 
 	
@@ -915,28 +857,6 @@
 	self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
-#pragma mark -
-#pragma mark UISearchBarDelegate
-- (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar 
-{
-
-	[self changeSearchStatus];   //处理search状态
-	
-	
-	if(forwardGeocoder == nil)
-	{
-		forwardGeocoder = [[BSForwardGeocoder alloc] initWithDelegate:self];
-	}
-	
-	// Forward geocode!
-	[forwardGeocoder findLocation:searchBar.text];
-	
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)theSearchBar
-{
-	[self searchBarCancelButtonPressed:theSearchBar];
-}
 
 #pragma mark -
 #pragma mark BSForwardGeocoderDelegate
@@ -977,7 +897,8 @@
 	
 		
 		//先删除原来的annotation
-		[self.mapView removeAnnotation:self.annotationAlarmEditing];
+		if (self.annotationAlarmEditing)
+			[self.mapView removeAnnotation:self.annotationAlarmEditing];
 		
 		//改变annotation内容
 		NSString *title = self.searchBar.text;
@@ -1051,16 +972,32 @@
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	[self changeSearchStatus];   //处理search状态
+	[self.searchController setActive:YES animated:YES];   //处理search状态
 }
 
 /*
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	//[self changeSearchStatus];   //处理search状态
+	
 }
  */
 
+#pragma mark -
+#pragma mark YCSearchControllerDelegete methods
+
+- (NSArray*)searchController:(YCSearchController *)controller searchString:(NSString *)searchString
+{
+	
+	if(forwardGeocoder == nil)
+	{
+		forwardGeocoder = [[BSForwardGeocoder alloc] initWithDelegate:self];
+	}
+	
+	// Forward geocode!
+	[forwardGeocoder findLocation:searchString];
+	
+	return nil;
+}
 
 #pragma mark -
 #pragma mark Memory management
@@ -1098,6 +1035,7 @@
 	[self->myTimer release];
 	[self->reverseGeocoder release];
 	[self.forwardGeocoder release];
+	[self.searchController release];
 	[self.alarms release];                       
 	[self.mapAnnotations release];        
 	[self.alarmTemp release];

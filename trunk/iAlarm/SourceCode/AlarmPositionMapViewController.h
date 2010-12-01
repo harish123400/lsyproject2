@@ -9,6 +9,7 @@
 #import "AlarmModifyViewController.h"
 #import "YCNavSuperControllerProtocol.h"
 #import "BSForwardGeocoder.h"
+#import "YCSearchController.h"
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -17,12 +18,13 @@
 @class YCAnnotation;
 @class AlarmNameViewController;
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
-<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,UISearchBarDelegate,BSForwardGeocoderDelegate,UIAlertViewDelegate>
+<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,BSForwardGeocoderDelegate,UIAlertViewDelegate,YCSearchControllerDelegete>
 {
 	NSTimer *myTimer;
 	
 	MKReverseGeocoder *reverseGeocoder;
 	BSForwardGeocoder *forwardGeocoder;
+	YCSearchController *searchController;
 	
 	IBOutlet MKMapView* mapView;            
 	IBOutlet UIControl *maskView;                           //覆盖View
@@ -72,7 +74,8 @@
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *pageCurlBarItem;
 @property (nonatomic,retain,readonly) UIBarButtonItem *locationingBarItem;
 
-@property (nonatomic, retain) BSForwardGeocoder *forwardGeocoder;
+@property (nonatomic,retain) BSForwardGeocoder *forwardGeocoder;
+@property (nonatomic,retain) YCSearchController *searchController;
 @property (nonatomic,assign) BOOL regionCenterWithCurrentLocation;
 @property (nonatomic,assign) BOOL newAlarm;
 @property (nonatomic,retain) NSArray *alarms;
@@ -86,7 +89,6 @@
 -(IBAction)resetPinButtonPressed:(id)sender;
 -(IBAction)currentPinButtonPressed:(id)sender;
 -(IBAction)searchButtonPressed:(id)sender;
--(IBAction)searchBarCancelButtonPressed:(id)sender;
 -(IBAction)pageCurlButtonPressed:(id)sender;
 -(IBAction)mapTypeSegmentedChanged:(id)sender;
 
