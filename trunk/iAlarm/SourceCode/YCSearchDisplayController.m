@@ -7,6 +7,7 @@
 //
 
 #import "YCSearchDisplayController.h"
+#import "YCSearchBar.h"
 
 
 @implementation YCSearchDisplayController
@@ -31,17 +32,24 @@
 	if (visible) 
 	{
 		[super setActive:visible animated:animated];
+		[self.searchBar becomeFirstResponder];
+		((YCSearchBar*)self.searchBar).canResignFirstResponder = NO;
+		
 		self.searchBar.text = self.lastSearchString;
 		self.searchBar.placeholder = self.originalPlaceholderString;
 	}else {
-		self.lastSearchString = self.searchBar.text ;
-		if (self.lastSearchString !=nil && [self.lastSearchString length] >0) 
+		if (self.searchBar.text !=nil && [self.searchBar.text length] >0) 
 		{
+			self.lastSearchString = self.searchBar.text;
 			self.searchBar.placeholder = lastSearchString;
+		}else {
+			self.lastSearchString = nil;
 		}
 		self.searchBar.text = nil;
-		
+
 		[super setActive:visible animated:animated];
+		((YCSearchBar*)self.searchBar).canResignFirstResponder = YES;
+		[self.searchBar resignFirstResponder];
 	}
 
 }

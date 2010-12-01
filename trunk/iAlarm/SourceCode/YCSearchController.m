@@ -105,8 +105,6 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	if (visible) 
 	{
 		[self.searchDisplayController setActive:visible animated:animated];
-		[self.searchDisplayController.searchBar becomeFirstResponder];
-		((YCSearchBar*)self.searchDisplayController.searchBar).canResignFirstResponder = NO;
 		if (self->originalSearchBarHidden) //显示或隐藏searchBar
 		{
 			[self setSearchBar:self.searchDisplayController.searchBar visible:visible animated:NO]; 
@@ -117,8 +115,6 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 		if (self.searchDisplayController.active) 
 			[self.searchDisplayController setActive:visible animated:animated];
 		
-		((YCSearchBar*)self.searchDisplayController.searchBar).canResignFirstResponder = YES;
-		[self.searchDisplayController.searchBar resignFirstResponder];
 		if (self->originalSearchBarHidden) //显示或隐藏searchBar
 		{
 			[self setSearchBar:self.searchDisplayController.searchBar visible:visible animated:animated]; 
@@ -303,6 +299,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
+	//NSLog(@"shouldReloadTableForSearchString:%@",searchString);
     [self filterContentForSearchText:searchString scope:
 	 [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     
