@@ -7,6 +7,7 @@
 //
 
 #import "YCSearchController.h"
+#import "YCSearchBar.h"
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -14,12 +15,29 @@
 
 @synthesize delegate;
 @synthesize searchDisplayController;
-@synthesize listContent;
-@synthesize filteredListContent;
 @synthesize searchMaskView;
 @synthesize searchTableView;
 @synthesize lastSearchString;
 @synthesize originalPlaceholderString;
+
+- (id)listContent
+{
+	static NSMutableArray	*listContent = nil; //所有实例，共用
+	if (listContent == nil) 
+	{
+		listContent = [[NSMutableArray alloc] init];
+	}
+	return listContent;
+}
+
+- (id)filteredListContent
+{
+	if (self->filteredListContent == nil) 
+	{
+		self->filteredListContent = [[NSMutableArray alloc] init];
+	}
+	return self->filteredListContent;
+}
 
 - (id) initWithDelegate:(id<YCSearchControllerDelegete>)theDelegate 
 searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
@@ -36,8 +54,6 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 		self.originalPlaceholderString = theSearchDisplayController.searchBar.placeholder;
 		self->originalSearchBarHidden = theSearchDisplayController.searchBar.hidden;
 		
-		self.listContent = [[NSMutableArray alloc] init];
-		self.filteredListContent = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -53,7 +69,6 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 - (void)dealloc
 {
 
-	[listContent release];
 	[filteredListContent release];
 	[searchMaskView release];
 	[searchTableView release];
@@ -97,6 +112,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	if (visible) 
 	{
 		[self.searchDisplayController.searchBar becomeFirstResponder];
+		((YCSearchBar*)self.searchDisplayController.searchBar).canResignFirstResponder = NO;
 		if (self->originalSearchBarHidden) //显示或隐藏searchBar
 		{
 			[self setSearchBar:self.searchDisplayController.searchBar visible:visible animated:NO]; 
@@ -104,6 +120,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 			                                                   //显示时候不用动画，maskView遮盖不了searchBar的背后区域
 		}
 	}else {
+		((YCSearchBar*)self.searchDisplayController.searchBar).canResignFirstResponder = YES;
 		[self.searchDisplayController.searchBar resignFirstResponder];
 		if (self->originalSearchBarHidden) //显示或隐藏searchBar
 		{
@@ -142,14 +159,11 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
     }
 	
 	
-	if (n == 0) 
+	if (self.searchTableView) 
 	{
-		self.searchTableView.hidden = YES;
-		if (self.searchDisplayController.searchContentsController.view != self.searchMaskView.superview)
-			[self.searchDisplayController.searchContentsController.view addSubview:self.searchMaskView];
-
+		[self searchDisplayController:self.searchDisplayController willShowSearchResultsTableView:self.searchTableView];
+		[self searchDisplayController:self.searchDisplayController didShowSearchResultsTableView:self.searchTableView];
 	}
-	 
 
 	
 	return n;
@@ -164,24 +178,24 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	if (cell == nil)
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellID] autorelease];
-		cell.textLabel.font = [UIFont systemFontOfSize:15];
+		cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
 	}
 	
 	/*
 	 If the requesting table view is the search display controller's table view, configure the cell using the filtered content, otherwise use the main list.
 	 */
 
-	NSString *product = nil;
+	NSString *searchString = nil;
 	if (tableView == self.searchDisplayController.searchResultsTableView)
 	{
-        product = [self.filteredListContent objectAtIndex:indexPath.row];
+        searchString = [self.filteredListContent objectAtIndex:indexPath.row];
     }
 	else
 	{
-        product = [self.listContent objectAtIndex:indexPath.row];
+        searchString = [self.listContent objectAtIndex:indexPath.row];
     }
 	
-	cell.textLabel.text = product;
+	cell.textLabel.text = searchString;
 	return cell;
 }
 
@@ -202,6 +216,8 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	{
         searchString = [self.listContent objectAtIndex:indexPath.row];
     }
+	
+	self.searchDisplayController.searchBar.text = searchString;
 	
 	//结束搜索状态
 	[self.searchDisplayController setActive:NO animated:YES];
@@ -226,7 +242,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	/*
 	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
 	 */
-	for (NSString *product in listContent)
+	for (NSString *product in self.listContent)
 	{
 		NSComparisonResult result = [product compare:searchText 
 											 options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) 
@@ -245,7 +261,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 {
 	
 	BOOL result = NO;
-	for (NSString *product in listContent)
+	for (NSString *product in self.listContent)
 	{
 		if (result = [product isEqualToString:string])
 		{
@@ -301,6 +317,18 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
     return YES;
 }
 
+/*
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
+{
+	self.searchDisplayController.searchBar.text = nil;
+}
+
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+{
+	self.searchDisplayController.searchBar.text = self.lastSearchString;
+}
+*/
+
 /////////////////////////////////////
 //退出搜索时候，保持最后搜索字符串在 bar上
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
@@ -331,34 +359,47 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
 {
 	NSArray *array= self.searchDisplayController.searchContentsController.view.subviews;
-	self.searchMaskView = [array objectAtIndex:array.count-1];
+	
+	/////////////////////////////
+	/////判断是否是maskview
+	UIView * maskTmp =[array objectAtIndex:array.count-1];
+	if ([maskTmp respondsToSelector:@selector(allControlEvents)]) 
+	{
+		UIControlEvents allEvents = [(UIControl*)maskTmp allControlEvents];
+		if ((allEvents & UIControlEventTouchUpInside) == UIControlEventTouchUpInside) 
+		{
+			self.searchMaskView = maskTmp;
+		}
+	}
+	/////////////////////////////
+	
+	self.searchTableView = tableView;
+	tableView.separatorStyle =  UITableViewCellSeparatorStyleSingleLine;
 }
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
 {
-	self.searchTableView = tableView;
 	if (!self.searchDisplayController.active)
 	{
 		tableView.hidden = YES ;
 		//[self.searbarMaskView removeFromSuperview];
-		NSLog(@"11");
 	}else {
 		if (self.filteredListContent.count !=0 ) 
 		{
 			tableView.hidden = NO ;
-			//[self.searchMaskView removeFromSuperview];
-			NSLog(@"22");
+			if (self.searchDisplayController.searchContentsController.view == self.searchMaskView.superview)
+				[self.searchMaskView removeFromSuperview];
 		}else {
 			tableView.hidden = YES;
 			if (self.searchDisplayController.searchContentsController.view != self.searchMaskView.superview)
 				[self.searchDisplayController.searchContentsController.view addSubview:self.searchMaskView];
-			NSLog(@"33");
 		}
 	}
 
 }
 //没有提示数据时候，隐藏搜索结果view
 /////////////////////////////////////
+
 
 
 

@@ -21,26 +21,26 @@
 <UISearchDisplayDelegate, UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 {
 	id<YCSearchControllerDelegete> delegate;
-	UISearchDisplayController *searchDisplayController;
+	UISearchDisplayController *searchDisplayController;  //重新设置父类的这个属性
 	
-	NSMutableArray	*listContent;			// The master content.
+	//static NSMutableArray	*listContent;			// The master content.
 	NSMutableArray	*filteredListContent;	// The content filtered as a result of a search.
 
 	UIView *searchMaskView;
-	UIView *searchTableView;
+	UITableView *searchTableView;
 	NSString *lastSearchString;
 	NSString *originalPlaceholderString;
 	BOOL originalSearchBarHidden;
 }
 
-@property (nonatomic, retain) id<YCSearchControllerDelegete> delegate;
-@property(nonatomic, retain) UISearchDisplayController *searchDisplayController;
+@property(nonatomic,retain) id<YCSearchControllerDelegete> delegate;
+@property(nonatomic,retain) UISearchDisplayController *searchDisplayController;
 
-@property (nonatomic, retain) NSMutableArray *listContent;
-@property (nonatomic, retain) NSMutableArray *filteredListContent;
+@property(nonatomic,retain,readonly) NSMutableArray *listContent;
+@property(nonatomic,retain,readonly) NSMutableArray *filteredListContent;
 
 @property(nonatomic,retain) UIView *searchMaskView;
-@property(nonatomic,retain) UIView *searchTableView;
+@property(nonatomic,retain) UITableView *searchTableView;
 @property(nonatomic,retain) NSString *lastSearchString;
 @property(nonatomic,retain) NSString *originalPlaceholderString;
 
