@@ -127,7 +127,7 @@
 	{
 		[self.activityIndicator stopAnimating];
 		[UIView beginAnimations:@"Unmask" context:NULL];
-		[UIView setAnimationDuration:1.5];
+		[UIView setAnimationDuration:1.0];
 		self.maskView.alpha = 0.0f;
 		[UIView commitAnimations];
 	}else {
@@ -243,25 +243,26 @@
 		annotation.subtitle = temp.position;
 		annotation.coordinate = temp.coordinate;
 		
-		if ([self isKindOfClass:[AlarmPositionMapViewController class]]) 
+		if (self.regionCenterWithCurrentLocation) 
 		{
+			if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
+			{
+				annotation.annotationType = YCMapAnnotationTypeMovingToTarget;
+			}else{
+				annotation.annotationType = YCMapAnnotationTypeStandard;
+			}
+		}else {
 			if(self.newAlarm)  //AlarmNew
 			{
-				annotation.title = NSLocalizedString(@"Drag to Move Pin",@"使用地图定位，图钉的开始提示");
+				annotation.title = KMapNewAnnotationTitle;
 				annotation.subtitle = @"";
 				annotation.annotationType = YCMapAnnotationTypeLocating;
 			}else {
 				annotation.annotationType = YCMapAnnotationTypeStandardEnabledDrag;
 			}
-
-		}else {
-			if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
-			{
-				annotation.annotationType = YCMapAnnotationTypeMovingTarget;
-			}else{
-				annotation.annotationType = YCMapAnnotationTypeStandard;
-			}
 		}
+
+		
 		
 		if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
 			self.annotationAlarmEditing = annotation;
@@ -270,6 +271,13 @@
 		[array addObject:annotation];
 		[annotation release];
 	}
+	
+	if (self.annotationAlarmEditing == nil)  //在tab上点击打开的情况
+	{
+		self.annotationAlarmEditing =  [[YCAnnotation alloc]init];
+		annotationAlarmEditing.annotationType = YCMapAnnotationTypeStandard;
+	}
+	
 	self.mapAnnotations = array;
 	[array release];
 	
@@ -706,12 +714,13 @@
 	switch (((YCAnnotation*)annotation).annotationType) 
 	{
 		case YCMapAnnotationTypeStandard:
+			pinView.draggable = NO;
 			pinView.pinColor = MKPinAnnotationColorRed;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeStandardEnabledDrag:
 			pinView.draggable = YES;
-			pinView.pinColor = MKPinAnnotationColorRed;
+			pinView.pinColor = MKPinAnnotationColorPurple;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeLocating:
@@ -719,7 +728,7 @@
 			pinView.pinColor = MKPinAnnotationColorPurple;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
-		case YCMapAnnotationTypeMovingTarget:
+		case YCMapAnnotationTypeMovingToTarget:
 			pinView.pinColor = MKPinAnnotationColorGreen;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;

@@ -16,6 +16,7 @@
 #define kMapTypeNameStandard                     NSLocalizedString(@"Map",@"地图类型名称")
 #define KMapTypeNameSatellite                    NSLocalizedString(@"Satellite",@"地图类型名称")
 #define KMapTypeNameHybrid                       NSLocalizedString(@"Hybrid",@"地图类型名称")
+#define KMapNewAnnotationTitle                   NSLocalizedString(@"Drag to Move Pin",@"一个新图钉的标题");
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +35,7 @@
 #define kAlertTitleWhenSearchMap                 NSLocalizedString(@"Search",@"地图查询alert标题")
 #define kAlertMsgNoResultsWhenSearchMap          NSLocalizedString(@"No results found.",@"地图查询时候，无结果")
 #define kAlertMsgTooManyQueriesWhenSearchMap     NSLocalizedString(@"Too many queries has been made, please try at tomorrow",@"地图查询时候，一天内查询次数过多")
-#define kAlertMsgErrorWhenSearchMap              NSLocalizedString(@"Server error, please try again.",@"地图查询时候，发生错误")
+#define kAlertMsgErrorWhenSearchMap              NSLocalizedString(@"Network error, please try again.",@"地图查询时候，发生错误")
 
 
 /////////////////////////////////////////////////////////////////////////////////////

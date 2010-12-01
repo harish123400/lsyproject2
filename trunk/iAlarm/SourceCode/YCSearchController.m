@@ -8,6 +8,7 @@
 
 #import "YCSearchController.h"
 #import "YCSearchBar.h"
+#import "YCSearchDisplayController.h"
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -17,8 +18,6 @@
 @synthesize searchDisplayController;
 @synthesize searchMaskView;
 @synthesize searchTableView;
-@synthesize lastSearchString;
-@synthesize originalPlaceholderString;
 
 - (id)listContent
 {
@@ -45,13 +44,13 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	if (self = [super init]) 
 	{
 		self.delegate = theDelegate;
-		self.searchDisplayController = theSearchDisplayController;
+		self.searchDisplayController = (YCSearchDisplayController*)theSearchDisplayController;
 		theSearchDisplayController.searchBar.delegate = self;
 		theSearchDisplayController.delegate = self;
 		theSearchDisplayController.searchResultsDataSource = self;
 		theSearchDisplayController.searchResultsDelegate = self;
 		
-		self.originalPlaceholderString = theSearchDisplayController.searchBar.placeholder;
+		self.searchDisplayController.originalPlaceholderString = theSearchDisplayController.searchBar.placeholder;
 		self->originalSearchBarHidden = theSearchDisplayController.searchBar.hidden;
 		
 	}
@@ -72,9 +71,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	[filteredListContent release];
 	[searchMaskView release];
 	[searchTableView release];
-	
-	[lastSearchString release];
-	[originalPlaceholderString release];
+
 	
 	[super dealloc];
 }
@@ -128,8 +125,8 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 		}
 		
 		[self.filteredListContent removeAllObjects];
-		self.searchMaskView = nil;
-		self.searchTableView = nil;
+		//self.searchMaskView = nil;
+		//self.searchTableView = nil;
 	}
 
 }
@@ -148,21 +145,21 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if (!self.searchDisplayController.active)
-		return 0;
-	/*
-	 If the requesting table view is the search display controller's table view, return the count of
-     the filtered list, otherwise return the count of the main list.
-	 */
 	NSInteger n = 0;
-	if (tableView == self.searchDisplayController.searchResultsTableView)
+	if (self.searchDisplayController.active)
 	{
-        n = [self.filteredListContent count];
-    }
-	else
-	{
-        n = [self.listContent count];
-    }
+		if (tableView == self.searchDisplayController.searchResultsTableView)
+		{
+			n = [self.filteredListContent count];
+		}
+		else
+		{
+			n = [self.listContent count];
+		}
+	}else {
+		n = 0;
+	}
+
 	
 	
 	if (self.searchTableView) 
@@ -326,35 +323,29 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 /*
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
-	self.searchDisplayController.searchBar.text = nil;
+
 }
 
 - (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
 {
-	self.searchDisplayController.searchBar.text = self.lastSearchString;
+
 }
 */
 
-/////////////////////////////////////
-//退出搜索时候，保持最后搜索字符串在 bar上
+
+/*
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
 {
-	self.lastSearchString = controller.searchBar.text;
-	if (self.lastSearchString !=nil && [self.lastSearchString length] >0) 
-	{
-		controller.searchBar.placeholder = lastSearchString;
-	}
+
+	
 }
+ */
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
-{
-	controller.searchBar.text = self.lastSearchString;
-	controller.searchBar.placeholder = self.originalPlaceholderString;
-	
+{	
 	[self setActive:NO animated:YES];
 }
-//退出搜索时候，保持最后搜索字符串在 bar上
-/////////////////////////////////////
+
 
 
 /////////////////////////////////////
