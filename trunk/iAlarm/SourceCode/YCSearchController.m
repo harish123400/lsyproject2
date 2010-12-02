@@ -283,7 +283,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	
 
 	//加数据到
-	[self addListContentWithString:searchString];
+	//[self addListContentWithString:searchString];
 	//[self performSelector:@selector(addListContentWithString:) withObject:searchString afterDelay:0.5];
 
 	

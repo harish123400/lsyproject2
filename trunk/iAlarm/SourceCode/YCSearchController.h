@@ -47,5 +47,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController;
 //激活或退出搜索
 - (void)setActive:(BOOL)visible animated:(BOOL)animated;
 
+- (void)addListContentWithString:(NSString*)string;
+
 
 @end

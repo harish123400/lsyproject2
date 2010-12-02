@@ -877,6 +877,8 @@
 	
 	if(forwardGeocoder.status == G_GEO_SUCCESS && searchResults > 0)
 	{
+		//加到最近查询list中
+		[self.searchController addListContentWithString:forwardGeocoder.searchQuery];
 		
 		//离当前位置最近的元素
 		CLLocationDistance distanceOfNearest = 900000000000.0;
@@ -910,7 +912,7 @@
 			[self.mapView removeAnnotation:self.annotationAlarmEditing];
 		
 		//改变annotation内容
-		NSString *title = self.searchBar.text;
+		NSString *title = forwardGeocoder.searchQuery;
 		NSString *subtitle = place.address!=nil ? place.address: @" " ;
 		[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
 		
@@ -976,6 +978,117 @@
 			 cancelButtonTitle:kAlertBtnOK 
 					  delegate:self];
 }
+ 
+
+/*
+-(void)forwardGeocoder:(BSForwardGeocoder*)theForwardGeocoder searchString:(NSString*)searchString results:(NSArray*)results
+{
+	NSUInteger searchResults = [results count];
+	
+	if(theForwardGeocoder.status == G_GEO_SUCCESS && searchResults > 0)
+	{
+		//加到最近查询list中
+		[self.searchController addListContentWithString:searchString];
+		
+		//离当前位置最近的元素
+		CLLocationDistance distanceOfNearest = 900000000000.0;
+		NSUInteger indexOfNearest =0;
+		
+		for(NSUInteger i = 0; i < searchResults; i++)
+		{
+			BSKmlResult *placeTmp = [results objectAtIndex:i];
+			
+			//找出个离当前位置最近的
+			CLLocation *currentLocation = self.mapView.userLocation.location;
+			if (currentLocation) 
+			{
+				CLLocation *locTmp = [[CLLocation alloc] initWithLatitude:placeTmp.coordinate.latitude longitude:placeTmp.coordinate.longitude];
+				CLLocationDistance distanceTmp = [currentLocation distanceFromLocation:locTmp];
+				if (distanceTmp  < distanceOfNearest) 
+				{
+					distanceOfNearest = distanceTmp;
+					indexOfNearest = i;
+				}
+			}
+			
+		}
+		
+		
+		BSKmlResult *place = [results objectAtIndex:indexOfNearest];  /////用最近的
+		
+		
+		//先删除原来的annotation
+		if (self.annotationAlarmEditing)
+			[self.mapView removeAnnotation:self.annotationAlarmEditing];
+		
+		//改变annotation内容
+		NSString *title = searchString;
+		NSString *subtitle = place.address!=nil ? place.address: @" " ;
+		[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
+		
+		////////////////////////
+		//Zoom into the location
+		self->defaultMapRegion = place.coordinateRegion;
+		self->defaultMapRegion.center = place.coordinate;
+		double delay = [self setMapRegion:self->defaultMapRegion FromWorld:YES animatedToWorld:YES animatedToPlace:YES];
+		//Zoom into the location
+		////////////////////////
+		
+		
+		//再加上
+		//[self.mapView addAnnotation:self.annotationAlarmEditing];
+		[self.mapView performSelector:@selector(addAnnotation:) withObject:self.annotationAlarmEditing afterDelay:delay+0.1];
+		
+		
+	}else {
+		
+		switch (theForwardGeocoder.status) {
+			case G_GEO_BAD_KEY:
+				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
+								alertTitle:kAlertTitleWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnOK 
+								  delegate:self];
+				break;
+				
+			case G_GEO_UNKNOWN_ADDRESS:
+				[UIUtility simpleAlertBody:kAlertMsgNoResultsWhenSearchMap 
+								alertTitle:kAlertTitleWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnOK 
+								  delegate:self];
+				break;
+				
+			case G_GEO_TOO_MANY_QUERIES:
+				[UIUtility simpleAlertBody:kAlertMsgTooManyQueriesWhenSearchMap 
+								alertTitle:kAlertTitleWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnOK 
+								  delegate:self];
+				break;
+				
+			case G_GEO_SERVER_ERROR:
+				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
+								alertTitle:kAlertTitleWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnOK 
+								  delegate:self];
+				break;
+				
+				
+			default:
+				break;
+		}
+		
+	}
+}
+
+
+-(void)forwardGeocoder:(BSForwardGeocoder*)forwardGeocoder error:(NSString *)error
+{
+	
+	[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
+					alertTitle:kAlertTitleWhenSearchMap 
+			 cancelButtonTitle:kAlertBtnOK 
+					  delegate:self];
+}
+ */
 
 #pragma mark -
 #pragma mark UIAlertViewDelegate
