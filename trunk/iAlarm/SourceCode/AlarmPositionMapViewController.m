@@ -14,6 +14,7 @@
 #import "YCLog.h"
 #import "AlarmMapSpecifyViewController.h"
 #import "AlarmNameViewController.h"
+#import "YCTapView.h"
 
 
 @implementation AlarmPositionMapViewController
@@ -28,7 +29,7 @@
 @synthesize curlbackgroundView;
 @synthesize activityIndicator;
 @synthesize searchBar;
-@synthesize toolBar;
+@synthesize toolbar;
 @synthesize mapTypeSegmented;
 @synthesize currentLocationBarItem;
 @synthesize currentPinBarItem;
@@ -76,7 +77,7 @@
 
 -(void)setToolBarItemsEnabled:(BOOL)enabled
 {
-	NSArray *baritems = self.toolBar.items ;
+	NSArray *baritems = self.toolbar.items ;
 	for(NSUInteger i=0;i<baritems.count;i++)
 	{
 		[[baritems objectAtIndex:i] setEnabled:enabled];
@@ -232,7 +233,7 @@
 
 -(void)addAnnotation
 {
-	[self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
+	//[self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
 	
 	NSMutableArray *array = [[NSMutableArray alloc] init];
 	for (NSUInteger i =0; i<self.alarms.count; i++) 
@@ -290,14 +291,14 @@
 -(void)setLocationBarItem:(BOOL)locationing
 {
 	NSMutableArray *baritems = [NSMutableArray array];
-	[baritems addObjectsFromArray:self.toolBar.items];
+	[baritems addObjectsFromArray:self.toolbar.items];
 	
 	if(locationing)
 		[baritems replaceObjectAtIndex:0 withObject:self.locationingBarItem];
 	else 
 		[baritems replaceObjectAtIndex:0 withObject:self.currentLocationBarItem];
 
-	[self.toolBar setItems:baritems animated:NO];
+	[self.toolbar setItems:baritems animated:NO];
 }
 
 #pragma mark -
@@ -316,6 +317,15 @@
 		self->isFirstShow = NO;
 		//关掉覆盖视图
 		[self closeMaskViewWithAnimated:YES];
+		
+		//显示toolbar
+		if (regionCenterWithCurrentLocation)  
+		{
+			[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
+			self.curlbackgroundView.canHideToolBar = YES;
+			[self.curlbackgroundView startToolbarTimeInterval:5.0];
+		}
+
 		
 		//先到世界地图，在下来
 		[self setMapRegion:self->defaultMapRegion FromWorld:YES animatedToWorld:NO animatedToPlace:YES];
@@ -342,6 +352,14 @@
 		 //关掉覆盖视图
 		 [self closeMaskViewWithAnimated:YES];
 		 
+		 //显示toolbar
+		 if (regionCenterWithCurrentLocation)  
+		 {
+			 [UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
+			 self.curlbackgroundView.canHideToolBar = YES;
+			 [self.curlbackgroundView startToolbarTimeInterval:5.0];
+		 }
+		 
 		 MKCoordinateRegion last = [YCParam paramSingleInstance].lastLoadMapRegion;
 		 if ([self isValidRegion:last]) 
 		 {
@@ -359,9 +377,9 @@
 	static double timePassed = 0.0;
 	if (self.mapView.userLocation.location)
 	{
-		[myTimer invalidate];
-		[myTimer release];
-		myTimer = nil;
+		[locationTimer invalidate];
+		[locationTimer release];
+		locationTimer = nil;
 		
 		self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.location.coordinate,1500.0,1500.0);
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -373,9 +391,9 @@
 		{
 			timePassed = 0;
 			
-			[myTimer invalidate];
-			[myTimer release];
-			myTimer = nil;
+			[locationTimer invalidate];
+			[locationTimer release];
+			locationTimer = nil;
 			
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 			[notificationCenter postNotificationName:kTimeOutForLocationNotification object:self];
@@ -388,8 +406,8 @@
 -(void)startCheckLocationTimer
 {
 	NSTimeInterval ti = 0.2;
-	myTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(checkLocation) userInfo:nil repeats:YES] retain];
-	[[NSRunLoop currentRunLoop] addTimer:myTimer forMode:NSRunLoopCommonModes];
+	locationTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(checkLocation) userInfo:nil repeats:YES] retain];
+	[[NSRunLoop currentRunLoop] addTimer:locationTimer forMode:NSRunLoopCommonModes];
 }
 
 
@@ -564,12 +582,12 @@
 	if (!regionCenterWithCurrentLocation) 
 	{
 		self.searchBar.hidden = YES;
-		self.toolBar.hidden = NO;
+		self.toolbar.hidden = NO;
 	} else { //在tab上的地图，一直有searchbar
 		self.searchBar.hidden = NO;
-		self.toolBar.hidden = NO;
-		self.toolBar.alpha = 0.75f;
-		self.resetPinBarItem.customView.hidden = YES;
+		self.toolbar.hidden = NO;
+		self.toolbar.alpha = 0.70f;
+		self.toolbar.hidden = YES;
 	}
 	[self setToolBarItemsEnabled:NO];
 	
@@ -1097,12 +1115,6 @@
 	[self.searchController setActive:YES animated:YES];   //处理search状态
 }
 
-/*
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-	
-}
- */
 
 #pragma mark -
 #pragma mark YCSearchControllerDelegete methods
@@ -1137,7 +1149,7 @@
 	self.curlbackgroundView = nil;                    
 	self.activityIndicator = nil;         
 	self.searchBar = nil;
-	self.toolBar = nil;
+	self.toolbar = nil;
 	self.mapTypeSegmented = nil;          
 	self.currentLocationBarItem = nil;       
 	self.currentPinBarItem = nil;            
@@ -1154,7 +1166,7 @@
 
 - (void)dealloc 
 {
-	[self->myTimer release];
+	[self->locationTimer release];
 	[self->reverseGeocoder release];
 	[self.forwardGeocoder release];
 	[self.searchController release];

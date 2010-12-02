@@ -9,6 +9,7 @@
 #import "YCSearchController.h"
 #import "YCSearchBar.h"
 #import "YCSearchDisplayController.h"
+#import "UIUtility.h"
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -78,7 +79,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 
 -(void)setSearchBar:(UISearchBar*)searchBar visible:(BOOL)visible animated:(BOOL)animated
 {
-	
+	/*
 	if (animated) 
 	{
 		CATransition *animation = [CATransition animation];  
@@ -96,6 +97,10 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	}else {
 		searchBar.hidden = !visible; 
 	}
+	 */
+	
+	[UIUtility setBar:searchBar topBar:YES visible:visible animated:animated animateDuration:0.3 animateName:@"showOrHideSearchBar"];
+
 
 }
 

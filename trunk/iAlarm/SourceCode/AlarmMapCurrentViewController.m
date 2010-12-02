@@ -15,11 +15,11 @@
 
 -(void)timeoutForMapCurrentLocation
 {
-	if (myTimer !=nil) 
+	if (locationTimer !=nil) 
 	{
-		[myTimer invalidate];
-		[myTimer release];
-		myTimer = nil;
+		[locationTimer invalidate];
+		[locationTimer release];
+		locationTimer = nil;
 		
 		//关掉覆盖视图
 		[super closeMaskViewWithAnimated:YES];

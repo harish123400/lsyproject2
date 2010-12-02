@@ -17,10 +17,12 @@
 
 @class YCAnnotation;
 @class AlarmNameViewController;
+@class YCTapView;
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
 <MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,BSForwardGeocoderDelegate,UIAlertViewDelegate,YCSearchControllerDelegete>
 {
-	NSTimer *myTimer;
+	NSTimer *locationTimer;
+	
 	
 	MKReverseGeocoder *reverseGeocoder;
 	BSForwardGeocoder *forwardGeocoder;
@@ -29,10 +31,10 @@
 	IBOutlet MKMapView* mapView;            
 	IBOutlet UIControl *maskView;                           //覆盖View
 	IBOutlet UIControl *curlView;                           //地图卷起后，显示的view
-	IBOutlet UIView *curlbackgroundView;                    //maskView,curlView的背景view。做卷起动画时候需要
+	IBOutlet YCTapView *curlbackgroundView;                 //maskView,curlView的背景view。做卷起动画时候需要;隐藏toolbar用
 	IBOutlet UIActivityIndicatorView *activityIndicator;    //覆盖View上的等待指示器
 	IBOutlet UISearchBar *searchBar;
-	IBOutlet UIToolbar *toolBar;
+	IBOutlet UIToolbar *toolbar;
 	IBOutlet UISegmentedControl *mapTypeSegmented;          //curlView上的按钮控件
 	IBOutlet UIBarButtonItem *currentLocationBarItem;       //地图转到－>当前位置
 	IBOutlet UIBarButtonItem *currentPinBarItem;            //地图转到－>当前图钉
@@ -62,10 +64,10 @@
 @property (nonatomic,retain) IBOutlet MKMapView* mapView;
 @property (nonatomic,retain) IBOutlet UIControl *maskView;
 @property (nonatomic,retain) IBOutlet UIControl *curlView;
-@property (nonatomic,retain) IBOutlet UIView *curlbackgroundView;
+@property (nonatomic,retain) IBOutlet YCTapView *curlbackgroundView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
-@property (nonatomic,retain) IBOutlet UIToolbar *toolBar;
+@property (nonatomic,retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic,retain) IBOutlet UISegmentedControl *mapTypeSegmented;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentLocationBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *currentPinBarItem;

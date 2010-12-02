@@ -378,6 +378,37 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 }
 
 
++(void)setBar:(UIView*)theBar
+	   topBar:(BOOL)topBar
+	  visible:(BOOL)visible 
+	 animated:(BOOL)animated
+animateDuration:(CFTimeInterval)animateDuration 
+  animateName:(NSString*)animateName;
+{
+	if (animated) 
+	{
+		CATransition *animation = [CATransition animation];  
+		[animation setDelegate:self];  
+		[animation setDuration:animateDuration];
+		animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]; 
+		[animation setType:kCATransitionPush];
+		[animation setFillMode:kCAFillModeForwards];
+		[animation setRemovedOnCompletion:YES];
+		
+		NSString *subtype = nil;
+		if (topBar)
+			subtype = visible ? kCATransitionFromBottom:kCATransitionFromTop;
+		else
+			subtype = visible ? kCATransitionFromTop:kCATransitionFromBottom;
+		[animation setSubtype:subtype];
+		
+		theBar.hidden = !visible;  
+		[[theBar layer] addAnimation:animation forKey:animateName];
+	}else {
+		theBar.hidden = !visible; 
+	}
+}
+
 @end
 
 

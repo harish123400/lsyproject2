@@ -569,7 +569,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>resetPinBarItem</string>
 							<string>searchBar</string>
 							<string>searchBarItem</string>
-							<string>toolBar</string>
+							<string>toolbar</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -606,7 +606,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>resetPinBarItem</string>
 							<string>searchBar</string>
 							<string>searchBarItem</string>
-							<string>toolBar</string>
+							<string>toolbar</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -663,7 +663,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAACAgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<string key="candidateClassName">UIBarButtonItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">toolBar</string>
+								<string key="name">toolbar</string>
 								<string key="candidateClassName">UIToolbar</string>
 							</object>
 						</object>

@@ -59,6 +59,15 @@
 +(NSString*)positionStringFromPlacemark:(MKPlacemark*)placemark;
 +(NSString*)titleStringFromPlacemark:(MKPlacemark*)placemark;
 
+//设置bar的可视状态
++(void)setBar:(UIView*)theBar
+	  topBar:(BOOL)topBar
+	  visible:(BOOL)visible 
+		 animated:(BOOL)animated
+  animateDuration:(CFTimeInterval)animateDuration 
+	  animateName:(NSString*)animateName;
+
+
 @end
 
 
