@@ -27,6 +27,7 @@
 @synthesize maskView;
 @synthesize curlView;
 @synthesize curlbackgroundView;
+@synthesize curlImageView;
 @synthesize activityIndicator;
 @synthesize searchBar;
 @synthesize toolbar;
@@ -594,8 +595,43 @@
 	self.searchController = [[YCSearchController alloc] initWithDelegate:self
 												 searchDisplayController:self.searchDisplayController];
 	
+	enum {
+		UIViewAutoresizingNone                 = 0,
+		UIViewAutoresizingFlexibleLeftMargin   = 1 << 0,
+		UIViewAutoresizingFlexibleWidth        = 1 << 1,
+		UIViewAutoresizingFlexibleRightMargin  = 1 << 2,
+		UIViewAutoresizingFlexibleTopMargin    = 1 << 3,
+		UIViewAutoresizingFlexibleHeight       = 1 << 4,
+		UIViewAutoresizingFlexibleBottomMargin = 1 << 5
+	};
 
 	
+	//curView
+	UIViewAutoresizing viewautoresizingMask = 0;
+	if (!regionCenterWithCurrentLocation) 
+	{
+		viewautoresizingMask = UIViewAutoresizingFlexibleLeftMargin
+							 | UIViewAutoresizingFlexibleWidth
+							 | UIViewAutoresizingFlexibleRightMargin
+							 | UIViewAutoresizingFlexibleTopMargin
+							 | UIViewAutoresizingFlexibleHeight
+							 | UIViewAutoresizingFlexibleBottomMargin;
+		
+		self.curlbackgroundView.autoresizingMask = viewautoresizingMask;
+		self.curlView.autoresizingMask = viewautoresizingMask;
+		self.mapView.autoresizingMask = viewautoresizingMask;
+		self.mapTypeSegmented.autoresizingMask = viewautoresizingMask;
+		self.curlImageView.autoresizingMask = viewautoresizingMask;
+		
+	}/*else {
+		viewautoresizingMask = UIViewAutoresizingFlexibleLeftMargin
+							 | UIViewAutoresizingFlexibleTopMargin;
+	}*/
+
+
+		
+	
+
 	//判断闹钟坐标是否有效
 	if (![self isValidCoordinate:self.alarm.coordinate]) 
 		self.alarm.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
@@ -1145,8 +1181,9 @@
     // e.g. self.myOutlet = nil;
 	self.mapView = nil;            
 	self.maskView = nil;                           
-	self.curlView;                           
-	self.curlbackgroundView = nil;                    
+	self.curlView = nil;;                           
+	self.curlbackgroundView = nil;
+	self.curlImageView = nil;
 	self.activityIndicator = nil;         
 	self.searchBar = nil;
 	self.toolbar = nil;

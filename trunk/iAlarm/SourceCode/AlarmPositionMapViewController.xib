@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="96"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -37,23 +38,23 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="191373211">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUIView" id="126933295">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">274</int>
+						<int key="NSvFlags">292</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBUIView" id="781883943">
 								<reference key="NSNextResponder" ref="126933295"/>
-								<int key="NSvFlags">274</int>
+								<int key="NSvFlags">292</int>
 								<object class="NSMutableArray" key="NSSubviews">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<object class="IBUIImageView" id="246231129">
 										<reference key="NSNextResponder" ref="781883943"/>
-										<int key="NSvFlags">274</int>
+										<int key="NSvFlags">292</int>
 										<string key="NSFrameSize">{320, 416}</string>
 										<reference key="NSSuperview" ref="781883943"/>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -65,8 +66,8 @@
 									</object>
 									<object class="IBUISegmentedControl" id="134878850">
 										<reference key="NSNextResponder" ref="781883943"/>
-										<int key="NSvFlags">258</int>
-										<string key="NSFrame">{{20, 291}, {280, 40}}</string>
+										<int key="NSvFlags">288</int>
+										<string key="NSFrame">{{20, 286}, {280, 40}}</string>
 										<reference key="NSSuperview" ref="781883943"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -111,12 +112,13 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
+								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUITag">1</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 							<object class="IBMKMapView" id="28040185">
 								<reference key="NSNextResponder" ref="126933295"/>
-								<int key="NSvFlags">274</int>
+								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{320, 416}</string>
 								<reference key="NSSuperview" ref="126933295"/>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -249,6 +251,7 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 460}</string>
+				<reference key="NSSuperview"/>
 				<reference key="IBUIBackgroundColor" ref="190358262"/>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -469,6 +472,14 @@
 						<reference key="destination" ref="251212599"/>
 					</object>
 					<int key="connectionID">140</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">curlImageView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="246231129"/>
+					</object>
+					<int key="connectionID">141</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -759,7 +770,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">140</int>
+			<int key="maxID">141</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -852,6 +863,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>activityIndicator</string>
 							<string>annotationManipulating</string>
+							<string>curlImageView</string>
 							<string>curlView</string>
 							<string>curlbackgroundView</string>
 							<string>currentLocationBarItem</string>
@@ -869,8 +881,9 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>UIActivityIndicatorView</string>
 							<string>id</string>
+							<string>UIImageView</string>
 							<string>UIControl</string>
-							<string>UIView</string>
+							<string>YCTapView</string>
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UISegmentedControl</string>
@@ -889,6 +902,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>activityIndicator</string>
 							<string>annotationManipulating</string>
+							<string>curlImageView</string>
 							<string>curlView</string>
 							<string>curlbackgroundView</string>
 							<string>currentLocationBarItem</string>
@@ -913,12 +927,16 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">curlImageView</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">curlView</string>
 								<string key="candidateClassName">UIControl</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">curlbackgroundView</string>
-								<string key="candidateClassName">UIView</string>
+								<string key="candidateClassName">YCTapView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">currentLocationBarItem</string>

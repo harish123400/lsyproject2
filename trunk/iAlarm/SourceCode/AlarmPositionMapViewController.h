@@ -32,6 +32,7 @@
 	IBOutlet UIControl *maskView;                           //覆盖View
 	IBOutlet UIControl *curlView;                           //地图卷起后，显示的view
 	IBOutlet YCTapView *curlbackgroundView;                 //maskView,curlView的背景view。做卷起动画时候需要;隐藏toolbar用
+	IBOutlet UIImageView *curlImageView;                    //地图卷起后,curlView的背景,设这个变量为了autosize用
 	IBOutlet UIActivityIndicatorView *activityIndicator;    //覆盖View上的等待指示器
 	IBOutlet UISearchBar *searchBar;
 	IBOutlet UIToolbar *toolbar;
@@ -65,6 +66,7 @@
 @property (nonatomic,retain) IBOutlet UIControl *maskView;
 @property (nonatomic,retain) IBOutlet UIControl *curlView;
 @property (nonatomic,retain) IBOutlet YCTapView *curlbackgroundView;
+@property (nonatomic,retain) IBOutlet UIImageView *curlImageView;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic,retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic,retain) IBOutlet UIToolbar *toolbar;
