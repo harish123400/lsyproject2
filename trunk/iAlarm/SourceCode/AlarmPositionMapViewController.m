@@ -78,9 +78,27 @@
 #pragma mark - 
 #pragma mark - UI元素操作
 
+//根据Annotation的选中情况，更新CyclingIndex
+-(void)updateCyclingIndex
+{
+	//是否已经有已经选中的了
+	NSArray *selectedAnnotations = self.mapView.selectedAnnotations;
+	if (selectedAnnotations !=nil && selectedAnnotations.count >0) 
+	{
+		id selectedAnnotation = [selectedAnnotations objectAtIndex:0];
+		if ([selectedAnnotation isKindOfClass:[YCAnnotation class]]) 
+		{
+			self->cyclingIndex = [self.mapAnnotations indexOfObject:selectedAnnotation];
+			if (NSNotFound == self->cyclingIndex) 
+				self->cyclingIndex = 0;
+		}
+	}
+}
+
 //设置上一个下一个按钮的可用状态
 -(void)setPreviousNextButtonEnableStatus
 {
+	[self updateCyclingIndex];
 	if (self.mapAnnotations.count > 1) 
 	{
 		[self.previousBarItem setEnabled:YES];
@@ -481,30 +499,27 @@
 
 //轮转Annotation 
 //返回值 YES:已经到头
--(BOOL)cycleAnnotations:(BOOL)forward
+-(BOOL)cycleAnnotationsWithForward:(BOOL)forward
 {
 	BOOL retVal = NO;
 	if(self.mapAnnotations.count ==0) return NO;
 	
-	//if (self->cyclingAnnotation == nil) 
-	//	self->cyclingAnnotation = [self.mapAnnotations objectAtIndex:0];	
-	
-	//轮转
-	//NSInteger cyclingIndex = [self.mapAnnotations indexOfObject:self->cyclingAnnotation];
+	[self updateCyclingIndex];
+
 	if (forward) 
 	{
-		cyclingIndex++;
-		if (cyclingIndex >= self.mapAnnotations.count)
+		self->cyclingIndex++;
+		if (self->cyclingIndex >= self.mapAnnotations.count)
 		{
-			cyclingIndex = 0;
+			self->cyclingIndex = 0;
 			retVal = YES;
 		}
 		
 	}else {
-		cyclingIndex--;
-		if (cyclingIndex < 0)
+		self->cyclingIndex--;
+		if (self->cyclingIndex < 0)
 		{
-			cyclingIndex = self.mapAnnotations.count -1;
+			self->cyclingIndex = self.mapAnnotations.count -1;
 			retVal = YES;
 		}
 	}
@@ -535,16 +550,9 @@
 		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
 	}
 	
-	if (self.mapAnnotations.count > 1) 
-	{
-		[self.nextBarItem setEnabled:YES]; //处理对立的按钮
-	}
-	
-	BOOL head = [self cycleAnnotations:YES];
-	if (head)
-	{
-		[(UIControl*)sender setEnabled:NO];
-	}
+	[self cycleAnnotationsWithForward:NO];
+
+	[self setPreviousNextButtonEnableStatus];
 }
 -(IBAction)nextPinButtonPressed:(id)sender
 {
@@ -554,24 +562,17 @@
 	{
 		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
 	}
-	
-	if (self.mapAnnotations.count > 1) 
-	{
-		[self.previousBarItem setEnabled:YES]; //处理对立的按钮
-	}
 
-	BOOL tail = [self cycleAnnotations:YES];
-	if (tail)
-	{
-		[(UIControl*)sender setEnabled:NO];
-	}
+	[self cycleAnnotationsWithForward:YES];
+
+	[self setPreviousNextButtonEnableStatus];
 }
 
 -(IBAction)currentPinButtonPressed:(id)sender
 {	
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
 	
-	[self cycleAnnotations:YES];
+	[self cycleAnnotationsWithForward:YES];
 }
 
 -(IBAction)resetPinButtonPressed:(id)sender
@@ -704,6 +705,7 @@
 		self.toolbar.hidden = NO;
 	} else { //在tab上的地图，一直有searchbar
 		self.searchBar.hidden = NO;
+		self.searchBar.showsBookmarkButton = YES;
 		self.toolbar.alpha = 0.80f;
 		self.toolbar.hidden = YES;
 	}
@@ -787,8 +789,6 @@
 		[self setPreviousNextButtonEnableStatus];
 	}
 	
-
-
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -801,6 +801,15 @@
 
 #pragma mark - 
 #pragma mark - MKMapViewDelegate
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+	if (self.regionCenterWithCurrentLocation) 
+	{
+		[self setPreviousNextButtonEnableStatus];
+	}
+	
+}
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
@@ -827,10 +836,21 @@
 		
 		if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) 
 		{
-			YCAnnotation *annotation = annotationView.annotation;
-			//if (annotation.annotationType == YCMapAnnotationTypeLocating) //注意:如果有多个图钉iew,能不能都选中能？
 			//选中
-			NSInteger index = [self.mapAnnotations indexOfObject:annotation];
+			YCAnnotation *annotation = annotationView.annotation;
+			YCMapAnnotationType type = annotation.annotationType;
+			
+			NSInteger index = -1;
+			if (self.regionCenterWithCurrentLocation) 
+			{
+				if (YCMapAnnotationTypeMovingToTarget == type)
+				{
+					index = [self.mapAnnotations indexOfObject:annotation];
+				}
+			}else {
+				index = [self.mapAnnotations indexOfObject:annotation];
+			}
+			
 			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:0.5];
 
 		}
@@ -873,7 +893,6 @@
 		pinView = [[[MKPinAnnotationView alloc]
 					initWithAnnotation:annotation reuseIdentifier:pinViewAnnotationIdentifier] autorelease];
 		
-		pinView.animatesDrop = YES;
 		pinView.canShowCallout = YES;
 		
 		UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -884,25 +903,28 @@
 		
 	}
 	
+	pinView.animatesDrop = YES;
+	pinView.draggable = YES;
 	UIImageView *sfIconView = nil;
 	switch (((YCAnnotation*)annotation).annotationType) 
 	{
 		case YCMapAnnotationTypeStandard:
+			pinView.animatesDrop = NO;
 			pinView.draggable = NO;
 			pinView.pinColor = MKPinAnnotationColorRed;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeStandardEnabledDrag:
-			pinView.draggable = YES;
 			pinView.pinColor = MKPinAnnotationColorPurple;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeLocating:
-			pinView.draggable = YES;
 			pinView.pinColor = MKPinAnnotationColorPurple;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeMovingToTarget:
+			pinView.animatesDrop = NO;
+			pinView.draggable = NO;
 			pinView.pinColor = MKPinAnnotationColorGreen;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
@@ -1154,115 +1176,6 @@
 }
  
 
-/*
--(void)forwardGeocoder:(BSForwardGeocoder*)theForwardGeocoder searchString:(NSString*)searchString results:(NSArray*)results
-{
-	NSUInteger searchResults = [results count];
-	
-	if(theForwardGeocoder.status == G_GEO_SUCCESS && searchResults > 0)
-	{
-		//加到最近查询list中
-		[self.searchController addListContentWithString:searchString];
-		
-		//离当前位置最近的元素
-		CLLocationDistance distanceOfNearest = 900000000000.0;
-		NSUInteger indexOfNearest =0;
-		
-		for(NSUInteger i = 0; i < searchResults; i++)
-		{
-			BSKmlResult *placeTmp = [results objectAtIndex:i];
-			
-			//找出个离当前位置最近的
-			CLLocation *currentLocation = self.mapView.userLocation.location;
-			if (currentLocation) 
-			{
-				CLLocation *locTmp = [[CLLocation alloc] initWithLatitude:placeTmp.coordinate.latitude longitude:placeTmp.coordinate.longitude];
-				CLLocationDistance distanceTmp = [currentLocation distanceFromLocation:locTmp];
-				if (distanceTmp  < distanceOfNearest) 
-				{
-					distanceOfNearest = distanceTmp;
-					indexOfNearest = i;
-				}
-			}
-			
-		}
-		
-		
-		BSKmlResult *place = [results objectAtIndex:indexOfNearest];  /////用最近的
-		
-		
-		//先删除原来的annotation
-		if (self.annotationAlarmEditing)
-			[self.mapView removeAnnotation:self.annotationAlarmEditing];
-		
-		//改变annotation内容
-		NSString *title = searchString;
-		NSString *subtitle = place.address!=nil ? place.address: @" " ;
-		[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
-		
-		////////////////////////
-		//Zoom into the location
-		self->defaultMapRegion = place.coordinateRegion;
-		self->defaultMapRegion.center = place.coordinate;
-		double delay = [self setMapRegion:self->defaultMapRegion FromWorld:YES animatedToWorld:YES animatedToPlace:YES];
-		//Zoom into the location
-		////////////////////////
-		
-		
-		//再加上
-		//[self.mapView addAnnotation:self.annotationAlarmEditing];
-		[self.mapView performSelector:@selector(addAnnotation:) withObject:self.annotationAlarmEditing afterDelay:delay+0.1];
-		
-		
-	}else {
-		
-		switch (theForwardGeocoder.status) {
-			case G_GEO_BAD_KEY:
-				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
-								alertTitle:kAlertTitleWhenSearchMap 
-						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:self];
-				break;
-				
-			case G_GEO_UNKNOWN_ADDRESS:
-				[UIUtility simpleAlertBody:kAlertMsgNoResultsWhenSearchMap 
-								alertTitle:kAlertTitleWhenSearchMap 
-						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:self];
-				break;
-				
-			case G_GEO_TOO_MANY_QUERIES:
-				[UIUtility simpleAlertBody:kAlertMsgTooManyQueriesWhenSearchMap 
-								alertTitle:kAlertTitleWhenSearchMap 
-						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:self];
-				break;
-				
-			case G_GEO_SERVER_ERROR:
-				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
-								alertTitle:kAlertTitleWhenSearchMap 
-						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:self];
-				break;
-				
-				
-			default:
-				break;
-		}
-		
-	}
-}
-
-
--(void)forwardGeocoder:(BSForwardGeocoder*)forwardGeocoder error:(NSString *)error
-{
-	
-	[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
-					alertTitle:kAlertTitleWhenSearchMap 
-			 cancelButtonTitle:kAlertBtnOK 
-					  delegate:self];
-}
- */
 
 #pragma mark -
 #pragma mark UIAlertViewDelegate
