@@ -298,6 +298,15 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	
 }
 
+- (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar
+{
+	if ([self.delegate respondsToSelector:@selector(searchBarbookmarkButtonPressed:)]) 
+	{
+		[self.delegate searchBarbookmarkButtonPressed:searchBar];
+	}
+}
+
+
 
 #pragma mark -
 #pragma mark UISearchDisplayController Delegate Methods

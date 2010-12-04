@@ -62,7 +62,7 @@
 	return reverseGeocoder;
 }
 
--(id)locationingBarItem
+-(id) locationingBarItem
 {
 	if (self->locationingBarItem == nil) 
 	{
@@ -73,6 +73,66 @@
 	}
 	
 	return self->locationingBarItem;
+}
+
+-(id) annotationSearched
+{
+	if (self->annotationSearched == nil) 
+	{
+		self->annotationSearched = [[YCAnnotation alloc] init];
+		self->annotationSearched.annotationType = YCMapAnnotationTypeSearch;
+	}
+	return self->annotationSearched;
+}
+
+
+-(void)updateMapAnnotations
+{
+	NSMutableArray *array = [[NSMutableArray alloc] init];
+	for (NSUInteger i =0; i<self.alarms.count; i++) 
+	{
+		YCAlarmEntity *temp = [self.alarms objectAtIndex:i];
+		YCAnnotation *annotation = [[YCAnnotation alloc] initWithCoordinate:temp.coordinate addressDictionary:nil];
+		annotation.title = temp.alarmName;
+		annotation.subtitle = temp.position;
+		annotation.coordinate = temp.coordinate;
+		
+		if (self.regionCenterWithCurrentLocation) 
+		{
+			if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
+			{
+				annotation.annotationType = YCMapAnnotationTypeMovingToTarget;
+			}else{
+				annotation.annotationType = YCMapAnnotationTypeStandard;
+			}
+			annotation.title = temp.alarmName;
+			annotation.subtitle = @"";
+		}else {
+			if(self.newAlarm)  //AlarmNew
+			{
+				annotation.annotationType = YCMapAnnotationTypeLocating;
+			}else {
+				annotation.annotationType = YCMapAnnotationTypeStandardEnabledDrag;
+			}
+			annotation.title = KMapNewAnnotationTitle;
+			annotation.subtitle = @"";
+		}
+		
+		
+		
+		if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
+			self.annotationAlarmEditing = annotation;
+		
+		
+		[array addObject:annotation];
+		[annotation release];
+	}
+	
+	//if(self.mapAnnotations && [self.mapAnnotations indexOfObject:self.annotationSearched] != NSNotFound)
+	//	[array addObject:self.annotationSearched];
+	
+	self.mapAnnotations = array;
+
 }
 
 #pragma mark - 
@@ -282,60 +342,9 @@
 		[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:nIndex] animated:YES];
 }
 
--(void)addAnnotation
-{
-	//[self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
-	
-	NSMutableArray *array = [[NSMutableArray alloc] init];
-	for (NSUInteger i =0; i<self.alarms.count; i++) 
-	{
-		YCAlarmEntity *temp = [self.alarms objectAtIndex:i];
-		YCAnnotation *annotation = [[YCAnnotation alloc] initWithCoordinate:temp.coordinate addressDictionary:nil];
-		annotation.title = temp.alarmName;
-		annotation.subtitle = temp.position;
-		annotation.coordinate = temp.coordinate;
-		
-		if (self.regionCenterWithCurrentLocation) 
-		{
-			if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
-			{
-				annotation.annotationType = YCMapAnnotationTypeMovingToTarget;
-			}else{
-				annotation.annotationType = YCMapAnnotationTypeStandard;
-			}
-		}else {
-			if(self.newAlarm)  //AlarmNew
-			{
-				annotation.title = KMapNewAnnotationTitle;
-				annotation.subtitle = @"";
-				annotation.annotationType = YCMapAnnotationTypeLocating;
-			}else {
-				annotation.annotationType = YCMapAnnotationTypeStandardEnabledDrag;
-			}
-		}
-
-		
-		
-		if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
-			self.annotationAlarmEditing = annotation;
-		
-		
-		[array addObject:annotation];
-		[annotation release];
-	}
-	
-	if (self.annotationAlarmEditing == nil)  //在tab上点击打开的情况
-	{
-		self.annotationAlarmEditing =  [[YCAnnotation alloc]init];
-		annotationAlarmEditing.annotationType = YCMapAnnotationTypeStandard;
-	}
-	
-	self.mapAnnotations = array;
-	[array release];
-	
-	
-	[self.mapView addAnnotations:mapAnnotations];
-	
+-(void)addMapAnnotations
+{	[self updateMapAnnotations];
+	[self.mapView addAnnotations:self.mapAnnotations];	
 }
 
 ////设置正在定位barItem处于定位状态
@@ -668,6 +677,7 @@
 }
 
 
+
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -751,7 +761,7 @@
 	[self registerNotifications];
 
 	[self showMaskView];
-	[self addAnnotation];
+	[self addMapAnnotations];
 	//[self performSelector:@selector(showMapView) withObject:nil afterDelay:0.5];
 
 	
@@ -784,8 +794,8 @@
 	//设置上一个下一个按钮的可用状态
 	if (self.regionCenterWithCurrentLocation) 
 	{
-		[self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
-		[self addAnnotation];
+		//[self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
+		//[self addMapAnnotations];
 		[self setPreviousNextButtonEnableStatus];
 	}
 	
@@ -821,6 +831,7 @@
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
+	NSInteger selectedIndex = -1;
 	for (NSUInteger i=0; i<views.count; i++) 
 	{
 		MKAnnotationView *annotationView = [views objectAtIndex:i];
@@ -840,21 +851,41 @@
 			YCAnnotation *annotation = annotationView.annotation;
 			YCMapAnnotationType type = annotation.annotationType;
 			
-			NSInteger index = -1;
+			
 			if (self.regionCenterWithCurrentLocation) 
 			{
-				if (YCMapAnnotationTypeMovingToTarget == type)
+				if (YCMapAnnotationTypeMovingToTarget == type || YCMapAnnotationTypeSearch == type)
 				{
-					index = [self.mapAnnotations indexOfObject:annotation];
+					selectedIndex = [self.mapAnnotations indexOfObject:annotation];
 				}
+
 			}else {
-				index = [self.mapAnnotations indexOfObject:annotation];
+				selectedIndex = [self.mapAnnotations indexOfObject:annotation];
 			}
 			
-			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:0.5];
-
 		}
 	}
+	
+	//判断上次最后选中的坐标，是否在屏幕中
+	if (-1 == selectedIndex) 
+	if (self->cyclingIndex < self.mapAnnotations.count)
+	{
+		YCAnnotation *annotation = [self.mapAnnotations objectAtIndex:self->cyclingIndex];
+		MKMapPoint point = MKMapPointForCoordinate(annotation.coordinate);
+		MKMapRect rect = self.mapView.visibleMapRect;
+		BOOL isContains = MKMapRectContainsPoint(rect, point);
+		if (isContains) 
+		{
+			selectedIndex = self->cyclingIndex;
+		}
+		
+	}
+	
+	if (selectedIndex !=-1) 
+	{
+		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:selectedIndex] afterDelay:0.5];
+	}
+
 
 }
 
@@ -928,6 +959,11 @@
 			pinView.pinColor = MKPinAnnotationColorGreen;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
+		case YCMapAnnotationTypeSearch:
+			pinView.draggable = NO;
+			pinView.pinColor = MKPinAnnotationColorRed;
+			sfIconView = nil;
+			break;
 		default:
 			pinView.pinColor = MKPinAnnotationColorRed;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
@@ -988,11 +1024,13 @@
 			title = kDefaultLocationAlarmName;
 		self.alarmTemp.alarmName = title;
 	}
+	
 	self.alarmTemp.coordinate = coordinate;
 	self.alarmTemp.position = subtitle;
 	
 	self.annotationAlarmEditing.coordinate = self.alarmTemp.coordinate;
-	self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
+	//self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
+	
 	
 	if (animated)
 	{
@@ -1102,16 +1140,27 @@
 
 		BSKmlResult *place = [forwardGeocoder.results objectAtIndex:indexOfNearest];  /////用最近的
 	
+		YCAnnotation *annotationTemp = nil;
+		NSString *title = nil;
+		NSString *subtitle = nil;
+		if(!self.regionCenterWithCurrentLocation) 
+		{
+			annotationTemp = self.annotationAlarmEditing;
+			title = forwardGeocoder.searchQuery;
+			subtitle = place.address!=nil ? place.address: @" " ;
+			[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
+		}else { //在tab页面上的搜索结果大头针
+			annotationTemp = self.annotationSearched;
+			title = place.address!=nil ? place.address: @" " ;
+			annotationTemp.title = title;
+			annotationTemp.coordinate = place.coordinate;
+			//[self.mapAnnotations addObject:annotationTemp]; //加入到Annotation列表中
+		}
 		
 		//先删除原来的annotation
-		if (self.annotationAlarmEditing)
-			[self.mapView removeAnnotation:self.annotationAlarmEditing];
-		
-		//改变annotation内容
-		NSString *title = forwardGeocoder.searchQuery;
-		NSString *subtitle = place.address!=nil ? place.address: @" " ;
-		[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
-		
+		if (annotationTemp)
+			[self.mapView removeAnnotation:annotationTemp];
+				
 		////////////////////////
 		//Zoom into the location
 		self->defaultMapRegion = place.coordinateRegion;
@@ -1120,12 +1169,11 @@
 		//Zoom into the location
 		////////////////////////
 		
-			
+		
 		//再加上
 		//[self.mapView addAnnotation:self.annotationAlarmEditing];
-		[self.mapView performSelector:@selector(addAnnotation:) withObject:self.annotationAlarmEditing afterDelay:delay+0.1];
+		[self.mapView performSelector:@selector(addAnnotation:) withObject:annotationTemp afterDelay:delay+0.1];
 			
-
 	}else {
 		
 		switch (forwardGeocoder.status) {
@@ -1202,6 +1250,11 @@
 	return nil;
 }
 
+-(void)searchBarbookmarkButtonPressed:(id)sender
+{
+	
+}
+
 #pragma mark -
 #pragma mark Memory management
 - (void)didReceiveMemoryWarning {
@@ -1247,6 +1300,7 @@
 	[self.alarmTemp release];
 	[self.annotationAlarmEditing release];
 	[self.locationingBarItem release];
+	[self.annotationSearched release];
 	
 	[super dealloc];
 }

@@ -14,7 +14,8 @@ enum {
     YCMapAnnotationTypeStandard = 0,        //已经定位的普通类型
 	YCMapAnnotationTypeStandardEnabledDrag, //已经定位的普通类型，但可以拖动
     YCMapAnnotationTypeLocating,            //正在定位的
-    YCMapAnnotationTypeMovingToTarget         //接近的目标位置
+    YCMapAnnotationTypeMovingToTarget,      //接近的目标位置
+	YCMapAnnotationTypeSearch               //搜索的类型
 };
 typedef NSUInteger YCMapAnnotationType;
 

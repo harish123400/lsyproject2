@@ -10,11 +10,12 @@
 
 @class YCSearchDisplayController;
 @class YCSearchController;
-@protocol YCSearchControllerDelegete
+@protocol YCSearchControllerDelegete <NSObject>
 
 @required
  
 - (NSArray*)searchController:(YCSearchController *)controller searchString:(NSString *)searchString;
+-(void)searchBarbookmarkButtonPressed:(id)sender;
 
 @end
 

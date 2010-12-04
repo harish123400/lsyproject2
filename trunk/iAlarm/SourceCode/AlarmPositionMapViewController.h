@@ -61,8 +61,9 @@
 	NSArray *alarms;                       //需要在地图上显示的
 	NSMutableArray *mapAnnotations;        //地图标签集合
 	YCAlarmEntity *alarmTemp;
-	YCAnnotation *annotationAlarmEditing;  //编辑中的Alarm的annotation
+	YCAnnotation *annotationAlarmEditing;     //编辑中的Alarm的annotation
 	id<MKAnnotation> annotationManipulating;  //正在操作的
+	YCAnnotation *annotationSearched;         //被搜索出来的，在tab中有别于annotationAlarmEditing
 	
 }
 
@@ -93,6 +94,7 @@
 @property (nonatomic,retain) NSMutableArray *mapAnnotations;
 @property (nonatomic,retain) YCAnnotation *annotationAlarmEditing;
 @property (nonatomic,retain) id<MKAnnotation> annotationManipulating;
+@property (nonatomic,retain,readonly) YCAnnotation *annotationSearched;
 
 
 -(IBAction)currentLocationButtonPressed:(id)sender;
@@ -103,6 +105,7 @@
 -(IBAction)mapTypeSegmentedChanged:(id)sender;
 -(IBAction)previousPinButtonPressed:(id)sender;
 -(IBAction)nextPinButtonPressed:(id)sender;
+
 
 /////////////////////////////////////////////
 //private函数
