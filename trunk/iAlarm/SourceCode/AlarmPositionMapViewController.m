@@ -704,7 +704,7 @@
 		self.toolbar.hidden = NO;
 	} else { //在tab上的地图，一直有searchbar
 		self.searchBar.hidden = NO;
-		self.toolbar.alpha = 0.70f;
+		self.toolbar.alpha = 0.80f;
 		self.toolbar.hidden = YES;
 	}
 	[self setToolBarItemsEnabled:NO];
