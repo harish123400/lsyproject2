@@ -37,6 +37,8 @@
 @synthesize searchBarItem;
 @synthesize resetPinBarItem;
 @synthesize pageCurlBarItem;
+@synthesize previousBarItem;              
+@synthesize nextBarItem;  
 
 @synthesize forwardGeocoder;
 @synthesize searchController;
@@ -76,12 +78,42 @@
 #pragma mark - 
 #pragma mark - UI元素操作
 
+//设置上一个下一个按钮的可用状态
+-(void)setPreviousNextButtonEnableStatus
+{
+	if (self.mapAnnotations.count > 1) 
+	{
+		[self.previousBarItem setEnabled:YES];
+		[self.nextBarItem setEnabled:YES];
+		
+		if (self->cyclingIndex ==0) 
+		{
+			[self.previousBarItem setEnabled:NO];
+			[self.nextBarItem setEnabled:YES];
+		}
+		
+		if (self->cyclingIndex >= self.mapAnnotations.count-1) 
+		{
+			[self.previousBarItem setEnabled:YES];
+			[self.nextBarItem setEnabled:NO];
+		}
+		
+	}else {
+		[self.previousBarItem setEnabled:NO];
+		[self.nextBarItem setEnabled:NO];
+	}
+}
+
 -(void)setToolBarItemsEnabled:(BOOL)enabled
 {
 	NSArray *baritems = self.toolbar.items ;
 	for(NSUInteger i=0;i<baritems.count;i++)
 	{
 		[[baritems objectAtIndex:i] setEnabled:enabled];
+	}
+	if (enabled) //设置上一个下一个按钮的可用状态
+	{
+		[self setPreviousNextButtonEnableStatus];
 	}
 }
 
@@ -441,27 +473,90 @@
 	[self setToolBarItemsEnabled:NO];
 	[self startCheckLocationTimer];
 }
+
+//返回值:
+//YES:已经到头
+-(BOOL)cycleAnnotations:(BOOL)forward
+{
+	BOOL retVal = NO;
+	if(self.mapAnnotations.count ==0) return NO;
+	
+	//if (self->cyclingAnnotation == nil) 
+	//	self->cyclingAnnotation = [self.mapAnnotations objectAtIndex:0];	
+	
+	//轮转
+	//NSInteger cyclingIndex = [self.mapAnnotations indexOfObject:self->cyclingAnnotation];
+	if (forward) 
+	{
+		cyclingIndex++;
+		if (cyclingIndex >= self.mapAnnotations.count)
+		{
+			cyclingIndex = 0;
+			retVal = YES;
+		}
+		
+	}else {
+		cyclingIndex--;
+		if (cyclingIndex < 0)
+		{
+			cyclingIndex = self.mapAnnotations.count -1;
+			retVal = YES;
+		}
+	}
+
+
+	
+	YCAnnotation *cyclingAnnotation = [self.mapAnnotations objectAtIndex:cyclingIndex];
+	
+	if ([self isValidCoordinate:cyclingAnnotation.coordinate])
+	{
+		//仅仅设置中心
+		[self.mapView setCenterCoordinate:cyclingAnnotation.coordinate animated:YES];
+		//选中
+		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:cyclingIndex] afterDelay:0.2];
+		
+	}
+	
+	return retVal;
+	
+}
+
+-(IBAction)previousPinButtonPressed:(id)sender
+{
+	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	if (self.mapAnnotations.count > 1) 
+	{
+		[self.nextBarItem setEnabled:YES]; //处理对立的按钮
+	}
+	
+	BOOL head = [self cycleAnnotations:YES];
+	if (head)
+	{
+		[(UIControl*)sender setEnabled:NO];
+	}
+}
+-(IBAction)nextPinButtonPressed:(id)sender
+{
+	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	if (self.mapAnnotations.count > 1) 
+	{
+		[self.previousBarItem setEnabled:YES]; //处理对立的按钮
+	}
+
+	BOOL tail = [self cycleAnnotations:YES];
+	if (tail)
+	{
+		[(UIControl*)sender setEnabled:NO];
+	}
+}
+
 -(IBAction)currentPinButtonPressed:(id)sender
 {	
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
 	
-	if(self.mapAnnotations.count ==0) return;
-	
-	//轮转
-	NSUInteger annotationIndex = [self.mapAnnotations indexOfObject:self.annotationAlarmEditing];
-	annotationIndex++;
-	if (annotationIndex >= self.mapAnnotations.count)
-		annotationIndex = 0;
-	self.annotationAlarmEditing = [self.mapAnnotations objectAtIndex:annotationIndex];
-	
-	if ([self isValidCoordinate:self.annotationAlarmEditing.coordinate])
-	{
-		//仅仅设置中心
-		[self.mapView setCenterCoordinate:self.annotationAlarmEditing.coordinate animated:YES];
-		//选中
-		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:annotationIndex] afterDelay:0.2];
-
-	}
+	[self cycleAnnotations:YES];
 }
 
 -(IBAction)resetPinButtonPressed:(id)sender
@@ -586,7 +681,6 @@
 		self.toolbar.hidden = NO;
 	} else { //在tab上的地图，一直有searchbar
 		self.searchBar.hidden = NO;
-		self.toolbar.hidden = NO;
 		self.toolbar.alpha = 0.70f;
 		self.toolbar.hidden = YES;
 	}
@@ -595,16 +689,6 @@
 	self.searchController = [[YCSearchController alloc] initWithDelegate:self
 												 searchDisplayController:self.searchDisplayController];
 	
-	enum {
-		UIViewAutoresizingNone                 = 0,
-		UIViewAutoresizingFlexibleLeftMargin   = 1 << 0,
-		UIViewAutoresizingFlexibleWidth        = 1 << 1,
-		UIViewAutoresizingFlexibleRightMargin  = 1 << 2,
-		UIViewAutoresizingFlexibleTopMargin    = 1 << 3,
-		UIViewAutoresizingFlexibleHeight       = 1 << 4,
-		UIViewAutoresizingFlexibleBottomMargin = 1 << 5
-	};
-
 	
 	//curView
 	UIViewAutoresizing viewautoresizingMask = 0;
@@ -664,11 +748,24 @@
 
 }
 
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
 	self.title = NSLocalizedString(@"位置",@"视图标题");
 	//[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.5];
+	
+	//设置上一个下一个按钮的可用状态
+	if (self.regionCenterWithCurrentLocation) 
+	{
+		[self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
+		[self addAnnotation];
+		[self setPreviousNextButtonEnableStatus];
+	}
+	
+
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -1193,6 +1290,8 @@
 	self.searchBarItem = nil;                
 	self.resetPinBarItem = nil;              
 	self.pageCurlBarItem = nil;
+	self.nextBarItem = nil;
+	self.previousBarItem = nil;
 
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	[notificationCenter removeObserver:self name:kLocationedNotification object:nil];
@@ -1220,3 +1319,4 @@
 
 
 @end
+ 

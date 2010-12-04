@@ -60,7 +60,7 @@
 	
 	if (visible)
 	{
-		toolbarTimer = [[NSTimer timerWithTimeInterval:3.0 target:self selector:@selector(timerFired:) userInfo:nil repeats:NO] retain];
+		toolbarTimer = [[NSTimer timerWithTimeInterval:5.0 target:self selector:@selector(timerFired:) userInfo:nil repeats:NO] retain];
 		[[NSRunLoop currentRunLoop] addTimer:toolbarTimer forMode:NSDefaultRunLoopMode];
 	}
 		

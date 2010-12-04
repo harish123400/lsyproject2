@@ -200,9 +200,12 @@
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="482211354">
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">previousAsBarItem.png</string>
+								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIToolbar" ref="251212599"/>
-								<int key="IBUISystemItemIdentifier">19</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="504052969">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -211,9 +214,12 @@
 								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="298448049">
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">nextAsBarItem.png</string>
+								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIToolbar" ref="251212599"/>
-								<int key="IBUISystemItemIdentifier">20</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="578148541">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -309,14 +315,6 @@
 					<int key="connectionID">18</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">currentPinButtonPressed:</string>
-						<reference key="source" ref="482211354"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">22</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchBar</string>
 						<reference key="source" ref="372490531"/>
@@ -334,35 +332,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">currentPinBarItem</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="482211354"/>
-					</object>
-					<int key="connectionID">65</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">searchBarItem</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="229743336"/>
 					</object>
 					<int key="connectionID">66</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">resetPinBarItem</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="298448049"/>
-					</object>
-					<int key="connectionID">90</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">resetPinButtonPressed:</string>
-						<reference key="source" ref="298448049"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">91</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -477,6 +451,38 @@
 						<reference key="destination" ref="246231129"/>
 					</object>
 					<int key="connectionID">141</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">nextPinButtonPressed:</string>
+						<reference key="source" ref="298448049"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">142</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">previousPinButtonPressed:</string>
+						<reference key="source" ref="482211354"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">143</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">nextBarItem</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="298448049"/>
+					</object>
+					<int key="connectionID">144</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">previousBarItem</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="482211354"/>
+					</object>
+					<int key="connectionID">145</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -767,7 +773,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">141</int>
+			<int key="maxID">145</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -801,12 +807,16 @@
 							<string>currentLocationButtonPressed:</string>
 							<string>currentPinButtonPressed:</string>
 							<string>mapTypeSegmentedChanged:</string>
+							<string>nextPinButtonPressed:</string>
 							<string>pageCurlButtonPressed:</string>
+							<string>previousPinButtonPressed:</string>
 							<string>resetPinButtonPressed:</string>
 							<string>searchButtonPressed:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -822,7 +832,9 @@
 							<string>currentLocationButtonPressed:</string>
 							<string>currentPinButtonPressed:</string>
 							<string>mapTypeSegmentedChanged:</string>
+							<string>nextPinButtonPressed:</string>
 							<string>pageCurlButtonPressed:</string>
+							<string>previousPinButtonPressed:</string>
 							<string>resetPinButtonPressed:</string>
 							<string>searchButtonPressed:</string>
 						</object>
@@ -841,7 +853,15 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">nextPinButtonPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">pageCurlButtonPressed:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">previousPinButtonPressed:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -868,7 +888,9 @@
 							<string>mapTypeSegmented</string>
 							<string>mapView</string>
 							<string>maskView</string>
+							<string>nextBarItem</string>
 							<string>pageCurlBarItem</string>
+							<string>previousBarItem</string>
 							<string>resetPinBarItem</string>
 							<string>searchBar</string>
 							<string>searchBarItem</string>
@@ -886,6 +908,8 @@
 							<string>UISegmentedControl</string>
 							<string>MKMapView</string>
 							<string>UIControl</string>
+							<string>UIBarButtonItem</string>
+							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UISearchBar</string>
@@ -907,7 +931,9 @@
 							<string>mapTypeSegmented</string>
 							<string>mapView</string>
 							<string>maskView</string>
+							<string>nextBarItem</string>
 							<string>pageCurlBarItem</string>
+							<string>previousBarItem</string>
 							<string>resetPinBarItem</string>
 							<string>searchBar</string>
 							<string>searchBarItem</string>
@@ -956,7 +982,15 @@
 								<string key="candidateClassName">UIControl</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">nextBarItem</string>
+								<string key="candidateClassName">UIBarButtonItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">pageCurlBarItem</string>
+								<string key="candidateClassName">UIBarButtonItem</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">previousBarItem</string>
 								<string key="candidateClassName">UIBarButtonItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -1310,11 +1344,15 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>arrowAsBarItem.png</string>
 				<string>backgroundCurlview.png</string>
+				<string>nextAsBarItem.png</string>
+				<string>previousAsBarItem.png</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{20, 20}</string>
 				<string>{512, 512}</string>
+				<string>{16, 20}</string>
+				<string>{16, 20}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">117</string>

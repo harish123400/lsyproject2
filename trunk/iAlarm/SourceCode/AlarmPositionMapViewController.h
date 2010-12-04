@@ -23,6 +23,8 @@
 {
 	NSTimer *locationTimer;
 	
+	//YCAnnotation *cyclingAnnotation;                      //上一个下一个临时使用
+	NSInteger cyclingIndex;                                 //上一个下一个临时使用
 	
 	MKReverseGeocoder *reverseGeocoder;
 	BSForwardGeocoder *forwardGeocoder;
@@ -43,6 +45,8 @@
 	IBOutlet UIBarButtonItem *resetPinBarItem;              //重放当前图钉
 	IBOutlet UIBarButtonItem *pageCurlBarItem;              //卷起地图
 	UIBarButtonItem *locationingBarItem;                    //显示正在定位的指示器的barItem
+	IBOutlet UIBarButtonItem *previousBarItem;              //上一个
+	IBOutlet UIBarButtonItem *nextBarItem;                  //下一个
 	
 	BOOL regionCenterWithCurrentLocation;  //初始化时候使用当前位置作为地图的中心点
 	BOOL newAlarm;                //新创建的Alarm
@@ -77,6 +81,8 @@
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *resetPinBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *pageCurlBarItem;
 @property (nonatomic,retain,readonly) UIBarButtonItem *locationingBarItem;
+@property (nonatomic,retain) IBOutlet IBOutlet UIBarButtonItem *previousBarItem;              
+@property (nonatomic,retain) IBOutlet IBOutlet UIBarButtonItem *nextBarItem;                  
 
 @property (nonatomic,retain) BSForwardGeocoder *forwardGeocoder;
 @property (nonatomic,retain) YCSearchController *searchController;
@@ -95,6 +101,8 @@
 -(IBAction)searchButtonPressed:(id)sender;
 -(IBAction)pageCurlButtonPressed:(id)sender;
 -(IBAction)mapTypeSegmentedChanged:(id)sender;
+-(IBAction)previousPinButtonPressed:(id)sender;
+-(IBAction)nextPinButtonPressed:(id)sender;
 
 /////////////////////////////////////////////
 //private函数
