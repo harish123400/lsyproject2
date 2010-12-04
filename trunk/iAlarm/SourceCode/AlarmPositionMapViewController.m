@@ -420,7 +420,7 @@
 	}else {
 		//Time out 
 		timePassed +=0.5;
-		if (timePassed > 10.0)  //10秒time out
+		if (timePassed > 20.0)  //10秒time out
 		{
 			timePassed = 0;
 			
@@ -468,14 +468,19 @@
 -(IBAction)currentLocationButtonPressed:(id)sender
 {
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
+	{
+		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+	}
 
 	[self setLocationBarItem:YES];
 	[self setToolBarItemsEnabled:NO];
 	[self startCheckLocationTimer];
 }
 
-//返回值:
-//YES:已经到头
+//轮转Annotation 
+//返回值 YES:已经到头
 -(BOOL)cycleAnnotations:(BOOL)forward
 {
 	BOOL retVal = NO;
@@ -525,6 +530,11 @@
 {
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
 	
+	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
+	{
+		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+	}
+	
 	if (self.mapAnnotations.count > 1) 
 	{
 		[self.nextBarItem setEnabled:YES]; //处理对立的按钮
@@ -539,6 +549,11 @@
 -(IBAction)nextPinButtonPressed:(id)sender
 {
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
+	{
+		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+	}
 	
 	if (self.mapAnnotations.count > 1) 
 	{
@@ -577,14 +592,22 @@
 
 -(IBAction)searchButtonPressed:(id)sender
 {
-
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
+	{
+		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+	}
+	
 	[self.searchController setActive:YES animated:YES];   //处理search状态
-
 }
 
 -(IBAction)pageCurlButtonPressed:(id)sender
 {
+	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
+	{
+		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+	}
 	
 	//创建CATransition对象
 	CATransition *animation = [CATransition animation];

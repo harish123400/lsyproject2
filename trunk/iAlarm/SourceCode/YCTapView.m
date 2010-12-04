@@ -31,6 +31,19 @@
 	}
 }
 
+-(void)resetToolbarTimeInterval:(NSTimeInterval)TimeInterval
+{
+	[toolbarTimer invalidate];
+	[toolbarTimer release];
+	toolbarTimer = nil;
+	
+	if (!self.toolbar.hidden)
+	{
+		toolbarTimer = [[NSTimer timerWithTimeInterval:TimeInterval target:self selector:@selector(timerFired:) userInfo:nil repeats:NO] retain];
+		[[NSRunLoop currentRunLoop] addTimer:toolbarTimer forMode:NSDefaultRunLoopMode];
+	}
+}
+
 
 - (void)dealloc
 {

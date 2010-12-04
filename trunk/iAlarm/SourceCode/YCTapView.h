@@ -25,6 +25,8 @@
 
 //开始隐藏倒计时
 -(void)startToolbarTimeInterval:(NSTimeInterval)TimeInterval;
+//重置隐藏倒计时
+-(void)resetToolbarTimeInterval:(NSTimeInterval)TimeInterval;
 
 @end
 
