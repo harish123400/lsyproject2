@@ -289,11 +289,26 @@ BOOL lo;
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
+	/*
 	if ([viewController isKindOfClass:[AlarmPositionMapViewController class]]) 
 	{
 		((AlarmPositionMapViewController*)viewController).alarms = [DataUtility alarmArray];
 		((AlarmPositionMapViewController*)viewController).alarm = [DataUtility createAlarm];
 		((AlarmPositionMapViewController*)viewController).regionCenterWithCurrentLocation = YES;
+	}
+	return YES;
+	 */
+	
+	if ([viewController isKindOfClass:[UINavigationController class]]) 
+	{
+		UIViewController *rootViewContoller = [((UINavigationController*)viewController).viewControllers objectAtIndex:0];
+		if ([rootViewContoller isKindOfClass:[AlarmPositionMapViewController class]]) 
+		{
+			((AlarmPositionMapViewController*)rootViewContoller).alarms = [DataUtility alarmArray];
+			((AlarmPositionMapViewController*)rootViewContoller).alarm = [DataUtility createAlarm];
+			((AlarmPositionMapViewController*)rootViewContoller).regionCenterWithCurrentLocation = YES;
+		}
+		
 	}
 	return YES;
 }

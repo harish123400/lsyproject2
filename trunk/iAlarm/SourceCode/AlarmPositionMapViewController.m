@@ -15,6 +15,7 @@
 #import "AlarmMapSpecifyViewController.h"
 #import "AlarmNameViewController.h"
 #import "YCTapView.h"
+#import "MapBookmarksListController.h"
 
 
 @implementation AlarmPositionMapViewController
@@ -133,6 +134,26 @@
 	
 	self.mapAnnotations = array;
 
+}
+
+- (MapBookmarksListController *)mapBookmarksListController
+{
+    if (mapBookmarksListController == nil)
+    {
+        mapBookmarksListController = [[MapBookmarksListController alloc] initWithStyle:UITableViewStylePlain];
+        mapBookmarksListController.delegate = self;
+        //mapBookmarksListController.title = @"Choose a bookmark:";
+    }
+    return mapBookmarksListController;
+}
+
+- (UINavigationController *)mapBookmarksListNavigationController
+{
+    if (mapBookmarksListNavigationController == nil)
+    {
+        mapBookmarksListNavigationController = [[UINavigationController alloc] initWithRootViewController:self.mapBookmarksListController];
+    }
+    return mapBookmarksListNavigationController;
 }
 
 #pragma mark - 
@@ -1252,7 +1273,14 @@
 
 -(void)searchBarbookmarkButtonPressed:(id)sender
 {
-	
+	[self.navigationController presentModalViewController:self.mapBookmarksListNavigationController animated:YES];
+}
+
+#pragma mark -
+#pragma mark MapBookmarksListControllerDelegete methods
+- (void)mapBookmarksListController:(MapBookmarksListController *)controller didChooseMapBookmark:(MapBookmark *)aBookmark;
+{
+	[self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -
@@ -1301,6 +1329,8 @@
 	[self.annotationAlarmEditing release];
 	[self.locationingBarItem release];
 	[self.annotationSearched release];
+	[self.mapBookmarksListController release];
+    [self.mapBookmarksListNavigationController release];
 	
 	[super dealloc];
 }

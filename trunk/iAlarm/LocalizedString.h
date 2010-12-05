@@ -17,6 +17,9 @@
 #define KMapTypeNameSatellite                    NSLocalizedString(@"Satellite",@"地图类型名称")
 #define KMapTypeNameHybrid                       NSLocalizedString(@"Hybrid",@"地图类型名称")
 #define KMapNewAnnotationTitle                   NSLocalizedString(@"Drag to Move Pin",@"一个新图钉的标题");
+#define KMapBookmarksViewTitle                   NSLocalizedString(@"Bookmarks",@"Bookmarkslist视图的标题");
+#define KMapBookmarksViewPrompt                  NSLocalizedString(@"Choose a bookmark to view on the map",@"Bookmarkslist视图的Prompt");
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////

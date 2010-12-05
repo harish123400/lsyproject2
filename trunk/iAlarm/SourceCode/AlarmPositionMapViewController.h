@@ -10,16 +10,20 @@
 #import "YCNavSuperControllerProtocol.h"
 #import "BSForwardGeocoder.h"
 #import "YCSearchController.h"
+#import "MapBookmarksListController.h"
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
 
+
 @class YCAnnotation;
 @class AlarmNameViewController;
 @class YCTapView;
+//@class MapBookmarksListController;
+//@protocol MapBookmarksListControllerDelegate;
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
-<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,BSForwardGeocoderDelegate,UIAlertViewDelegate,YCSearchControllerDelegete>
+<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,BSForwardGeocoderDelegate,UIAlertViewDelegate,YCSearchControllerDelegete,MapBookmarksListControllerDelegate>
 {
 	NSTimer *locationTimer;
 	
@@ -65,6 +69,9 @@
 	id<MKAnnotation> annotationManipulating;  //正在操作的
 	YCAnnotation *annotationSearched;         //被搜索出来的，在tab中有别于annotationAlarmEditing
 	
+	MapBookmarksListController *mapBookmarksListController;
+    UINavigationController *mapBookmarksListNavigationController;
+	
 }
 
 @property (nonatomic,retain) IBOutlet MKMapView* mapView;
@@ -95,6 +102,10 @@
 @property (nonatomic,retain) YCAnnotation *annotationAlarmEditing;
 @property (nonatomic,retain) id<MKAnnotation> annotationManipulating;
 @property (nonatomic,retain,readonly) YCAnnotation *annotationSearched;
+
+@property (nonatomic, retain, readonly) MapBookmarksListController *mapBookmarksListController;
+@property (nonatomic, retain, readonly) UINavigationController *mapBookmarksListNavigationController;
+
 
 
 -(IBAction)currentLocationButtonPressed:(id)sender;
