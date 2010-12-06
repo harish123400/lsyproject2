@@ -12,6 +12,12 @@
 /////////////////////////////////////////////////////////////////////////////////////
 //名称
 ////界面元素
+#define KInformationLabel                        NSLocalizedString(@"Info",@"指示详细信息的标签，多用于NavBar Title");
+
+#define KAlarmNameLabel                          NSLocalizedString(@"Label",@"指示AlarmName的标签");
+#define KAlarmPostionLabel                       NSLocalizedString(@"Address",@"指示AlarmPosition的标签");
+#define KAlarmMapInfoLabel                       NSLocalizedString(@"address",@"地图详细地址页面地址的标签（英文小写）");
+
 #define kDefaultLocationAlarmName                NSLocalizedString(@"Location Alarm",@"默认的位置闹钟名称")
 #define kMapTypeNameStandard                     NSLocalizedString(@"Map",@"地图类型名称")
 #define KMapTypeNameSatellite                    NSLocalizedString(@"Satellite",@"地图类型名称")
@@ -19,6 +25,7 @@
 #define KMapNewAnnotationTitle                   NSLocalizedString(@"Drag to Move Pin",@"一个新图钉的标题");
 #define KMapBookmarksViewTitle                   NSLocalizedString(@"Bookmarks",@"Bookmarkslist视图的标题");
 #define KMapBookmarksViewPrompt                  NSLocalizedString(@"Choose a bookmark to view on the map",@"Bookmarkslist视图的Prompt");
+
 
 
 

@@ -11,4 +11,18 @@
 
 @implementation MapBookmark
 
+@synthesize bookmarkName;
+@synthesize annotation;
+
+
+#pragma mark -
+#pragma mark Memory management
+
+- (void)dealloc 
+{
+	[self.bookmarkName release];
+	//[self.annotation release];
+    [super dealloc];
+}
+
 @end

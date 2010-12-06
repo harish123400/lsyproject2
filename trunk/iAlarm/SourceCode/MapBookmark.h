@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-
-@interface MapBookmark : NSObject {
-
+@protocol MKAnnotation;
+@interface MapBookmark : NSObject 
+{
+	NSString *bookmarkName;
+	id<MKAnnotation> annotation;
 }
+
+@property(nonatomic,retain) NSString *bookmarkName;
+@property(nonatomic,assign) id<MKAnnotation> annotation;
 
 @end

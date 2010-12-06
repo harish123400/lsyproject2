@@ -362,11 +362,13 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	NSString * locality = placemark.locality; //城市
 	NSString * thoroughfare = placemark.thoroughfare; //街道
 	NSString * subthoroughfare = placemark.subThoroughfare;//街道号
+	NSString * administrativeArea = placemark.administrativeArea;//省
+	NSString * country = placemark.country;//国
 	if (locality ==nil) locality=@"";
 	if (thoroughfare ==nil) thoroughfare=@"";
 	if (subthoroughfare ==nil) subthoroughfare=@"";
 	
-	NSString *string = [[[NSString alloc] initWithFormat:@"%@%@ %@",thoroughfare,subthoroughfare,locality] autorelease];
+	NSString *string = [[[NSString alloc] initWithFormat:@"%@%@ %@ %@ %@",thoroughfare,subthoroughfare,locality,administrativeArea,country] autorelease];
 	
 	return string;
 }

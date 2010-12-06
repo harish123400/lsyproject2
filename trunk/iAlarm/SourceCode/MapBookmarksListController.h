@@ -20,7 +20,7 @@
 	UIBarButtonItem *cancelButton;
 }
 
-@property (nonatomic,retain) NSMutableArray* bookmarksList;
+@property (nonatomic,retain,readonly) NSMutableArray* bookmarksList;
 @property (nonatomic,assign) id <MapBookmarksListControllerDelegate> delegate; //为何使用assign？
 @property (nonatomic,retain,readonly)  UIBarButtonItem *cancelButton;
 

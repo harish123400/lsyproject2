@@ -9,12 +9,22 @@
 #import "MapBookmarksListController.h"
 #import "LocalizedString.h"
 #import "MapBookmark.h"
+#import <MapKit/MapKit.h>
 
 
 @implementation MapBookmarksListController
 
 @synthesize bookmarksList;
 @synthesize delegate;
+
+-(id)bookmarksList
+{
+	if (self->bookmarksList == nil) 
+	{
+		self->bookmarksList = [[NSMutableArray alloc] init];
+	}
+	return self->bookmarksList;
+}
 
 -(id)cancelButton
 {
@@ -36,6 +46,8 @@
 }
 
 
+
+
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -48,6 +60,11 @@
 	self.navigationItem.prompt = KMapBookmarksViewPrompt;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
 
 
 
@@ -78,6 +95,17 @@
     }
     
     // Configure the cell...
+	MapBookmark *bookmark = (MapBookmark*)[self.bookmarksList objectAtIndex:indexPath.row];
+	cell.textLabel.text = bookmark.bookmarkName;
+	
+	if ([bookmark.annotation isKindOfClass:[MKUserLocation class]]) 
+	{ //当前位置
+		cell.textLabel.textColor = [UIColor blueColor];
+	}else {
+		cell.textLabel.textColor = [UIColor blackColor];
+	}
+
+	
     return cell;
 }
 
@@ -98,6 +126,7 @@
 
 - (void)dealloc {
 	[self.cancelButton release];
+	[self.bookmarksList release];
     [super dealloc];
 }
 

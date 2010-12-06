@@ -12,10 +12,11 @@
 #import "UIUtility.h"
 #import "YCParam.h"
 #import "YCLog.h"
-#import "AlarmMapSpecifyViewController.h"
-#import "AlarmNameViewController.h"
+//#import "AlarmMapSpecifyViewController.h"
+#import "AlarmNameInMapViewController.h"
 #import "YCTapView.h"
 #import "MapBookmarksListController.h"
+#import "MapBookmark.h"
 
 
 @implementation AlarmPositionMapViewController
@@ -820,6 +821,11 @@
 		[self setPreviousNextButtonEnableStatus];
 	}
 	
+	if (self.regionCenterWithCurrentLocation) 
+	{
+		self.navigationController.navigationBarHidden = YES;
+	}
+	
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -863,6 +869,12 @@
 			UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			annotationView.leftCalloutAccessoryView = sfIconView;
 			[sfIconView release];
+			
+			UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+			[rightButton addTarget:self
+							action:@selector(showDetails:)
+				  forControlEvents:UIControlEventTouchUpInside];
+			annotationView.rightCalloutAccessoryView = rightButton;
 		}
 		
 		
@@ -921,9 +933,44 @@
 	MKAnnotationView *annotationView = (MKAnnotationView *)((UIView*)sender).superview.superview;
 	self.annotationAlarmEditing = annotationView.annotation;
 	
-	AlarmNameViewController *nameViewCtl = [[AlarmNameViewController alloc] initWithNibName:@"AlarmNameViewController" bundle:nil];
-	nameViewCtl.alarm = self.alarmTemp;
+	AlarmNameInMapViewController *nameViewCtl = [[AlarmNameInMapViewController alloc] initWithStyle:UITableViewStyleGrouped];
 	nameViewCtl.parentController = self;
+	nameViewCtl.alarm = self.alarmTemp;
+	self.navigationController.navigationBarHidden = NO;//在闹钟标签页面上显示navbar
+	
+	if ([annotationView.annotation isKindOfClass:[MKUserLocation class]]) 
+	{
+		//当前位置
+		nameViewCtl.alarm.alarmName = annotationView.annotation.title;
+		nameViewCtl.alarm.position = annotationView.annotation.subtitle;
+		nameViewCtl.image = [UIImage imageNamed:@"mapInfoCurrent.png"];
+
+	}else {
+		if (self.regionCenterWithCurrentLocation)
+		{
+			if (((YCAnnotation*)annotationView.annotation).annotationType == YCMapAnnotationTypeSearch)
+			{   //搜索的结果
+				nameViewCtl.alarm.alarmName = annotationView.annotation.title;
+				nameViewCtl.alarm.position = annotationView.annotation.subtitle;
+				nameViewCtl.image = [UIImage imageNamed:@"mapInfoRed.png"];
+			}else {   
+				nameViewCtl.alarm = [self.alarms objectAtIndex:[self.mapAnnotations indexOfObject:annotationView.annotation]];
+				             //tab上用闹钟本身，save就能直接保存
+				if (((YCAnnotation*)annotationView.annotation).annotationType == YCMapAnnotationTypeMovingToTarget) 
+				{//接近的目标位置
+					nameViewCtl.image = [UIImage imageNamed:@"mapInfoGreen.png"];
+				}else {
+					nameViewCtl.image = [UIImage imageNamed:@"mapInfoRed.png"];
+				}
+
+			}
+		}else {
+			nameViewCtl.image = [UIImage imageNamed:@"mapInfoPurple.png"];
+		}
+
+	}
+
+	
 	[self.navigationController pushViewController:nameViewCtl animated:YES];
 	[nameViewCtl release];
 }
@@ -1172,8 +1219,10 @@
 			[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
 		}else { //在tab页面上的搜索结果大头针
 			annotationTemp = self.annotationSearched;
-			title = place.address!=nil ? place.address: @" " ;
+			title = forwardGeocoder.searchQuery ;
+			subtitle = place.address!=nil ? place.address: @" " ;
 			annotationTemp.title = title;
+			annotationTemp.subtitle = subtitle;
 			annotationTemp.coordinate = place.coordinate;
 			//[self.mapAnnotations addObject:annotationTemp]; //加入到Annotation列表中
 		}
@@ -1273,6 +1322,29 @@
 
 -(void)searchBarbookmarkButtonPressed:(id)sender
 {
+	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
+	
+	[self.mapBookmarksListController.bookmarksList removeAllObjects];
+	
+	//当前位置
+	if (self.mapView.userLocation.location) 
+	{
+		MapBookmark *bmCurrentLocation = [[MapBookmark alloc] init];
+		bmCurrentLocation.bookmarkName = self.mapView.userLocation.title;
+		bmCurrentLocation.annotation = self.mapView.userLocation;
+		[self.mapBookmarksListController.bookmarksList addObject:bmCurrentLocation];
+	}
+	
+	NSUInteger i, count = [self.mapAnnotations count];
+	for (i = 0; i < count; i++) 
+	{
+		YCAnnotation *obj = [self.mapAnnotations objectAtIndex:i];
+		MapBookmark *bm = [[MapBookmark alloc] init];
+		bm.bookmarkName = obj.title;
+		bm.annotation = obj;
+		[self.mapBookmarksListController.bookmarksList addObject:bm];
+	}
+
 	[self.navigationController presentModalViewController:self.mapBookmarksListNavigationController animated:YES];
 }
 
@@ -1280,7 +1352,28 @@
 #pragma mark MapBookmarksListControllerDelegete methods
 - (void)mapBookmarksListController:(MapBookmarksListController *)controller didChooseMapBookmark:(MapBookmark *)aBookmark;
 {
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+
+	[self.navigationController dismissModalViewControllerAnimated:YES];	
+	
+	if (aBookmark !=nil) 
+	{
+		[self.searchController setActive:NO animated:NO]; //如果是搜索状态，取消
+		
+		//仅仅设置中心
+		[self.mapView setCenterCoordinate:aBookmark.annotation.coordinate animated:YES];
+		
+		//选中
+		if ([aBookmark.annotation isKindOfClass:[MKUserLocation class]]) 
+		{ //当前位置
+			[self setLocationBarItem:YES];
+			[self setToolBarItemsEnabled:NO];
+			[self startCheckLocationTimer];
+		}else{
+			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:[self.mapAnnotations indexOfObject:aBookmark.annotation]] afterDelay:0.2];
+		}
+	}
+	
+	
 }
 
 #pragma mark -

@@ -299,6 +299,8 @@ BOOL lo;
 	return YES;
 	 */
 	
+	//NSLog(@"alarms's count = %d",[DataUtility alarmArray].count);
+	
 	if ([viewController isKindOfClass:[UINavigationController class]]) 
 	{
 		UIViewController *rootViewContoller = [((UINavigationController*)viewController).viewControllers objectAtIndex:0];
