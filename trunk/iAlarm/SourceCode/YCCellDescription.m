@@ -16,8 +16,8 @@
 #import "AlarmVibrateViewController.h"
 #import "AlarmNameViewController.h"
 #import "AlarmPositionMapViewController.h"
-#import "AlarmMapCurrentViewController.h"
-#import "AlarmMapSpecifyViewController.h"
+//#import "AlarmMapCurrentViewController.h"
+//#import "AlarmMapSpecifyViewController.h"
 #import "UIUtility.h"
 #import "YCAlarmEntity.h"
 
@@ -83,24 +83,24 @@
 		AlarmLSoundViewController *lsoundCtler;
 		AlarmVibrateViewController *vibrateCtler;
 		AlarmNameViewController * nameCtler;
-		AlarmMapCurrentViewController *curMapCtler;
-		AlarmMapSpecifyViewController *speMapCtler;
+		//AlarmMapCurrentViewController *curMapCtler;
+		//AlarmMapSpecifyViewController *speMapCtler;
 
 		positionCtler = [[AlarmPositionViewController alloc] initWithStyle:UITableViewStyleGrouped];	
 		lrepreatCtler = [[AlarmLRepeatTypeViewController alloc] initWithStyle:UITableViewStyleGrouped];
 		lsoundCtler = [[AlarmLSoundViewController alloc] initWithStyle:UITableViewStyleGrouped];
 		vibrateCtler = [[AlarmVibrateViewController alloc] initWithStyle:UITableViewStyleGrouped];
 		nameCtler = [[AlarmNameViewController alloc] initWithNibName:@"AlarmNameViewController" bundle:nil];
-		curMapCtler = [[AlarmMapCurrentViewController alloc] initWithNibName:@"AlarmPositionMapViewController" bundle:nil];
-		speMapCtler = [[AlarmMapSpecifyViewController alloc] initWithNibName:@"AlarmPositionMapViewController" bundle:nil];
+		//curMapCtler = [[AlarmMapCurrentViewController alloc] initWithNibName:@"AlarmPositionMapViewController" bundle:nil];
+		//speMapCtler = [[AlarmMapSpecifyViewController alloc] initWithNibName:@"AlarmPositionMapViewController" bundle:nil];
 		
 		[dic setObject:positionCtler forKey:kAlarmPositionViewController];
 		[dic setObject:lrepreatCtler forKey:kAlarmLRepeatTypeViewController];
 		[dic setObject:lsoundCtler forKey:kAlarmLSoundViewController];
 		[dic setObject:vibrateCtler forKey:kAlarmVibrateViewController];
 		[dic setObject:nameCtler forKey:kAlarmNameViewController];
-		[dic setObject:curMapCtler forKey:kAlarmMapCurrentViewController];
-		[dic setObject:speMapCtler forKey:kAlarmMapSpecifyViewController];
+		//[dic setObject:curMapCtler forKey:kAlarmMapCurrentViewController];
+		//[dic setObject:speMapCtler forKey:kAlarmMapSpecifyViewController];
 	}
 	
 	return [dic objectForKey:viewControllerString];

@@ -20,8 +20,7 @@
 @class YCAnnotation;
 @class AlarmNameViewController;
 @class YCTapView;
-//@class MapBookmarksListController;
-//@protocol MapBookmarksListControllerDelegate;
+
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
 <MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,BSForwardGeocoderDelegate,UIAlertViewDelegate,YCSearchControllerDelegete,MapBookmarksListControllerDelegate>
 {
@@ -57,17 +56,18 @@
 	BOOL isFirstShow;             //第一次显示
 	BOOL isAlreadyCenterCoord;    //中心坐标是否准备好
 	BOOL isCurl;                  //是否已经半卷
-	BOOL isCurrentLocationAtCenterRegion;   //当前位置在中心
-	BOOL isCurrentPinAtCenterRegion;        //当前图钉在中心
-	//BOOL searching;                         //数据查询中
+	//BOOL isCurrentLocationAtCenterRegion;   //当前位置在中心
+	//BOOL isCurrentPinAtCenterRegion;        //当前图钉在中心
+
 	
 	MKCoordinateRegion defaultMapRegion;   //地图的可视范围，设置该变量方便代码编写
 	NSArray *alarms;                       //需要在地图上显示的
 	NSMutableArray *mapAnnotations;        //地图标签集合
 	YCAlarmEntity *alarmTemp;
 	YCAnnotation *annotationAlarmEditing;     //编辑中的Alarm的annotation
-	id<MKAnnotation> annotationManipulating;  //正在操作的
 	YCAnnotation *annotationSearched;         //被搜索出来的，在tab中有别于annotationAlarmEditing
+	id<MKAnnotation> annotationManipulating;  //正在操作的,反转坐标等异步操作使用该变量
+
 	
 	MapBookmarksListController *mapBookmarksListController;
     UINavigationController *mapBookmarksListNavigationController;
@@ -89,8 +89,8 @@
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *resetPinBarItem;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *pageCurlBarItem;
 @property (nonatomic,retain,readonly) UIBarButtonItem *locationingBarItem;
-@property (nonatomic,retain) IBOutlet IBOutlet UIBarButtonItem *previousBarItem;              
-@property (nonatomic,retain) IBOutlet IBOutlet UIBarButtonItem *nextBarItem;                  
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *previousBarItem;              
+@property (nonatomic,retain) IBOutlet UIBarButtonItem *nextBarItem;                  
 
 @property (nonatomic,retain) BSForwardGeocoder *forwardGeocoder;
 @property (nonatomic,retain) YCSearchController *searchController;
@@ -100,8 +100,9 @@
 @property (nonatomic,retain) YCAlarmEntity *alarmTemp;
 @property (nonatomic,retain) NSMutableArray *mapAnnotations;
 @property (nonatomic,retain) YCAnnotation *annotationAlarmEditing;
-@property (nonatomic,retain) id<MKAnnotation> annotationManipulating;
 @property (nonatomic,retain,readonly) YCAnnotation *annotationSearched;
+@property (nonatomic,assign) id<MKAnnotation> annotationManipulating;
+
 
 @property (nonatomic, retain, readonly) MapBookmarksListController *mapBookmarksListController;
 @property (nonatomic, retain, readonly) UINavigationController *mapBookmarksListNavigationController;

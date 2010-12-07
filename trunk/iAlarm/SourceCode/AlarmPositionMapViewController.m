@@ -12,7 +12,6 @@
 #import "UIUtility.h"
 #import "YCParam.h"
 #import "YCLog.h"
-//#import "AlarmMapSpecifyViewController.h"
 #import "AnnotationInfoViewController.h"
 #import "YCTapView.h"
 #import "MapBookmarksListController.h"
@@ -355,14 +354,33 @@
 	return delay;
 }
 
-
-//选中Annotation －显示标题
+///////////////////////////////////////////////////////
+//选中Annotation,该元素在mapView.annotations中。 －显示标题
 -(void)selectAnnotationAtIndex:(NSNumber*)index
+{
+	NSInteger nIndex = [index intValue];
+	if(nIndex >=0 && nIndex < self.mapView.annotations.count)
+		[self.mapView selectAnnotation:[self.mapView.annotations objectAtIndex:nIndex] animated:YES];
+}
+
+
+-(void)selectAnnotation:(id<MKAnnotation>)annotation
+{
+	[self.mapView selectAnnotation:annotation animated:YES];
+}
+//选中Annotation,该元素在mapView.annotations中。 －显示标题
+///////////////////////////////////////////////////////
+
+
+/*
+//选中Annotation,该元素在self.mapAnnotations中。 －显示标题
+-(void)selectAnnotationInListAtIndex:(NSNumber*)index
 {
 	NSInteger nIndex = [index intValue];
 	if(nIndex >=0 && nIndex < self.mapAnnotations.count)
 		[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:nIndex] animated:YES];
 }
+ */
 
 -(void)addMapAnnotations
 {	[self updateMapAnnotations];
@@ -412,9 +430,14 @@
 		//先到世界地图，在下来
 		[self setMapRegion:self->defaultMapRegion FromWorld:YES animatedToWorld:NO animatedToPlace:YES];
 		
+		//反向取当前位置的地址
+		self.annotationManipulating = self.mapView.userLocation;
+		reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
+		[reverseGeocoder start];
+		
 		//选中Annotation
-		NSInteger index = [self.mapAnnotations indexOfObject:self.annotationAlarmEditing];
-		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
+		//NSInteger index = [self.mapAnnotations indexOfObject:self.annotationAlarmEditing];
+		//[self performSelector:@selector(selectAnnotationInListAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
 		
 	}else {
 		[self setMapRegion:self->defaultMapRegion FromWorld:NO animatedToWorld:NO animatedToPlace:YES];
@@ -526,6 +549,15 @@
 	[self setLocationBarItem:YES];
 	[self setToolBarItemsEnabled:NO];
 	[self startCheckLocationTimer];
+	
+	//选中当前
+	id annotationSelecting = nil;
+	if (self.mapView.userLocation.location)
+	{
+		annotationSelecting = self.mapView.userLocation;
+		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:0.5]; //适当延长时间
+	}
+
 }
 
 //轮转Annotation 
@@ -563,10 +595,13 @@
 	{
 		//仅仅设置中心
 		[self.mapView setCenterCoordinate:cyclingAnnotation.coordinate animated:YES];
-		//选中
-		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:cyclingIndex] afterDelay:0.2];
-		
 	}
+	
+	//选中
+	//[self performSelector:@selector(selectAnnotationInListAtIndex:) withObject:[NSNumber numberWithInt:cyclingIndex] afterDelay:0.2];
+	if (cyclingAnnotation)
+		[self performSelector:@selector(selectAnnotation:) withObject:cyclingAnnotation afterDelay:0.2];
+	
 	
 	return retVal;
 	
@@ -850,14 +885,15 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
+	//反向取当前位置的地址
 	self.annotationManipulating = userLocation;
-	reverseGeocoder = [self reverseGeocoder:userLocation.coordinate]; 
+	reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
 	[reverseGeocoder start];
-	
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
+	/*
 	NSInteger selectedIndex = -1;
 	for (NSUInteger i=0; i<views.count; i++) 
 	{
@@ -916,10 +952,55 @@
 	
 	if (selectedIndex !=-1) 
 	{
-		[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:selectedIndex] afterDelay:0.5];
+		[self performSelector:@selector(selectAnnotationInListAtIndex:) withObject:[NSNumber numberWithInt:selectedIndex] afterDelay:0.5];
 	}
+	 */
 
+	id annotationSelecting = nil;
 
+	for (NSUInteger i=0; i<views.count; i++) 
+	{
+		MKAnnotationView *annotationView = [views objectAtIndex:i];
+		
+		//当前位置
+		if ([annotationView.annotation isKindOfClass:[MKUserLocation class]]) 
+		{
+			UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
+			annotationView.leftCalloutAccessoryView = sfIconView;
+			[sfIconView release];
+			
+			UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+			[rightButton addTarget:self
+							action:@selector(showDetails:)
+				  forControlEvents:UIControlEventTouchUpInside];
+			annotationView.rightCalloutAccessoryView = rightButton;
+		}
+		
+		//处理选中，下面的几种情况不会同时出现
+		id annotation = annotationView.annotation;
+		if ([annotation isKindOfClass:[YCAnnotation class]])
+		{
+			switch (((YCAnnotation*)annotation).annotationType) {
+				case YCMapAnnotationTypeMovingToTarget:
+					annotationSelecting = annotation;
+					break;
+				case YCMapAnnotationTypeSearch:
+					annotationSelecting = annotation;
+					break;
+				case YCMapAnnotationTypeLocating:
+				case YCMapAnnotationTypeStandardEnabledDrag:
+					annotationSelecting = annotation;
+					break;
+				default:
+					break;
+			}
+		}
+
+	}
+	
+	if (annotationSelecting) 
+		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:0.5];
+	
 }
 
 
@@ -1027,7 +1108,7 @@
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState 
 {
-	self.annotationManipulating = annotationView.annotation;
+	
 	switch (newState) 
 	{
 		case MKAnnotationViewDragStateStarting:  //开始拖拽的－紫色
@@ -1038,6 +1119,7 @@
 			//坐标
 			self.alarmTemp.coordinate = annotationView.annotation.coordinate;
 			
+			self.annotationManipulating = annotationView.annotation;
 			//反转坐标－地址
 			((YCAnnotation*) annotationView.annotation).subtitle = @"";
 			reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
@@ -1204,7 +1286,6 @@
 			annotationTemp.title = title;
 			annotationTemp.subtitle = subtitle;
 			annotationTemp.coordinate = place.coordinate;
-			//[self.mapAnnotations addObject:annotationTemp]; //加入到Annotation列表中
 		}
 		
 		//先删除原来的annotation
@@ -1343,14 +1424,9 @@
 		[self.mapView setCenterCoordinate:aBookmark.annotation.coordinate animated:YES];
 		
 		//选中
-		if ([aBookmark.annotation isKindOfClass:[MKUserLocation class]]) 
-		{ //当前位置
-			[self setLocationBarItem:YES];
-			[self setToolBarItemsEnabled:NO];
-			[self startCheckLocationTimer];
-		}else{
-			[self performSelector:@selector(selectAnnotationAtIndex:) withObject:[NSNumber numberWithInt:[self.mapAnnotations indexOfObject:aBookmark.annotation]] afterDelay:0.2];
-		}
+		id annotationSelecting = aBookmark.annotation;
+		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:0.2];
+
 	}
 	
 	
@@ -1364,8 +1440,6 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 	self.mapView = nil;            
 	self.maskView = nil;                           
 	self.curlView = nil;;                           
