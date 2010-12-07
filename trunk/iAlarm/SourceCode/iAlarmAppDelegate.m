@@ -307,7 +307,8 @@ BOOL lo;
 		if ([rootViewContoller isKindOfClass:[AlarmPositionMapViewController class]]) 
 		{
 			((AlarmPositionMapViewController*)rootViewContoller).alarms = [DataUtility alarmArray];
-			((AlarmPositionMapViewController*)rootViewContoller).alarm = [DataUtility createAlarm];
+			//((AlarmPositionMapViewController*)rootViewContoller).alarm = [DataUtility createAlarm];
+			//((AlarmPositionMapViewController*)rootViewContoller).alarm = [[DataUtility alarmArray] objectAtIndex:0];
 			((AlarmPositionMapViewController*)rootViewContoller).regionCenterWithCurrentLocation = YES;
 		}
 		

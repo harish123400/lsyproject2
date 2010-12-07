@@ -17,6 +17,9 @@
 #import "MapBookmarksListController.h"
 #import "MapBookmark.h"
 
+//默认显示地图的范围
+const  CLLocationDistance kDefaultLatitudinalMeters  = 1500.0;
+const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 @implementation AlarmPositionMapViewController
 
@@ -117,22 +120,18 @@
 			}
 			annotation.title = KMapNewAnnotationTitle;
 			annotation.subtitle = temp.position;
+			
+			if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
+				self.annotationAlarmEditing = annotation;
 		}
-		
-		
-		
-		if([temp.alarmId isEqualToString:self.alarmTemp.alarmId])
-			self.annotationAlarmEditing = annotation;
 		
 		
 		[array addObject:annotation];
 		[annotation release];
 	}
 	
-	//if(self.mapAnnotations && [self.mapAnnotations indexOfObject:self.annotationSearched] != NSNotFound)
-	//	[array addObject:self.annotationSearched];
-	
 	self.mapAnnotations = array;
+	[array release];
 
 }
 
@@ -142,7 +141,6 @@
     {
         mapBookmarksListController = [[MapBookmarksListController alloc] initWithStyle:UITableViewStylePlain];
         mapBookmarksListController.delegate = self;
-        //mapBookmarksListController.title = @"Choose a bookmark:";
     }
     return mapBookmarksListController;
 }
@@ -485,8 +483,8 @@
 		[locationTimer invalidate];
 		[locationTimer release];
 		locationTimer = nil;
-		
-		self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.location.coordinate,1500.0,1500.0);
+				
+		self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.location.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 		[notificationCenter postNotificationName:kLocationedNotification object:self];
 	}else {
@@ -738,7 +736,7 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-- (void) registerNotifications 
+- (void) registerLocationedNotifications 
 {
 	
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -806,37 +804,46 @@
 
 
 		
+	//注册定位成功消息
+	[self registerLocationedNotifications];
 	
-
-	//判断闹钟坐标是否有效
-	if (![self isValidCoordinate:self.alarm.coordinate]) 
-		self.alarm.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
-	
-	self.alarmTemp = [self.alarm copy];
-	
-	//注册消息
-	[self registerNotifications];
-
+	//覆盖
 	[self showMaskView];
-	[self addMapAnnotations];
-	//[self performSelector:@selector(showMapView) withObject:nil afterDelay:0.5];
+	
+	//判断闹钟坐标是否有效
+	if (self.alarm) 
+	{
+		if (![self isValidCoordinate:self.alarm.coordinate]) 
+			self.alarm.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
+		self.alarmTemp = [self.alarm copy];
+	}
 
 	
-	if (self.regionCenterWithCurrentLocation) 
+	if (!self.regionCenterWithCurrentLocation) 
 	{
-		[self startCheckLocationTimer];
-	}else {
-		
 		if ([self isValidCoordinate:self.alarmTemp.coordinate]) 
 		{
-			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,1500.0,1500.0);
+			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 			[notificationCenter postNotificationName:kLocationedNotification object:self];
 		}else { //alarmTemp中的坐标无效，按当前位置显示
 			[self startCheckLocationTimer];
 		}
-
+		
+	}else{
+		if(self.alarmTemp)  //有闹钟到达
+		{
+			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
+			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+			[notificationCenter postNotificationName:kLocationedNotification object:self];
+		}else 
+			[self startCheckLocationTimer];
 	}
+	
+
+	//加入Annotation
+	[self addMapAnnotations];
+	
 
 }
 
@@ -893,69 +900,6 @@
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
-	/*
-	NSInteger selectedIndex = -1;
-	for (NSUInteger i=0; i<views.count; i++) 
-	{
-		MKAnnotationView *annotationView = [views objectAtIndex:i];
-		
-		//当前位置
-		if ([annotationView.annotation isKindOfClass:[MKUserLocation class]]) 
-		{
-			UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
-			annotationView.leftCalloutAccessoryView = sfIconView;
-			[sfIconView release];
-			
-			UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-			[rightButton addTarget:self
-							action:@selector(showDetails:)
-				  forControlEvents:UIControlEventTouchUpInside];
-			annotationView.rightCalloutAccessoryView = rightButton;
-		}
-		
-		
-		if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) 
-		{
-			//选中
-			YCAnnotation *annotation = annotationView.annotation;
-			YCMapAnnotationType type = annotation.annotationType;
-			
-			
-			if (self.regionCenterWithCurrentLocation) 
-			{
-				if (YCMapAnnotationTypeMovingToTarget == type || YCMapAnnotationTypeSearch == type)
-				{
-					selectedIndex = [self.mapAnnotations indexOfObject:annotation];
-				}
-
-			}else {
-				selectedIndex = [self.mapAnnotations indexOfObject:annotation];
-			}
-			
-		}
-	}
-	
-	//判断上次最后选中的坐标，是否在屏幕中
-	if (-1 == selectedIndex) 
-	if (self->cyclingIndex < self.mapAnnotations.count)
-	{
-		YCAnnotation *annotation = [self.mapAnnotations objectAtIndex:self->cyclingIndex];
-		MKMapPoint point = MKMapPointForCoordinate(annotation.coordinate);
-		MKMapRect rect = self.mapView.visibleMapRect;
-		BOOL isContains = MKMapRectContainsPoint(rect, point);
-		if (isContains) 
-		{
-			selectedIndex = self->cyclingIndex;
-		}
-		
-	}
-	
-	if (selectedIndex !=-1) 
-	{
-		[self performSelector:@selector(selectAnnotationInListAtIndex:) withObject:[NSNumber numberWithInt:selectedIndex] afterDelay:0.5];
-	}
-	 */
-
 	id annotationSelecting = nil;
 
 	for (NSUInteger i=0; i<views.count; i++) 
