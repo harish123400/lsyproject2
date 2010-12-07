@@ -13,7 +13,7 @@
 #import "YCParam.h"
 #import "YCLog.h"
 //#import "AlarmMapSpecifyViewController.h"
-#import "AlarmNameInMapViewController.h"
+#import "AnnotationInfoViewController.h"
 #import "YCTapView.h"
 #import "MapBookmarksListController.h"
 #import "MapBookmark.h"
@@ -108,7 +108,7 @@
 				annotation.annotationType = YCMapAnnotationTypeStandard;
 			}
 			annotation.title = temp.alarmName;
-			annotation.subtitle = @"";
+			annotation.subtitle = nil;
 		}else {
 			if(self.newAlarm)  //AlarmNew
 			{
@@ -117,7 +117,7 @@
 				annotation.annotationType = YCMapAnnotationTypeStandardEnabledDrag;
 			}
 			annotation.title = KMapNewAnnotationTitle;
-			annotation.subtitle = @"";
+			annotation.subtitle = temp.position;
 		}
 		
 		
@@ -931,48 +931,28 @@
 	
 	//取得当前操作的Annotation
 	MKAnnotationView *annotationView = (MKAnnotationView *)((UIView*)sender).superview.superview;
-	self.annotationAlarmEditing = annotationView.annotation;
+	//self.annotationAlarmEditing = annotationView.annotation;
 	
-	AlarmNameInMapViewController *nameViewCtl = [[AlarmNameInMapViewController alloc] initWithStyle:UITableViewStyleGrouped];
-	nameViewCtl.parentController = self;
-	nameViewCtl.alarm = self.alarmTemp;
-	self.navigationController.navigationBarHidden = NO;//在闹钟标签页面上显示navbar
-	
-	if ([annotationView.annotation isKindOfClass:[MKUserLocation class]]) 
+	AnnotationInfoViewController *annotationInfoViewCtl = [[AnnotationInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    annotationInfoViewCtl.annotation = annotationView.annotation;
+	annotationInfoViewCtl.annotationTitle = annotationView.annotation.title;
+	if (annotationView.annotation.subtitle !=nil) 
 	{
-		//当前位置
-		nameViewCtl.alarm.alarmName = annotationView.annotation.title;
-		nameViewCtl.alarm.position = annotationView.annotation.subtitle;
-		nameViewCtl.image = [UIImage imageNamed:@"mapInfoCurrent.png"];
-
-	}else {
-		if (self.regionCenterWithCurrentLocation)
+		annotationInfoViewCtl.annotationSubtitle = annotationView.annotation.subtitle;
+	}else { //annotation.subtitle 没有被赋值
+		NSUInteger index = [self.mapAnnotations indexOfObject:annotationView.annotation];
+		if (index != NSNotFound && index < self.alarms.count)
 		{
-			if (((YCAnnotation*)annotationView.annotation).annotationType == YCMapAnnotationTypeSearch)
-			{   //搜索的结果
-				nameViewCtl.alarm.alarmName = annotationView.annotation.title;
-				nameViewCtl.alarm.position = annotationView.annotation.subtitle;
-				nameViewCtl.image = [UIImage imageNamed:@"mapInfoRed.png"];
-			}else {   
-				nameViewCtl.alarm = [self.alarms objectAtIndex:[self.mapAnnotations indexOfObject:annotationView.annotation]];
-				             //tab上用闹钟本身，save就能直接保存
-				if (((YCAnnotation*)annotationView.annotation).annotationType == YCMapAnnotationTypeMovingToTarget) 
-				{//接近的目标位置
-					nameViewCtl.image = [UIImage imageNamed:@"mapInfoGreen.png"];
-				}else {
-					nameViewCtl.image = [UIImage imageNamed:@"mapInfoRed.png"];
-				}
-
-			}
-		}else {
-			nameViewCtl.image = [UIImage imageNamed:@"mapInfoPurple.png"];
-		}
-
+			YCAlarmEntity *alarmObj = [self.alarms objectAtIndex:index];
+			annotationInfoViewCtl.annotationSubtitle = alarmObj.position;
+		}else 
+		   annotationInfoViewCtl.annotationSubtitle = @"";
 	}
 
 	
-	[self.navigationController pushViewController:nameViewCtl animated:YES];
-	[nameViewCtl release];
+	self.navigationController.navigationBarHidden = NO;//在闹钟标签页面上显示navbar
+	[self.navigationController pushViewController:annotationInfoViewCtl animated:YES];
+	[annotationInfoViewCtl release];
 }
 
 
