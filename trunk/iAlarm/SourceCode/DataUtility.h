@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+//闹钟列表改变消息，包括：增，改，删。
+#define kAlarmsDidChangeNotification @"kAlarmsDidChangeNotification"
+
 @class YCAlarmEntity;
 
 @interface DataUtility : NSObject {

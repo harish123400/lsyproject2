@@ -85,8 +85,7 @@
 @property (nonatomic,retain) NSString *vehicleTypeId;
 @property (nonatomic,assign) CLLocationDistance radius;
 
-
-//-(id)init;
+//-(id)initWithDefault;
 
 @end
 

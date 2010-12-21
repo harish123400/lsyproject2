@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.title = KInformationLabel;
+	self.title = KInformationTitle;
 	self.navigationItem.rightBarButtonItem = nil;
 }
 

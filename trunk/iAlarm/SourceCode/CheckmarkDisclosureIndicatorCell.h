@@ -14,9 +14,11 @@
 	UITableViewCell *subCheckmarkCell;
 
 }
-//@property(nonatomic) UITableViewCellAccessoryType accessoryType
 
-@property (nonatomic,retain,readonly) IBOutlet UITableViewCell *subCheckmarkCell;
+@property (nonatomic,retain,readonly) UITableViewCell *subCheckmarkCell;
+
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier checkmark:(BOOL)isCheckmark;
+-(void) setChechmark:(BOOL)isCheckmark;
 
 
 

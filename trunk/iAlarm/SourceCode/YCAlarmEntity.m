@@ -11,6 +11,8 @@
 #import "YCSound.h"
 #import "YCRepeatType.h"
 #import "YCVehicleType.h"
+#import "DicManager.h"
+#import "YCParam.h"
 
 
 @implementation NSCoder (iArrived)
@@ -57,29 +59,35 @@
 @synthesize radius;
 @synthesize locationAccuracy;
 
-/*
+
 -(id)init
 {
 	if (self = [super init]) 
 	{
 		
-		alarmId = [DataUtility genSerialCode];
-		//alarmId = @"alarmId"; 
-		alarmName = NSLocalizedString(@"位置闹钟",@"");            
-		position = NSLocalizedString(@"当前位置",@"");      
-		description  = @"";     
-		vehicleTypeId = 0;          
-		sortId = 0;       
-		enabling = TRUE;           
-		coordinate.latitude=0.0 ; coordinate.longitude =0.0;
-		soundId = @"s001";             
-		vibration = TRUE;            
-		repeatTypeId = @"r001";
+
+		self.alarmId = [DataUtility genSerialCode];
+		self.alarmName = NSLocalizedString(@"位置闹钟",@"");
+		self.positionType = [[DicManager positionTypeDictionary] objectForKey:@"p001"];
+		self.position = @"";      
+	    self.description  = @"";              
+		self.sortId = 0;       
+		self.enabling = YES; 
+		CLLocationCoordinate2D coor ={0.0,0.0};
+		self.coordinate = coor;            
+		self.vibrate = YES;
+		self.ring = YES;
+		
+		self.sound = [[DicManager soundDictionary] objectForKey:@"s001"];
+		self.repeatType = [[DicManager repeatTypeDictionary] objectForKey:@"r001"];
+		self.vehicleType = [[DicManager vehicleTypeDictionary] objectForKey:@"v001"];
+		
+		self.radius = [[YCParam paramSingleInstance] radiusForAlarm];
 		 
 	}
 	return self;
 }
- */
+
 
 
 #pragma mark NSCoding
