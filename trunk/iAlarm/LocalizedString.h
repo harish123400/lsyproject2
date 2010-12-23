@@ -19,13 +19,18 @@
 
 
 #define KAlarmNameLabel                          NSLocalizedString(@"Label",@"AlarmName的标签");
-#define KAlarmPostionLabel                       NSLocalizedString(@"Address",@"AlarmPosition的标签");
+#define KAlarmSoundLabel                         NSLocalizedString(@"Sound",@"AlarmName的标签");
+#define KAlarmVibrateLabel                       NSLocalizedString(@"Vibrate",@"AlarmName的标签");
+#define KAlarmRepeatLabel                        NSLocalizedString(@"Repeat",@"AlarmName的标签");
+//#define KAlarmPostionLabel                       NSLocalizedString(@"Address",@"AlarmPosition的标签");
+#define KAlarmPostionLabel                       NSLocalizedString(@"Set the Address",@"AlarmPosition的标签");
 #define KAlarmMapInfoLabel                       NSLocalizedString(@"address",@"地图详细地址页面地址的标签（英文小写）");
 #define KAlarmEnableLabel                        NSLocalizedString(@"Enable",@"Alarm是否启用的标签");
-#define KAlarmCurrentLocationLabel               NSLocalizedString(@"Current Location",@"当前位置的标签");
-#define KAlarmLocationByMapLabel                 NSLocalizedString(@"Location by Maps",@"通过地图定位的标签");
+#define KAlarmCurrentLocationLabel               NSLocalizedString(@"by Current Location",@"当前位置的标签");
+#define KAlarmLocationByMapLabel                 NSLocalizedString(@"by Maps",@"通过地图定位的标签");
+//#define KLocationingLabel                        NSLocalizedString(@"Locating",@"正在定位的标签");
+#define KLocationingLabel                        NSLocalizedString(@"Set the Address",@"正在定位的标签");
 
-#define KLocationingLabel                        NSLocalizedString(@"Locationing",@"正在定位的标签");
 
 
 

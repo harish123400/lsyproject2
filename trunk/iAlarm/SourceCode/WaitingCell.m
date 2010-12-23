@@ -6,17 +6,21 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "UIUtility.h"
 #import "WaitingCell.h"
 
 
 @implementation WaitingCell
+
+@synthesize defaultImage;
+@synthesize checkedImage;
 
 - (id) activityIndCtl{
 	
 	if (!self->activityIndCtl) {
 		
 		/////////////////////
-		////switch控件位置
+		////activityInd控件位置
 		CGPoint cellP = self.frame.origin;  //cell原点坐标
 		CGSize  cellS = self.frame.size;    //cell的尺寸
 		
@@ -43,17 +47,50 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         [self.contentView addSubview: self.activityIndCtl];
+		
+		//留下以后使用
+		self->defaultDetailTextLabelColor = self.detailTextLabel.textColor;
+		[self->defaultDetailTextLabelColor retain];
     }
     return self;
 }
 
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier{
-	return [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
+	//return [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
+	return [self initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+}
+
+-(void) setAccessoryType:(UITableViewCellAccessoryType)accType
+{
+	[super setAccessoryType:accType];
+	
+	if (UITableViewCellAccessoryCheckmark == accType) {
+		self.textLabel.textColor = [UIUtility checkedCellTextColor];
+		self.detailTextLabel.textColor = [UIUtility defaultCellDetailTextColor];
+		self.imageView.image = self.checkedImage;
+	}
+	else {
+		self.textLabel.textColor = [UIUtility defaultCellTextColor];
+		self.detailTextLabel.textColor = self->defaultDetailTextLabelColor;
+		self.imageView.image = self.defaultImage;
+	}
+	
+}
+
+
+-(void) setChechmark:(BOOL)isCheckmark
+{
+	if (isCheckmark) 
+		[self setAccessoryType:UITableViewCellAccessoryCheckmark];
+	else 
+		[self setAccessoryType:UITableViewCellAccessoryNone];
+	
 }
 
 
 
 - (void)dealloc {
+	[defaultDetailTextLabelColor release];
 	[activityIndCtl release];
     [super dealloc];
 }

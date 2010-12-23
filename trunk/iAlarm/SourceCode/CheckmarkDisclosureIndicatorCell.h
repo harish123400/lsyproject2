@@ -12,10 +12,14 @@
 @interface CheckmarkDisclosureIndicatorCell : UITableViewCell {
 	
 	UITableViewCell *subCheckmarkCell;
+	UIImage *defaultImage;
+	UIImage *checkedImage;
 
 }
 
 @property (nonatomic,retain,readonly) UITableViewCell *subCheckmarkCell;
+@property (nonatomic,retain) UIImage *defaultImage;
+@property (nonatomic,retain) UIImage *checkedImage;
 
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier checkmark:(BOOL)isCheckmark;
 -(void) setChechmark:(BOOL)isCheckmark;

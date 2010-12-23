@@ -6,11 +6,14 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "UIUtility.h"
 #import "CheckmarkDisclosureIndicatorCell.h"
 
 
 @implementation CheckmarkDisclosureIndicatorCell
 
+@synthesize defaultImage;
+@synthesize checkedImage;
 
 -(id)subCheckmarkCell
 {
@@ -42,8 +45,9 @@
 	
 	if ((self = [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier])) {
 		// √
-		if (isCheckmark) 
-			self.subCheckmarkCell.accessoryType = UITableViewCellAccessoryCheckmark;		
+		if (isCheckmark) {
+			self.subCheckmarkCell.accessoryType = UITableViewCellAccessoryCheckmark;	
+		}
     }
     return self;	
 }
@@ -51,16 +55,33 @@
 
 -(void) setAccessoryType:(UITableViewCellAccessoryType)accType
 {
+	if (UITableViewCellAccessoryCheckmark == accType) {
+		self.textLabel.textColor = [UIUtility checkedCellTextColor];
+		self.imageView.image = self.checkedImage;
+	}
+	else {
+		self.textLabel.textColor = [UIUtility defaultCellTextColor];
+		self.imageView.image = self.defaultImage;
+	}
+
+	
 	self.subCheckmarkCell.accessoryType = accType;
 }
  
 
 -(void) setChechmark:(BOOL)isCheckmark
 {
+	/*
 	if (isCheckmark) 
 		[self insertSubview:self.subCheckmarkCell belowSubview:self.contentView];	
 	else 
 		[self.subCheckmarkCell removeFromSuperview];
+	 */
+	
+	if (isCheckmark) 
+		[self setAccessoryType:UITableViewCellAccessoryCheckmark];
+	else 
+		[self setAccessoryType:UITableViewCellAccessoryNone];
 }
 
 - (void)dealloc {
