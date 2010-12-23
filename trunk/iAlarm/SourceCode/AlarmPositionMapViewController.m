@@ -50,6 +50,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 @synthesize alarms;
 @synthesize newAlarm; 
 @synthesize alarmTemp;
+@synthesize alarmsTemp;
 @synthesize mapAnnotations;
 @synthesize annotationAlarmEditing;
 @synthesize annotationManipulating;
@@ -93,9 +94,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 -(void)updateMapAnnotations
 {
 	NSMutableArray *array = [[NSMutableArray alloc] init];
-	for (NSUInteger i =0; i<self.alarms.count; i++) 
+	for (NSUInteger i =0; i<self.alarmsTemp.count; i++) 
 	{
-		YCAlarmEntity *temp = [self.alarms objectAtIndex:i];
+		YCAlarmEntity *temp = [self.alarmsTemp objectAtIndex:i];
 		YCAnnotation *annotation = [[YCAnnotation alloc] initWithCoordinate:temp.coordinate addressDictionary:nil];
 		annotation.title = temp.alarmName;
 		annotation.subtitle = temp.position;
@@ -155,7 +156,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 }
 
 #pragma mark - 
-#pragma mark - UI元素操作
+#pragma mark - Utility
 
 //根据Annotation的选中情况，更新CyclingIndex
 -(void)updateCyclingIndex
@@ -424,7 +425,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			[self.curlbackgroundView startToolbarTimeInterval:5.0];
 		}
 
-		
+
 		//先到世界地图，在下来
 		[self setMapRegion:self->defaultMapRegion FromWorld:YES animatedToWorld:NO animatedToPlace:YES];
 		
@@ -433,10 +434,15 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
 		[reverseGeocoder start];
 		
-		//选中Annotation
-		//NSInteger index = [self.mapAnnotations indexOfObject:self.annotationAlarmEditing];
-		//[self performSelector:@selector(selectAnnotationInListAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:1.5];
+		//闹钟中的坐标无效，用屏幕中心
+		if (!regionCenterWithCurrentLocation) {
+			if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
+				self.alarmTemp.coordinate = self->defaultMapRegion.center;
+		}
 		
+		//加入Annotation
+		[self addMapAnnotations];
+				
 	}else {
 		[self setMapRegion:self->defaultMapRegion FromWorld:NO animatedToWorld:NO animatedToPlace:YES];
 	}
@@ -470,6 +476,15 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			[self setMapRegion:self->defaultMapRegion FromWorld:NO animatedToWorld:NO animatedToPlace:YES];
 		 }//如果没有最后一次正确的加载，那么听天由命吧，估计是显示一个世界地图
 		 
+		 //闹钟中的坐标无效，用屏幕中心
+		 if (!regionCenterWithCurrentLocation) {
+			 if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
+				 self.alarmTemp.coordinate = self->defaultMapRegion.center;
+		 }
+		 
+		 //加入Annotation
+		 [self addMapAnnotations];
+		 
 	 }
 	 
 }
@@ -489,10 +504,10 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		[notificationCenter postNotificationName:kLocationedNotification object:self];
 	}else {
 		//Time out 
-		timePassed +=0.5;
-		if (timePassed > 20.0)  //10秒time out
+		timePassed +=0.1;
+		if (timePassed > 20.0)  //x0秒time out
 		{
-			timePassed = 0;
+			timePassed = 0.0;
 			
 			[locationTimer invalidate];
 			[locationTimer release];
@@ -508,7 +523,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 -(void)startCheckLocationTimer
 {
-	NSTimeInterval ti = 0.2;
+	NSTimeInterval ti = 0.1;
 	locationTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(checkLocation) userInfo:nil repeats:YES] retain];
 	[[NSRunLoop currentRunLoop] addTimer:locationTimer forMode:NSRunLoopCommonModes];
 }
@@ -530,7 +545,12 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	self.alarm.alarmName = self.alarmTemp.alarmName;
 	self.alarm.position = self.alarmTemp.position;
 	self.alarm.nameChanged = self.alarmTemp.nameChanged;
-	[self.parentController reflashView];
+	
+	//[self.parentController reflashView];
+	//position通过地图改变，发送通知
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter postNotificationName:kAlarmPositionChangedByMapNotification object:self];
+	
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -813,9 +833,13 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	//判断闹钟坐标是否有效
 	if (self.alarm) 
 	{
-		if (![self isValidCoordinate:self.alarm.coordinate]) 
-			self.alarm.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
 		self.alarmTemp = [self.alarm copy];
+		self.alarmsTemp = [self.alarms mutableCopy];
+		[self.alarmsTemp replaceObjectAtIndex:[self.alarms indexOfObject:self.alarm] withObject:self.alarmTemp];
+		
+		if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
+			self.alarmTemp.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
+		
 	}
 
 	
@@ -839,10 +863,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		}else 
 			[self startCheckLocationTimer];
 	}
-	
-
-	//加入Annotation
-	[self addMapAnnotations];
 	
 
 }
@@ -966,9 +986,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		annotationInfoViewCtl.annotationSubtitle = annotationView.annotation.subtitle;
 	}else { //annotation.subtitle 没有被赋值
 		NSUInteger index = [self.mapAnnotations indexOfObject:annotationView.annotation];
-		if (index != NSNotFound && index < self.alarms.count)
+		if (index != NSNotFound && index < self.alarmsTemp.count)
 		{
-			YCAlarmEntity *alarmObj = [self.alarms objectAtIndex:index];
+			YCAlarmEntity *alarmObj = [self.alarmsTemp objectAtIndex:index];
 			annotationInfoViewCtl.annotationSubtitle = alarmObj.position;
 		}else 
 		   annotationInfoViewCtl.annotationSubtitle = @"";
@@ -1382,8 +1402,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
+- (void) outletRelease{
 	self.mapView = nil;            
 	self.maskView = nil;                           
 	self.curlView = nil;;                           
@@ -1400,16 +1419,21 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	self.pageCurlBarItem = nil;
 	self.nextBarItem = nil;
 	self.previousBarItem = nil;
-
+	
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	[notificationCenter removeObserver:self name:kLocationedNotification object:nil];
 	[notificationCenter removeObserver:self name:kTimeOutForLocationNotification object:nil];
+}
 
+- (void)viewDidUnload {
+    [super viewDidUnload];
+	[self outletRelease];
 }
 
 
 - (void)dealloc 
 {
+	[self outletRelease];
 	[self->locationTimer release];
 	[self->reverseGeocoder release];
 	[self.forwardGeocoder release];
@@ -1417,6 +1441,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[self.alarms release];                       
 	[self.mapAnnotations release];        
 	[self.alarmTemp release];
+	[self.alarmsTemp release];
 	[self.annotationAlarmEditing release];
 	[self.locationingBarItem release];
 	[self.annotationSearched release];

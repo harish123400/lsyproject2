@@ -31,7 +31,8 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
 		// >
-		super.accessoryType = UITableViewCellAccessoryDisclosureIndicator;	
+		super.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		[self insertSubview:self.subCheckmarkCell belowSubview:self.contentView];
     }
     return self;
 }
@@ -42,17 +43,17 @@
 	if ((self = [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier])) {
 		// √
 		if (isCheckmark) 
-			[self insertSubview:self.subCheckmarkCell belowSubview:self.contentView];		
+			self.subCheckmarkCell.accessoryType = UITableViewCellAccessoryCheckmark;		
     }
     return self;	
 }
 
-/*
+
 -(void) setAccessoryType:(UITableViewCellAccessoryType)accType
 {
-	subCheckmarkCell.accessoryType = accType;
+	self.subCheckmarkCell.accessoryType = accType;
 }
- */
+ 
 
 -(void) setChechmark:(BOOL)isCheckmark
 {

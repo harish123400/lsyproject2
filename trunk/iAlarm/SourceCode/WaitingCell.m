@@ -25,7 +25,8 @@
 		[ctlTmp release];
 		
 		CGFloat ctlY= (cellP.y + cellS.height/2 - ctlS.height/2);  //控件的原点的Y
-		CGRect ctlRect = CGRectMake(cellP.x+270, ctlY, ctlS.width, ctlS.height);
+		//CGRect ctlRect = CGRectMake(cellP.x+270, ctlY, ctlS.width, ctlS.height);
+		CGRect ctlRect = CGRectMake(cellP.x+250, ctlY, ctlS.width, ctlS.height);
 		/////////////////////
 		
 		self->activityIndCtl = [[UIActivityIndicatorView alloc] initWithFrame:ctlRect];

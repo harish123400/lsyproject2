@@ -17,12 +17,15 @@
 #define KAddAlarmsViewTitle                      NSLocalizedString(@"Add iAlarm",@"闹钟列表视图标题");
 #define KEditAlarmsViewTitle                     NSLocalizedString(@"Edit iAlarm",@"闹钟列表视图标题");
 
+
 #define KAlarmNameLabel                          NSLocalizedString(@"Label",@"AlarmName的标签");
 #define KAlarmPostionLabel                       NSLocalizedString(@"Address",@"AlarmPosition的标签");
 #define KAlarmMapInfoLabel                       NSLocalizedString(@"address",@"地图详细地址页面地址的标签（英文小写）");
 #define KAlarmEnableLabel                        NSLocalizedString(@"Enable",@"Alarm是否启用的标签");
 #define KAlarmCurrentLocationLabel               NSLocalizedString(@"Current Location",@"当前位置的标签");
 #define KAlarmLocationByMapLabel                 NSLocalizedString(@"Location by Maps",@"通过地图定位的标签");
+
+#define KLocationingLabel                        NSLocalizedString(@"Locationing",@"正在定位的标签");
 
 
 
@@ -33,6 +36,7 @@
 #define KMapNewAnnotationTitle                   NSLocalizedString(@"Drag the Pin",@"一个新图钉的标题");
 #define KMapBookmarksViewTitle                   NSLocalizedString(@"Bookmarks",@"Bookmarkslist视图的标题");
 #define KMapBookmarksViewPrompt                  NSLocalizedString(@"Choose a bookmark to view on the map",@"Bookmarkslist视图的Prompt");
+
 
 
 

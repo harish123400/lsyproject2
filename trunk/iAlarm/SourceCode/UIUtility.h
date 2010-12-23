@@ -11,6 +11,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+//闹钟的地址通过地图改变了
+#define kAlarmPositionChangedByMapNotification @"kAlarmPositionChangedByMapNotification"
 
 
 @class MKPlacemark;
