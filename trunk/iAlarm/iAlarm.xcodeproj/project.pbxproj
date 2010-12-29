@@ -218,6 +218,7 @@
 		9C1299A0127E8DDC00054B82 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9C1299A2127E8DE900054B82 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9C135BAD12CAE97B004A3C3E /* MapNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapNotification.h; sourceTree = "<group>"; };
+		9C135CA312CB315B004A3C3E /* AlarmModifyNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmModifyNotification.h; sourceTree = "<group>"; };
 		9C14F26E1287FFE40000689A /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
 		9C14F26F1287FFE40000689A /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
 		9C14F2701287FFE40000689A /* DebugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugViewController.xib; sourceTree = "<group>"; };
@@ -360,6 +361,8 @@
 		9C017D8412BF082100710E16 /* AlarmUINew */ = {
 			isa = PBXGroup;
 			children = (
+				9C135CA312CB315B004A3C3E /* AlarmModifyNotification.h */,
+				9C1299CE127E901000054B82 /* AlarmItemModify */,
 				9C017D8712BF082100710E16 /* AlarmsListViewController.h */,
 				9C017D8812BF082100710E16 /* AlarmsListViewController.m */,
 				9C017D8512BF082100710E16 /* AlarmDetailTableViewController.h */,
@@ -423,7 +426,6 @@
 				9C017D8412BF082100710E16 /* AlarmUINew */,
 				9C1299EF127E91ED00054B82 /* AlarmList */,
 				9C1299CD127E8FA200054B82 /* AlarmNewAndDetail */,
-				9C1299CE127E901000054B82 /* AlarmItemModify */,
 				9C1299CC127E8F8E00054B82 /* TableCell */,
 				9C1299A8127E8E0100054B82 /* MainWindow */,
 			);
@@ -499,6 +501,7 @@
 				9C129938127E8DC000054B82 /* AlarmVibrateViewController.xib */,
 			);
 			name = AlarmItemModify;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		9C1299ED127E90E700054B82 /* Model Class and Model Manager */ = {
@@ -650,11 +653,11 @@
 		9CC5C7CC128BE77400B948E7 /* AlarmMap */ = {
 			isa = PBXGroup;
 			children = (
-				9C135BAD12CAE97B004A3C3E /* MapNotification.h */,
 				9CCFFD2912ADCF67002381BA /* searchController */,
 				9CCFFD2812ADCF0C002381BA /* tapAnnotation */,
 				9CCFFD2712ADCED5002381BA /* autoHidebar */,
 				9CCFFD2612ADCEB7002381BA /* bookmark */,
+				9C135BAD12CAE97B004A3C3E /* MapNotification.h */,
 				9C129931127E8DC000054B82 /* AlarmPositionMapViewController.h */,
 				9C129932127E8DC000054B82 /* AlarmPositionMapViewController.m */,
 				9C129933127E8DC000054B82 /* AlarmPositionMapViewController.xib */,
