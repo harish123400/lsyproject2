@@ -217,6 +217,7 @@
 		9C12999E127E8DD100054B82 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9C1299A0127E8DDC00054B82 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9C1299A2127E8DE900054B82 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9C135BAD12CAE97B004A3C3E /* MapNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapNotification.h; sourceTree = "<group>"; };
 		9C14F26E1287FFE40000689A /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
 		9C14F26F1287FFE40000689A /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
 		9C14F2701287FFE40000689A /* DebugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugViewController.xib; sourceTree = "<group>"; };
@@ -649,6 +650,7 @@
 		9CC5C7CC128BE77400B948E7 /* AlarmMap */ = {
 			isa = PBXGroup;
 			children = (
+				9C135BAD12CAE97B004A3C3E /* MapNotification.h */,
 				9CCFFD2912ADCF67002381BA /* searchController */,
 				9CCFFD2812ADCF0C002381BA /* tapAnnotation */,
 				9CCFFD2712ADCED5002381BA /* autoHidebar */,
