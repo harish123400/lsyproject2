@@ -22,6 +22,7 @@
 #define    kalarmId                 @"kalarmId"
 #define    kalarmName               @"kalarmName"
 #define    kposition                @"kposition"
+#define    kpositionShort           @"kpositionShort"
 #define    kdescription             @"kdescription"
 #define    ksortId                  @"ksortId"
 #define    kenabling                @"kenabling"
@@ -44,6 +45,7 @@
 	NSString *alarmId;         
 	NSString *alarmName;            
 	NSString *position;                      //地点，使用MapKit取得
+	NSString *positionShort;                 //短地点
 	NSString *description;                   //描述
 	NSUInteger sortId;                       //排序，用于界面显示
 	BOOL enabling;                           //启用状态
@@ -68,6 +70,7 @@
 @property (nonatomic,retain) NSString *alarmId;
 @property (nonatomic,retain) NSString *alarmName;
 @property (nonatomic,retain) NSString *position;
+@property (nonatomic,retain) NSString *positionShort;
 @property (nonatomic,retain) NSString *description;
 @property (nonatomic,assign) NSUInteger sortId;
 @property (nonatomic,assign) BOOL enabling;

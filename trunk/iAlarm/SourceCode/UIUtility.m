@@ -6,9 +6,11 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "LocalizedString.h"
 #import "UIUtility.h"
 #import <QuartzCore/QuartzCore.h>
 #import <MapKit/MapKit.h>
+
 
 
 
@@ -223,9 +225,7 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	[notification release];
 }
 
-
-
-//转换经纬度
+/*
 +(NSString*)convertgen:(double)latitude decimal:(NSUInteger)decimal name:(NSString*)name
 {
 	double lTemp =  fabs(latitude);
@@ -245,31 +245,82 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	if (decimal >0) 
 		f = [name stringByAppendingString:@" %d°%d′%d.%d″"];
 	else 
-		f = [name stringByAppendingString:@" %d°%d′%d″"];;
+		f = [name stringByAppendingString:@" %d°%d′%d″"];
 	
 	s = [[[NSString alloc] initWithFormat:f,a,b,c,cf] autorelease];
 	return s;
 }
+ */
+
+//转换经纬度
++(NSString*)convertgen:(double)latitude decimal:(NSUInteger)decimal formateString:(NSString*)formateString
+{
+	double lTemp =  fabs(latitude);
+	
+	NSInteger a= (NSInteger)lTemp;
+	double af = lTemp - a;
+	
+	NSInteger b= (NSInteger)(af*60);
+	double bf = af * 60 -b;
+	
+	NSInteger c= (NSInteger)(bf*60);
+	NSInteger cf = (NSInteger)((bf*60 - c) * pow(10,decimal)) ;
+	
+	
+	NSString *s = [[[NSString alloc] initWithFormat:formateString,a,b,c,cf] autorelease];
+	return s;
+}
+
+
 
 +(NSString*)convertLatitude:(double)latitude decimal:(NSUInteger)decimal
 {
-	NSString *name = nil;
-	if (latitude>0) 
-		name = NSLocalizedString(@"北纬",@"");
-	else 
-		name = NSLocalizedString(@"南纬",@"");
+	NSString *formateString = nil;
+
+	if (latitude>0){
+		if (decimal >0) 
+			formateString = kNorthLatitudeFormateStringDecimal; //北纬,带小数
+		else 
+			formateString = kNorthLatitudeFormateString; //北纬
+	}else {
+		if (decimal >0) 
+			formateString = kSouthLatitudeFormateStringDecimal; //南纬,带小数
+		else 
+			formateString = kSouthLatitudeFormateString; //南纬
+	}
 	
-	return [UIUtility convertgen:latitude decimal:decimal name:name];
+	return [UIUtility convertgen:latitude decimal:decimal formateString:formateString];
 }
 +(NSString*)convertLongitude:(double)longitude decimal:(NSUInteger)decimal
 {
-	NSString *name = nil;
-	if (longitude>0) 
-		name = NSLocalizedString(@"东经",@"");
-	else 
-		name = NSLocalizedString(@"西经",@"");
-	return [UIUtility convertgen:longitude decimal:decimal name:name];
+	
+	NSString *formateString = nil;
+	
+	if (longitude>0){
+		if (decimal >0) 
+			formateString = kEastLongitudeFormateStringDecimal; //东经,带小数
+		else 
+			formateString = kEastLongitudeFormateString; //东经
+	}else {
+		if (decimal >0) 
+			formateString = kWestLongitudeFormateStringDecimal; //西经,带小数
+		else 
+			formateString = kWestLongitudeFormateString; //西经
+	}
+	
+	return [UIUtility convertgen:longitude decimal:decimal formateString:formateString];
 }
+
++(NSString*)convertCoordinate:(CLLocationCoordinate2D)coordinate{
+	double lat = coordinate.latitude;
+	double lon = coordinate.longitude;
+	NSString *latstr = [UIUtility convertLatitude:lat decimal:0];
+	NSString *lonstr = [UIUtility convertLongitude:lon decimal:0];
+	NSString *position = [[[NSString alloc] initWithFormat:@"%@,%@",latstr,lonstr] autorelease];
+	return position;
+}
+
+
 
 //发送个简单的通知 弹出警告筐－－debug
 +(void)sendSimpleNotifyForAlart:(NSString*)alertBody
@@ -357,6 +408,21 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	[alert release];
 }
 
++(NSString*)positionShortStringFromPlacemark:(MKPlacemark*)placemark
+{
+	NSString * thoroughfare = placemark.thoroughfare; //街道
+	NSString * subthoroughfare = placemark.subThoroughfare;//街道号
+	
+	if(thoroughfare == nil && subthoroughfare == nil) return nil;
+	
+	if (thoroughfare ==nil) thoroughfare=@"";
+	if (subthoroughfare ==nil) subthoroughfare=@"";
+	
+	NSString *string = [[[NSString alloc] initWithFormat:@"%@ %@",thoroughfare,subthoroughfare] autorelease];
+	
+	return string;
+}
+
 +(NSString*)positionStringFromPlacemark:(MKPlacemark*)placemark
 {
 	NSString * locality = placemark.locality; //城市
@@ -364,11 +430,16 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	NSString * subthoroughfare = placemark.subThoroughfare;//街道号
 	NSString * administrativeArea = placemark.administrativeArea;//省
 	NSString * country = placemark.country;//国
+	
+	if(locality == nil && thoroughfare == nil && subthoroughfare == nil  
+	   && administrativeArea == nil && country == nil) 
+		return nil;
+	
 	if (locality ==nil) locality=@"";
 	if (thoroughfare ==nil) thoroughfare=@"";
 	if (subthoroughfare ==nil) subthoroughfare=@"";
 	
-	NSString *string = [[[NSString alloc] initWithFormat:@"%@%@ %@ %@ %@",thoroughfare,subthoroughfare,locality,administrativeArea,country] autorelease];
+	NSString *string = [[[NSString alloc] initWithFormat:@"%@ %@ %@ %@ %@",thoroughfare,subthoroughfare,locality,administrativeArea,country] autorelease];
 	
 	return string;
 }
@@ -378,7 +449,6 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	NSString * thoroughfare = placemark.thoroughfare; //街道
 	return thoroughfare;
 }
-
 
 +(void)setBar:(UIView*)theBar
 	   topBar:(BOOL)topBar

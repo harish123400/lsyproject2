@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "AlarmModifyNotification.h"
 #import "AlarmLRepeatTypeViewController.h"
 #import "DicManager.h"
 #import "YCRepeatType.h"
@@ -17,39 +18,29 @@
 @implementation AlarmLRepeatTypeViewController
 @synthesize lastIndexPath;
 
-#pragma mark -
-#pragma mark Initialization
-
-/*
-- (id)initWithStyle:(UITableViewStyle)style {
-    // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-    if ((self = [super initWithStyle:style])) {
-    }
-    return self;
+//覆盖父类
+-(IBAction)doneButtonPressed:(id)sender
+{	
+	YCRepeatType *rep = [DicManager repeatTypeForSortId:lastIndexPath.row];
+	self.alarm.repeatType = rep;
+	
+	//改变了，发送通知
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter postNotificationName:kAlarmItemChangedNotification object:self];
+	
+	[self.navigationController popViewControllerAnimated:YES];
 }
-*/
-
 
 #pragma mark -
 #pragma mark View lifecycle
 
--(IBAction) backButtonPressed:(id)sender
-{
-	if (self.lastIndexPath) {
-		YCRepeatType *rep = [DicManager repeatTypeForSortId:lastIndexPath.row];
-		alarm.repeatType = rep;
-		[self.parentController  reflashView];
-	}
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = NSLocalizedString(@"重复",@"指示是否重复使用的的标签");
+	self.title = KRepeatViewTitle;
 	
 	//修改视图背景等
 	[self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-	//self.tableView.style = UITableViewStyleGrouped ;
 	self.tableView.separatorStyle =  UITableViewCellSeparatorStyleNone;
 }
 
@@ -57,12 +48,6 @@
 {
 	[self.tableView reloadData];
 }
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[self backButtonPressed:nil];
-}
-
 
 
 #pragma mark -
@@ -110,15 +95,6 @@
 
 }
 
-- (NSString *)tableView:(UITableView *)tv titleForHeaderInSection:(NSInteger)section
-{
-	
-	NSString *result = NSLocalizedString(@"重复",@"指示是否重复使用的的标签");
-	return result;
-	
-}
-
-
 #pragma mark -
 #pragma mark Table view delegate
 
@@ -139,6 +115,9 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+	//done按钮可用
+	self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 

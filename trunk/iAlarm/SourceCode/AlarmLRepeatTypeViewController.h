@@ -16,6 +16,5 @@
 }
 @property (nonatomic, retain) NSIndexPath * lastIndexPath;
 
--(IBAction) backButtonPressed:(id)sender;
 
 @end

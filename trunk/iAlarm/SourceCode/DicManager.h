@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class YCRepeatType;
+@class YCSound;
 @class YCPositionType;
 @interface DicManager : NSObject {
 
@@ -22,6 +23,7 @@
 
 //根据sortId取得对象
 +(YCRepeatType*) repeatTypeForSortId:(NSUInteger)sortId;
++(YCSound*) soundForSortId:(NSUInteger)sortId;
 +(YCPositionType*) positionTypeForSortId:(NSUInteger)sortId;
 
 

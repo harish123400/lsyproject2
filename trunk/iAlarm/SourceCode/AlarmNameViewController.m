@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "AlarmModifyNotification.h"
 #import "AlarmNameViewController.h"
 #import "AlarmNewDetailSuperViewController.h"
 #import "YCAlarmEntity.h"
@@ -37,7 +38,10 @@
 		self.alarm.alarmName = kDefaultLocationAlarmName;
 	}
 	
-	[self.parentController reflashView];
+	//改变了，发送通知
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter postNotificationName:kAlarmItemChangedNotification object:self];
+	
 	[self.alarmNameTextField keyboardAppearance];
 	[self.navigationController popViewControllerAnimated:YES];
 }
@@ -63,7 +67,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = NSLocalizedString(@"标签",@"指示闹钟名字的标签，闹钟名字在闹钟列表上显示");
+	self.title = KNameViewTitle;
 	//修改输入文本筐的风格，设置焦点
 	alarmNameTextField.borderStyle = UITextBorderStyleRoundedRect;
 	alarmNameTextField.textColor = [UIUtility checkedCellTextColor];

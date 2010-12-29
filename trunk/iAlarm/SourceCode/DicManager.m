@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "LocalizedString.h"
 #import "DicManager.h"
 #import "YCSound.h"
 #import "YCRepeatType.h"
@@ -25,8 +26,14 @@
 	{
 		NSString* names[ksoundCount] = 
 		{
-			NSLocalizedString(@"铃声1",@""),
-			NSLocalizedString(@"铃声2",@"")
+			KSoundName001,
+			KSoundName002
+		};
+		
+		NSString* fileNames[ksoundCount] = 
+		{
+			@"001.mid",
+			@"002.mid"
 		};
 		
 		NSString* ids[ksoundCount] = 
@@ -35,6 +42,11 @@
 			@"s002"
 		};
 		
+		NSUInteger sortIds[ksoundCount] = 
+		{
+			0,
+			1
+		};
 		
 		soundDic = [[NSMutableDictionary alloc] init];
 		for (int i=0; i<ksoundCount; i++) 
@@ -42,6 +54,8 @@
 			YCSound *obj = [[YCSound alloc] init];
 			obj.soundId = ids[i];
 			obj.soundName = names[i];
+			obj.soundFileName = fileNames[i];
+			obj.sortId = sortIds[i];
 			[soundDic setObject:obj forKey:ids[i]];
 			[obj release];
 		}
@@ -60,8 +74,8 @@
 	{
 		NSString* names[ksoundCount] = 
 		{
-			NSLocalizedString(@"永远",@""),
-			NSLocalizedString(@"一次",@"")
+			KRepeateTypeName001,
+			KRepeateTypeName002
 		};
 		
 		NSString* ids[ksoundCount] = 
@@ -171,6 +185,18 @@
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sortId == %d",sortId];
 	NSArray* results = [repArray filteredArrayUsingPredicate:predicate];
 	YCRepeatType *obj;
+	if (results.count > 0) {
+		obj = [results objectAtIndex:0]; //有，且有一个
+	}
+	return obj;
+}
+
++(YCSound*) soundForSortId:(NSUInteger)sortId
+{
+	NSArray *repArray = [[DicManager soundDictionary] allValues];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sortId == %d",sortId];
+	NSArray* results = [repArray filteredArrayUsingPredicate:predicate];
+	YCSound *obj;
 	if (results.count > 0) {
 		obj = [results objectAtIndex:0]; //有，且有一个
 	}

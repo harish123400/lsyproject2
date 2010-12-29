@@ -6,6 +6,8 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "AlarmModifyNotification.h"
+#import "YCSearchBar.h"
 #import "AlarmPositionMapViewController.h"
 #import "YCAnnotation.h"
 #import "YCAlarmEntity.h"
@@ -422,7 +424,11 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		{
 			[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
 			self.curlbackgroundView.canHideToolBar = YES;
-			[self.curlbackgroundView startToolbarTimeInterval:5.0];
+			[self.curlbackgroundView startHideToolbarAfterTimeInterval:5.0];
+		}else{//显示SearchBar -animated:NO 
+			[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideSearchBar"];
+			//self.curlbackgroundView.canHideSearchBar = YES;
+			[self.curlbackgroundView startHideSearchBarAfterTimeInterval:15.0];
 		}
 
 
@@ -466,7 +472,11 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		 {
 			 [UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
 			 self.curlbackgroundView.canHideToolBar = YES;
-			 [self.curlbackgroundView startToolbarTimeInterval:5.0];
+			 [self.curlbackgroundView startHideToolbarAfterTimeInterval:5.0];
+		 }else{//显示SearchBar
+			 [UIUtility setBar:self.searchBar topBar:YES visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideSearchBar"];
+			 //self.curlbackgroundView.canHideSearchBar = YES;
+			 [self.curlbackgroundView startHideSearchBarAfterTimeInterval:15.0];
 		 }
 		 
 		 MKCoordinateRegion last = [YCParam paramSingleInstance].lastLoadMapRegion;
@@ -538,18 +548,20 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	buttonItem.style =  UIBarButtonItemStyleDone;
 }
 
+//覆盖父类
 -(IBAction)doneButtonPressed:(id)sender
 {	
-	//覆盖父类
+	
 	self.alarm.coordinate = self.alarmTemp.coordinate;
 	self.alarm.alarmName = self.alarmTemp.alarmName;
 	self.alarm.position = self.alarmTemp.position;
+	self.alarm.positionShort = self.alarmTemp.positionShort;
 	self.alarm.nameChanged = self.alarmTemp.nameChanged;
 	
 	//[self.parentController reflashView];
 	//position通过地图改变，发送通知
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter postNotificationName:kAlarmPositionChangedByMapNotification object:self];
+	[notificationCenter postNotificationName:kAlarmItemChangedNotification object:self];
 	
 	[self.navigationController popViewControllerAnimated:YES];
 }
@@ -561,7 +573,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
 	{
-		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+		[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 	}
 
 	[self setLocationBarItem:YES];
@@ -631,7 +643,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
 	{
-		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+		[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 	}
 	
 	[self cycleAnnotationsWithForward:NO];
@@ -644,7 +656,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
 	{
-		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+		[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 	}
 
 	[self cycleAnnotationsWithForward:YES];
@@ -681,7 +693,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
 	{
-		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+		[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 	}
 	
 	[self.searchController setActive:YES animated:YES];   //处理search状态
@@ -691,7 +703,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 {
 	if (regionCenterWithCurrentLocation) //reset Toolbar的隐藏倒计时
 	{
-		[self.curlbackgroundView resetToolbarTimeInterval:3.0];
+		[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 	}
 	
 	//创建CATransition对象
@@ -786,7 +798,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	//search bar,toolbar
 	if (!regionCenterWithCurrentLocation) 
 	{
-		self.searchBar.hidden = YES;
+		self.searchBar.hidden = NO;
+		[(YCSearchBar*)self.searchBar setCanResignFirstResponder:YES];
 		self.toolbar.hidden = NO;
 	} else { //在tab上的地图，一直有searchbar
 		self.searchBar.hidden = NO;
@@ -872,22 +885,30 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	self.title = NSLocalizedString(@"位置",@"视图标题");
-	//[self performSelector:@selector(setDoneStyleToBarButtonItem:) withObject:self.currentPinBarItem afterDelay:0.5];
+	self.title = KAlarmPostionLabel;
 	
-	//设置上一个下一个按钮的可用状态
+	
 	if (self.regionCenterWithCurrentLocation) 
 	{
-		//[self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
-		//[self addMapAnnotations];
+		//设置上一个下一个按钮的可用状态
 		[self setPreviousNextButtonEnableStatus];
+		
+		//除了第一次外，每次WillAppear都显示Toolbar。第一次在定位结束后显示
+		if (!isFirstShow) { 
+			[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
+			self.curlbackgroundView.canHideToolBar = YES;
+			[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
+		}
+	}else {
+		//除了第一次外，每次WillAppear都显示Searchbar。-animated:NO 
+		if (!isFirstShow) { 
+			[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideToolbar"];
+			[self.curlbackgroundView resetTimeIntervalForHideSearchBar:10.0];
+		}
+
 	}
-	
-	if (self.regionCenterWithCurrentLocation) 
-	{
-		self.navigationController.navigationBarHidden = YES;
-	}
-	
+
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -895,6 +916,15 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[super viewDidDisappear:animated];
 	//保存最后加载的区域
 	[YCParam paramSingleInstance].lastLoadMapRegion = self.mapView.region;
+	
+	//toolbar消失
+	if (self.regionCenterWithCurrentLocation) 
+	{
+		self.toolbar.hidden = YES;
+	}else {
+		self.searchBar.hidden = YES;
+	}
+
 }
 
 
@@ -1110,7 +1140,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 
 -(void) setAnnotationAlarmEditingWithCoordinate:(CLLocationCoordinate2D)coordinate 
-										  title:(NSString*)title subtitle:(NSString*)subtitle
+										  title:(NSString*)title subtitle:(NSString*)subtitle subtitleShort:(NSString*)subtitleShort
 									   animated:(BOOL)animated;
 {
 	if (!self.alarmTemp.nameChanged) {
@@ -1121,6 +1151,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 	self.alarmTemp.coordinate = coordinate;
 	self.alarmTemp.position = subtitle;
+	self.alarmTemp.positionShort = subtitleShort;
 	
 	self.annotationAlarmEditing.coordinate = self.alarmTemp.coordinate;
 	//self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
@@ -1144,6 +1175,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 {   
 	NSString *title = [UIUtility titleStringFromPlacemark:placemark];
 	NSString *subtitle = [UIUtility positionStringFromPlacemark:placemark];
+	NSString *subtitleShort = [UIUtility positionShortStringFromPlacemark:placemark];
 	CLLocationCoordinate2D coordinate = placemark.coordinate;
 	
 	if (self.annotationManipulating != self.annotationAlarmEditing)
@@ -1156,7 +1188,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		}
 	}
 	else 
-		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle animated:YES];
+		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle subtitleShort:subtitleShort animated:YES];
 	
 }
 
@@ -1181,7 +1213,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		}
 	}
 	else 
-		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle animated:YES];
+		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle subtitleShort:subtitle animated:YES];
 	
 }
 
@@ -1242,7 +1274,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			annotationTemp = self.annotationAlarmEditing;
 			title = forwardGeocoder.searchQuery;
 			subtitle = place.address!=nil ? place.address: @" " ;
-			[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle animated:NO];
+			[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle subtitleShort:subtitle animated:NO];
 		}else { //在tab页面上的搜索结果大头针
 			annotationTemp = self.annotationSearched;
 			title = forwardGeocoder.searchQuery ;

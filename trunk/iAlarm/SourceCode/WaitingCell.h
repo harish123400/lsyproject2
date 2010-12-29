@@ -12,17 +12,13 @@
 @interface WaitingCell : UITableViewCell {
 	
 	UIColor *defaultDetailTextLabelColor;
-	
 	UIActivityIndicatorView	*activityIndCtl;
-	UIImage *defaultImage;
-	UIImage *checkedImage;
 }
 
 @property(nonatomic,retain,readonly) UIActivityIndicatorView *activityIndCtl;
-@property (nonatomic,retain) UIImage *defaultImage;
-@property (nonatomic,retain) UIImage *checkedImage;
+
 
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier;
--(void) setChechmark:(BOOL)isCheckmark;
+-(void) setWaiting:(BOOL)waiting;
 
 @end

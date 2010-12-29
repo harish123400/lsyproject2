@@ -10,13 +10,19 @@
 
 #define    ksoundId        @"ksoundId"
 #define    ksoundName      @"ksoundName"
+#define    ksoundFileName  @"ksoundFileName"
+#define    ksoundSortId    @"ksortId"
 
 @interface YCSound : NSObject <NSCoding, NSCopying>{
 	NSString *soundId;         
 	NSString *soundName;
+	NSString *soundFileName;
+	NSUInteger sortId;    //排序
 }
 
 @property (nonatomic,retain) NSString *soundId;
 @property (nonatomic,retain) NSString *soundName;
+@property (nonatomic,retain) NSString *soundFileName;
+@property (nonatomic,assign) NSUInteger sortId;
 
 @end

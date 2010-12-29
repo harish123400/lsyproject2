@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "LocalizedString.h"
 #import "YCAlarmEntity.h"
 #import "DataUtility.h"
 #import "YCSound.h"
@@ -42,6 +43,7 @@
 @synthesize alarmId;
 @synthesize alarmName;
 @synthesize position;
+@synthesize positionShort;
 @synthesize description;
 @synthesize sortId;
 @synthesize enabling;
@@ -67,9 +69,10 @@
 		
 
 		self.alarmId = [DataUtility genSerialCode];
-		self.alarmName = NSLocalizedString(@"位置闹钟",@"");
+		self.alarmName = kDefaultLocationAlarmName;
 		self.positionType = [[DicManager positionTypeDictionary] objectForKey:@"p001"];
-		self.position = @"";      
+		self.position = @"";
+		self.positionShort = @""; 
 	    self.description  = @"";              
 		self.sortId = 0;       
 		self.enabling = YES; 
@@ -97,6 +100,7 @@
 	[encoder encodeObject:alarmId forKey:kalarmId];
 	[encoder encodeObject:alarmName forKey:kalarmName];
 	[encoder encodeObject:position forKey:kposition];
+	[encoder encodeObject:positionShort forKey:kpositionShort];
 	[encoder encodeObject:description forKey:kdescription];
 	[encoder encodeInteger:sortId  forKey:ksortId];
 	[encoder encodeBool:enabling forKey:kenabling];
@@ -118,6 +122,7 @@
 		self.alarmId = [decoder decodeObjectForKey:kalarmId];
 		self.alarmName = [decoder decodeObjectForKey:kalarmName];
 		self.position = [decoder decodeObjectForKey:kposition];
+		self.positionShort = [decoder decodeObjectForKey:kpositionShort];
 		self.description = [decoder decodeObjectForKey:kdescription];
 		self.sortId = [decoder decodeIntegerForKey:ksortId];
 		self.enabling = [decoder decodeBoolForKey:kenabling];
@@ -164,6 +169,7 @@
     copy.alarmId = self.alarmId;
     copy.alarmName = self.alarmName;
     copy.position = self.position;
+	copy.positionShort = self.positionShort;
     copy.description = self.description;
 	copy.sortId = self.sortId ;
 	copy.enabling = self.enabling;
@@ -189,6 +195,7 @@
 	[alarmId release];
 	[alarmName release];
 	[position release];
+	[positionShort release];
 	[description release];
 	[sound release];
 	[repeatType release];

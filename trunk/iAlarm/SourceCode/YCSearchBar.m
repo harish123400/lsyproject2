@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "MapNotification.h"
 #import "YCSearchBar.h"
 
 
@@ -13,6 +14,7 @@
 
 @synthesize canResignFirstResponder;
 
+//覆盖super
 - (BOOL)resignFirstResponder
 {
 	if (self.canResignFirstResponder) 
@@ -21,6 +23,15 @@
 	}
 	
 	return NO;
+}
+
+//覆盖super
+- (BOOL)becomeFirstResponder{
+	if (self.hidden) { //如果被被隐藏
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+		[notificationCenter postNotificationName:kSearchBarBecomeFirstResponderNotification object:self];
+	}
+	return [super becomeFirstResponder];
 }
 
 

@@ -12,32 +12,36 @@
 
 @implementation WaitingCell
 
-@synthesize defaultImage;
-@synthesize checkedImage;
 
 - (id) activityIndCtl{
 	
 	if (!self->activityIndCtl) {
-		
-		/////////////////////
-		////activityInd控件位置
-		CGPoint cellP = self.frame.origin;  //cell原点坐标
-		CGSize  cellS = self.frame.size;    //cell的尺寸
-		
-		UIActivityIndicatorView *ctlTmp = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-		CGSize  ctlS = ctlTmp.frame.size;      //控件的的尺寸
-		[ctlTmp release];
-		
-		CGFloat ctlY= (cellP.y + cellS.height/2 - ctlS.height/2);  //控件的原点的Y
-		//CGRect ctlRect = CGRectMake(cellP.x+270, ctlY, ctlS.width, ctlS.height);
-		CGRect ctlRect = CGRectMake(cellP.x+250, ctlY, ctlS.width, ctlS.height);
-		/////////////////////
-		
-		self->activityIndCtl = [[UIActivityIndicatorView alloc] initWithFrame:ctlRect];
+		self->activityIndCtl = [[UIActivityIndicatorView alloc] init];
 		self->activityIndCtl.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
 		self->activityIndCtl.hidesWhenStopped = YES;
 		self->activityIndCtl.backgroundColor = [UIColor clearColor];
 	}
+	
+	/////////////////////
+	////activityInd控件位置
+	CGPoint cellP = self.contentView.frame.origin;  //cell原点坐标
+	CGSize  cellS = self.contentView.frame.size;    //cell的尺寸
+	
+	CGFloat accViewW = 0.0;//指示器view宽
+	if (self.accessoryType != UITableViewCellAccessoryNone) {
+		accViewW = 18.0;
+	}
+
+	
+	UIActivityIndicatorView *ctlTmp = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+	CGSize  ctlS = ctlTmp.frame.size;      //控件的的尺寸
+	[ctlTmp release];
+	
+	CGFloat ctlY= (cellP.y + cellS.height/2 - ctlS.height/2);  //控件的原点的Y
+	CGFloat ctlX= cellS.width - ctlS.width - accViewW - 10;
+	CGRect ctlRect = CGRectMake(ctlX, ctlY, ctlS.width, ctlS.height);
+	/////////////////////
+	self->activityIndCtl.frame = ctlRect;
 	
 	
 	return self->activityIndCtl;
@@ -46,45 +50,24 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
-        [self.contentView addSubview: self.activityIndCtl];
-		
-		//留下以后使用
-		self->defaultDetailTextLabelColor = self.detailTextLabel.textColor;
-		[self->defaultDetailTextLabelColor retain];
+        //[self.contentView addSubview: self.activityIndCtl];
     }
     return self;
 }
 
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier{
-	//return [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-	return [self initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+	return [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
 }
 
--(void) setAccessoryType:(UITableViewCellAccessoryType)accType
-{
-	[super setAccessoryType:accType];
+-(void) setWaiting:(BOOL)waiting{
 	
-	if (UITableViewCellAccessoryCheckmark == accType) {
-		self.textLabel.textColor = [UIUtility checkedCellTextColor];
-		self.detailTextLabel.textColor = [UIUtility defaultCellDetailTextColor];
-		self.imageView.image = self.checkedImage;
+	if (waiting){
+		[self.activityIndCtl removeFromSuperview];         //先删除后加入，为了改变位置
+		[self.contentView addSubview: self.activityIndCtl];
+		[self.activityIndCtl startAnimating];
 	}
-	else {
-		self.textLabel.textColor = [UIUtility defaultCellTextColor];
-		self.detailTextLabel.textColor = self->defaultDetailTextLabelColor;
-		self.imageView.image = self.defaultImage;
-	}
-	
-}
-
-
--(void) setChechmark:(BOOL)isCheckmark
-{
-	if (isCheckmark) 
-		[self setAccessoryType:UITableViewCellAccessoryCheckmark];
 	else 
-		[self setAccessoryType:UITableViewCellAccessoryNone];
-	
+		[self.activityIndCtl stopAnimating];
 }
 
 

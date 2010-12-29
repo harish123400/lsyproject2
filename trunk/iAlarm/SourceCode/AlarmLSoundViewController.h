@@ -12,12 +12,10 @@
 
 @interface AlarmLSoundViewController : AlarmModifyTableViewController {
 	
-	UISwitch *ringSwitch;
+	 NSIndexPath    * lastIndexPath;
 	
 }
 
-@property(nonatomic,retain) IBOutlet UISwitch *ringSwitch;
-
--(IBAction) backButtonPressed:(id)sender;
+@property (nonatomic, retain) NSIndexPath * lastIndexPath;
 
 @end

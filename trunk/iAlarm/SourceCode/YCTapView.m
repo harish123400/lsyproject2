@@ -6,97 +6,101 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "MapNotification.h"
 #import "YCTapView.h"
 #import "UIUtility.h"
 #import <MapKit/MapKit.h>
 
-#define kShowToolbar @"kShowToolbar"
+#define kTimeIntervalForHideToolbar    5.0
+#define kTimeIntervalForHideSearchBar 15.0
 
 @implementation YCTapView
 
 @synthesize mapView;
 @synthesize toolbar;
 @synthesize canHideToolBar;
+@synthesize searchBar;
+//@synthesize canHideSearchBar;
 
--(void)startToolbarTimeInterval:(NSTimeInterval)TimeInterval
-{
-	[toolbarTimer invalidate];
-	[toolbarTimer release];
-	toolbarTimer = nil;
-	
+-(void)hideToolbar{
 	if (!self.toolbar.hidden)
 	{
-		toolbarTimer = [[NSTimer timerWithTimeInterval:TimeInterval target:self selector:@selector(timerFired:) userInfo:nil repeats:NO] retain];
-		[[NSRunLoop currentRunLoop] addTimer:toolbarTimer forMode:NSDefaultRunLoopMode];
+		if (self.canHideToolBar)
+		{
+			[UIUtility setBar:self.toolbar topBar:NO visible:NO animated:YES animateDuration:0.5 animateName:@"showOrHideToolbar"];
+		}
 	}
 }
 
--(void)resetToolbarTimeInterval:(NSTimeInterval)TimeInterval
-{
-	[toolbarTimer invalidate];
-	[toolbarTimer release];
-	toolbarTimer = nil;
-	
-	if (!self.toolbar.hidden)
+-(void)showToolbar{
+	if (self.toolbar.hidden)
 	{
-		toolbarTimer = [[NSTimer timerWithTimeInterval:TimeInterval target:self selector:@selector(timerFired:) userInfo:nil repeats:NO] retain];
-		[[NSRunLoop currentRunLoop] addTimer:toolbarTimer forMode:NSDefaultRunLoopMode];
+		[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:0.5 animateName:@"showOrHideToolbar"];
 	}
 }
+
+-(void)startHideToolbarAfterTimeInterval:(NSTimeInterval)TimeInterval
+{
+	[self performSelector:@selector(hideToolbar) withObject:nil afterDelay:TimeInterval];
+}
+
+-(void)resetTimeIntervalForHideToolbar:(NSTimeInterval)TimeInterval
+{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideToolbar) object:nil];
+	[self performSelector:@selector(hideToolbar) withObject:nil afterDelay:TimeInterval];
+}
+
+
+-(void)hideSearchBar{
+	if (!self.searchBar.hidden)
+	{
+		if ([self.searchBar canResignFirstResponder])
+		{
+			[UIUtility setBar:self.searchBar topBar:YES visible:NO animated:YES animateDuration:0.5 animateName:@"showOrHideToolbar"];
+		}else { //递归
+			[self performSelector:@selector(hideSearchBar) withObject:nil afterDelay:kTimeIntervalForHideSearchBar];
+		}
+	}
+}
+
+-(void)showSearchBar{
+	if (self.searchBar.hidden)
+	{
+		[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:YES animateDuration:0.5 animateName:@"showOrHideToolbar"];
+	}
+}
+
+
+-(void)startHideSearchBarAfterTimeInterval:(NSTimeInterval)TimeInterval{
+
+	[self performSelector:@selector(hideSearchBar) withObject:nil afterDelay:TimeInterval];
+}
+
+-(void)resetTimeIntervalForHideSearchBar:(NSTimeInterval)TimeInterval{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideSearchBar) object:nil];
+	[self performSelector:@selector(hideSearchBar) withObject:nil afterDelay:TimeInterval];
+}
+
+
 
 
 - (void)dealloc
 {
-	self.toolbar = nil;
-	self.mapView = nil;
-	[self->toolbarTimer release];
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter removeObserver:self name:kSearchBarBecomeFirstResponderNotification object:nil];
 
-	//[[NSNotificationCenter defaultCenter] removeObserver:self name:kShowToolbar object:nil];
+	[self.toolbar release];
+	self.toolbar = nil;
+	
+	[self.searchBar release];
+	self.searchBar = nil;
+	
+	[self.mapView release];
+	self.mapView = nil;
+		
 	[super dealloc];
 }
 
-- (void)setToolbarVisible:(BOOL)visible
-{
-	[toolbarTimer invalidate];
-	[toolbarTimer release];
-	toolbarTimer = nil;
-	
-	if (!self.canHideToolBar)
-	{
-		if (self.toolbar.hidden)
-			[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:0.5 animateName:@"showOrHideToolbar"];
-
-		return;
-	}
-		
-	[UIUtility setBar:self.toolbar topBar:NO visible:visible animated:YES animateDuration:0.5 animateName:@"showOrHideToolbar"];
-	
-	if (visible)
-	{
-		toolbarTimer = [[NSTimer timerWithTimeInterval:5.0 target:self selector:@selector(timerFired:) userInfo:nil repeats:NO] retain];
-		[[NSRunLoop currentRunLoop] addTimer:toolbarTimer forMode:NSDefaultRunLoopMode];
-	}
-		
-	
-}
-
-- (void)setToolbarNotif:(NSNotification *)aNotification
-{
-	[toolbarTimer invalidate];
-	[toolbarTimer release];
-	toolbarTimer = nil;
-	[self setToolbarVisible: (!self.toolbar.hidden)];
-}
-
-- (void)timerFired:(NSTimer *)timer
-{
-	[toolbarTimer invalidate];
-	[toolbarTimer release];
-	toolbarTimer = nil;
-	
-	// time has passed, hide the HoverView
-	[self setToolbarVisible: NO];
-}
 
 #pragma mark -
 #pragma mark === Setting up and tearing down ===
@@ -111,10 +115,23 @@
     
 }
 
+- (void) handle_SearchBarBecomeFirstResponder: (id) notification {
+	if (self.searchBar.hidden) {
+		self.searchBar.hidden = NO;
+		[self startHideSearchBarAfterTimeInterval:kTimeIntervalForHideSearchBar];
+	}
+}
+
 - (void)awakeFromNib
 {
     [self addGestureRecognizersToPiece:self.mapView];
-	//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setToolbarNotif:) name:kShowToolbar object:nil];
+	
+	//searchBar 获得焦点
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter addObserver: self
+						   selector: @selector (handle_SearchBarBecomeFirstResponder:)
+							   name: kSearchBarBecomeFirstResponderNotification
+							 object: nil];
 }
 
 
@@ -130,24 +147,42 @@
 	CGPoint tapLocation = [gestureRecognizer locationInView:view];
 	CGRect viewFrame = view.frame;
 	
+	//下部tap，--toolbar
 	if ((viewFrame.size.height -tapLocation.y) *5 < viewFrame.size.height)
 	{
 		if (self.toolbar.hidden) 
 		{
-			[self setToolbarVisible:YES];
+			[self showToolbar];
+			//[self startHideToolbarAfterTimeInterval:kTimeIntervalForHideToolbar];
+			[self resetTimeIntervalForHideToolbar:kTimeIntervalForHideToolbar];
 		}
 		
 	}else {
 		//点其他位置隐藏
 		if (!self.toolbar.hidden) 
 		{
-			[self setToolbarVisible:NO];
-			return;
+			[self hideToolbar];
 		}
 	}
 
 	
-
+	//上部tap，--searchBar
+	if (tapLocation.y *5 < viewFrame.size.height)
+	{
+		if (self.searchBar.hidden) 
+		{
+			[self showSearchBar];
+			//[self startHideSearchBarAfterTimeInterval:kTimeIntervalForHideSearchBar];
+			[self resetTimeIntervalForHideSearchBar:kTimeIntervalForHideSearchBar];
+		}
+		
+	} else {
+		//点其他位置隐藏
+		if (!self.searchBar.hidden) 
+		{
+			[self hideSearchBar];
+		}
+	}
 	
 }
 

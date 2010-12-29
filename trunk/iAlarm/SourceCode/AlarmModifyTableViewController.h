@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "LocalizedString.h"
 #import <UIKit/UIKit.h>
 #import "YCNavSuperControllerProtocol.h"
 

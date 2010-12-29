@@ -13,6 +13,8 @@
 
 @synthesize soundId;
 @synthesize soundName;
+@synthesize soundFileName;
+@synthesize sortId;
 
 #pragma mark NSCoding
 
@@ -20,13 +22,16 @@
 	
 	[encoder encodeObject:soundId forKey:ksoundId];
 	[encoder encodeObject:soundName forKey:ksoundName];
-	
+	[encoder encodeObject:soundFileName forKey:ksoundFileName];
+	[encoder encodeInteger:sortId forKey:ksoundSortId];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
     if (self = [super init]) {		
 		self.soundId = [decoder decodeObjectForKey:ksoundId];
 		self.soundName = [decoder decodeObjectForKey:ksoundName];
+		self.soundFileName = [decoder decodeObjectForKey:ksoundFileName];
+		self.sortId = [decoder decodeIntegerForKey:ksoundSortId];
     }
     return self;
 }
@@ -42,12 +47,15 @@
 	 */
 	copy.soundId = self.soundId;
     copy.soundName = self.soundName; 
+	copy.soundFileName = self.soundFileName; 
+	copy.sortId= self.sortId;  
     return copy;
 }
 
 - (void)dealloc {
 	[soundId release];
 	[soundName release];
+	[soundFileName release];
     [super dealloc];
 }
 
