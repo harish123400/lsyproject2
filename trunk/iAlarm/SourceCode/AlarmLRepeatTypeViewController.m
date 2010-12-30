@@ -20,12 +20,11 @@
 //覆盖父类
 -(IBAction)doneButtonPressed:(id)sender
 {	
-	[super doneButtonPressed:sender];
-	
 	YCRepeatType *rep = [DicManager repeatTypeForSortId:lastIndexPath.row];
 	self.alarm.repeatType = rep;
-	
 	[self.navigationController popViewControllerAnimated:YES];
+	
+	[super doneButtonPressed:sender];
 }
 
 #pragma mark -

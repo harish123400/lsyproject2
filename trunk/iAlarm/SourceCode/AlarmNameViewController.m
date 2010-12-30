@@ -20,9 +20,6 @@
 
 -(IBAction)doneButtonPressed:(id)sender
 {	
-	[super doneButtonPressed:sender];
-	
-	
 	//闹钟名是否为空
 	if ([self.alarmNameTextField.text length] != 0) {
 		//手工改动了闹钟的名字
@@ -39,6 +36,8 @@
 	
 	[self.alarmNameTextField keyboardAppearance];
 	[self.navigationController popViewControllerAnimated:YES];
+	
+	[super doneButtonPressed:sender];
 }
 
 -(IBAction) textFieldDoneEditing:(id)sender

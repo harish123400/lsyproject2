@@ -33,6 +33,7 @@
 		
 		self->switchCtl = [[UISwitch alloc] initWithFrame:switchCtlRect];
 		self->switchCtl.backgroundColor = [UIColor clearColor];
+		self->switchCtl.opaque = NO;
 	}
 
 	
@@ -45,7 +46,6 @@
 		
 		self.selectionStyle = UITableViewCellSelectionStyleNone;    //被选择后，无变化
 		[self.contentView addSubview: self.switchCtl];
-		
     }
     return self;
 }

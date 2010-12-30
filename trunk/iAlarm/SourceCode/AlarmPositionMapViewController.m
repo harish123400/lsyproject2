@@ -499,7 +499,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	 
 }
  
-
+#define kTimeSpanForUserLocation   15.0
 -(void)checkLocation
 {
 	static double timePassed = 0.0;
@@ -515,7 +515,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	}else {
 		//Time out 
 		timePassed +=0.1;
-		if (timePassed > 20.0)  //x0秒time out
+		if (timePassed > kTimeSpanForUserLocation)  //x0秒time out
 		{
 			timePassed = 0.0;
 			
@@ -551,15 +551,14 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 //覆盖父类
 -(IBAction)doneButtonPressed:(id)sender
 {	
-	[super doneButtonPressed:sender];
-	
 	self.alarm.coordinate = self.alarmTemp.coordinate;
 	self.alarm.alarmName = self.alarmTemp.alarmName;
 	self.alarm.position = self.alarmTemp.position;
 	self.alarm.positionShort = self.alarmTemp.positionShort;
 	self.alarm.nameChanged = self.alarmTemp.nameChanged;
-	
 	[self.navigationController popViewControllerAnimated:YES];
+	
+	[super doneButtonPressed:sender];
 }
 
 
@@ -1190,6 +1189,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
 {
+	/*
 	double lat = geocoder.coordinate.latitude;
 	double lon = geocoder.coordinate.longitude;
 	NSString *latstr = [UIUtility convertLatitude:lat decimal:0];
@@ -1197,7 +1197,11 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 	NSString *title = nil;
 	NSString *subtitle = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
+	*/
+	
 	CLLocationCoordinate2D coordinate = geocoder.coordinate;
+	NSString *title = nil;
+	NSString *subtitle = [UIUtility convertCoordinate:coordinate];
 	
 	if (self.annotationManipulating != self.annotationAlarmEditing)
 	{

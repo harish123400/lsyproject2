@@ -29,7 +29,7 @@
 #define KAlarmRepeatLabel                        NSLocalizedString(@"Repeat",@"AlarmName的标签")
 #define KAlarmPostionLabel                       NSLocalizedString(@"Address",@"AlarmPosition的标签")
 #define KAlarmMapInfoLabel                       NSLocalizedString(@"address",@"地图详细地址页面地址的标签（英文小写）")
-#define KAlarmEnableLabel                        NSLocalizedString(@"Enable",@"Alarm是否启用的标签")
+#define KAlarmEnableLabel                        NSLocalizedString(@"Enabled",@"Alarm是否启用的标签")
 #define KAlarmCurrentLocationLabel               NSLocalizedString(@"by Current Location",@"当前位置的标签")
 #define KAlarmLocationByMapLabel                 NSLocalizedString(@"by Maps",@"通过地图定位的标签")
 #define KLocationingLabel                        NSLocalizedString(@"Locating",@"正在定位的标签")
@@ -75,17 +75,17 @@
 //经纬度转换
 
 ////41°46′21″N
-#define kNorthLatitudeFormateString              NSLocalizedString(@"%d°%d′%d″N",   @"北纬格式化串")
+#define kNorthLatitudeFormateString              NSLocalizedString(@"%d°%d′%d″ N",   @"北纬格式化串")
 ////41°46′21.12″N
-#define kNorthLatitudeFormateStringDecimal       NSLocalizedString(@"%d°%d′%d.%d″N",@"北纬格式化串(秒上带小数)")
+#define kNorthLatitudeFormateStringDecimal       NSLocalizedString(@"%d°%d′%d.%d″ N",@"北纬格式化串(秒上带小数)")
 
-#define kSouthLatitudeFormateString              NSLocalizedString(@"%d°%d′%d″S",   @"南纬格式化串")
-#define kSouthLatitudeFormateStringDecimal       NSLocalizedString(@"%d°%d′%d.%d″S",@"南纬格式化串(秒上带小数)")
+#define kSouthLatitudeFormateString              NSLocalizedString(@"%d°%d′%d″ S",   @"南纬格式化串")
+#define kSouthLatitudeFormateStringDecimal       NSLocalizedString(@"%d°%d′%d.%d″ S",@"南纬格式化串(秒上带小数)")
 
-#define kEastLongitudeFormateString              NSLocalizedString(@"%d°%d′%d″E",   @"东经格式化串")
-#define kEastLongitudeFormateStringDecimal       NSLocalizedString(@"%d°%d′%d.%d″E",@"东经格式化串(秒上带小数)")
+#define kEastLongitudeFormateString              NSLocalizedString(@"%d°%d′%d″ E",   @"东经格式化串")
+#define kEastLongitudeFormateStringDecimal       NSLocalizedString(@"%d°%d′%d.%d″ E",@"东经格式化串(秒上带小数)")
 
-#define kWestLongitudeFormateString              NSLocalizedString(@"%d°%d′%d″W",   @"西经格式化串")
-#define kWestLongitudeFormateStringDecimal       NSLocalizedString(@"%d°%d′%d.%d″W",@"西经格式化串(秒上带小数)")
+#define kWestLongitudeFormateString              NSLocalizedString(@"%d°%d′%d″ W",   @"西经格式化串")
+#define kWestLongitudeFormateStringDecimal       NSLocalizedString(@"%d°%d′%d.%d″ W",@"西经格式化串(秒上带小数)")
 
 

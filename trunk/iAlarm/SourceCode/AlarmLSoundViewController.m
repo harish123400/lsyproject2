@@ -21,12 +21,11 @@
 //覆盖父类
 -(IBAction)doneButtonPressed:(id)sender
 {	
-	[super doneButtonPressed:sender];
-	
 	YCSound *sound = [DicManager soundForSortId:lastIndexPath.row];
 	self.alarm.sound = sound;
-	
 	[self.navigationController popViewControllerAnimated:YES];
+	
+	[super doneButtonPressed:sender];
 }
 
 #pragma mark -
