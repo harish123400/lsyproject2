@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "AlarmModifyNotification.h"
 #import "AlarmModifyViewController.h"
 #import "YCAlarmEntity.h"
 
@@ -14,41 +15,24 @@
 @implementation AlarmModifyViewController
 
 
--(id)parentController
-{
-	return parentController;
-}
--(void)setParentController:(id)newObj
-{
-	if (newObj == parentController) {
-		//[parentController retain];
-		return;
-	}
-	
-	[parentController release];
-	parentController = newObj;
-	[parentController retain];
-}
-
 -(id)alarm
 {
 	return alarm;
 }
 -(void)setAlarm:(id)newObj
 {
-	if (newObj == alarm) {
-		//[alarm retain];
-		return;
-	}
+	[newObj retain];
 	[alarm release];
 	alarm = newObj;
-	[alarm retain];
 }
 
 
 -(IBAction)doneButtonPressed:(id)sender
 {	
 	//子类覆盖
+	//改变了，发送通知
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+	[notificationCenter postNotificationName:kAlarmItemChangedNotification object:self];
 }
 
 - (void)viewDidLoad {
@@ -64,7 +48,6 @@
 
 
 - (void)dealloc {
-	[self.parentViewController release];
 	[self.alarm release];
     [super dealloc];
 }

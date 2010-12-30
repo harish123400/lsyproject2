@@ -7,7 +7,6 @@
 //
 
 #import "AlarmModifyViewController.h"
-#import "YCNavSuperControllerProtocol.h"
 #import "BSForwardGeocoder.h"
 #import "YCSearchController.h"
 #import "MapBookmarksListController.h"
@@ -22,7 +21,7 @@
 @class YCTapView;
 
 @interface AlarmPositionMapViewController : AlarmModifyViewController 
-<MKMapViewDelegate,MKReverseGeocoderDelegate,YCNavSuperControllerProtocol,BSForwardGeocoderDelegate,UIAlertViewDelegate,YCSearchControllerDelegete,MapBookmarksListControllerDelegate>
+<MKMapViewDelegate,MKReverseGeocoderDelegate,BSForwardGeocoderDelegate,UIAlertViewDelegate,YCSearchControllerDelegete,MapBookmarksListControllerDelegate>
 {
 	NSTimer *locationTimer;
 	

@@ -11,9 +11,7 @@
 #import "AlarmModifyNotification.h"
 #import "DicManager.h"
 #import "AlarmLSoundViewController.h"
-#import "AlarmDetailViewController.h"
 #import "YCAlarmEntity.h"
-#import "YCCellDescription.h"
 
 
 @implementation AlarmLSoundViewController
@@ -23,12 +21,10 @@
 //覆盖父类
 -(IBAction)doneButtonPressed:(id)sender
 {	
+	[super doneButtonPressed:sender];
+	
 	YCSound *sound = [DicManager soundForSortId:lastIndexPath.row];
 	self.alarm.sound = sound;
-	
-	//改变了，发送通知
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter postNotificationName:kAlarmItemChangedNotification object:self];
 	
 	[self.navigationController popViewControllerAnimated:YES];
 }

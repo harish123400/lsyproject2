@@ -11,14 +11,17 @@
 
 @interface WaitingCell : UITableViewCell {
 	
-	UIColor *defaultDetailTextLabelColor;
-	UIActivityIndicatorView	*activityIndCtl;
+	IBOutlet UIActivityIndicatorView *activityIndicator;
+	IBOutlet UILabel *activityLabel;
+	IBOutlet UIView *activityView;
 }
 
-@property(nonatomic,retain,readonly) UIActivityIndicatorView *activityIndCtl;
+@property(nonatomic,retain,readonly) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property(nonatomic,retain,readonly) IBOutlet UILabel *activityLabel;
+@property(nonatomic,retain,readonly) IBOutlet UIView *activityView;
 
-
-- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 -(void) setWaiting:(BOOL)waiting;
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier;
+
 
 @end

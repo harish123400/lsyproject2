@@ -10,7 +10,6 @@
 #import "AlarmLRepeatTypeViewController.h"
 #import "DicManager.h"
 #import "YCRepeatType.h"
-#import "YCCellDescription.h"
 #import "UIUtility.h"
 #import "YCAlarmEntity.h"
 
@@ -21,12 +20,10 @@
 //覆盖父类
 -(IBAction)doneButtonPressed:(id)sender
 {	
+	[super doneButtonPressed:sender];
+	
 	YCRepeatType *rep = [DicManager repeatTypeForSortId:lastIndexPath.row];
 	self.alarm.repeatType = rep;
-	
-	//改变了，发送通知
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter postNotificationName:kAlarmItemChangedNotification object:self];
 	
 	[self.navigationController popViewControllerAnimated:YES];
 }

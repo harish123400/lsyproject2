@@ -8,14 +8,13 @@
 
 #import "LocalizedString.h"
 #import <UIKit/UIKit.h>
-#import "YCNavSuperControllerProtocol.h"
 
 @class YCAlarmEntity;
 @interface AlarmModifyTableViewController : UITableViewController {
-	id<YCNavSuperControllerProtocol> parentController;
 	YCAlarmEntity *alarm;
 }
 
-@property(nonatomic,retain) id<YCNavSuperControllerProtocol> parentController;
 @property(nonatomic,retain) YCAlarmEntity *alarm;
+-(IBAction)doneButtonPressed:(id)sender;
+
 @end

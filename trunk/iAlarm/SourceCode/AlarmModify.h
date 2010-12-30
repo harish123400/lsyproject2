@@ -14,7 +14,6 @@
 @interface UIViewController (iArrived)
 
 
-@property(nonatomic,retain) id<YCNavSuperControllerProtocol> parentController;
 @property(nonatomic,retain) YCAlarmEntity *alarm;
 
 @end

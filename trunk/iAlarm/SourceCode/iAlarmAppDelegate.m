@@ -134,10 +134,11 @@
     [window makeKeyAndVisible];
 	
 	//tabBarController.selectedIndex = 3;
-	
+	/*
 	YCLocationManager * ycLocationManager = [YCLocationManager locationManagerSigleInstance];
 	[ycLocationManager start];
 	[self resetMonitoredRegions];
+	 */
 
     return YES;
 }
@@ -169,6 +170,7 @@ BOOL lo;
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
 	
+	/*
 	[[YCLog logSingleInstance] addlog:@"here is applicationDidEnterBackground"];
 	
 	UIApplication*    app = [UIApplication sharedApplication];
@@ -207,7 +209,7 @@ BOOL lo;
             }
         });
     });
-	 
+	*/
 	 
 	
 	//YCLocationManager * ycLocationManager = [YCLocationManager locationManagerSigleInstance];

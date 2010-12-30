@@ -551,17 +551,13 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 //覆盖父类
 -(IBAction)doneButtonPressed:(id)sender
 {	
+	[super doneButtonPressed:sender];
 	
 	self.alarm.coordinate = self.alarmTemp.coordinate;
 	self.alarm.alarmName = self.alarmTemp.alarmName;
 	self.alarm.position = self.alarmTemp.position;
 	self.alarm.positionShort = self.alarmTemp.positionShort;
 	self.alarm.nameChanged = self.alarmTemp.nameChanged;
-	
-	//[self.parentController reflashView];
-	//position通过地图改变，发送通知
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter postNotificationName:kAlarmItemChangedNotification object:self];
 	
 	[self.navigationController popViewControllerAnimated:YES];
 }

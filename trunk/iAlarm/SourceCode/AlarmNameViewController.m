@@ -8,9 +8,7 @@
 
 #import "AlarmModifyNotification.h"
 #import "AlarmNameViewController.h"
-#import "AlarmNewDetailSuperViewController.h"
 #import "YCAlarmEntity.h"
-#import "YCCellDescription.h"
 #import "UIUtility.h"
 
 
@@ -22,8 +20,9 @@
 
 -(IBAction)doneButtonPressed:(id)sender
 {	
-	/////////覆盖父类
-	///
+	[super doneButtonPressed:sender];
+	
+	
 	//闹钟名是否为空
 	if ([self.alarmNameTextField.text length] != 0) {
 		//手工改动了闹钟的名字
@@ -37,10 +36,6 @@
 		self.alarm.nameChanged = NO;
 		self.alarm.alarmName = kDefaultLocationAlarmName;
 	}
-	
-	//改变了，发送通知
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter postNotificationName:kAlarmItemChangedNotification object:self];
 	
 	[self.alarmNameTextField keyboardAppearance];
 	[self.navigationController popViewControllerAnimated:YES];
@@ -103,14 +98,8 @@
 
 
 - (void)dealloc {
-	/*
-	////分类的数据////
-	[self.parentViewController release];
-	[self.alarm release];
-	////分类的数据////
-	 */
-	
-	[self.alarmNameTextField release];
+	[alarmNameTextField release];
+	[alarmPositionLabel release];
     [super dealloc];
 }
 

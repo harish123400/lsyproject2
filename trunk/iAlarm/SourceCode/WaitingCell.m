@@ -12,45 +12,73 @@
 
 @implementation WaitingCell
 
+/*
+@synthesize activityIndicator;
+@synthesize activityLabel;
+@synthesize activityView;
+ */
 
-- (id) activityIndCtl{
-	
-	if (!self->activityIndCtl) {
-		self->activityIndCtl = [[UIActivityIndicatorView alloc] init];
-		self->activityIndCtl.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-		self->activityIndCtl.hidesWhenStopped = YES;
-		self->activityIndCtl.backgroundColor = [UIColor clearColor];
+-(id) activityIndicator{
+	if (!activityIndicator ) {
+		activityIndicator = [[UIActivityIndicatorView alloc] 
+							 initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		activityIndicator.frame = CGRectMake(152.0,12.0,20.0,20.0);
+		activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin 
+											|UIViewAutoresizingFlexibleBottomMargin;
 	}
-	
-	/////////////////////
-	////activityInd控件位置
-	CGPoint cellP = self.contentView.frame.origin;  //cell原点坐标
-	CGSize  cellS = self.contentView.frame.size;    //cell的尺寸
-	
-	CGFloat accViewW = 0.0;//指示器view宽
-	if (self.accessoryType != UITableViewCellAccessoryNone) {
-		accViewW = 18.0;
-	}
+	return activityIndicator;
+}
 
+-(id) activityLabel{
+	if (!activityLabel ) {
+		activityLabel = [[UILabel alloc] init];
+		activityLabel.backgroundColor = [UIColor clearColor];    //背景色
+		activityLabel.textColor = [UIColor grayColor];           //文本颜色
+		activityLabel.font = [UIFont boldSystemFontOfSize:15.0]; //字体：加粗
+		activityLabel.textAlignment = UITextAlignmentRight;      //文本右对齐
+		activityLabel.frame = CGRectMake(5.0,12.0,133.0,20.0);
+		activityLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin 
+										|UIViewAutoresizingFlexibleBottomMargin;
+	}
+	return activityLabel;
+}
+
+-(id) activityView{
+	if (!activityView ) {
+		activityView = [[UILabel alloc] init];
+		activityView.backgroundColor = [UIColor clearColor];
+		activityView.frame = CGRectMake(130.0,0.0,190.0,44.0);
+		activityView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin 
+									   |UIViewAutoresizingFlexibleRightMargin
+									   |UIViewAutoresizingFlexibleBottomMargin;
+		
+		[activityView addSubview:self.activityIndicator];
+		[activityView addSubview:self.activityLabel];
+		activityView.hidden = YES;
+	}
+	return activityView;
+}
+
+-(void) setWaiting:(BOOL)waiting{
 	
-	UIActivityIndicatorView *ctlTmp = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-	CGSize  ctlS = ctlTmp.frame.size;      //控件的的尺寸
-	[ctlTmp release];
-	
-	CGFloat ctlY= (cellP.y + cellS.height/2 - ctlS.height/2);  //控件的原点的Y
-	CGFloat ctlX= cellS.width - ctlS.width - accViewW - 10;
-	CGRect ctlRect = CGRectMake(ctlX, ctlY, ctlS.width, ctlS.height);
-	/////////////////////
-	self->activityIndCtl.frame = ctlRect;
-	
-	
-	return self->activityIndCtl;
+	if (waiting){
+		self.activityView.hidden = NO;
+		self.activityIndicator.hidden = NO;
+		self.activityLabel.hidden = NO;
+		[self.activityIndicator startAnimating];
+	}else {
+		self.activityView.hidden = YES;
+		self.activityIndicator.hidden = YES;
+		self.activityLabel.hidden = YES;
+		[self.activityIndicator stopAnimating];
+	}
 }
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
-        //[self.contentView addSubview: self.activityIndCtl];
+        
+		[self.contentView addSubview: self.activityView];
     }
     return self;
 }
@@ -59,22 +87,10 @@
 	return [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
 }
 
--(void) setWaiting:(BOOL)waiting{
-	
-	if (waiting){
-		[self.activityIndCtl removeFromSuperview];         //先删除后加入，为了改变位置
-		[self.contentView addSubview: self.activityIndCtl];
-		[self.activityIndCtl startAnimating];
-	}
-	else 
-		[self.activityIndCtl stopAnimating];
-}
-
-
-
 - (void)dealloc {
-	[defaultDetailTextLabelColor release];
-	[activityIndCtl release];
+	[activityIndicator release];
+	[activityLabel release];
+	[activityView release];
     [super dealloc];
 }
 

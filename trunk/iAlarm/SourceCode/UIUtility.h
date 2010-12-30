@@ -36,13 +36,6 @@
 //发送闹钟已经更新消息
 +(void)sendAlarmUpdateNotification;
 
-//转换经纬度
-+(NSString*)convertLatitude:(double)latitude   decimal:(NSUInteger)decimal;
-+(NSString*)convertLongitude:(double)longitude decimal:(NSUInteger)decimal;
-
-//转换经纬度
-+(NSString*)convertCoordinate:(CLLocationCoordinate2D)coordinate;
-
 
 //发送个简单的通知 －－debug
 +(void)sendSimpleNotifyForAlart:(NSString*)alertBody;
@@ -58,10 +51,17 @@
 		 cancelButtonTitle:(NSString*)cancelButtonTitle
 				  delegate:(id)delegate;
 
+//转换经纬度
++(NSString*)convertLatitude:(double)latitude   decimal:(NSUInteger)decimal;
++(NSString*)convertLongitude:(double)longitude decimal:(NSUInteger)decimal;
+//转换经+纬度
++(NSString*)convertCoordinate:(CLLocationCoordinate2D)coordinate;
+
 //从地址信息提取地址字符串
 +(NSString*)positionStringFromPlacemark:(MKPlacemark*)placemark;
 +(NSString*)titleStringFromPlacemark:(MKPlacemark*)placemark;
 +(NSString*)positionShortStringFromPlacemark:(MKPlacemark*)placemark;
+
 
 //设置bar的可视状态
 +(void)setBar:(UIView*)theBar
