@@ -535,6 +535,11 @@
 			9CD0595112CC6924004895B9 /* PBXTextBookmark */ = 9CD0595112CC6924004895B9 /* PBXTextBookmark */;
 			9CD0595212CC6924004895B9 /* PBXTextBookmark */ = 9CD0595212CC6924004895B9 /* PBXTextBookmark */;
 			9CD0595312CC6924004895B9 /* PBXTextBookmark */ = 9CD0595312CC6924004895B9 /* PBXTextBookmark */;
+			9CD0595612CC6AE8004895B9 /* PBXTextBookmark */ = 9CD0595612CC6AE8004895B9 /* PBXTextBookmark */;
+			9CD0595712CC6AE8004895B9 /* PBXTextBookmark */ = 9CD0595712CC6AE8004895B9 /* PBXTextBookmark */;
+			9CD0595812CC6AE8004895B9 /* PBXTextBookmark */ = 9CD0595812CC6AE8004895B9 /* PBXTextBookmark */;
+			9CD0595912CC6AE8004895B9 /* PBXTextBookmark */ = 9CD0595912CC6AE8004895B9 /* PBXTextBookmark */;
+			9CD0595A12CC6AE8004895B9 /* PBXTextBookmark */ = 9CD0595A12CC6AE8004895B9 /* PBXTextBookmark */;
 			9CDA3AFE129D2EE000B8A1E1 = 9CDA3AFE129D2EE000B8A1E1 /* PBXTextBookmark */;
 			9CDC2EEC12C04E3900015950 = 9CDC2EEC12C04E3900015950 /* PBXTextBookmark */;
 			9CDC2EED12C04E3900015950 = 9CDC2EED12C04E3900015950 /* PBXTextBookmark */;
@@ -569,15 +574,15 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {787, 871}}";
 			sepNavSelRange = "{1492, 16}";
-			sepNavVisRange = "{561, 1771}";
+			sepNavVisRange = "{525, 1807}";
 			sepNavWindowFrame = "{{15, 72}, {1184, 621}}";
 		};
 	};
 	9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {787, 8203}}";
-			sepNavSelRange = "{12036, 0}";
-			sepNavVisRange = "{12037, 1394}";
+			sepNavIntBoundsRect = "{{0, 0}, {787, 8125}}";
+			sepNavSelRange = "{13005, 0}";
+			sepNavVisRange = "{12035, 1498}";
 			sepNavWindowFrame = "{{96, 4}, {1184, 621}}";
 		};
 	};
@@ -1898,7 +1903,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 447";
 		rLen = 0;
-		rLoc = 16033;
+		rLoc = 16032;
 		rType = 0;
 		vrLen = 1009;
 		vrLoc = 12976;
@@ -3355,7 +3360,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 541";
 		rLen = 0;
-		rLoc = 17697;
+		rLoc = 17696;
 		rType = 0;
 		vrLen = 958;
 		vrLoc = 15282;
@@ -3375,7 +3380,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 451";
 		rLen = 0;
-		rLoc = 16039;
+		rLoc = 16038;
 		rType = 0;
 		vrLen = 1356;
 		vrLoc = 12781;
@@ -3685,7 +3690,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 461";
 		rLen = 0;
-		rLoc = 16039;
+		rLoc = 16038;
 		rType = 0;
 		vrLen = 1410;
 		vrLoc = 13287;
@@ -3705,7 +3710,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 462";
 		rLen = 0;
-		rLoc = 16039;
+		rLoc = 16038;
 		rType = 0;
 		vrLen = 1462;
 		vrLoc = 13287;
@@ -3905,7 +3910,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 461";
 		rLen = 0;
-		rLoc = 16039;
+		rLoc = 16038;
 		rType = 0;
 		vrLen = 1401;
 		vrLoc = 13241;
@@ -3925,7 +3930,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 461";
 		rLen = 0;
-		rLoc = 16039;
+		rLoc = 16038;
 		rType = 0;
 		vrLen = 1439;
 		vrLoc = 13241;
@@ -4410,7 +4415,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 383";
 		rLen = 19;
-		rLoc = 14613;
+		rLoc = 14612;
 		rType = 0;
 		vrLen = 1028;
 		vrLoc = 11169;
@@ -4437,7 +4442,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 383";
 		rLen = 0;
-		rLoc = 14633;
+		rLoc = 14632;
 		rType = 0;
 		vrLen = 831;
 		vrLoc = 11169;
@@ -4476,7 +4481,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 381";
 		rLen = 0;
-		rLoc = 14576;
+		rLoc = 14575;
 		rType = 0;
 		vrLen = 292;
 		vrLoc = 11541;
@@ -4486,7 +4491,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 381";
 		rLen = 0;
-		rLoc = 14576;
+		rLoc = 14575;
 		rType = 0;
 		vrLen = 385;
 		vrLoc = 0;
@@ -4496,7 +4501,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 381";
 		rLen = 0;
-		rLoc = 14576;
+		rLoc = 14575;
 		rType = 0;
 		vrLen = 385;
 		vrLoc = 0;
@@ -4525,7 +4530,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 381";
 		rLen = 0;
-		rLoc = 14576;
+		rLoc = 14575;
 		rType = 0;
 		vrLen = 338;
 		vrLoc = 11498;
@@ -4972,7 +4977,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 566";
 		rLen = 0;
-		rLoc = 18195;
+		rLoc = 18194;
 		rType = 0;
 		vrLen = 956;
 		vrLoc = 16099;
@@ -5022,7 +5027,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 383";
 		rLen = 0;
-		rLoc = 14633;
+		rLoc = 14632;
 		rType = 0;
 		vrLen = 831;
 		vrLoc = 11169;
@@ -5112,7 +5117,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 375";
 		rLen = 13;
-		rLoc = 14360;
+		rLoc = 14412;
 		rType = 0;
 		vrLen = 1065;
 		vrLoc = 10768;
@@ -5122,7 +5127,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 375";
 		rLen = 13;
-		rLoc = 14360;
+		rLoc = 14412;
 		rType = 0;
 		vrLen = 1065;
 		vrLoc = 10768;
@@ -5151,7 +5156,7 @@
 		isa = PBXTextBookmark;
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		rLen = 0;
-		rLoc = 473;
+		rLoc = 474;
 		rType = 1;
 	};
 	9CD0583312CC4DAE004895B9 /* PBXTextBookmark */ = {
@@ -5159,7 +5164,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 375";
 		rLen = 0;
-		rLoc = 14402;
+		rLoc = 14454;
 		rType = 0;
 		vrLen = 916;
 		vrLoc = 11081;
@@ -5179,7 +5184,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 375";
 		rLen = 0;
-		rLoc = 14402;
+		rLoc = 14454;
 		rType = 0;
 		vrLen = 867;
 		vrLoc = 16188;
@@ -5199,7 +5204,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 375";
 		rLen = 0;
-		rLoc = 14327;
+		rLoc = 14379;
 		rType = 0;
 		vrLen = 1047;
 		vrLoc = 10914;
@@ -5219,7 +5224,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 432";
 		rLen = 0;
-		rLoc = 13969;
+		rLoc = 14021;
 		rType = 0;
 		vrLen = 982;
 		vrLoc = 12442;
@@ -5239,7 +5244,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 432";
 		rLen = 0;
-		rLoc = 13969;
+		rLoc = 14021;
 		rType = 0;
 		vrLen = 1227;
 		vrLoc = 14968;
@@ -5249,7 +5254,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 514";
 		rLen = 0;
-		rLoc = 16344;
+		rLoc = 16343;
 		rType = 0;
 		vrLen = 1375;
 		vrLoc = 14272;
@@ -5269,7 +5274,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 514";
 		rLen = 0;
-		rLoc = 16344;
+		rLoc = 16343;
 		rType = 0;
 		vrLen = 1085;
 		vrLoc = 15536;
@@ -5279,7 +5284,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 514";
 		rLen = 0;
-		rLoc = 16344;
+		rLoc = 16343;
 		rType = 0;
 		vrLen = 1155;
 		vrLoc = 15343;
@@ -5299,7 +5304,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 538";
 		rLen = 0;
-		rLoc = 16913;
+		rLoc = 16912;
 		rType = 0;
 		vrLen = 1194;
 		vrLoc = 15398;
@@ -5319,7 +5324,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 569";
 		rLen = 0;
-		rLoc = 18214;
+		rLoc = 18213;
 		rType = 0;
 		vrLen = 877;
 		vrLoc = 16195;
@@ -5616,7 +5621,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 566";
 		rLen = 0;
-		rLoc = 17695;
+		rLoc = 17694;
 		rType = 0;
 		vrLen = 961;
 		vrLoc = 16662;
@@ -5626,7 +5631,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 566";
 		rLen = 0;
-		rLoc = 17622;
+		rLoc = 17621;
 		rType = 0;
 		vrLen = 952;
 		vrLoc = 16838;
@@ -5665,7 +5670,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 576";
 		rLen = 0;
-		rLoc = 17726;
+		rLoc = 17725;
 		rType = 0;
 		vrLen = 345;
 		vrLoc = 16888;
@@ -5715,7 +5720,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 570";
 		rLen = 15;
-		rLoc = 17700;
+		rLoc = 17699;
 		rType = 0;
 		vrLen = 940;
 		vrLoc = 16575;
@@ -5745,7 +5750,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 574";
 		rLen = 0;
-		rLoc = 17726;
+		rLoc = 17725;
 		rType = 0;
 		vrLen = 354;
 		vrLoc = 16770;
@@ -5785,7 +5790,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 410";
 		rLen = 0;
-		rLoc = 13223;
+		rLoc = 13275;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 11712;
@@ -5805,7 +5810,7 @@
 		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
 		name = "AlarmDetailTableViewController.m: 412";
 		rLen = 0;
-		rLoc = 13373;
+		rLoc = 13425;
 		rType = 0;
 		vrLen = 1217;
 		vrLoc = 11796;
@@ -5941,6 +5946,56 @@
 		vrLoc = 14633;
 	};
 	9CD0595312CC6924004895B9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9CD056DE12CC3453004895B9 /* WaitingCell.m */;
+		name = "WaitingCell.m: 36";
+		rLen = 99;
+		rLoc = 857;
+		rType = 0;
+		vrLen = 1163;
+		vrLoc = 183;
+	};
+	9CD0595612CC6AE8004895B9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9C129932127E8DC000054B82 /* AlarmPositionMapViewController.m */;
+		name = "AlarmPositionMapViewController.m: 546";
+		rLen = 0;
+		rLoc = 14688;
+		rType = 0;
+		vrLen = 959;
+		vrLoc = 14633;
+	};
+	9CD0595712CC6AE8004895B9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9C017D8512BF082100710E16 /* AlarmDetailTableViewController.h */;
+		name = "AlarmDetailTableViewController.h: 50";
+		rLen = 16;
+		rLoc = 1492;
+		rType = 0;
+		vrLen = 1807;
+		vrLoc = 525;
+	};
+	9CD0595812CC6AE8004895B9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
+		name = "AlarmDetailTableViewController.m: 475";
+		rLen = 0;
+		rLoc = 14458;
+		rType = 0;
+		vrLen = 1005;
+		vrLoc = 13483;
+	};
+	9CD0595912CC6AE8004895B9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 9C017D8612BF082100710E16 /* AlarmDetailTableViewController.m */;
+		name = "AlarmDetailTableViewController.m: 422";
+		rLen = 0;
+		rLoc = 13005;
+		rType = 0;
+		vrLen = 1498;
+		vrLoc = 12035;
+	};
+	9CD0595A12CC6AE8004895B9 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 9CD056DE12CC3453004895B9 /* WaitingCell.m */;
 		name = "WaitingCell.m: 36";
