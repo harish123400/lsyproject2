@@ -93,6 +93,9 @@
 		9CCC2D9212C36FD0004D3FC1 /* shared-iphone-172.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CCC2D9012C36FD0004D3FC1 /* shared-iphone-172.png */; };
 		9CCCA33B12A54373009AC24D /* YCSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CCCA0AA12A54372009AC24D /* YCSearchController.m */; };
 		9CD0568E12CC271A004895B9 /* WaitingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9CD0568D12CC271A004895B9 /* WaitingCell.xib */; };
+		9CD2337F12CCCA430029F826 /* DisclosureIndicator-HighLighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD2337C12CCCA430029F826 /* DisclosureIndicator-HighLighted.png */; };
+		9CD2338012CCCA430029F826 /* DisclosureIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD2337D12CCCA430029F826 /* DisclosureIndicator.png */; };
+		9CD2338112CCCA430029F826 /* Pin-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD2337E12CCCA430029F826 /* Pin-2x.png */; };
 		9CD425A112AB31A70005CDAD /* MapBookmarksListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD4259F12AB31A70005CDAD /* MapBookmarksListController.m */; };
 		9CD4266412AB40000005CDAD /* MapBookmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD4266312AB40000005CDAD /* MapBookmark.m */; };
 		9CD426C612AB45C00005CDAD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD426C512AB45C00005CDAD /* CoreData.framework */; };
@@ -251,6 +254,9 @@
 		9CCCA0A912A54372009AC24D /* YCSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCSearchController.h; sourceTree = "<group>"; };
 		9CCCA0AA12A54372009AC24D /* YCSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCSearchController.m; sourceTree = "<group>"; };
 		9CD0568D12CC271A004895B9 /* WaitingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitingCell.xib; sourceTree = "<group>"; };
+		9CD2337C12CCCA430029F826 /* DisclosureIndicator-HighLighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DisclosureIndicator-HighLighted.png"; sourceTree = "<group>"; };
+		9CD2337D12CCCA430029F826 /* DisclosureIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DisclosureIndicator.png; sourceTree = "<group>"; };
+		9CD2337E12CCCA430029F826 /* Pin-2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pin-2x.png"; sourceTree = "<group>"; };
 		9CD4259E12AB31A70005CDAD /* MapBookmarksListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapBookmarksListController.h; sourceTree = "<group>"; };
 		9CD4259F12AB31A70005CDAD /* MapBookmarksListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapBookmarksListController.m; sourceTree = "<group>"; };
 		9CD4266212AB40000005CDAD /* MapBookmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapBookmark.h; sourceTree = "<group>"; };
@@ -335,8 +341,8 @@
 		9C017D8412BF082100710E16 /* AlarmUINew */ = {
 			isa = PBXGroup;
 			children = (
-				9C135CA312CB315B004A3C3E /* AlarmModifyNotification.h */,
 				9C1299CE127E901000054B82 /* AlarmItemModify */,
+				9C135CA312CB315B004A3C3E /* AlarmModifyNotification.h */,
 				9C017D8712BF082100710E16 /* AlarmsListViewController.h */,
 				9C017D8812BF082100710E16 /* AlarmsListViewController.m */,
 				9C017D8512BF082100710E16 /* AlarmDetailTableViewController.h */,
@@ -359,6 +365,9 @@
 		9C129917127E8DC000054B82 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9CD2337C12CCCA430029F826 /* DisclosureIndicator-HighLighted.png */,
+				9CD2337D12CCCA430029F826 /* DisclosureIndicator.png */,
+				9CD2337E12CCCA430029F826 /* Pin-2x.png */,
 				9CDCB81812C38DEB00DDDD3D /* Pin1-Gray.png */,
 				9CDCB81912C38DEB00DDDD3D /* shared-iphone-172-Gray.png */,
 				9CCC2D8F12C36FD0004D3FC1 /* Pin1.png */,
@@ -735,6 +744,9 @@
 				9CDCB81A12C38DEB00DDDD3D /* Pin1-Gray.png in Resources */,
 				9CDCB81B12C38DEB00DDDD3D /* shared-iphone-172-Gray.png in Resources */,
 				9CD0568E12CC271A004895B9 /* WaitingCell.xib in Resources */,
+				9CD2337F12CCCA430029F826 /* DisclosureIndicator-HighLighted.png in Resources */,
+				9CD2338012CCCA430029F826 /* DisclosureIndicator.png in Resources */,
+				9CD2338112CCCA430029F826 /* Pin-2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
