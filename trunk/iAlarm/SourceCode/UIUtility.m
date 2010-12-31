@@ -438,6 +438,8 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	if (locality ==nil) locality=@"";
 	if (thoroughfare ==nil) thoroughfare=@"";
 	if (subthoroughfare ==nil) subthoroughfare=@"";
+	if (administrativeArea ==nil) administrativeArea=@"";
+	if (country ==nil) country=@"";
 	
 	NSString *string = [[[NSString alloc] initWithFormat:@"%@ %@ %@ %@ %@",thoroughfare,subthoroughfare,locality,administrativeArea,country] autorelease];
 	

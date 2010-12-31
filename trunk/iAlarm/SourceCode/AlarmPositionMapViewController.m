@@ -1146,7 +1146,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 	self.alarmTemp.coordinate = coordinate;
 	self.alarmTemp.position = subtitle;
-	self.alarmTemp.positionShort = subtitleShort;
+	self.alarmTemp.positionShort = subtitleShort!=nil ? subtitleShort:subtitle; //短地址空，使用长地址
 	
 	self.annotationAlarmEditing.coordinate = self.alarmTemp.coordinate;
 	//self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
