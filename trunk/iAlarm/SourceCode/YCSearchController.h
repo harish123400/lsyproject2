@@ -16,6 +16,7 @@
  
 - (NSArray*)searchController:(YCSearchController *)controller searchString:(NSString *)searchString;
 -(void)searchBarbookmarkButtonPressed:(id)sender;
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar;
 
 @end
 
@@ -31,6 +32,8 @@
 	UIView *searchMaskView;
 	UITableView *searchTableView;
 	BOOL originalSearchBarHidden;
+	
+
 }
 
 @property(nonatomic,retain) id<YCSearchControllerDelegete> delegate;
@@ -49,6 +52,10 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController;
 - (void)setActive:(BOOL)visible animated:(BOOL)animated;
 
 - (void)addListContentWithString:(NSString*)string;
+
+#pragma mark  设置搜索等待
+- (void)setSearchWaiting:(BOOL)Waiting;
+
 
 
 @end

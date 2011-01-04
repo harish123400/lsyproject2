@@ -28,7 +28,12 @@
 	//YCAnnotation *cyclingAnnotation;                      //上一个下一个临时使用
 	NSInteger cyclingIndex;                                 //上一个下一个临时使用
 	
+	/////////////////////////////////////
+	//地址反转
 	MKReverseGeocoder *reverseGeocoder;
+	MKPlacemark *placemarkForReverse;  
+	/////////////////////////////////////
+	
 	BSForwardGeocoder *forwardGeocoder;
 	YCSearchController *searchController;
 	
@@ -92,7 +97,12 @@
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *previousBarItem;              
 @property (nonatomic,retain) IBOutlet UIBarButtonItem *nextBarItem;                  
 
-@property (nonatomic,retain) BSForwardGeocoder *forwardGeocoder;
+/////////////////////////////////////
+//地址反转
+@property (nonatomic,retain) MKPlacemark *placemarkForReverse;
+/////////////////////////////////////
+
+@property (nonatomic,retain,readonly) BSForwardGeocoder *forwardGeocoder;
 @property (nonatomic,retain) YCSearchController *searchController;
 @property (nonatomic,assign) BOOL regionCenterWithCurrentLocation;
 @property (nonatomic,assign) BOOL newAlarm;
@@ -126,8 +136,14 @@
 -(void)showMaskView;
 ////关掉覆盖视图
 -(void)closeMaskViewWithAnimated:(BOOL)animated;
-////显示地图
-//-(void)showMapView;
+
+
+-(void)beginReverseWithCoordinate:(CLLocationCoordinate2D)coordinate;
+-(void)endReverse;
+
+-(void)beginForwardGeocoderWithSearchString:(NSString *)searchString;
+-(void)endForwardGeocoder;
+
 
 /////////////////////////////////////////////
 

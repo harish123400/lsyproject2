@@ -388,12 +388,12 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 		 cancelButtonTitle:(NSString*)cancelButtonTitle
 				  delegate:(id)delegate
 {
-	
+	/*
 	if(alertTitle ==nil)
 	{
-		//[UIApplication sharedApplication]
 		alertTitle = @"iAlarm";
 	}
+	 */
 	
 	if(cancelButtonTitle ==nil)
 		cancelButtonTitle = @"OK";
@@ -403,6 +403,24 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 												   delegate:delegate
 										  cancelButtonTitle:cancelButtonTitle 
 										  otherButtonTitles:nil];
+	
+	[alert show];
+	[alert release];
+}
+
++(void)simpleAlertBody:(NSString*)alertBody 
+			alertTitle:(NSString*)alertTitle
+	 cancelButtonTitle:(NSString*)cancelButtonTitle
+		 OKButtonTitle:(NSString*)OKButtonTitle
+			  delegate:(id)delegate
+{
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+													message:alertBody 
+												   delegate:delegate
+										  cancelButtonTitle:OKButtonTitle 
+										  otherButtonTitles:cancelButtonTitle,nil];
+	                                       //保持cancel按钮在右侧
 	
 	[alert show];
 	[alert release];

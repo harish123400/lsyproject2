@@ -46,7 +46,11 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 @synthesize previousBarItem;              
 @synthesize nextBarItem;  
 
-@synthesize forwardGeocoder;
+/////////////////////////////////////
+//地址反转
+@synthesize placemarkForReverse;
+/////////////////////////////////////
+
 @synthesize searchController;
 @synthesize regionCenterWithCurrentLocation;
 @synthesize alarms;
@@ -57,6 +61,12 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 @synthesize annotationAlarmEditing;
 @synthesize annotationManipulating;
 
+-(id)forwardGeocoder{
+	if (forwardGeocoder == nil) {
+		forwardGeocoder = [[BSForwardGeocoder alloc] initWithDelegate:self];
+	}
+	return forwardGeocoder;
+}
 
 - (MKReverseGeocoder *)reverseGeocoder:(CLLocationCoordinate2D)coordinate
 {
@@ -423,11 +433,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		if (regionCenterWithCurrentLocation)  
 		{
 			[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
-			self.curlbackgroundView.canHideToolBar = YES;
 			[self.curlbackgroundView startHideToolbarAfterTimeInterval:5.0];
 		}else{//显示SearchBar -animated:NO 
 			[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideSearchBar"];
-			//self.curlbackgroundView.canHideSearchBar = YES;
 			[self.curlbackgroundView startHideSearchBarAfterTimeInterval:15.0];
 		}
 
@@ -437,8 +445,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		
 		//反向取当前位置的地址
 		self.annotationManipulating = self.mapView.userLocation;
-		reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
-		[reverseGeocoder start];
+		//reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
+		//[reverseGeocoder start];
+		[self beginReverseWithCoordinate:self.annotationManipulating.coordinate];
 		
 		//闹钟中的坐标无效，用屏幕中心
 		if (!regionCenterWithCurrentLocation) {
@@ -471,10 +480,10 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		 if (regionCenterWithCurrentLocation)  
 		 {
 			 [UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
-			 self.curlbackgroundView.canHideToolBar = YES;
+			 //self.curlbackgroundView.canHideToolBar = YES;
 			 [self.curlbackgroundView startHideToolbarAfterTimeInterval:5.0];
 		 }else{//显示SearchBar
-			 [UIUtility setBar:self.searchBar topBar:YES visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideSearchBar"];
+			 [UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideSearchBar"];
 			 //self.curlbackgroundView.canHideSearchBar = YES;
 			 [self.curlbackgroundView startHideSearchBarAfterTimeInterval:15.0];
 		 }
@@ -676,9 +685,10 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	//反转坐标－地址
 	self.annotationManipulating = self.annotationAlarmEditing;
 	((YCAnnotation*) self.annotationAlarmEditing).subtitle = @"";
-	reverseGeocoder = [self reverseGeocoder:self.annotationAlarmEditing.coordinate]; 
-	[reverseGeocoder start];
-	//[reverseGeocoder performSelector:@selector(start) withObject:nil afterDelay:0.2];
+	//reverseGeocoder = [self reverseGeocoder:self.annotationAlarmEditing.coordinate]; 
+	//[reverseGeocoder start];
+	[self beginReverseWithCoordinate:self.annotationAlarmEditing.coordinate];
+
 }
 
 
@@ -790,17 +800,23 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[self.mapTypeSegmented setTitle:KMapTypeNameSatellite forSegmentAtIndex:1];
 	[self.mapTypeSegmented setTitle:KMapTypeNameHybrid forSegmentAtIndex:2];
 	
-	//search bar,toolbar
+	//searchBar,toolbar
+	self.searchBar.hidden = NO;
+	[(YCSearchBar*)self.searchBar setCanResignFirstResponder:YES];
+	
 	if (!regionCenterWithCurrentLocation) 
-	{
-		self.searchBar.hidden = NO;
-		[(YCSearchBar*)self.searchBar setCanResignFirstResponder:YES];
+	{  
+		self.curlbackgroundView.canHideSearchBar = YES;
+		
+		self.curlbackgroundView.canHideToolBar = NO;
 		self.toolbar.hidden = NO;
-	} else { //在tab上的地图，一直有searchbar
-		self.searchBar.hidden = NO;
+	} else { //在tab上的地图，一直有searchbar,toolbar可以隐藏
+		self.curlbackgroundView.canHideSearchBar = NO;
 		self.searchBar.showsBookmarkButton = YES;
-		self.toolbar.alpha = 0.80f;
+		
+		self.curlbackgroundView.canHideToolBar = YES;
 		self.toolbar.hidden = YES;
+		self.toolbar.alpha = 0.80f;
 	}
 	[self setToolBarItemsEnabled:NO];
 	
@@ -891,7 +907,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		//除了第一次外，每次WillAppear都显示Toolbar。第一次在定位结束后显示
 		if (!isFirstShow) { 
 			[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
-			self.curlbackgroundView.canHideToolBar = YES;
+			//self.curlbackgroundView.canHideToolBar = YES;
 			[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 		}
 	}else {
@@ -939,8 +955,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 {
 	//反向取当前位置的地址
 	self.annotationManipulating = userLocation;
-	reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
-	[reverseGeocoder start];
+	//reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
+	//[reverseGeocoder start];
+	[self beginReverseWithCoordinate:self.annotationManipulating.coordinate];
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
@@ -1111,8 +1128,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			self.annotationManipulating = annotationView.annotation;
 			//反转坐标－地址
 			((YCAnnotation*) annotationView.annotation).subtitle = @"";
-			reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
-			[reverseGeocoder start];
+			//reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
+			//[reverseGeocoder start];
+			[self beginReverseWithCoordinate:annotationView.annotation.coordinate];
 			
 			//激活Done按钮
 			self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -1131,8 +1149,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 }
 
 #pragma mark -
-#pragma mark MKReverseGeocoderDelegate
-
+#pragma mark Utility - ReverseGeocoder
 
 -(void) setAnnotationAlarmEditingWithCoordinate:(CLLocationCoordinate2D)coordinate 
 										  title:(NSString*)title subtitle:(NSString*)subtitle subtitleShort:(NSString*)subtitleShort
@@ -1162,16 +1179,45 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 	//激活Done按钮
 	self.navigationItem.rightBarButtonItem.enabled = YES;
-		
+	
 	
 }
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
-{   
-	NSString *title = [UIUtility titleStringFromPlacemark:placemark];
-	NSString *subtitle = [UIUtility positionStringFromPlacemark:placemark];
-	NSString *subtitleShort = [UIUtility positionShortStringFromPlacemark:placemark];
-	CLLocationCoordinate2D coordinate = placemark.coordinate;
+#define kTimeOutForReverse 8.0
+
+-(void)beginReverseWithCoordinate:(CLLocationCoordinate2D)coordinate
+{
+	//初始化，reverseGeocoder对象必须根据特定坐标init。
+	reverseGeocoder = [self reverseGeocoder:coordinate];
+	reverseGeocoder.delegate = self;
+	
+	//反转坐标
+	self.placemarkForReverse = nil; //先赋空相关数据
+	[reverseGeocoder start];
+	[self performSelector:@selector(endReverse) withObject:nil afterDelay:kTimeOutForReverse];
+}
+
+-(void)endReverse
+{
+	//如果超时了，反转还没结束，结束它
+	[reverseGeocoder cancel];
+	//取消掉另一个调用
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(endReverse) object:nil];
+	
+	//
+	CLLocationCoordinate2D coordinate = reverseGeocoder.coordinate;
+	NSString *title = nil;
+	NSString *subtitle = nil;
+	NSString *subtitleShort = nil;
+	if (self.placemarkForReverse == nil) {
+		//反转坐标 失败，使用坐标
+		title = nil;
+		subtitle = [UIUtility convertCoordinate:coordinate];
+	}else {
+		title = [UIUtility titleStringFromPlacemark:self.placemarkForReverse];
+		subtitle = [UIUtility positionStringFromPlacemark:self.placemarkForReverse];
+		subtitleShort = [UIUtility positionShortStringFromPlacemark:self.placemarkForReverse];
+	}
 	
 	if (self.annotationManipulating != self.annotationAlarmEditing)
 	{
@@ -1185,60 +1231,50 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	else 
 		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle subtitleShort:subtitleShort animated:YES];
 	
+	
+}
+
+
+#pragma mark -
+#pragma mark MKReverseGeocoderDelegate
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
+{
+	self.placemarkForReverse = placemark;
+	[self performSelector:@selector(endReverse) withObject:nil afterDelay:0.1];  //数据更新后，等待x秒
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
 {
-	/*
-	double lat = geocoder.coordinate.latitude;
-	double lon = geocoder.coordinate.longitude;
-	NSString *latstr = [UIUtility convertLatitude:lat decimal:0];
-	NSString *lonstr = [UIUtility convertLongitude:lon decimal:0];
-	
-	NSString *title = nil;
-	NSString *subtitle = [[[NSString alloc] initWithFormat:@"%@ %@",latstr,lonstr] autorelease];
-	*/
-	
-	CLLocationCoordinate2D coordinate = geocoder.coordinate;
-	NSString *title = nil;
-	NSString *subtitle = [UIUtility convertCoordinate:coordinate];
-	
-	if (self.annotationManipulating != self.annotationAlarmEditing)
-	{
-		if ([self.annotationManipulating isKindOfClass:[MKUserLocation class]])
-		{
-			//((MKUserLocation*)self.annotationManipulating).title = title;          
-			((MKUserLocation*)self.annotationManipulating).subtitle = subtitle;
-			self.annotationManipulating.coordinate = coordinate;
-		}
-	}
-	else 
-		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle subtitleShort:subtitle animated:YES];
-	
-}
-
-#pragma mark -
-#pragma mark YCNavSuperControllerProtocol
--(void)reflashView
-{
-	self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
-	//激活Done按钮
-	self.navigationItem.rightBarButtonItem.enabled = YES;
+	self.placemarkForReverse = nil;
+	[self performSelector:@selector(endReverse) withObject:nil afterDelay:0.1];  //等待x秒，结束
 }
 
 
 #pragma mark -
-#pragma mark BSForwardGeocoderDelegate
+#pragma mark Utility - ForwardGeocoder
 
--(void)forwardGeocoderFoundLocation
-{
+#define kTimeOutForForwardGeocoder    10.0
+-(void)beginForwardGeocoderWithSearchString:(NSString *)searchString{
+	// Forward geocode!
+	[self.forwardGeocoder findLocation:searchString];
+	[self performSelector:@selector(endForwardGeocoder) withObject:nil afterDelay:kTimeOutForForwardGeocoder];
+}
+
+-(void)endForwardGeocoder{
+	//如果超时了，还没结束，结束它
+	[self.forwardGeocoder cancel]; 
+	//取消掉另一个调用
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(endForwardGeocoder) object:nil];
 	
-	NSUInteger searchResults = [forwardGeocoder.results count];
+	//结束搜索状态
+	[self.searchController setActive:NO animated:YES];   //处理search状态
 	
-	if(forwardGeocoder.status == G_GEO_SUCCESS && searchResults > 0)
+	NSUInteger searchResults = [self.forwardGeocoder.results count];
+	if(self.forwardGeocoder.status == G_GEO_SUCCESS && searchResults > 0)
 	{
 		//加到最近查询list中
-		[self.searchController addListContentWithString:forwardGeocoder.searchQuery];
+		[self.searchController addListContentWithString:self.forwardGeocoder.searchQuery];
 		
 		//离当前位置最近的元素
 		CLLocationDistance distanceOfNearest = 900000000000.0;
@@ -1246,7 +1282,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		
 		for(NSUInteger i = 0; i < searchResults; i++)
 		{
-			BSKmlResult *placeTmp = [forwardGeocoder.results objectAtIndex:i];
+			BSKmlResult *placeTmp = [self.forwardGeocoder.results objectAtIndex:i];
 			
 			//找出个离当前位置最近的
 			CLLocation *currentLocation = self.mapView.userLocation.location;
@@ -1263,21 +1299,21 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			
 		}
 		
-
-		BSKmlResult *place = [forwardGeocoder.results objectAtIndex:indexOfNearest];  /////用最近的
-	
+		
+		BSKmlResult *place = [self.forwardGeocoder.results objectAtIndex:indexOfNearest];  /////用最近的
+		
 		YCAnnotation *annotationTemp = nil;
 		NSString *title = nil;
 		NSString *subtitle = nil;
 		if(!self.regionCenterWithCurrentLocation) 
 		{
 			annotationTemp = self.annotationAlarmEditing;
-			title = forwardGeocoder.searchQuery;
+			title = self.forwardGeocoder.searchQuery;
 			subtitle = place.address!=nil ? place.address: @" " ;
 			[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle subtitleShort:subtitle animated:NO];
 		}else { //在tab页面上的搜索结果大头针
 			annotationTemp = self.annotationSearched;
-			title = forwardGeocoder.searchQuery ;
+			title = self.forwardGeocoder.searchQuery ;
 			subtitle = place.address!=nil ? place.address: @" " ;
 			annotationTemp.title = title;
 			annotationTemp.subtitle = subtitle;
@@ -1287,7 +1323,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		//先删除原来的annotation
 		if (annotationTemp)
 			[self.mapView removeAnnotation:annotationTemp];
-				
+		
 		////////////////////////
 		//Zoom into the location
 		self->defaultMapRegion = place.coordinateRegion;
@@ -1300,54 +1336,69 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		//再加上
 		//[self.mapView addAnnotation:self.annotationAlarmEditing];
 		[self.mapView performSelector:@selector(addAnnotation:) withObject:annotationTemp afterDelay:delay+0.1];
-			
+		
 	}else {
 		
-		switch (forwardGeocoder.status) {
+		switch (self.forwardGeocoder.status) {
 			case G_GEO_BAD_KEY:
-				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
-								alertTitle:kAlertTitleWhenSearchMap 
-						 cancelButtonTitle:kAlertBtnOK 
+				[UIUtility simpleAlertBody:kAlertMsgError1WhenSearchMap 
+								alertTitle:kAlertTitleDefaultErrorWhenSearchMap
+						 cancelButtonTitle:kAlertBtnCancel
+						     OKButtonTitle:kAlertBtnRetry
 								  delegate:self];
 				break;
 				
 			case G_GEO_UNKNOWN_ADDRESS:
-				[UIUtility simpleAlertBody:kAlertMsgNoResultsWhenSearchMap 
-								alertTitle:kAlertTitleWhenSearchMap 
-						 cancelButtonTitle:kAlertBtnOK 
+				[UIUtility simpleAlertBody:kAlertMsgError1WhenSearchMap 
+								alertTitle:kAlertTitleNoResultsWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnCancel
+						     OKButtonTitle:kAlertBtnRetry 
 								  delegate:self];
+				
 				break;
 				
 			case G_GEO_TOO_MANY_QUERIES:
-				[UIUtility simpleAlertBody:kAlertMsgTooManyQueriesWhenSearchMap 
-								alertTitle:kAlertTitleWhenSearchMap 
+				[UIUtility simpleAlertBody:kAlertMsgError2WhenSearchMap 
+								alertTitle:kAlertTitleTooManyQueriesWhenSearchMap 
 						 cancelButtonTitle:kAlertBtnOK 
-								  delegate:self];
+								  delegate:nil];  //只用1个按钮，而且不用retry
 				break;
 				
 			case G_GEO_SERVER_ERROR:
-				[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
-								alertTitle:kAlertTitleWhenSearchMap 
-						 cancelButtonTitle:kAlertBtnOK 
+				[UIUtility simpleAlertBody:kAlertMsgError1WhenSearchMap 
+								alertTitle:kAlertTitleDefaultErrorWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnCancel
+						     OKButtonTitle:kAlertBtnRetry
 								  delegate:self];
 				break;
 				
 				
 			default:
+				[UIUtility simpleAlertBody:kAlertMsgError1WhenSearchMap 
+								alertTitle:kAlertTitleDefaultErrorWhenSearchMap 
+						 cancelButtonTitle:kAlertBtnCancel
+						     OKButtonTitle:kAlertBtnRetry
+								  delegate:self];
 				break;
 		}
 		
 	}
+	
+}
+
+#pragma mark -
+#pragma mark BSForwardGeocoderDelegate
+
+
+-(void)forwardGeocoderFoundLocation
+{
+	[self performSelector:@selector(endForwardGeocoder) withObject:nil afterDelay:0.1];  //数据更新后，等待x秒
 }
 
 
 -(void)forwardGeocoderError:(NSString *)errorMessage
 {
-	
-	[UIUtility simpleAlertBody:kAlertMsgErrorWhenSearchMap 
-					alertTitle:kAlertTitleWhenSearchMap 
-			 cancelButtonTitle:kAlertBtnOK 
-					  delegate:self];
+	[self performSelector:@selector(endForwardGeocoder) withObject:nil afterDelay:0.1];  //数据更新后，等待x秒
 }
  
 
@@ -1356,7 +1407,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	[self.searchController setActive:YES animated:YES];   //处理search状态
+	if(buttonIndex == 0)  
+		[self.searchController setActive:YES animated:YES];   //处理search状态
 }
 
 
@@ -1365,15 +1417,12 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 - (NSArray*)searchController:(YCSearchController *)controller searchString:(NSString *)searchString
 {
+	//结束其他的搜索
+	[self.forwardGeocoder cancel]; 
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(endForwardGeocoder) object:nil];
 	
-	if(forwardGeocoder == nil)
-	{
-		forwardGeocoder = [[BSForwardGeocoder alloc] initWithDelegate:self];
-	}
 	
-	// Forward geocode!
-	[forwardGeocoder findLocation:searchString];
-	
+	[self beginForwardGeocoderWithSearchString:searchString];
 	return nil;
 }
 
@@ -1403,6 +1452,13 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	}
 
 	[self.navigationController presentModalViewController:self.mapBookmarksListNavigationController animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+	//取消了，还没结束，结束它
+	[self.forwardGeocoder cancel]; 
+	//取消掉另一个调用
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(endForwardGeocoder) object:nil];	
 }
 
 #pragma mark -
@@ -1467,7 +1523,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 {
 	[self outletRelease];
 	[self->locationTimer release];
-	[self->reverseGeocoder release];
 	[self.forwardGeocoder release];
 	[self.searchController release];
 	[self.alarms release];                       
@@ -1479,6 +1534,12 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[self.annotationSearched release];
 	[self.mapBookmarksListController release];
     [self.mapBookmarksListNavigationController release];
+	
+	/////////////////////////////////////
+	//地址反转
+	[self->reverseGeocoder release];
+	[placemarkForReverse release];
+	/////////////////////////////////////
 	
 	[super dealloc];
 }

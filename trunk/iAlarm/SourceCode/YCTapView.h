@@ -17,14 +17,14 @@
 	IBOutlet UISearchBar *searchBar;
 	
 	BOOL canHideToolBar;
-	//BOOL canHideSearchBar;
+	BOOL canHideSearchBar;
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, assign) BOOL canHideToolBar;
-//@property (nonatomic, assign) BOOL canHideSearchBar;
+@property (nonatomic, assign) BOOL canHideSearchBar;
 
 //开始隐藏倒计时 - toolbar
 -(void)startHideToolbarAfterTimeInterval:(NSTimeInterval)TimeInterval;

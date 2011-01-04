@@ -12,8 +12,23 @@
 @interface YCSearchBar : UISearchBar 
 {
 	BOOL canResignFirstResponder;
+	
+	
+	#pragma mark -
+	#pragma mark  设置搜索等待
+	UITextField *searchBarTextField;  //searchbar上的TextField控件
+	UITextFieldViewMode originalClearButtonMode;
+	UIActivityIndicatorView *searchActivityIndicator;
 }
 
 @property(nonatomic,assign) BOOL canResignFirstResponder;
+
+///////////////////////////////////////////
+#pragma mark -
+#pragma mark  设置搜索等待
+@property(nonatomic,retain,readonly) UITextField *searchBarTextField;
+- (void)setSearchWaiting:(BOOL)Waiting;
+@property(nonatomic,retain,readonly) UIActivityIndicatorView *searchActivityIndicator;
+///////////////////////////////////////////
 
 @end

@@ -53,7 +53,6 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 		
 		self.searchDisplayController.originalPlaceholderString = theSearchDisplayController.searchBar.placeholder;
 		self->originalSearchBarHidden = theSearchDisplayController.searchBar.hidden;
-		
 	}
 	return self;
 }
@@ -79,29 +78,7 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 
 -(void)setSearchBar:(UISearchBar*)searchBar visible:(BOOL)visible animated:(BOOL)animated
 {
-	/*
-	if (animated) 
-	{
-		CATransition *animation = [CATransition animation];  
-		[animation setDelegate:self];  
-		[animation setDuration:0.3f];
-		animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]; 
-		[animation setType:kCATransitionPush];
-		[animation setFillMode:kCAFillModeForwards];
-		[animation setRemovedOnCompletion:YES]; 
-		NSString *subtype = visible ? kCATransitionFromBottom:kCATransitionFromTop;
-		[animation setSubtype:subtype];
-		
-		searchBar.hidden = !visible;  
-		[[searchBar layer] addAnimation:animation forKey:@"showOrHideSearchBar"];
-	}else {
-		searchBar.hidden = !visible; 
-	}
-	 */
-	
 	[UIUtility setBar:searchBar topBar:YES visible:visible animated:animated animateDuration:0.3 animateName:@"showOrHideSearchBar"];
-
-
 }
 
 
@@ -126,23 +103,18 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 		}
 		
 		[self.filteredListContent removeAllObjects];
-		//self.searchMaskView = nil;
-		//self.searchTableView = nil;
+		
 	}
 
 }
 
+- (void)setSearchWaiting:(BOOL)Waiting{
+	[(YCSearchBar*)self.searchDisplayController.searchBar setSearchWaiting:Waiting];
+}
 
 #pragma mark -
 #pragma mark UITableView data source and delegate methods
 
-/*
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[tableView canBecomeFirstResponder]
-	return 40.0;
-}
- */
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -221,13 +193,15 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
         searchString = [self.listContent objectAtIndex:indexPath.row];
     }
 	
-	self.searchDisplayController.searchBar.text = searchString;
-	
-	//结束搜索状态
-	[self.searchDisplayController setActive:NO animated:YES];
-	
-	//执行搜索
-	[self.delegate searchController:self searchString:searchString];
+	//相同，直接搜索
+	if ([searchString isEqualToString:self.searchDisplayController.searchBar.text]) {
+		//结束搜索状态
+		[self.searchDisplayController setActive:NO animated:YES];		
+		//执行搜索
+		[self.delegate searchController:self searchString:searchString];
+	}else {//不相同，把选中的“提示字符串”显示到searchBar的文本框中
+		self.searchDisplayController.searchBar.text = searchString;
+	}
 
 }
 
@@ -258,6 +232,9 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	}
 }
 
+
+
+
 #pragma mark -
 #pragma mark UISearchBarDelegate Delegate Methods
 
@@ -278,18 +255,17 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	}
 }
 
+
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
 	NSString *searchString = [self.searchDisplayController.searchBar.text copy]; 
 	                                 //结束搜索状态,改变searchBar.text,所以copy
 
+	/*
 	//结束搜索状态
 	[self.searchDisplayController setActive:NO animated:YES];
-	
-
-	//加数据到
-	//[self addListContentWithString:searchString];
-	//[self performSelector:@selector(addListContentWithString:) withObject:searchString afterDelay:0.5];
+	 */
 
 	
 	//执行搜索
@@ -303,6 +279,14 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 	if ([self.delegate respondsToSelector:@selector(searchBarbookmarkButtonPressed:)]) 
 	{
 		[self.delegate searchBarbookmarkButtonPressed:searchBar];
+	}
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+	if ([self.delegate respondsToSelector:@selector(searchBarCancelButtonClicked:)]) 
+	{
+		[self.delegate searchBarCancelButtonClicked:searchBar];
 	}
 }
 

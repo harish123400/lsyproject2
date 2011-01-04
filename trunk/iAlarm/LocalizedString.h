@@ -58,14 +58,19 @@
 ////alert通用按钮
 #define kAlertBtnOK                              NSLocalizedString(@"OK",@"alert提示的OK按钮")
 #define kAlertBtnCancel                          NSLocalizedString(@"Cancel",@"alert提示的Cancel按钮")
+#define kAlertBtnRetry                           NSLocalizedString(@"Retry",@"alert提示的Retry按钮")
 #define kAlertBtnSettings                        NSLocalizedString(@"Settings",@"alert提示的Settings按钮")
 
 
 ////地图查询
 #define kAlertTitleWhenSearchMap                 NSLocalizedString(@"Search",@"地图查询alert标题")
-#define kAlertMsgNoResultsWhenSearchMap          NSLocalizedString(@"No results found.",@"地图查询时候，无结果")
-#define kAlertMsgTooManyQueriesWhenSearchMap     NSLocalizedString(@"Too many queries has been made, please try at tomorrow",@"地图查询时候，一天内查询次数过多")
-#define kAlertMsgErrorWhenSearchMap              NSLocalizedString(@"Network error, please try again.",@"地图查询时候，发生错误")
+#define kAlertTitleNoResultsWhenSearchMap        NSLocalizedString(@"No results found",@"地图查询时候，无结果")
+#define kAlertTitleTooManyQueriesWhenSearchMap   NSLocalizedString(@"Too many queries has been made",@"地图查询时候，一天内查询次数过多")
+#define kAlertTitleDefaultErrorWhenSearchMap     NSLocalizedString(@"Network error",@"地图查询时候，发生错误,默认提示")
+
+#define kAlertMsgError1WhenSearchMap             NSLocalizedString(@"please try again.",@"")
+#define kAlertMsgError2WhenSearchMap             NSLocalizedString(@"please try tomorrow.",@"")
+
 
 ////界面提示
 #define kPromptWhenLocating                      NSLocalizedString(@"Locating...",@"正在定位的提示")

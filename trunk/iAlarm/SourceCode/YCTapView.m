@@ -20,7 +20,7 @@
 @synthesize toolbar;
 @synthesize canHideToolBar;
 @synthesize searchBar;
-//@synthesize canHideSearchBar;
+@synthesize canHideSearchBar;
 
 -(void)hideToolbar{
 	if (!self.toolbar.hidden)
@@ -54,8 +54,8 @@
 -(void)hideSearchBar{
 	if (!self.searchBar.hidden)
 	{
-		if ([self.searchBar canResignFirstResponder])
-		{
+		if ([self.searchBar canResignFirstResponder] && self.canHideSearchBar) 
+		{//canResignFirstResponder:搜索后；canHideSearchBar:不在tab上
 			[UIUtility setBar:self.searchBar topBar:YES visible:NO animated:YES animateDuration:0.5 animateName:@"showOrHideToolbar"];
 		}else { //递归
 			[self performSelector:@selector(hideSearchBar) withObject:nil afterDelay:kTimeIntervalForHideSearchBar];
@@ -153,7 +153,6 @@
 		if (self.toolbar.hidden) 
 		{
 			[self showToolbar];
-			//[self startHideToolbarAfterTimeInterval:kTimeIntervalForHideToolbar];
 			[self resetTimeIntervalForHideToolbar:kTimeIntervalForHideToolbar];
 		}
 		
@@ -172,7 +171,6 @@
 		if (self.searchBar.hidden) 
 		{
 			[self showSearchBar];
-			//[self startHideSearchBarAfterTimeInterval:kTimeIntervalForHideSearchBar];
 			[self resetTimeIntervalForHideSearchBar:kTimeIntervalForHideSearchBar];
 		}
 		

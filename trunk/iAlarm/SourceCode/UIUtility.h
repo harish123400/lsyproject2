@@ -51,6 +51,12 @@
 		 cancelButtonTitle:(NSString*)cancelButtonTitle
 				  delegate:(id)delegate;
 
++(void)simpleAlertBody:(NSString*)alertBody 
+			alertTitle:(NSString*)alertTitle
+	 cancelButtonTitle:(NSString*)cancelButtonTitle
+	OKButtonTitle:(NSString*)OKButtonTitle
+			  delegate:(id)delegate;
+
 //转换经纬度
 +(NSString*)convertLatitude:(double)latitude   decimal:(NSUInteger)decimal;
 +(NSString*)convertLongitude:(double)longitude decimal:(NSUInteger)decimal;
