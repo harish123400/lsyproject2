@@ -64,12 +64,12 @@
 
 ////地图查询
 #define kAlertTitleWhenSearchMap                 NSLocalizedString(@"Search",@"地图查询alert标题")
-#define kAlertTitleNoResultsWhenSearchMap        NSLocalizedString(@"No results found",@"地图查询时候，无结果")
-#define kAlertTitleTooManyQueriesWhenSearchMap   NSLocalizedString(@"Too many queries has been made",@"地图查询时候，一天内查询次数过多")
-#define kAlertTitleDefaultErrorWhenSearchMap     NSLocalizedString(@"Network error",@"地图查询时候，发生错误,默认提示")
+#define kAlertTitleNoResultsWhenSearchMap        NSLocalizedString(@"No Results Found",@"地图查询时候，无结果")
+#define kAlertTitleTooManyQueriesWhenSearchMap   NSLocalizedString(@"Too Many Queries has been Made",@"地图查询时候，一天内查询次数过多")
+#define kAlertTitleDefaultErrorWhenSearchMap     NSLocalizedString(@"Network Error",@"地图查询时候，发生错误,默认提示")
 
-#define kAlertMsgError1WhenSearchMap             NSLocalizedString(@"please try again.",@"")
-#define kAlertMsgError2WhenSearchMap             NSLocalizedString(@"please try tomorrow.",@"")
+#define kAlertMsgError1WhenSearchMap             NSLocalizedString(@"Please try again.",@"")
+#define kAlertMsgError2WhenSearchMap             NSLocalizedString(@"Please try tomorrow.",@"")
 
 
 ////界面提示

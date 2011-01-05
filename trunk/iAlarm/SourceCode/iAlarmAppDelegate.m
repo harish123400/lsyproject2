@@ -223,6 +223,7 @@ BOOL lo;
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
 	
+	/*
 	[[YCLog logSingleInstance] addlog:@"here is applicationWillEnterForeground"];
 	
 	YCLocationManager * ycLocationManager = [YCLocationManager locationManagerSigleInstance];
@@ -231,6 +232,7 @@ BOOL lo;
 	UIApplication* app = [UIApplication sharedApplication];
 	[app endBackgroundTask:bgTask];
 	bgTask = UIBackgroundTaskInvalid;
+	 */
 	 
 	 
 
@@ -301,7 +303,7 @@ BOOL lo;
 	return YES;
 	 */
 	
-	//NSLog(@"alarms's count = %d",[DataUtility alarmArray].count);
+	NSLog(@"alarms's count = %d",[DataUtility alarmArray].count);
 	
 	if ([viewController isKindOfClass:[UINavigationController class]]) 
 	{
@@ -309,8 +311,6 @@ BOOL lo;
 		if ([rootViewContoller isKindOfClass:[AlarmPositionMapViewController class]]) 
 		{
 			((AlarmPositionMapViewController*)rootViewContoller).alarms = [DataUtility alarmArray];
-			//((AlarmPositionMapViewController*)rootViewContoller).alarm = [DataUtility createAlarm];
-			//((AlarmPositionMapViewController*)rootViewContoller).alarm = [[DataUtility alarmArray] objectAtIndex:0];
 			((AlarmPositionMapViewController*)rootViewContoller).regionCenterWithCurrentLocation = YES;
 		}
 		

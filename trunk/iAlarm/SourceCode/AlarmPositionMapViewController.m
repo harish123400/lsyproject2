@@ -854,11 +854,11 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	//覆盖
 	[self showMaskView];
 	
+	self.alarmTemp = [self.alarm copy];
+	self.alarmsTemp = [self.alarms mutableCopy];
 	//判断闹钟坐标是否有效
-	if (self.alarm) 
+	if (self.alarmTemp) 
 	{
-		self.alarmTemp = [self.alarm copy];
-		self.alarmsTemp = [self.alarms mutableCopy];
 		[self.alarmsTemp replaceObjectAtIndex:[self.alarms indexOfObject:self.alarm] withObject:self.alarmTemp];
 		
 		if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
