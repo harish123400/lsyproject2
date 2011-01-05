@@ -20,6 +20,14 @@
 @synthesize window;
 @synthesize tabBarController;
 
+//////////////////////////////////
+//tabBarItem title
+@synthesize iAlarmTabBarItem;
+@synthesize mapsTabBarItem;
+@synthesize settingTabBarItem;
+@synthesize aboutTabBarItem;
+//////////////////////////////////
+
 -(void)resetMonitoredRegions
 {
 	
@@ -124,11 +132,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-	[[YCLog logSingleInstance] addlog:@"here is didFinishLaunchingWithOptions"];
+	//////////////////////////////////
+	//tabBarItem title
+	self.iAlarmTabBarItem.title = KIAlarmTabBarItemTitle;
+	self.mapsTabBarItem.title = KMapsTabBarItemTitle;
+	self.settingTabBarItem.title = KSettingTabBarItemTitle;
+	self.aboutTabBarItem.title = KAboutTabBarItemTitle;
+	//////////////////////////////////
 	
-    // Override point for customization after application launch.
-
-    // Add the tab bar controller's view to the window and display.
+	
 	tabBarController.delegate = self;
     [window addSubview:tabBarController.view];
     [window makeKeyAndVisible];

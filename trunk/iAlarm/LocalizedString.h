@@ -34,6 +34,12 @@
 #define KAlarmLocationByMapLabel                 NSLocalizedString(@"by Maps",@"通过地图定位的标签")
 #define KLocationingLabel                        NSLocalizedString(@"Locating",@"正在定位的标签")
 
+////tabBarItem Title
+#define KIAlarmTabBarItemTitle                   NSLocalizedString(@"iAlarm",@"iAlarm tabBarItem 的标题")
+#define KMapsTabBarItemTitle                     NSLocalizedString(@"Maps",@"Maps tabBarItem 的标题")
+#define KSettingTabBarItemTitle                  NSLocalizedString(@"Setting",@"Setting tabBarItem 的标题")
+#define KAboutTabBarItemTitle                    NSLocalizedString(@"About",@"About tabBarItem 的标题")
+
 
 #define kDefaultLocationAlarmName                NSLocalizedString(@"iAlarm",@"默认的位置闹钟名称")
 #define kMapTypeNameStandard                     NSLocalizedString(@"Map",@"地图类型名称")

@@ -9,14 +9,30 @@
 #import <UIKit/UIKit.h>
 
 @interface iAlarmAppDelegate : NSObject 
-<UIApplicationDelegate, UITabBarControllerDelegate, UITabBarControllerDelegate> 
+<UIApplicationDelegate, UITabBarControllerDelegate> 
 {
     UIWindow *window;
     UITabBarController *tabBarController;
 	UIBackgroundTaskIdentifier	bgTask;
+	
+	//////////////////////////////////
+	//tabBarItem title
+	IBOutlet UITabBarItem *iAlarmTabBarItem;
+	IBOutlet UITabBarItem *mapsTabBarItem;
+	IBOutlet UITabBarItem *settingTabBarItem;
+	IBOutlet UITabBarItem *aboutTabBarItem;
+	//////////////////////////////////
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
+@property (nonatomic,retain) IBOutlet UIWindow *window;
+@property (nonatomic,retain) IBOutlet UITabBarController *tabBarController;
+
+//////////////////////////////////
+//tabBarItem title
+@property (nonatomic,retain) IBOutlet UITabBarItem *iAlarmTabBarItem;
+@property (nonatomic,retain) IBOutlet UITabBarItem *mapsTabBarItem;
+@property (nonatomic,retain) IBOutlet UITabBarItem *settingTabBarItem;
+@property (nonatomic,retain) IBOutlet UITabBarItem *aboutTabBarItem;
+//////////////////////////////////
 
 @end

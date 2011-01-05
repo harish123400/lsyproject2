@@ -896,7 +896,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	self.title = KAlarmPostionLabel;
 	
 	
 	if (self.regionCenterWithCurrentLocation) 
@@ -911,6 +910,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 		}
 	}else {
+		self.title = KAlarmPostionLabel;
+		
 		//除了第一次外，每次WillAppear都显示Searchbar。-animated:NO 
 		if (!isFirstShow) { 
 			[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideToolbar"];
