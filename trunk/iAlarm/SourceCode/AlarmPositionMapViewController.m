@@ -5,7 +5,7 @@
 //  Created by li shiyong on 10-10-28.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
-
+#import "YCLocationUtility.h"
 #import "AlarmModifyNotification.h"
 #import "YCSearchBar.h"
 #import "AlarmPositionMapViewController.h"
@@ -169,6 +169,31 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 #pragma mark - 
 #pragma mark - Utility
+
+//设置“回到当前位置按钮”、“回到正在编辑按钮”的可用状态。
+-(void)setLocationBarItemAndCurrentPinBarItem{
+	CLLocationCoordinate2D currentMapCenter = self.mapView.region.center;
+	
+	//比较“当前地图的中心坐标”、annotationAlarmEditing的坐标；相等：currentPinBarItem不可用
+	CLLocationCoordinate2D alarmEditing = self.annotationAlarmEditing.coordinate;
+	int isA = compareCLLocationCoordinate2D(currentMapCenter, alarmEditing);
+	if (0 == isA) {
+		self.currentPinBarItem.enabled = NO;
+	}else {
+		self.currentPinBarItem.enabled = YES;
+	}
+	
+	// 不好用
+	//比较“当前地图的中心坐标”、当前位置的坐标；相等：currentLocationBarItem不可用
+	CLLocationCoordinate2D userCurrentLocation = self.mapView.userLocation.location.coordinate;
+	int isC = compareCLLocationCoordinate2D(currentMapCenter, userCurrentLocation);
+	if (0 == isC) {
+		self.currentLocationBarItem.enabled = NO;
+	}else {
+		self.currentLocationBarItem.enabled = YES;
+	}
+	 
+}
 
 //根据Annotation的选中情况，更新CyclingIndex
 -(void)updateCyclingIndex
@@ -351,16 +376,22 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		}
 
 	}
-	
+	 	
 	//ZoomTo目标
 	if (animatedToPlace) 
 	{
+		
 		if(delay > 0.1) delay +=1.4;
 		NSValue *regionObj = [NSValue valueWithBytes:&region objCType:@encode(MKCoordinateRegion)];
 		[self performSelector:@selector(animateToPlaceWithObj:) withObject:regionObj afterDelay:delay];
+		
 	}else {
 		[self zoomToPlace:region animated:NO];
 	}
+	 
+	//校正一下位置; 这个函数 MKMapView:setRegion:有误差: 
+	//[self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:NO];
+	
 	
 	return delay;
 }
@@ -398,7 +429,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[self.mapView addAnnotations:self.mapAnnotations];	
 }
 
-////设置正在定位barItem处于定位状态
+////设置"正在定位"barItem处于定位状态
 -(void)setLocationBarItem:(BOOL)locationing
 {
 	NSMutableArray *baritems = [NSMutableArray array];
@@ -579,12 +610,12 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	{
 		[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 	}
-
-	[self setLocationBarItem:YES];
-	[self setToolBarItemsEnabled:NO];
-	[self startCheckLocationTimer];
 	
-	//选中当前
+	[self setLocationBarItem:YES];    //把barItem改成正在定位的状态
+	[self setToolBarItemsEnabled:NO]; //Disable整个toolbar
+	[self startCheckLocationTimer];   //开始检查当前位置
+	
+	//选中当前位置
 	id annotationSelecting = nil;
 	if (self.mapView.userLocation.location)
 	{
@@ -685,8 +716,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	//反转坐标－地址
 	self.annotationManipulating = self.annotationAlarmEditing;
 	((YCAnnotation*) self.annotationAlarmEditing).subtitle = @"";
-	//reverseGeocoder = [self reverseGeocoder:self.annotationAlarmEditing.coordinate]; 
-	//[reverseGeocoder start];
 	[self beginReverseWithCoordinate:self.annotationAlarmEditing.coordinate];
 
 }
@@ -956,9 +985,10 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 {
 	//反向取当前位置的地址
 	self.annotationManipulating = userLocation;
-	//reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
-	//[reverseGeocoder start];
 	[self beginReverseWithCoordinate:self.annotationManipulating.coordinate];
+	
+	//设置“回到当前位置按钮”、“回到正在编辑按钮”的可用状态。
+	[self setLocationBarItemAndCurrentPinBarItem];
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
@@ -1143,11 +1173,12 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 }
 
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
-{
-	//self.currentLocationBarItem.style =  UIBarButtonItemStyleBordered;
-	//self.currentPinBarItem.style =  UIBarButtonItemStyleBordered;
+- (void)mapView:(MKMapView *)theMapView regionDidChangeAnimated:(BOOL)animated{
+	//设置“回到当前位置按钮”、“回到正在编辑按钮”的可用状态。
+	[self setLocationBarItemAndCurrentPinBarItem];
 }
+
+
 
 #pragma mark -
 #pragma mark Utility - ReverseGeocoder
