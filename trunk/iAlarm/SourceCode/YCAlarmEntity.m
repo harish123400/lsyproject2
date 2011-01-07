@@ -76,7 +76,7 @@
 	    self.description  = @"";              
 		self.sortId = 0;       
 		self.enabling = YES; 
-		CLLocationCoordinate2D coor ={0.0,0.0};
+		CLLocationCoordinate2D coor = {-10000.0,-10000.0};
 		self.coordinate = coor;            
 		self.vibrate = YES;
 		self.ring = YES;

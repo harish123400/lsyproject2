@@ -21,3 +21,8 @@
 //返回值:
 //0：相等；非0值，不相等
 int compareCLLocationCoordinate2D(CLLocationCoordinate2D src1,CLLocationCoordinate2D src2);
+
+//比较2个 CGPoint；
+//返回值:
+//0：相等；非0值，不相等
+int compareCGPoint(CGPoint src1,CGPoint src2);

@@ -305,25 +305,25 @@ BOOL lo;
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-	/*
-	if ([viewController isKindOfClass:[AlarmPositionMapViewController class]]) 
-	{
-		((AlarmPositionMapViewController*)viewController).alarms = [DataUtility alarmArray];
-		((AlarmPositionMapViewController*)viewController).alarm = [DataUtility createAlarm];
-		((AlarmPositionMapViewController*)viewController).regionCenterWithCurrentLocation = YES;
-	}
-	return YES;
-	 */
-	
-	NSLog(@"alarms's count = %d",[DataUtility alarmArray].count);
-	
 	if ([viewController isKindOfClass:[UINavigationController class]]) 
 	{
 		UIViewController *rootViewContoller = [((UINavigationController*)viewController).viewControllers objectAtIndex:0];
 		if ([rootViewContoller isKindOfClass:[AlarmPositionMapViewController class]]) 
 		{
+			
 			((AlarmPositionMapViewController*)rootViewContoller).alarms = [DataUtility alarmArray];
 			((AlarmPositionMapViewController*)rootViewContoller).regionCenterWithCurrentLocation = YES;
+			
+			/*
+			YCAlarmEntity *a = [[YCAlarmEntity alloc] init];
+			((AlarmPositionMapViewController*)rootViewContoller).alarms = [NSArray arrayWithObject:a];
+			((AlarmPositionMapViewController*)rootViewContoller).alarm = a;
+			((AlarmPositionMapViewController*)rootViewContoller).regionCenterWithCurrentLocation = NO;
+			 */
+			
+			//YCAlarmEntity *a = [[YCAlarmEntity alloc] init];
+			//((AlarmPositionMapViewController*)rootViewContoller).alarms = [NSArray arrayWithObject:a];
+
 		}
 		
 	}

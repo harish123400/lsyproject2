@@ -64,10 +64,6 @@
 								<reference key="NSSuperview" ref="539044910"/>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">SBWeatherCelsius.png</string>
-								</object>
 							</object>
 							<object class="IBUILabel" id="186742213">
 								<reference key="NSNextResponder" ref="539044910"/>
@@ -448,10 +444,6 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<string key="IBDocument.LastKnownRelativeProjectPath">../iAlarm.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">SBWeatherCelsius.png</string>
-			<string key="NS.object.0">{16, 16}</string>
-		</object>
 		<string key="IBCocoaTouchPluginVersion">117</string>
 	</data>
 </archive>

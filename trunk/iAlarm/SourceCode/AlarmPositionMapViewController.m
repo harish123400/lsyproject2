@@ -170,31 +170,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 #pragma mark - 
 #pragma mark - Utility
 
-//设置“回到当前位置按钮”、“回到正在编辑按钮”的可用状态。
--(void)setLocationBarItemAndCurrentPinBarItem{
-	CLLocationCoordinate2D currentMapCenter = self.mapView.region.center;
-	
-	//比较“当前地图的中心坐标”、annotationAlarmEditing的坐标；相等：currentPinBarItem不可用
-	CLLocationCoordinate2D alarmEditing = self.annotationAlarmEditing.coordinate;
-	int isA = compareCLLocationCoordinate2D(currentMapCenter, alarmEditing);
-	if (0 == isA) {
-		self.currentPinBarItem.enabled = NO;
-	}else {
-		self.currentPinBarItem.enabled = YES;
-	}
-	
-	// 不好用
-	//比较“当前地图的中心坐标”、当前位置的坐标；相等：currentLocationBarItem不可用
-	CLLocationCoordinate2D userCurrentLocation = self.mapView.userLocation.location.coordinate;
-	int isC = compareCLLocationCoordinate2D(currentMapCenter, userCurrentLocation);
-	if (0 == isC) {
-		self.currentLocationBarItem.enabled = NO;
-	}else {
-		self.currentLocationBarItem.enabled = YES;
-	}
-	 
-}
-
 //根据Annotation的选中情况，更新CyclingIndex
 -(void)updateCyclingIndex
 {
@@ -254,6 +229,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 -(BOOL) isValidCoordinate:(CLLocationCoordinate2D)coordinate
 {
+	/*
 	BOOL retVal = NO;
 	int la = (int)coordinate.latitude;
 	int lo = (int)coordinate.longitude;
@@ -262,7 +238,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	else 
 		retVal = YES;
 	
-	return retVal;
+	return retVal;*/
+	
+	return CLLocationCoordinate2DIsValid(coordinate);
 }
 
 -(BOOL) isValidSpan:(MKCoordinateSpan)span
@@ -388,10 +366,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	}else {
 		[self zoomToPlace:region animated:NO];
 	}
-	 
-	//校正一下位置; 这个函数 MKMapView:setRegion:有误差: 
-	//[self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:NO];
-	
 	
 	return delay;
 }
@@ -443,6 +417,50 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[self.toolbar setItems:baritems animated:NO];
 }
 
+////设置“回到当前位置按钮”的可用状态。
+-(void)setLocationBarItem{
+	
+	CLLocationCoordinate2D currentMapCenter = self.mapView.region.center;
+	CGPoint currentMapCenterPoint = [self.mapView convertCoordinate:currentMapCenter toPointToView:nil];
+	
+	//比较的坐标转换后到屏幕上的点；相等：BarItem不可用
+	CLLocationCoordinate2D userCurrentLocation = {-10000.0,-10000.0};
+	if (self.mapView.userLocation.location) userCurrentLocation = self.mapView.userLocation.location.coordinate;
+	if (![self isValidCoordinate:userCurrentLocation]) return; //无效坐标
+	
+	CGPoint userCurrentLocationPoint = [self.mapView convertCoordinate:userCurrentLocation toPointToView:nil];
+	int isA = compareCGPoint(currentMapCenterPoint, userCurrentLocationPoint);
+	if (0 == isA) {
+		self.currentLocationBarItem.enabled = NO;
+	}else {
+		self.currentLocationBarItem.enabled = YES;
+	}
+	
+}
+
+////设置“回到正在编辑按钮”的可用状态。
+-(void)setCurrentPinBarItem{
+	
+	//取消由点击按钮CurrentPin引发的调用
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(setCurrentPinBarItem) object:nil];
+	
+	CLLocationCoordinate2D currentMapCenter = self.mapView.region.center;
+	CGPoint currentMapCenterPoint = [self.mapView convertCoordinate:currentMapCenter toPointToView:nil];
+	
+	//比较的坐标转换后到屏幕上的点；相等：BarItem不可用
+	CLLocationCoordinate2D alarmEditing = self.annotationAlarmEditing.coordinate;
+	if (![self isValidCoordinate:alarmEditing]) return; //无效坐标
+	
+	CGPoint alarmEditingPoint = [self.mapView convertCoordinate:alarmEditing toPointToView:nil];
+	int isA = compareCGPoint(currentMapCenterPoint, alarmEditingPoint);
+	if (0 == isA) {
+		self.currentPinBarItem.enabled = NO;
+	}else {
+		self.currentPinBarItem.enabled = YES;
+	}
+	
+}
+
 #pragma mark -
 #pragma mark Location Notification 
 
@@ -452,7 +470,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 - (void) handle_Locationed: (id) notification 
 {
 	[self setLocationBarItem:NO];
-	[self setToolBarItemsEnabled:YES];
+	//[self setToolBarItemsEnabled:YES];
 	
 	if(self->isFirstShow)
 	{
@@ -476,8 +494,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		
 		//反向取当前位置的地址
 		self.annotationManipulating = self.mapView.userLocation;
-		//reverseGeocoder = [self reverseGeocoder:self.annotationManipulating.coordinate]; 
-		//[reverseGeocoder start];
 		[self beginReverseWithCoordinate:self.annotationManipulating.coordinate];
 		
 		//闹钟中的坐标无效，用屏幕中心
@@ -488,6 +504,18 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		
 		//加入Annotation
 		[self addMapAnnotations];
+		
+		
+		//选中当前位置
+		if (regionCenterWithCurrentLocation){
+			id annotationSelecting = nil;
+			if (self.mapView.userLocation.location)
+			{
+				annotationSelecting = self.mapView.userLocation;
+				[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:3.0]; //适当延长时间,否则会跑到大海里
+			}
+		}
+		 
 				
 	}else {
 		[self setMapRegion:self->defaultMapRegion FromWorld:NO animatedToWorld:NO animatedToPlace:YES];
@@ -499,7 +527,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 - (void) handle_TimeOutForLocation: (id) notification 
 {
 	[self setLocationBarItem:NO];
-	[self setToolBarItemsEnabled:YES];
+	//[self setToolBarItemsEnabled:YES];
 	
 	 if(self->isFirstShow)
 	 {
@@ -612,8 +640,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	}
 	
 	[self setLocationBarItem:YES];    //把barItem改成正在定位的状态
-	[self setToolBarItemsEnabled:NO]; //Disable整个toolbar
+	//[self setToolBarItemsEnabled:NO]; //Disable整个toolbar
 	[self startCheckLocationTimer];   //开始检查当前位置
+	
 	
 	//选中当前位置
 	id annotationSelecting = nil;
@@ -622,6 +651,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		annotationSelecting = self.mapView.userLocation;
 		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:0.5]; //适当延长时间
 	}
+	 
 
 }
 
@@ -663,7 +693,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	}
 	
 	//选中
-	//[self performSelector:@selector(selectAnnotationInListAtIndex:) withObject:[NSNumber numberWithInt:cyclingIndex] afterDelay:0.2];
 	if (cyclingAnnotation)
 		[self performSelector:@selector(selectAnnotation:) withObject:cyclingAnnotation afterDelay:0.2];
 	
@@ -704,6 +733,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	if (self->isCurl) [self pageCurlButtonPressed:nil]; //处理卷页
 	
 	[self cycleAnnotationsWithForward:YES];
+	
+	//解决：由resetPinButtonPressed引起的大头针位置变化
+	[self performSelector:@selector(setCurrentPinBarItem) withObject:nil afterDelay:1.5];
 }
 
 -(IBAction)resetPinButtonPressed:(id)sender
@@ -820,6 +852,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
+	
 	mapView.delegate = self;
 	self->isFirstShow = YES;
 	self.navigationItem.rightBarButtonItem.enabled = NO;//Done按钮
@@ -832,7 +865,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	//searchBar,toolbar
 	self.searchBar.hidden = NO;
 	[(YCSearchBar*)self.searchBar setCanResignFirstResponder:YES];
-	
 	if (!regionCenterWithCurrentLocation) 
 	{  
 		self.curlbackgroundView.canHideSearchBar = YES;
@@ -847,11 +879,10 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		self.toolbar.hidden = YES;
 		self.toolbar.alpha = 0.80f;
 	}
-	[self setToolBarItemsEnabled:NO];
+	//[self setToolBarItemsEnabled:NO];
 	
 	self.searchController = [[YCSearchController alloc] initWithDelegate:self
 												 searchDisplayController:self.searchDisplayController];
-	
 	
 	//curView
 	UIViewAutoresizing viewautoresizingMask = 0;
@@ -870,10 +901,12 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		self.mapTypeSegmented.autoresizingMask = viewautoresizingMask;
 		self.curlImageView.autoresizingMask = viewautoresizingMask;
 		
-	}/*else {
-		viewautoresizingMask = UIViewAutoresizingFlexibleLeftMargin
-							 | UIViewAutoresizingFlexibleTopMargin;
-	}*/
+	}
+	//else {
+	//	viewautoresizingMask = UIViewAutoresizingFlexibleLeftMargin
+	//						 | UIViewAutoresizingFlexibleTopMargin;
+	//}
+	
 
 
 		
@@ -916,6 +949,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		}else 
 			[self startCheckLocationTimer];
 	}
+	 
 	
 
 }
@@ -925,7 +959,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	
 	
 	if (self.regionCenterWithCurrentLocation) 
 	{
@@ -938,6 +971,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			//self.curlbackgroundView.canHideToolBar = YES;
 			[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 		}
+		self.title = KMapsTabBarItemTitle;
+		self.navigationController.navigationBarHidden = YES;   //在tab上隐藏navigationBar
 	}else {
 		self.title = KAlarmPostionLabel;
 		
@@ -946,15 +981,42 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideToolbar"];
 			[self.curlbackgroundView resetTimeIntervalForHideSearchBar:10.0];
 		}
-
+	}
+	 
+}
+/*
+-(void) viewDidAppear:(BOOL)animated{
+	
+	self.mapView.delegate = self;
+	
+	//关掉覆盖视图
+	[self closeMaskViewWithAnimated:NO];
+	
+	self.alarmTemp = [self.alarm copy];
+	self.alarmsTemp = [self.alarms mutableCopy];
+	//判断闹钟坐标是否有效
+	if (self.alarmTemp) 
+	{
+		[self.alarmsTemp replaceObjectAtIndex:[self.alarms indexOfObject:self.alarm] withObject:self.alarmTemp];
+		
+		if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
+			self.alarmTemp.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
+		
 	}
 
+	
+	//加入Annotation
+	[self addMapAnnotations];
 
 }
 
+*/
 -(void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
+	if (!self.regionCenterWithCurrentLocation) {
+		self.title = nil;
+	}
 	//保存最后加载的区域
 	[YCParam paramSingleInstance].lastLoadMapRegion = self.mapView.region;
 	
@@ -987,8 +1049,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	self.annotationManipulating = userLocation;
 	[self beginReverseWithCoordinate:self.annotationManipulating.coordinate];
 	
-	//设置“回到当前位置按钮”、“回到正在编辑按钮”的可用状态。
-	[self setLocationBarItemAndCurrentPinBarItem];
+	//设置“回到当前位置按钮”的可用状态。
+	[self setLocationBarItem];
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
@@ -1045,7 +1107,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 - (void)showDetails:(id)sender
 {
 	//back按钮
-	self.title = nil;
+	if (!self.regionCenterWithCurrentLocation) 
+		self.title = nil;
+	
 	
 	//取得当前操作的Annotation
 	MKAnnotationView *annotationView = (MKAnnotationView *)((UIView*)sender).superview.superview;
@@ -1067,7 +1131,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		   annotationInfoViewCtl.annotationSubtitle = @"";
 	}
 
-	
+
 	self.navigationController.navigationBarHidden = NO;//在闹钟标签页面上显示navbar
 	[self.navigationController pushViewController:annotationInfoViewCtl animated:YES];
 	[annotationInfoViewCtl release];
@@ -1174,8 +1238,10 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 }
 
 - (void)mapView:(MKMapView *)theMapView regionDidChangeAnimated:(BOOL)animated{
-	//设置“回到当前位置按钮”、“回到正在编辑按钮”的可用状态。
-	[self setLocationBarItemAndCurrentPinBarItem];
+	//设置“回到正在编辑按钮”的可用状态。
+	[self setCurrentPinBarItem];
+	//设置“回到当前位置按钮”的可用状态。
+	[self setLocationBarItem];
 }
 
 
@@ -1523,6 +1589,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 }
 
 - (void) outletRelease{
+	
 	self.mapView = nil;            
 	self.maskView = nil;                           
 	self.curlView = nil;;                           
@@ -1553,6 +1620,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 - (void)dealloc 
 {
+	[mapView release];
+	mapView = nil;
 	[self outletRelease];
 	[self->locationTimer release];
 	[self.forwardGeocoder release];

@@ -19,10 +19,14 @@
 @synthesize annotationTitle;
 @synthesize annotationSubtitle;
 
+-(void)backBarButtonItemPressed:(id)sender{
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.title = KInformationTitle;
-	self.navigationItem.rightBarButtonItem = nil;
+	//self.navigationItem.rightBarButtonItem = nil;
 }
 
 #pragma mark -

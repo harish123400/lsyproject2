@@ -37,6 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
 	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
 								   initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
 								   target:self 
@@ -44,6 +45,7 @@
     self.navigationItem.rightBarButtonItem = doneButton;
 	self.navigationItem.rightBarButtonItem.enabled = NO;
     [doneButton release];
+	 
 }
 
 
