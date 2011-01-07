@@ -57,6 +57,10 @@
 		9C14F2711287FFE40000689A /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C14F26F1287FFE40000689A /* DebugViewController.m */; };
 		9C14F2721287FFE40000689A /* DebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9C14F2701287FFE40000689A /* DebugViewController.xib */; };
 		9C14F2A4128822580000689A /* YCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C14F2A3128822580000689A /* YCLog.m */; };
+		9C1A577F12D5463B008CE7A6 /* iAlarmInTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1A577E12D5463B008CE7A6 /* iAlarmInTab.png */; };
+		9C1A578112D54645008CE7A6 /* aboutInTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1A578012D54645008CE7A6 /* aboutInTab.png */; };
+		9C1A57A712D5D0B4008CE7A6 /* YCDouble.c in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A57A612D5D0B4008CE7A6 /* YCDouble.c */; };
+		9C1A57B812D5D421008CE7A6 /* YCLocationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A57B712D5D421008CE7A6 /* YCLocationUtility.m */; };
 		9C3E406D12AD2DE100D16658 /* mapInfoCurrent.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C3E406912AD2DE100D16658 /* mapInfoCurrent.png */; };
 		9C3E406E12AD2DE100D16658 /* mapInfoGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C3E406A12AD2DE100D16658 /* mapInfoGreen.png */; };
 		9C3E406F12AD2DE100D16658 /* mapInfoPurple.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C3E406B12AD2DE100D16658 /* mapInfoPurple.png */; };
@@ -204,6 +208,12 @@
 		9C14F2701287FFE40000689A /* DebugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugViewController.xib; sourceTree = "<group>"; };
 		9C14F2A2128822580000689A /* YCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCLog.h; sourceTree = "<group>"; };
 		9C14F2A3128822580000689A /* YCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCLog.m; sourceTree = "<group>"; };
+		9C1A577E12D5463B008CE7A6 /* iAlarmInTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iAlarmInTab.png; sourceTree = "<group>"; };
+		9C1A578012D54645008CE7A6 /* aboutInTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aboutInTab.png; sourceTree = "<group>"; };
+		9C1A57A512D5D0B4008CE7A6 /* YCDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCDouble.h; sourceTree = "<group>"; };
+		9C1A57A612D5D0B4008CE7A6 /* YCDouble.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = YCDouble.c; sourceTree = "<group>"; };
+		9C1A57B612D5D421008CE7A6 /* YCLocationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YCLocationUtility.h; sourceTree = "<group>"; };
+		9C1A57B712D5D421008CE7A6 /* YCLocationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YCLocationUtility.m; sourceTree = "<group>"; };
 		9C3E406912AD2DE100D16658 /* mapInfoCurrent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapInfoCurrent.png; sourceTree = "<group>"; };
 		9C3E406A12AD2DE100D16658 /* mapInfoGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapInfoGreen.png; sourceTree = "<group>"; };
 		9C3E406B12AD2DE100D16658 /* mapInfoPurple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapInfoPurple.png; sourceTree = "<group>"; };
@@ -371,6 +381,8 @@
 		9C129917127E8DC000054B82 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				9C1A578012D54645008CE7A6 /* aboutInTab.png */,
+				9C1A577E12D5463B008CE7A6 /* iAlarmInTab.png */,
 				9CBCE7C612D4B232003BEE3D /* mapsInTab.png */,
 				9CBCE7C712D4B232003BEE3D /* settingInTab.png */,
 				9CD0B70B12D4580600558094 /* replacePin.png */,
@@ -507,6 +519,10 @@
 				9C6B1B151293CABD003D8CC7 /* Reachability.m */,
 				9C48CC9E129E03C7008069CC /* LocalizedString.h */,
 				9C48CC9F129E03C7008069CC /* LocalizedString.m */,
+				9C1A57A512D5D0B4008CE7A6 /* YCDouble.h */,
+				9C1A57A612D5D0B4008CE7A6 /* YCDouble.c */,
+				9C1A57B612D5D421008CE7A6 /* YCLocationUtility.h */,
+				9C1A57B712D5D421008CE7A6 /* YCLocationUtility.m */,
 			);
 			name = Utilities;
 			path = ..;
@@ -759,6 +775,8 @@
 				9CD0B70C12D4580600558094 /* replacePin.png in Resources */,
 				9CBCE7C812D4B232003BEE3D /* mapsInTab.png in Resources */,
 				9CBCE7C912D4B232003BEE3D /* settingInTab.png in Resources */,
+				9C1A577F12D5463B008CE7A6 /* iAlarmInTab.png in Resources */,
+				9C1A578112D54645008CE7A6 /* aboutInTab.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,6 +842,8 @@
 				9CDC2F9812C0618200015950 /* BoolCell.m in Sources */,
 				9CDC304D12C0710200015950 /* WaitingCell.m in Sources */,
 				9CCC2BFA12C32595004D3FC1 /* CellHeaderView.m in Sources */,
+				9C1A57A712D5D0B4008CE7A6 /* YCDouble.c in Sources */,
+				9C1A57B812D5D421008CE7A6 /* YCLocationUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
