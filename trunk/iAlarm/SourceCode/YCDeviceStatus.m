@@ -102,7 +102,8 @@
 }
 - (BOOL) enabledLocation
 {
-	return YES; //TODO
+	return [CLLocationManager locationServicesEnabled];
+	//return YES; //TODO,本程序是否运行定位不能确定！！！
 }
 
 /*

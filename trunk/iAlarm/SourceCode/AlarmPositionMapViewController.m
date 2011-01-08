@@ -5,6 +5,8 @@
 //  Created by li shiyong on 10-10-28.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
+
+#import "YCDeviceStatus.h"
 #import "YCLocationUtility.h"
 #import "AlarmModifyNotification.h"
 #import "YCSearchBar.h"
@@ -639,6 +641,20 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 	}
 	
+	//显示 打开定位服务的提示框
+	BOOL enabledLocation = [[YCDeviceStatus deviceStatusSingleInstance] enabledLocation];
+	if (!enabledLocation) {
+
+		[[YCDeviceStatus deviceStatusSingleInstance].locationManager startUpdatingLocation];
+		
+		[UIUtility simpleAlertBody:nil 
+						alertTitle:@"定位服务已经关闭" 
+				 cancelButtonTitle:kAlertBtnCancel
+					 OKButtonTitle:kAlertBtnSettings
+						  delegate:nil];
+	}
+	
+	
 	[self setLocationBarItem:YES];    //把barItem改成正在定位的状态
 	//[self setToolBarItemsEnabled:NO]; //Disable整个toolbar
 	[self startCheckLocationTimer];   //开始检查当前位置
@@ -1216,24 +1232,23 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			((MKPinAnnotationView *)annotationView).pinColor = MKPinAnnotationColorPurple;
 			((YCAnnotation *)annotationView.annotation).annotationType = YCMapAnnotationTypeLocating;
 			break;
-		case MKAnnotationViewDragStateEnding:   //结束拖拽－显示地址
-			//坐标
-			self.alarmTemp.coordinate = annotationView.annotation.coordinate;
-			
-			self.annotationManipulating = annotationView.annotation;
-			//反转坐标－地址
-			((YCAnnotation*) annotationView.annotation).subtitle = @"";
-			//reverseGeocoder = [self reverseGeocoder:annotationView.annotation.coordinate]; 
-			//[reverseGeocoder start];
-			[self beginReverseWithCoordinate:annotationView.annotation.coordinate];
-			
+		case MKAnnotationViewDragStateEnding:   //停止拖拽
 			//激活Done按钮
 			self.navigationItem.rightBarButtonItem.enabled = YES;
 			break;
+		case MKAnnotationViewDragStateNone:   //结束拖拽－大头针落下
+			//为闹钟坐标赋值
+			self.alarmTemp.coordinate = annotationView.annotation.coordinate;
+		
+			self.annotationManipulating = annotationView.annotation;
+			//反转坐标－地址
+			((YCAnnotation*) annotationView.annotation).subtitle = @"";
+			[self beginReverseWithCoordinate:annotationView.annotation.coordinate];
 		default:
 			break;
 
 	}
+	 
 
 }
 
@@ -1263,7 +1278,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	self.alarmTemp.position = subtitle;
 	self.alarmTemp.positionShort = subtitleShort!=nil ? subtitleShort:subtitle; //短地址空，使用长地址
 	
-	self.annotationAlarmEditing.coordinate = self.alarmTemp.coordinate;
+	//self.annotationAlarmEditing.coordinate = self.alarmTemp.coordinate;
 	//self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
 	
 	
@@ -1323,7 +1338,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		{
 			//((MKUserLocation*)self.annotationManipulating).title = title;          
 			((MKUserLocation*)self.annotationManipulating).subtitle = subtitle;
-			self.annotationManipulating.coordinate = coordinate;
+			//self.annotationManipulating.coordinate = coordinate;
 		}
 	}
 	else 
@@ -1505,8 +1520,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	if(buttonIndex == 0)  
-		[self.searchController setActive:YES animated:YES];   //处理search状态
+	if(buttonIndex == 1)  
+		[self.searchController setActive:YES animated:YES];   //search状态
 }
 
 
@@ -1620,8 +1635,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 - (void)dealloc 
 {
-	[mapView release];
-	mapView = nil;
+	//[mapView release];
+	//mapView = nil;
 	[self outletRelease];
 	[self->locationTimer release];
 	[self.forwardGeocoder release];

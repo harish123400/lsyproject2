@@ -418,9 +418,11 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
 													message:alertBody 
 												   delegate:delegate
-										  cancelButtonTitle:OKButtonTitle 
-										  otherButtonTitles:cancelButtonTitle,nil];
-	                                       //保持cancel按钮在右侧
+										  cancelButtonTitle:cancelButtonTitle 
+										  otherButtonTitles:OKButtonTitle,nil];
+	                                       
+	
+	//保持cancel按钮在右侧
 	
 	[alert show];
 	[alert release];

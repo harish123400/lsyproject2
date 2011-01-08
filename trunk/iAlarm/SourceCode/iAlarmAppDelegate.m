@@ -313,17 +313,6 @@ BOOL lo;
 			
 			((AlarmPositionMapViewController*)rootViewContoller).alarms = [DataUtility alarmArray];
 			((AlarmPositionMapViewController*)rootViewContoller).regionCenterWithCurrentLocation = YES;
-			
-			/*
-			YCAlarmEntity *a = [[YCAlarmEntity alloc] init];
-			((AlarmPositionMapViewController*)rootViewContoller).alarms = [NSArray arrayWithObject:a];
-			((AlarmPositionMapViewController*)rootViewContoller).alarm = a;
-			((AlarmPositionMapViewController*)rootViewContoller).regionCenterWithCurrentLocation = NO;
-			 */
-			
-			//YCAlarmEntity *a = [[YCAlarmEntity alloc] init];
-			//((AlarmPositionMapViewController*)rootViewContoller).alarms = [NSArray arrayWithObject:a];
-
 		}
 		
 	}
