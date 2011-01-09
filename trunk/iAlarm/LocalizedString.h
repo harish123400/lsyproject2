@@ -57,6 +57,9 @@
 #define KSoundName001                            NSLocalizedString(@"Ring1",@"闹钟铃声名称-001")
 #define KSoundName002                            NSLocalizedString(@"Ring2",@"闹钟铃声名称-002")
 
+////
+#define KOn                                     NSLocalizedString(@"On",@"开关值已经打开")
+#define KOff                                    NSLocalizedString(@"off",@"开关值已经关闭")
 
 /////////////////////////////////////////////////////////////////////////////////////
 //提示
