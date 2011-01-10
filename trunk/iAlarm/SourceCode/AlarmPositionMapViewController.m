@@ -5,7 +5,7 @@
 //  Created by li shiyong on 10-10-28.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
-
+#import "DataUtility.h"
 #import "YCDeviceStatus.h"
 #import "YCLocationUtility.h"
 #import "AlarmModifyNotification.h"
@@ -171,6 +171,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 #pragma mark - 
 #pragma mark - Utility
+
 
 //根据Annotation的选中情况，更新CyclingIndex
 -(void)updateCyclingIndex
@@ -462,6 +463,39 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	}
 	
 }
+
+-(void)copyAlarm{
+	self.alarmTemp = [self.alarm copy];
+	self.alarmsTemp = [self.alarms mutableCopy];
+	//判断闹钟坐标是否有效
+	if (self.alarmTemp) 
+	{
+		//替换临时列表中的alarmTemp
+		[self.alarmsTemp replaceObjectAtIndex:[self.alarms indexOfObject:self.alarm] withObject:self.alarmTemp];
+		
+		if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
+			self.alarmTemp.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
+		
+	}
+}
+
+
+#pragma mark -
+#pragma mark alarms Notification
+- (void) handle_AlarmsChanged: (id) notification 
+{
+	
+	self.alarms = [DataUtility alarmArray];
+	
+	[self copyAlarm]; 
+	
+	//先移除
+	[self.mapView removeAnnotations:self.mapAnnotations];
+	//加入Annotation
+	[self addMapAnnotations];
+	 
+}
+
 
 #pragma mark -
 #pragma mark Location Notification 
@@ -852,7 +886,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 - (void) registerLocationedNotifications 
 {
-	
+	//定位完成
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	[notificationCenter addObserver: self
 						   selector: @selector (handle_Locationed:)
@@ -862,6 +896,13 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 						   selector: @selector (handle_TimeOutForLocation:)
 							   name: kTimeOutForLocationNotification
 							 object: nil];
+	
+	//alarms改变
+	[notificationCenter addObserver: self
+						   selector: @selector (handle_AlarmsChanged:)
+							   name: kAlarmsDidChangeNotification
+							 object: nil];
+	 
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -932,17 +973,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	//覆盖
 	[self showMaskView];
 	
-	self.alarmTemp = [self.alarm copy];
-	self.alarmsTemp = [self.alarms mutableCopy];
-	//判断闹钟坐标是否有效
-	if (self.alarmTemp) 
-	{
-		[self.alarmsTemp replaceObjectAtIndex:[self.alarms indexOfObject:self.alarm] withObject:self.alarmTemp];
-		
-		if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
-			self.alarmTemp.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
-		
-	}
+	
+	/*
+	[self copyAlarm]; 
 
 	
 	if (!self.regionCenterWithCurrentLocation) 
@@ -965,6 +998,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		}else 
 			[self startCheckLocationTimer];
 	}
+	 */
 	 
 	
 
@@ -997,6 +1031,30 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideToolbar"];
 			[self.curlbackgroundView resetTimeIntervalForHideSearchBar:10.0];
 		}
+	}
+	
+	
+	
+	[self copyAlarm]; 
+	if (!self.regionCenterWithCurrentLocation) 
+	{
+		if ([self isValidCoordinate:self.alarmTemp.coordinate]) 
+		{
+			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
+			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+			[notificationCenter postNotificationName:kLocationedNotification object:self];
+		}else { //alarmTemp中的坐标无效，按当前位置显示
+			[self startCheckLocationTimer];
+		}
+		
+	}else{
+		if(self.alarmTemp)  //有闹钟到达
+		{
+			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
+			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+			[notificationCenter postNotificationName:kLocationedNotification object:self];
+		}else 
+			[self startCheckLocationTimer];
 	}
 	 
 }
@@ -1034,7 +1092,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		self.title = nil;
 	}
 	//保存最后加载的区域
-	[YCParam paramSingleInstance].lastLoadMapRegion = self.mapView.region;
+	//[YCParam paramSingleInstance].lastLoadMapRegion = self.mapView.region;
+	
 	
 	//toolbar消失
 	if (self.regionCenterWithCurrentLocation) 
@@ -1625,6 +1684,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	[notificationCenter removeObserver:self name:kLocationedNotification object:nil];
 	[notificationCenter removeObserver:self name:kTimeOutForLocationNotification object:nil];
+	[notificationCenter removeObserver:self	name: kAlarmsDidChangeNotification object: nil];
 }
 
 - (void)viewDidUnload {

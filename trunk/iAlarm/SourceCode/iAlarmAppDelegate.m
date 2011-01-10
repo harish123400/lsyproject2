@@ -310,7 +310,7 @@ BOOL lo;
 		UIViewController *rootViewContoller = [((UINavigationController*)viewController).viewControllers objectAtIndex:0];
 		if ([rootViewContoller isKindOfClass:[AlarmPositionMapViewController class]]) 
 		{
-			
+			((AlarmPositionMapViewController*)rootViewContoller).alarm = nil;
 			((AlarmPositionMapViewController*)rootViewContoller).alarms = [DataUtility alarmArray];
 			((AlarmPositionMapViewController*)rootViewContoller).regionCenterWithCurrentLocation = YES;
 		}

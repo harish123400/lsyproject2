@@ -14,7 +14,7 @@
 
 @synthesize lastSearchString;
 @synthesize originalPlaceholderString;
-@synthesize searchBar;
+
 
 - (void)dealloc
 {
@@ -55,11 +55,6 @@
 }
 //退出搜索时候，保持最后搜索字符串在 bar上
 /////////////////////////////////////
-
--(void) awakeFromNib{
-	NSLog(@"YCSearchDisplayController:awakeFromNib");	
-}
-
 
 
 @end

@@ -53,9 +53,6 @@ searchDisplayController:(UISearchDisplayController*) theSearchDisplayController
 		
 		self.searchDisplayController.originalPlaceholderString = theSearchDisplayController.searchBar.placeholder;
 		self->originalSearchBarHidden = theSearchDisplayController.searchBar.hidden;
-		
-		//theSearchDisplayController.searchBar.barStyle = UIBarStyleDefault;
-		//theSearchDisplayController.searchBar.tintColor = nil;
 	}
 	return self;
 }
