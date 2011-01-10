@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-
+@class YCSearchBar;
 @interface YCSearchDisplayController : UISearchDisplayController {
 	NSString *lastSearchString;
 	NSString *originalPlaceholderString;
+	
 }
 
 @property(nonatomic,retain) NSString *lastSearchString;

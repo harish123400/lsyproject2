@@ -59,7 +59,7 @@
 
 ////
 #define KOn                                     NSLocalizedString(@"On",@"开关值已经打开")
-#define KOff                                    NSLocalizedString(@"off",@"开关值已经关闭")
+#define KOff                                    NSLocalizedString(@"Off",@"开关值已经关闭")
 
 /////////////////////////////////////////////////////////////////////////////////////
 //提示
