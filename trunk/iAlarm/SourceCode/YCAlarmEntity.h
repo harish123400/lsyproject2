@@ -10,15 +10,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-@interface NSCoder (iArrived)
-
-- (void)encodeCLLocationCoordinate2D:(CLLocationCoordinate2D)coordinate forKey:(NSString *)key;
-
-- (CLLocationCoordinate2D)decodeCLLocationCoordinate2DForKey:(NSString *)key;
-
-@end
-
-
 #define    kalarmId                 @"kalarmId"
 #define    kalarmName               @"kalarmName"
 #define    kposition                @"kposition"

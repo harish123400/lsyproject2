@@ -241,17 +241,24 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	else 
 		retVal = YES;
 	
-	return retVal;*/
+	return retVal;
+	 */
+	
+	int la = (int)coordinate.latitude;
+	int lo = (int)coordinate.longitude;
+	if (la == 0 && lo == 0 ) 
+		return NO;
 	
 	return CLLocationCoordinate2DIsValid(coordinate);
 }
 
 -(BOOL) isValidSpan:(MKCoordinateSpan)span
-{	
+{	/*
 	double lad = span.latitudeDelta;
 	double lod = span.longitudeDelta;
 	if (lad > 180.0 || lad < 0.0) return NO;
 	if (lod > 180.0 || lod < 0.0) return NO;
+	 */
 	
 	return YES;
 }
@@ -270,9 +277,48 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[self.activityIndicator startAnimating];
 }
 
+//关掉MaskView,加入Annotations
+-(void)addAnnotationsAfterCloseMask{
+	
+	[self updateMapAnnotations];  //生成Annotation
+	
+	//闹钟地址无效情况，用于addAlarm时候
+	if(self.annotationAlarmEditing){
+		if (![self isValidCoordinate:self.annotationAlarmEditing.coordinate] ) {
+			self.annotationAlarmEditing.coordinate = self.mapView.region.center;
+			/////////////////
+			//改变了闹钟地址
+			//self.alarmTemp.coordinate = self.mapView.region.center;
+			//self.navigationItem.rightBarButtonItem.enabled = YES;	//激活Done按钮
+			/////////////////
+		}
+	}
+	
+	[self.mapView addAnnotations:self.mapAnnotations];	//加入Annotation
+
+	
+	//选中
+	if (self->annotationSelecting!=nil){
+		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:0.5]; //适当延长时间
+	}
+}
+
 //关掉覆盖视图
 -(void)closeMaskViewWithAnimated:(BOOL)animated
 {
+	//显示toolbar
+	if (regionCenterWithCurrentLocation)  
+	{
+		[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
+		[self.curlbackgroundView startHideToolbarAfterTimeInterval:5.0];
+	}else{//显示SearchBar -animated:NO 
+		[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideSearchBar"];
+		[self.curlbackgroundView startHideSearchBarAfterTimeInterval:15.0];
+	}
+	
+	
+	[self performSelector:@selector(addAnnotationsAfterCloseMask) withObject:nil afterDelay:1.1];
+	
 	if (animated) 
 	{
 		[self.activityIndicator stopAnimating];
@@ -284,7 +330,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		[self.activityIndicator stopAnimating];
 		self.maskView.alpha = 0.0f;
 	}
-	
+	self->isFirstShow = NO;
 }
 
 - (void)zoomToWorld:(CLLocationCoordinate2D)world animated:(BOOL)animated
@@ -387,19 +433,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 {
 	[self.mapView selectAnnotation:annotation animated:YES];
 }
-//选中Annotation,该元素在mapView.annotations中。 －显示标题
-///////////////////////////////////////////////////////
 
-
-/*
-//选中Annotation,该元素在self.mapAnnotations中。 －显示标题
--(void)selectAnnotationInListAtIndex:(NSNumber*)index
-{
-	NSInteger nIndex = [index intValue];
-	if(nIndex >=0 && nIndex < self.mapAnnotations.count)
-		[self.mapView selectAnnotation:[self.mapAnnotations objectAtIndex:nIndex] animated:YES];
-}
- */
 
 -(void)addMapAnnotations
 {	[self updateMapAnnotations];
@@ -471,10 +505,13 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	if (self.alarmTemp) 
 	{
 		//替换临时列表中的alarmTemp
-		[self.alarmsTemp replaceObjectAtIndex:[self.alarms indexOfObject:self.alarm] withObject:self.alarmTemp];
-		
-		if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
-			self.alarmTemp.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
+		NSInteger row = [self.alarms indexOfObject:self.alarm];
+		if (row < self.alarmsTemp.count) {
+			[self.alarmsTemp replaceObjectAtIndex:row withObject:self.alarmTemp];
+		}
+			
+		//if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
+		//	self.alarmTemp.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
 		
 	}
 }
@@ -484,162 +521,16 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 #pragma mark alarms Notification
 - (void) handle_AlarmsChanged: (id) notification 
 {
-	
-	self.alarms = [DataUtility alarmArray];
-	
-	[self copyAlarm]; 
-	
-	//先移除
-	[self.mapView removeAnnotations:self.mapAnnotations];
-	//加入Annotation
-	[self addMapAnnotations];
-	 
-}
-
-
-#pragma mark -
-#pragma mark Location Notification 
-
-#define kLocationedNotification           @"kLocationedNotification"
-#define kTimeOutForLocationNotification   @"kTimeOutForLocationNotification"
-
-- (void) handle_Locationed: (id) notification 
-{
-	[self setLocationBarItem:NO];
-	//[self setToolBarItemsEnabled:YES];
-	
-	if(self->isFirstShow)
-	{
-		self->isFirstShow = NO;
-		//关掉覆盖视图
-		[self closeMaskViewWithAnimated:YES];
+	if (regionCenterWithCurrentLocation){
+		self.alarms = [DataUtility alarmArray];
 		
-		//显示toolbar
-		if (regionCenterWithCurrentLocation)  
-		{
-			[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
-			[self.curlbackgroundView startHideToolbarAfterTimeInterval:5.0];
-		}else{//显示SearchBar -animated:NO 
-			[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideSearchBar"];
-			[self.curlbackgroundView startHideSearchBarAfterTimeInterval:15.0];
-		}
-
-
-		//先到世界地图，在下来
-		[self setMapRegion:self->defaultMapRegion FromWorld:YES animatedToWorld:NO animatedToPlace:YES];
+		[self copyAlarm]; 
 		
-		//反向取当前位置的地址
-		self.annotationManipulating = self.mapView.userLocation;
-		[self beginReverseWithCoordinate:self.annotationManipulating.coordinate];
-		
-		//闹钟中的坐标无效，用屏幕中心
-		if (!regionCenterWithCurrentLocation) {
-			if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
-				self.alarmTemp.coordinate = self->defaultMapRegion.center;
-		}
-		
+		//先移除
+		[self.mapView removeAnnotations:self.mapAnnotations];
 		//加入Annotation
 		[self addMapAnnotations];
-		
-		
-		//选中当前位置
-		if (regionCenterWithCurrentLocation){
-			id annotationSelecting = nil;
-			if (self.mapView.userLocation.location)
-			{
-				annotationSelecting = self.mapView.userLocation;
-				[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:3.0]; //适当延长时间,否则会跑到大海里
-			}
-		}
-		 
-				
-	}else {
-		[self setMapRegion:self->defaultMapRegion FromWorld:NO animatedToWorld:NO animatedToPlace:YES];
 	}
-	
-}
-
-
-- (void) handle_TimeOutForLocation: (id) notification 
-{
-	[self setLocationBarItem:NO];
-	//[self setToolBarItemsEnabled:YES];
-	
-	 if(self->isFirstShow)
-	 {
-		 self->isFirstShow = NO;
-		 //关掉覆盖视图
-		 [self closeMaskViewWithAnimated:YES];
-		 
-		 //显示toolbar
-		 if (regionCenterWithCurrentLocation)  
-		 {
-			 [UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
-			 //self.curlbackgroundView.canHideToolBar = YES;
-			 [self.curlbackgroundView startHideToolbarAfterTimeInterval:5.0];
-		 }else{//显示SearchBar
-			 [UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideSearchBar"];
-			 //self.curlbackgroundView.canHideSearchBar = YES;
-			 [self.curlbackgroundView startHideSearchBarAfterTimeInterval:15.0];
-		 }
-		 
-		 MKCoordinateRegion last = [YCParam paramSingleInstance].lastLoadMapRegion;
-		 if ([self isValidRegion:last]) 
-		 {
-			 self->defaultMapRegion = last;//加载上一次的正确的区域
-			[self setMapRegion:self->defaultMapRegion FromWorld:NO animatedToWorld:NO animatedToPlace:YES];
-		 }//如果没有最后一次正确的加载，那么听天由命吧，估计是显示一个世界地图
-		 
-		 //闹钟中的坐标无效，用屏幕中心
-		 if (!regionCenterWithCurrentLocation) {
-			 if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
-				 self.alarmTemp.coordinate = self->defaultMapRegion.center;
-		 }
-		 
-		 //加入Annotation
-		 [self addMapAnnotations];
-		 
-	 }
-	 
-}
- 
-#define kTimeSpanForUserLocation   15.0
--(void)checkLocation
-{
-	static double timePassed = 0.0;
-	if (self.mapView.userLocation.location)
-	{
-		[locationTimer invalidate];
-		[locationTimer release];
-		locationTimer = nil;
-				
-		self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.location.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
-		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-		[notificationCenter postNotificationName:kLocationedNotification object:self];
-	}else {
-		//Time out 
-		timePassed +=0.1;
-		if (timePassed > kTimeSpanForUserLocation)  //x0秒time out
-		{
-			timePassed = 0.0;
-			
-			[locationTimer invalidate];
-			[locationTimer release];
-			locationTimer = nil;
-			
-			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-			[notificationCenter postNotificationName:kTimeOutForLocationNotification object:self];
-
-		}
-	}
-	
-}
-
--(void)startCheckLocationTimer
-{
-	NSTimeInterval ti = 0.1;
-	locationTimer = [[NSTimer timerWithTimeInterval:ti target:self selector:@selector(checkLocation) userInfo:nil repeats:YES] retain];
-	[[NSRunLoop currentRunLoop] addTimer:locationTimer forMode:NSRunLoopCommonModes];
 }
 
 
@@ -689,17 +580,14 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	}
 	
 	
-	[self setLocationBarItem:YES];    //把barItem改成正在定位的状态
-	//[self setToolBarItemsEnabled:NO]; //Disable整个toolbar
-	[self startCheckLocationTimer];   //开始检查当前位置
-	
-	
 	//选中当前位置
-	id annotationSelecting = nil;
 	if (self.mapView.userLocation.location)
 	{
-		annotationSelecting = self.mapView.userLocation;
-		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:0.5]; //适当延长时间
+		[self setLocationBarItem:YES];    //把barItem改成正在定位的状态
+		[self performSelector:@selector(setLocationBarItem:) withObject:nil afterDelay:0.5];//0.5秒后，把barItem改回正常状态
+		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.location.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
+		[self setMapRegion:region FromWorld:NO animatedToWorld:NO animatedToPlace:YES];
+		[self performSelector:@selector(selectAnnotation:) withObject:self.mapView.userLocation afterDelay:0.5]; //适当延长时间
 	}
 	 
 
@@ -886,17 +774,9 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 - (void) registerLocationedNotifications 
 {
+	
 	//定位完成
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter addObserver: self
-						   selector: @selector (handle_Locationed:)
-							   name: kLocationedNotification
-							 object: nil];
-	[notificationCenter addObserver: self
-						   selector: @selector (handle_TimeOutForLocation:)
-							   name: kTimeOutForLocationNotification
-							 object: nil];
-	
 	//alarms改变
 	[notificationCenter addObserver: self
 						   selector: @selector (handle_AlarmsChanged:)
@@ -974,37 +854,37 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[self showMaskView];
 	
 	
-	/*
-	[self copyAlarm]; 
-
-	
-	if (!self.regionCenterWithCurrentLocation) 
-	{
-		if ([self isValidCoordinate:self.alarmTemp.coordinate]) 
-		{
-			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
-			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-			[notificationCenter postNotificationName:kLocationedNotification object:self];
-		}else { //alarmTemp中的坐标无效，按当前位置显示
-			[self startCheckLocationTimer];
-		}
-		
-	}else{
-		if(self.alarmTemp)  //有闹钟到达
-		{
-			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
-			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-			[notificationCenter postNotificationName:kLocationedNotification object:self];
-		}else 
-			[self startCheckLocationTimer];
-	}
-	 */
-	 
-	
 
 }
 
+#define kTimeSpanForUserLocation   15.0
 
+////先用上一次加载的region；无效，使用设备当前位置
+-(void)setRegionWithLastLoadOrUserLocation{ 
+	
+	MKCoordinateRegion region = [YCParam paramSingleInstance].lastLoadMapRegion;
+	if (![self isValidRegion:region]) {//上一次打开地图的region
+		if (!self.mapView.userLocation.location) { //设备当前位置
+			self->isRegionWithUserLocation = YES;
+			[self performSelector:@selector(endUpdateUserLocation) withObject:nil afterDelay:kTimeSpanForUserLocation];
+		}else {
+			region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.location.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
+		}
+		
+	}
+	
+	if ([self isValidRegion:region]) {
+		//关掉覆盖视图
+		[self closeMaskViewWithAnimated:YES];
+		//先到世界地图，在下来
+		[self setMapRegion:region FromWorld:YES animatedToWorld:NO animatedToPlace:YES];
+	}
+}
+
+//为了延时执行。否则有上个bar的痕迹
+-(void)performShowBar:(UIView*)theBar{
+	[UIUtility setBar:theBar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -1017,84 +897,85 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		
 		//除了第一次外，每次WillAppear都显示Toolbar。第一次在定位结束后显示
 		if (!isFirstShow) { 
-			[UIUtility setBar:self.toolbar topBar:NO visible:YES animated:YES animateDuration:1.0 animateName:@"showOrHideToolbar"];
-			//self.curlbackgroundView.canHideToolBar = YES;
+			if (self.toolbar.hidden == YES) {
+				[self performSelector:@selector(performShowBar:) withObject:self.toolbar afterDelay:0.1];
+			}
+			
 			[self.curlbackgroundView resetTimeIntervalForHideToolbar:3.0];
 		}
+		
 		self.title = KMapsTabBarItemTitle;
 		self.navigationController.navigationBarHidden = YES;   //在tab上隐藏navigationBar
 	}else {
 		self.title = KAlarmPostionLabel;
 		
 		//除了第一次外，每次WillAppear都显示Searchbar。-animated:NO 
-		if (!isFirstShow) { 
-			[UIUtility setBar:self.searchBar topBar:YES visible:YES animated:NO animateDuration:1.0 animateName:@"showOrHideToolbar"];
+		if (!isFirstShow) {
+			if (self.searchBar.hidden == YES) {
+				[self performSelector:@selector(performShowBar:) withObject:self.searchBar afterDelay:0.1];
+			}
+			
 			[self.curlbackgroundView resetTimeIntervalForHideSearchBar:10.0];
 		}
 	}
 	
+
 	
+	[self copyAlarm];
 	
-	[self copyAlarm]; 
-	if (!self.regionCenterWithCurrentLocation) 
-	{
-		if ([self isValidCoordinate:self.alarmTemp.coordinate]) 
+	if (self->isFirstShow) {
+		
+		if(self.alarmTemp)  //编辑闹钟、或有闹钟到达
 		{
-			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
-			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-			[notificationCenter postNotificationName:kLocationedNotification object:self];
-		}else { //alarmTemp中的坐标无效，按当前位置显示
-			[self startCheckLocationTimer];
+			if ([self isValidCoordinate:self.alarmTemp.coordinate]) {
+				self->annotationSelecting = self.annotationAlarmEditing;
+				[self closeMaskViewWithAnimated:YES];//关掉覆盖视图
+				
+				MKCoordinateRegion alarmRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
+				[self setMapRegion:alarmRegion FromWorld:YES animatedToWorld:NO animatedToPlace:YES];
+			}else //alarmTemp中的坐标无效
+				[self setRegionWithLastLoadOrUserLocation];
+			
+		}else { //tab上显示
+			[self setRegionWithLastLoadOrUserLocation];
 		}
 		
-	}else{
-		if(self.alarmTemp)  //有闹钟到达
-		{
-			self->defaultMapRegion = MKCoordinateRegionMakeWithDistance(self.alarmTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
-			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-			[notificationCenter postNotificationName:kLocationedNotification object:self];
-		}else 
-			[self startCheckLocationTimer];
+
 	}
 	 
 }
+
 /*
 -(void) viewDidAppear:(BOOL)animated{
 	
-	self.mapView.delegate = self;
+	[super viewDidAppear:animated];
 	
-	//关掉覆盖视图
-	[self closeMaskViewWithAnimated:NO];
-	
-	self.alarmTemp = [self.alarm copy];
-	self.alarmsTemp = [self.alarms mutableCopy];
-	//判断闹钟坐标是否有效
-	if (self.alarmTemp) 
-	{
-		[self.alarmsTemp replaceObjectAtIndex:[self.alarms indexOfObject:self.alarm] withObject:self.alarmTemp];
-		
-		if (![self isValidCoordinate:self.alarmTemp.coordinate]) 
-			self.alarmTemp.coordinate = [YCParam paramSingleInstance].lastLoadMapRegion.center;
-		
+	/////////////////////////
+	//不是当前视图，自动隐藏后，需要再设置一下
+	if (self.toolbar.hidden == YES) {
+		self.toolbar.hidden = YES;  
 	}
-
 	
-	//加入Annotation
-	[self addMapAnnotations];
-
+	if (self.searchBar.hidden == YES) {
+		self.searchBar.hidden =YES;
+	}
+	
 }
+ */
 
-*/
+
 -(void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
 	if (!self.regionCenterWithCurrentLocation) {
 		self.title = nil;
 	}
+	
 	//保存最后加载的区域
-	//[YCParam paramSingleInstance].lastLoadMapRegion = self.mapView.region;
+	[YCParam paramSingleInstance].lastLoadMapRegion = self.mapView.region;
+	[[YCParam paramSingleInstance] saveParam];
 	
-	
+	/*
 	//toolbar消失
 	if (self.regionCenterWithCurrentLocation) 
 	{
@@ -1102,6 +983,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	}else {
 		self.searchBar.hidden = YES;
 	}
+	 */
 
 }
 
@@ -1118,19 +1000,36 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	
 }
 
+-(void) endUpdateUserLocation{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(endUpdateUserLocation) object:nil];
+	
+	//反转地址	
+	self.annotationManipulating = self.mapView.userLocation;
+	[self beginReverseWithCoordinate:self.mapView.userLocation.coordinate];
+	
+	//设置地图region
+	if (self->isRegionWithUserLocation) {
+		self->isRegionWithUserLocation = NO; 
+		
+		//关掉覆盖视图
+		[self closeMaskViewWithAnimated:YES];
+		
+		if (self.mapView.userLocation.location) {
+			self->annotationSelecting = self.mapView.userLocation; //将要选中当前位置
+			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.location.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
+			[self setMapRegion:region FromWorld:YES animatedToWorld:YES animatedToPlace:YES];
+		}
+	}
+}
+
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-	//反向取当前位置的地址
-	self.annotationManipulating = userLocation;
-	[self beginReverseWithCoordinate:self.annotationManipulating.coordinate];
-	
-	//设置“回到当前位置按钮”的可用状态。
-	[self setLocationBarItem];
+	[self performSelector:@selector(endUpdateUserLocation) withObject:nil afterDelay:0.1];
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
-	id annotationSelecting = nil;
+	id annotationSelectingTemp = nil;
 
 	for (NSUInteger i=0; i<views.count; i++) 
 	{
@@ -1156,14 +1055,14 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		{
 			switch (((YCAnnotation*)annotation).annotationType) {
 				case YCMapAnnotationTypeMovingToTarget:
-					annotationSelecting = annotation;
+					annotationSelectingTemp = annotation;
 					break;
 				case YCMapAnnotationTypeSearch:
-					annotationSelecting = annotation;
+					annotationSelectingTemp = annotation;
 					break;
 				case YCMapAnnotationTypeLocating:
 				case YCMapAnnotationTypeStandardEnabledDrag:
-					annotationSelecting = annotation;
+					annotationSelectingTemp = annotation;
 					break;
 				default:
 					break;
@@ -1172,8 +1071,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 	}
 	
-	if (annotationSelecting) 
-		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:0.5];
+	if (annotationSelectingTemp) 
+		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelectingTemp afterDelay:0.5];
 	
 }
 
@@ -1245,7 +1144,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	switch (((YCAnnotation*)annotation).annotationType) 
 	{
 		case YCMapAnnotationTypeStandard:
-			pinView.animatesDrop = NO;
+			//pinView.animatesDrop = NO;
 			pinView.draggable = NO;
 			pinView.pinColor = MKPinAnnotationColorRed;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
@@ -1259,7 +1158,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
 			break;
 		case YCMapAnnotationTypeMovingToTarget:
-			pinView.animatesDrop = NO;
+			//pinView.animatesDrop = NO;
 			pinView.draggable = NO;
 			pinView.pinColor = MKPinAnnotationColorGreen;
 			sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flagAsAnnotation.png"]];
@@ -1337,7 +1236,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	self.alarmTemp.position = subtitle;
 	self.alarmTemp.positionShort = subtitleShort!=nil ? subtitleShort:subtitle; //短地址空，使用长地址
 	
-	//self.annotationAlarmEditing.coordinate = self.alarmTemp.coordinate;
+	//self.annotationAlarmEditing.coordinate = self.alarmTemp.coordinate;  //不能在这里设置，会引起拖动的大头针小跳的。
 	//self.annotationAlarmEditing.title = self.alarmTemp.alarmName;
 	
 	
@@ -1359,51 +1258,67 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 
 -(void)beginReverseWithCoordinate:(CLLocationCoordinate2D)coordinate
 {
-	//初始化，reverseGeocoder对象必须根据特定坐标init。
-	reverseGeocoder = [self reverseGeocoder:coordinate];
-	reverseGeocoder.delegate = self;
+	@try {
+		//初始化，reverseGeocoder对象必须根据特定坐标init。
+		reverseGeocoder = [self reverseGeocoder:coordinate];
+		reverseGeocoder.delegate = self;
+		
+		//反转坐标
+		self.placemarkForReverse = nil; //先赋空相关数据
+		[reverseGeocoder start];
+		[self performSelector:@selector(endReverse) withObject:nil afterDelay:kTimeOutForReverse];
+	}
+	@catch (NSException * e) {
+		[UIUtility sendSimpleNotifyForAlart:@"beginReverseWithCoordinate NSException"];
+		[[YCLog logSingleInstance] addlog:@"beginReverseWithCoordinate NSException"];
+		[[YCLog logSingleInstance] addlog:[e description]];
+	}
 	
-	//反转坐标
-	self.placemarkForReverse = nil; //先赋空相关数据
-	[reverseGeocoder start];
-	[self performSelector:@selector(endReverse) withObject:nil afterDelay:kTimeOutForReverse];
+
 }
 
 -(void)endReverse
 {
-	//如果超时了，反转还没结束，结束它
-	[reverseGeocoder cancel];
-	//取消掉另一个调用
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(endReverse) object:nil];
-	
-	//
-	CLLocationCoordinate2D coordinate = reverseGeocoder.coordinate;
-	NSString *title = nil;
-	NSString *subtitle = nil;
-	NSString *subtitleShort = nil;
-	if (self.placemarkForReverse == nil) {
-		//反转坐标 失败，使用坐标
-		title = nil;
-		subtitle = [UIUtility convertCoordinate:coordinate];
-	}else {
-		title = [UIUtility titleStringFromPlacemark:self.placemarkForReverse];
-		subtitle = [UIUtility positionStringFromPlacemark:self.placemarkForReverse];
-		subtitleShort = [UIUtility positionShortStringFromPlacemark:self.placemarkForReverse];
-	}
-	
-	if (self.annotationManipulating != self.annotationAlarmEditing)
-	{
-		if ([self.annotationManipulating isKindOfClass:[MKUserLocation class]])
-		{
-			//((MKUserLocation*)self.annotationManipulating).title = title;          
-			((MKUserLocation*)self.annotationManipulating).subtitle = subtitle;
-			//self.annotationManipulating.coordinate = coordinate;
+	@try {
+		
+		//如果超时了，反转还没结束，结束它
+		[reverseGeocoder cancel];
+		//取消掉另一个调用
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(endReverse) object:nil];
+		
+		//
+		CLLocationCoordinate2D coordinate = reverseGeocoder.coordinate;
+		NSString *title = nil;
+		NSString *subtitle = nil;
+		NSString *subtitleShort = nil;
+		if (self.placemarkForReverse == nil) {
+			//反转坐标 失败，使用坐标
+			title = nil;
+			subtitle = [UIUtility convertCoordinate:coordinate];
+		}else {
+			title = [UIUtility titleStringFromPlacemark:self.placemarkForReverse];
+			subtitle = [UIUtility positionStringFromPlacemark:self.placemarkForReverse];
+			subtitleShort = [UIUtility positionShortStringFromPlacemark:self.placemarkForReverse];
 		}
+		
+		if (self.annotationManipulating != self.annotationAlarmEditing)
+		{
+			if ([self.annotationManipulating isKindOfClass:[MKUserLocation class]])
+			{          
+				((MKUserLocation*)self.annotationManipulating).subtitle = subtitle;
+			}
+		}
+		else 
+			[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle subtitleShort:subtitleShort animated:YES];
+		
 	}
-	else 
-		[self setAnnotationAlarmEditingWithCoordinate:coordinate title:title subtitle:subtitle subtitleShort:subtitleShort animated:YES];
+	@catch (NSException * e) {
+		[UIUtility sendSimpleNotifyForAlart:@"beginReverseWithCoordinate NSException"];
+		[[YCLog logSingleInstance] addlog:@"beginReverseWithCoordinate NSException"];
+		[[YCLog logSingleInstance] addlog:[e description]];
+	}
 	
-	
+		
 }
 
 
@@ -1473,6 +1388,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		
 		
 		BSKmlResult *place = [self.forwardGeocoder.results objectAtIndex:indexOfNearest];  /////用最近的
+
 		
 		YCAnnotation *annotationTemp = nil;
 		NSString *title = nil;
@@ -1483,6 +1399,7 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 			title = self.forwardGeocoder.searchQuery;
 			subtitle = place.address!=nil ? place.address: @" " ;
 			[self setAnnotationAlarmEditingWithCoordinate:place.coordinate title:title subtitle:subtitle subtitleShort:subtitle animated:NO];
+			annotationTemp.coordinate = place.coordinate;
 		}else { //在tab页面上的搜索结果大头针
 			annotationTemp = self.annotationSearched;
 			title = self.forwardGeocoder.searchQuery ;
@@ -1498,11 +1415,11 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		
 		////////////////////////
 		//Zoom into the location
-		self->defaultMapRegion = place.coordinateRegion;
-		self->defaultMapRegion.center = place.coordinate;
-		double delay = [self setMapRegion:self->defaultMapRegion FromWorld:YES animatedToWorld:YES animatedToPlace:YES];
+		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(annotationTemp.coordinate,kDefaultLatitudinalMeters,kDefaultLongitudinalMeters);
+		double delay = [self setMapRegion:region FromWorld:YES animatedToWorld:YES animatedToPlace:YES];
 		//Zoom into the location
 		////////////////////////
+		//NSLog(@"annotationTemp.coordinate:%f,%f",annotationTemp.coordinate.latitude,annotationTemp.coordinate.longitude);
 		
 		
 		//再加上
@@ -1648,8 +1565,8 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 		[self.mapView setCenterCoordinate:aBookmark.annotation.coordinate animated:YES];
 		
 		//选中
-		id annotationSelecting = aBookmark.annotation;
-		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelecting afterDelay:0.2];
+		id annotationSelectingTemp = aBookmark.annotation;
+		[self performSelector:@selector(selectAnnotation:) withObject:annotationSelectingTemp afterDelay:0.2];
 
 	}
 	
@@ -1682,8 +1599,6 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	self.previousBarItem = nil;
 	
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter removeObserver:self name:kLocationedNotification object:nil];
-	[notificationCenter removeObserver:self name:kTimeOutForLocationNotification object:nil];
 	[notificationCenter removeObserver:self	name: kAlarmsDidChangeNotification object: nil];
 }
 
@@ -1701,10 +1616,10 @@ const  CLLocationDistance kDefaultLongitudinalMeters = 1500.0;
 	[self->locationTimer release];
 	[self.forwardGeocoder release];
 	[self.searchController release];
-	[self.alarms release];                       
+	[alarms release];   alarms = nil;                    
 	[self.mapAnnotations release];        
-	[self.alarmTemp release];
-	[self.alarmsTemp release];
+	[alarmTemp release]; alarmTemp = nil;
+	[alarmsTemp release];alarmsTemp = nil;
 	[self.annotationAlarmEditing release];
 	[self.locationingBarItem release];
 	[self.annotationSearched release];

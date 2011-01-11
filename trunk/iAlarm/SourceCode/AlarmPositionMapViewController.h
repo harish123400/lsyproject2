@@ -64,7 +64,6 @@
 	//BOOL isCurrentPinAtCenterRegion;        //当前图钉在中心
 
 	
-	MKCoordinateRegion defaultMapRegion;   //地图的可视范围，设置该变量方便代码编写
 	NSArray *alarms;                       //需要在地图上显示的
 	NSMutableArray *mapAnnotations;        //地图标签集合
 	YCAlarmEntity *alarmTemp;
@@ -77,6 +76,9 @@
 	MapBookmarksListController *mapBookmarksListController;
     UINavigationController *mapBookmarksListNavigationController;
 	
+	
+	BOOL isRegionWithUserLocation ; //是否用设备位置作为中心;变量用于等待地图定位异步处理
+	id annotationSelecting;         //将要被选中的annotion;用在第一次显示
 }
 
 @property (nonatomic,retain) IBOutlet MKMapView* mapView;
@@ -144,6 +146,10 @@
 -(void)beginForwardGeocoderWithSearchString:(NSString *)searchString;
 -(void)endForwardGeocoder;
 
+-(void)endUpdateUserLocation;
+
+-(void)addMapAnnotations;
+-(void)updateMapAnnotations;
 
 /////////////////////////////////////////////
 

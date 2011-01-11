@@ -10,8 +10,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-
-@interface YCParam : NSObject {
+#define    klastLoadMapRegion                 @"lastLoadMapRegion"
+@interface YCParam : NSObject <NSCoding> {
 	
 	CLLocationDistance radiusForAlarm;                          //提示距离，距离多远时候进行提示
 	CLLocationDistance distanceForProAlarm;        //距离多远，启动Standard Location服务
@@ -60,5 +60,6 @@
 
 +(YCParam*) paramSingleInstance;
 +(void)updateParam;
+-(void)saveParam;
 
 @end

@@ -51,7 +51,9 @@
 
 
 - (void)dealloc {
-	[self.alarm release];
+	[alarm release];
+	alarm = nil;
+	
     [super dealloc];
 }
  

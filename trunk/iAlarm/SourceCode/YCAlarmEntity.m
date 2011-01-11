@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "NSCoder-YC.h"
 #import "LocalizedString.h"
 #import "YCAlarmEntity.h"
 #import "DataUtility.h"
@@ -16,26 +17,7 @@
 #import "YCParam.h"
 
 
-@implementation NSCoder (iArrived)
 
-#define    klatitude        @"klatitude"
-#define    klongitude       @"klongitude"
-
-- (void)encodeCLLocationCoordinate2D:(CLLocationCoordinate2D)coordinate forKey:(NSString *)key
-{
-	[self encodeDouble:coordinate.latitude forKey:klatitude];
-	[self encodeDouble:coordinate.longitude forKey:klongitude];
-}
-
-- (CLLocationCoordinate2D)decodeCLLocationCoordinate2DForKey:(NSString *)key
-{
-	CLLocationCoordinate2D coordinate;
-	coordinate.latitude = [self decodeDoubleForKey:klatitude];
-	coordinate.longitude = [self decodeDoubleForKey:klongitude];
-	return coordinate;
-}
-
-@end
 
 
 @implementation YCAlarmEntity

@@ -6,6 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
+#import "NSCoder-YC.h"
 #import "YCParam.h"
 #import "DataUtility.h"
 #import "UIUtility.h"
@@ -32,12 +33,24 @@
 @synthesize validDistanceOfOffset; 
 @synthesize lastLoadMapRegion;
 
+#define kParamFilename @"param.plist"
++ (NSString *)dataFilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(
+                                                         NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:kParamFilename];
+}
 
 +(YCParam*) paramSingleInstance
 {
 	static YCParam* obj = nil;
 	if (obj == nil) {
-		obj = [[YCParam alloc] init];
+		obj = (YCParam*)[NSKeyedUnarchiver unarchiveObjectWithFile:[YCParam dataFilePath]];
+		if (obj == nil) {
+			obj = [[YCParam alloc] init];
+			obj.lastLoadMapRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(-1000,-1000), MKCoordinateSpanMake(0, 0));
+		}
+
 		obj.radiusForAlarm = 1200.0;
 		obj.distanceForProAlarm = 2000.0;
 		obj.desiredAccuracyForStartStandardLocation = kCLLocationAccuracyNearestTenMeters;
@@ -59,7 +72,6 @@
 		obj.lastTimeStampOfOffset = nil;
 		obj.validDistanceOfOffset = 5000.0;
 		
-		//obj.lastLoadMapRegion.span ;
 		
 		[obj retain];
 	}
@@ -80,6 +92,29 @@
 	[UIUtility sendNotifyForAlart:nil notifyName :@"updateParam"];
 	
 }
+
+#pragma mark NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	[encoder encodeMKCoordinateRegion:lastLoadMapRegion forKey:klastLoadMapRegion];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+	
+    if (self = [super init]) {		
+		self.lastLoadMapRegion = [decoder decodeMKCoordinateRegionForKey:klastLoadMapRegion];
+    }
+    return self;
+}
+
+
+
+-(void)saveParam{
+	[NSKeyedArchiver archiveRootObject:self toFile:[YCParam dataFilePath]];
+}
+
+
+
 
 - (void)dealloc {
 	[lastTimeStampOfOffset release];
