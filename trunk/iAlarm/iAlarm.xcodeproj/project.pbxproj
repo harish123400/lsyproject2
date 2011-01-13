@@ -115,6 +115,7 @@
 		9CD2338012CCCA430029F826 /* DisclosureIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD2337D12CCCA430029F826 /* DisclosureIndicator.png */; };
 		9CD2338112CCCA430029F826 /* Pin-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD2337E12CCCA430029F826 /* Pin-2x.png */; };
 		9CD426C612AB45C00005CDAD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD426C512AB45C00005CDAD /* CoreData.framework */; };
+		9CD887DF12DE87BB0013B992 /* tap.aif in Resources */ = {isa = PBXBuildFile; fileRef = 9CD887DE12DE87BB0013B992 /* tap.aif */; };
 		9CDC2F9812C0618200015950 /* BoolCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC2F9712C0618200015950 /* BoolCell.m */; };
 		9CDC304D12C0710200015950 /* WaitingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC304C12C0710200015950 /* WaitingCell.m */; };
 		9CDC310412C07C9000015950 /* currentLocationIconInCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CDC310212C07C9000015950 /* currentLocationIconInCell.png */; };
@@ -299,6 +300,7 @@
 		9CD2337D12CCCA430029F826 /* DisclosureIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DisclosureIndicator.png; sourceTree = "<group>"; };
 		9CD2337E12CCCA430029F826 /* Pin-2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pin-2x.png"; sourceTree = "<group>"; };
 		9CD426C512AB45C00005CDAD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9CD887DE12DE87BB0013B992 /* tap.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = tap.aif; sourceTree = "<group>"; };
 		9CDC2F9612C0618200015950 /* BoolCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoolCell.h; sourceTree = "<group>"; };
 		9CDC2F9712C0618200015950 /* BoolCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoolCell.m; sourceTree = "<group>"; };
 		9CDC304B12C0710200015950 /* WaitingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingCell.h; sourceTree = "<group>"; };
@@ -745,6 +747,7 @@
 		9CC39BD812DDEEA8004C6064 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				9CD887DE12DE87BB0013B992 /* tap.aif */,
 				9CC39BD912DDEEA8004C6064 /* spacemusic.au */,
 			);
 			path = sounds;
@@ -847,6 +850,7 @@
 				9CC1E82B12DC545E004960B6 /* AnnotationSubtitleTableCell.xib in Resources */,
 				9CC1E82D12DC545E004960B6 /* AnnotationTitleTableCell.xib in Resources */,
 				9CC39BDA12DDEEA8004C6064 /* spacemusic.au in Resources */,
+				9CD887DF12DE87BB0013B992 /* tap.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
