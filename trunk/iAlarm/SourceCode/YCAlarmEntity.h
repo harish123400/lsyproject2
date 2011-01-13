@@ -63,13 +63,6 @@
 @property (nonatomic,retain) NSString *position;
 @property (nonatomic,retain) NSString *positionShort;
 @property (nonatomic,retain) NSString *description;
-@property (nonatomic,assign) NSUInteger sortId;
-@property (nonatomic,assign) BOOL enabling;
-@property (nonatomic,assign) CLLocationCoordinate2D coordinate;
-@property (nonatomic,assign) CLLocationAccuracy locationAccuracy;
-@property (nonatomic,assign) BOOL vibrate;
-@property (nonatomic,assign) BOOL ring;
-@property (nonatomic,assign) BOOL nameChanged;
 @property (nonatomic,retain) YCPositionType *positionType;
 @property (nonatomic,retain) YCSound *sound;
 @property (nonatomic,retain) YCRepeatType *repeatType;
@@ -77,6 +70,15 @@
 @property (nonatomic,retain) NSString *soundId;
 @property (nonatomic,retain) NSString *repeatTypeId;
 @property (nonatomic,retain) NSString *vehicleTypeId;
+
+
+@property (nonatomic,assign) NSUInteger sortId;
+@property (nonatomic,assign) BOOL enabling;
+@property (nonatomic,assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic,assign) CLLocationAccuracy locationAccuracy;
+@property (nonatomic,assign) BOOL vibrate;
+@property (nonatomic,assign) BOOL ring;
+@property (nonatomic,assign) BOOL nameChanged;
 @property (nonatomic,assign) CLLocationDistance radius;
 
 //-(id)initWithDefault;

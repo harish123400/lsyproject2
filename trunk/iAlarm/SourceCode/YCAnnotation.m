@@ -14,9 +14,23 @@
 @synthesize coordinate;
 @synthesize subtitle;
 @synthesize title;
-@synthesize isCurrent;
+//@synthesize isCurrent;
 @synthesize annotationType;
 
+- (id)init{
+	if (self=[super initWithCoordinate:CLLocationCoordinate2DMake(0, 0) addressDictionary:nil]) {
+		
+	}
+	return self;
+}
 
+
+- (void)dealloc 
+{
+	[title release];
+	[subtitle release];
+	[super dealloc];
+	
+}
 
 @end

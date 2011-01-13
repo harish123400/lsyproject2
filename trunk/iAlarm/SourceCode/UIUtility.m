@@ -383,6 +383,18 @@ void MyDrawWithShadows (CGContextRef myContext, // 1
 	[notification release];
 }
 
++(void)simpleAlertMessage:(NSString*)alertMessage
+{
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertMessage
+													message:@"" 
+												   delegate:nil
+										  cancelButtonTitle:kAlertBtnOK 
+										  otherButtonTitles:nil];
+	
+	[alert show];
+	[alert release];
+}
+
 +(void)simpleAlertBody:(NSString*)alertBody 
 				alertTitle:(NSString*)alertTitle
 		 cancelButtonTitle:(NSString*)cancelButtonTitle

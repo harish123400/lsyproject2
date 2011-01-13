@@ -144,8 +144,27 @@
 	copy.soundId = [[self.soundId copyWithZone:zone] autorelease];
 	copy.repeatTypeId = [[self.repeatTypeId copyWithZone:zone] autorelease];
 	copy.vehicleTypeId = [[self.vehicleTypeId copyWithZone:zone] autorelease];
+	 
+
 	 */
 	
+	
+	//copy.alarmId = [[self.alarmId copy] autorelease];
+	
+	/*
+	copy.alarmName;
+	copy.position;
+	copy.positionShort;
+	copy.description;
+	copy.soundId;
+	copy.repeatTypeId;
+	copy.vehicleTypeId;
+	
+	copy.positionType;
+	copy.sound;
+	copy.repeatType;
+	copy.vehicleType;
+	 */
 
 	YCAlarmEntity *copy = [[[self class] allocWithZone: zone] init];
     copy.alarmId = self.alarmId;
@@ -159,8 +178,8 @@
 	copy.locationAccuracy = self.locationAccuracy;
 	copy.vibrate = self.vibrate;
 	copy.ring = self.ring;
-	copy.ring = self.ring;
 	copy.nameChanged = self.nameChanged;
+	copy.sound = self.sound;
 	copy.repeatType = self.repeatType;
 	copy.vehicleType = self.vehicleType;
 	

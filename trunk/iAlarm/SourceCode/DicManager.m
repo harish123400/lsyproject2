@@ -16,7 +16,7 @@
 
 @implementation DicManager
 
-#define ksoundCount 2
+#define ksoundCount 3
 +(NSDictionary*) soundDictionary
 {
 
@@ -26,18 +26,21 @@
 	{
 		NSString* names[ksoundCount] = 
 		{
+			KSoundName000,
 			KSoundName001,
 			KSoundName002
 		};
 		
 		NSString* fileNames[ksoundCount] = 
 		{
-			@"001.mid",
-			@"002.mid"
+			@"",
+			@"tap.aif",
+			@"spacemusic.au"
 		};
 		
 		NSString* ids[ksoundCount] = 
 		{
+			@"s000",
 			@"s001",
 			@"s002"
 		};
@@ -45,7 +48,8 @@
 		NSUInteger sortIds[ksoundCount] = 
 		{
 			0,
-			1
+			1,
+			2
 		};
 		
 		soundDic = [[NSMutableDictionary alloc] init];
@@ -72,26 +76,26 @@
 	static NSMutableDictionary* repeatTypeDic;
 	if (!repeatTypeDic) 
 	{
-		NSString* names[ksoundCount] = 
+		NSString* names[krepeatTypeCount] = 
 		{
 			KRepeateTypeName001,
 			KRepeateTypeName002
 		};
 		
-		NSString* ids[ksoundCount] = 
+		NSString* ids[krepeatTypeCount] = 
 		{
 			@"r001",
 			@"r002"
 		};
 		
-		NSUInteger sortIds[ksoundCount] = 
+		NSUInteger sortIds[krepeatTypeCount] = 
 		{
 			0,
 			1
 		};
 		
 		repeatTypeDic = [[NSMutableDictionary alloc] init];
-		for (int i=0; i<ksoundCount; i++) 
+		for (int i=0; i<krepeatTypeCount; i++) 
 		{
 			YCRepeatType *obj = [[YCRepeatType alloc] init];
 			obj.repeatTypeId = ids[i];
@@ -112,20 +116,20 @@
 	static NSMutableDictionary* vehicleTypeDic;
 	if (!vehicleTypeDic) 
 	{
-		NSString* names[ksoundCount] = 
+		NSString* names[kvehicleTypeCount] = 
 		{
 			NSLocalizedString(@"公交",@""),
 			NSLocalizedString(@"火车",@"")
 		};
 		
-		NSString* ids[ksoundCount] = 
+		NSString* ids[kvehicleTypeCount] = 
 		{
 			@"v001",
 			@"v002"
 		};
 		
 		vehicleTypeDic = [[NSMutableDictionary alloc] init];
-		for (int i=0; i<ksoundCount; i++) 
+		for (int i=0; i<kvehicleTypeCount; i++) 
 		{
 			YCVehicleType *obj = [[YCVehicleType alloc] init];
 			obj.vehicleTypeId = ids[i];
@@ -145,26 +149,26 @@
 	static NSMutableDictionary* dic;
 	if (!dic) 
 	{
-		NSString* names[ksoundCount] = 
+		NSString* names[kpositionTypeCount] = 
 		{
 			NSLocalizedString(@"当前位置",@"指示地理位置方式的标签"),
 			NSLocalizedString(@"地图指定位置",@"指示地理位置方式的标签")
 		};
 		
-		NSString* ids[ksoundCount] = 
+		NSString* ids[kpositionTypeCount] = 
 		{
 			@"p001",
 			@"p002"
 		};
 		
-		NSUInteger sortIds[ksoundCount] = 
+		NSUInteger sortIds[kpositionTypeCount] = 
 		{
 			0,
 			1
 		};
 		
 		dic = [[NSMutableDictionary alloc] init];
-		for (int i=0; i<ksoundCount; i++) 
+		for (int i=0; i<kpositionTypeCount; i++) 
 		{
 			YCPositionType *obj = [[YCPositionType alloc] init];
 			obj.positionTypeId = ids[i];

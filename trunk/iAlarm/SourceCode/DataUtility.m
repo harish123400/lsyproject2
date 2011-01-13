@@ -14,13 +14,8 @@
 
 @implementation DataUtility
 
-#define kFilename @"alarms.plist"
-+ (NSString *)dataFilePath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(
-                                                         NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:kFilename];
-}
+#define kDataFilename @"alarms.plist"
+
 
 +(NSString*) genSerialCode
 {
@@ -39,7 +34,8 @@
 	static NSMutableArray *alarms;
 	
 	if (!alarms) {
-		alarms  = (NSMutableArray *)[NSKeyedUnarchiver unarchiveObjectWithFile:[DataUtility dataFilePath]];
+		NSString *filePathName =  [[YCParam paramSingleInstance].applicationDocumentsDirectory stringByAppendingPathComponent:kDataFilename];
+		alarms  = (NSMutableArray *)[NSKeyedUnarchiver unarchiveObjectWithFile:filePathName];
 		[alarms retain];//NSKeyedUnarchiver 读出的对象autorelease
 		
 		if (alarms ==nil) { //文件还不存在的时候（一个闹钟也没有的时候）
@@ -59,7 +55,8 @@
 //保存闹钟列表
 +(void) saveAlarmArray:(NSArray*)array
 {
-	[NSKeyedArchiver archiveRootObject:array toFile:[DataUtility dataFilePath]];
+	NSString *filePathName =  [[YCParam paramSingleInstance].applicationDocumentsDirectory stringByAppendingPathComponent:kDataFilename];
+	[NSKeyedArchiver archiveRootObject:array toFile:filePathName];
 }
 
 //根据一个默认条件，产生一个新闹钟

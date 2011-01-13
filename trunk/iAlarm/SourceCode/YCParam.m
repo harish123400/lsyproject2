@@ -34,18 +34,30 @@
 @synthesize lastLoadMapRegion;
 
 #define kParamFilename @"param.plist"
-+ (NSString *)dataFilePath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(
-                                                         NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:kParamFilename];
+
+#pragma mark -
+#pragma mark Application's documents directory
+
+/**
+ Returns the path to the application's documents directory.
+ */
+
++ (NSString *)applicationDocumentsDirectory {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    return basePath;
 }
+- (NSString *)applicationDocumentsDirectory {
+	return [YCParam applicationDocumentsDirectory];
+}
+
 
 +(YCParam*) paramSingleInstance
 {
 	static YCParam* obj = nil;
 	if (obj == nil) {
-		obj = (YCParam*)[NSKeyedUnarchiver unarchiveObjectWithFile:[YCParam dataFilePath]];
+		NSString *filePathName = [[YCParam applicationDocumentsDirectory] stringByAppendingPathComponent:kParamFilename];
+		obj = [(YCParam*)[NSKeyedUnarchiver unarchiveObjectWithFile:filePathName] retain];
 		if (obj == nil) {
 			obj = [[YCParam alloc] init];
 			obj.lastLoadMapRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(-1000,-1000), MKCoordinateSpanMake(0, 0));
@@ -73,10 +85,25 @@
 		obj.validDistanceOfOffset = 5000.0;
 		
 		
-		[obj retain];
 	}
 	
 	return obj;
+}
+
+
+
+#pragma mark -
+#pragma mark NSCoding
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	[encoder encodeMKCoordinateRegion:lastLoadMapRegion forKey:klastLoadMapRegion];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+	
+    if (self = [super init]) {		
+		self.lastLoadMapRegion = [decoder decodeMKCoordinateRegionForKey:klastLoadMapRegion];
+    }
+    return self;
 }
 
 +(void)updateParam
@@ -93,24 +120,11 @@
 	
 }
 
-#pragma mark NSCoding
-
-- (void)encodeWithCoder:(NSCoder *)encoder {
-	[encoder encodeMKCoordinateRegion:lastLoadMapRegion forKey:klastLoadMapRegion];
-}
-
-- (id)initWithCoder:(NSCoder *)decoder {
-	
-    if (self = [super init]) {		
-		self.lastLoadMapRegion = [decoder decodeMKCoordinateRegionForKey:klastLoadMapRegion];
-    }
-    return self;
-}
-
 
 
 -(void)saveParam{
-	[NSKeyedArchiver archiveRootObject:self toFile:[YCParam dataFilePath]];
+	NSString *filePathName = [self.applicationDocumentsDirectory stringByAppendingPathComponent:kParamFilename];
+	[NSKeyedArchiver archiveRootObject:self toFile:filePathName];
 }
 
 
@@ -120,5 +134,7 @@
 	[lastTimeStampOfOffset release];
     [super dealloc];
 }
+
+
 
 @end

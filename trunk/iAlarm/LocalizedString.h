@@ -54,6 +54,7 @@
 #define KRepeateTypeName002                      NSLocalizedString(@"Once"   ,@"重复类型的名称-002")
 
 ////闹钟铃声名称
+#define KSoundName000                            NSLocalizedString(@"None",@"闹钟铃声名称-无")
 #define KSoundName001                            NSLocalizedString(@"Ring1",@"闹钟铃声名称-001")
 #define KSoundName002                            NSLocalizedString(@"Ring2",@"闹钟铃声名称-002")
 

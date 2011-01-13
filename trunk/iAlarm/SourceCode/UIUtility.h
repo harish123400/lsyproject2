@@ -46,6 +46,8 @@
    repeatInterval:(NSCalendarUnit)repeatInterval 
 		soundName:(NSString*)soundName;
 
++(void)simpleAlertMessage:(NSString*)alertMessage;
+
 +(void)simpleAlertBody:(NSString*)alertBody 
 				alertTitle:(NSString*)alertTitle
 		 cancelButtonTitle:(NSString*)cancelButtonTitle

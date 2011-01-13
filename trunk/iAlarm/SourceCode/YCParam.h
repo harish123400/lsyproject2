@@ -58,6 +58,8 @@
 
 @property (nonatomic,assign) MKCoordinateRegion lastLoadMapRegion;
 
+@property (nonatomic, readonly) NSString *applicationDocumentsDirectory;
+
 +(YCParam*) paramSingleInstance;
 +(void)updateParam;
 -(void)saveParam;

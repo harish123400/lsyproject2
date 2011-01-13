@@ -15,12 +15,24 @@
 	SystemSoundID	soundFileObject;
 	
 	BOOL playing;
+	NSInteger repeatNumber; //重复播放次数
 }
 
 @property(nonatomic,assign) BOOL playing;
+@property(nonatomic,assign) NSInteger repeatNumber;
+@property(nonatomic,readonly,assign) SystemSoundID soundFileObject;
 
 -(id)initWithSoundName:(CFStringRef)soundName soundType:(CFStringRef)soundType;
++(id)soundPlayerWithSoundName:(CFStringRef)soundName soundType:(CFStringRef)soundType;
+
+-(id)initWithSoundFileName:(NSString*)soundFileName;
++(id)soundPlayerWithSoundFileName:(NSString*)soundFileName;
+
+-(id)initWithVibrate;
++(id)soundPlayerWithVibrate;
+
 -(void)play;
+-(void)playRepeatNumber:(NSInteger)theRepeatNumber; //重复播放，theRepeatNumber==－1 一直播放
 -(void)stop;
 
 @end
