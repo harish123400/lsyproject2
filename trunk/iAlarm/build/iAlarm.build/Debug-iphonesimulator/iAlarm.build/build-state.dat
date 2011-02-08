@@ -1,2046 +1,0 @@
-TiAlarm
-v7
-r0
-t310290785.292486
-cCheck dependencies
-cProcessInfoPlistFile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist iAlarm-Info.plist
-cCpResource build/Debug-iphonesimulator/iAlarm.app/checkmarkicon.png Resources/images/checkmarkicon.png
-cCpResource build/Debug-iphonesimulator/iAlarm.app/DarkBackground.png Resources/images/DarkBackground.png
-cCpResource build/Debug-iphonesimulator/iAlarm.app/LightBackground.png Resources/images/LightBackground.png
-cCpResource build/Debug-iphonesimulator/iAlarm.app/MathGraph.png Resources/images/MathGraph.png
-cCompileXIB /Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.xib
-cCompileXIB /Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.xib
-cCompileXIB /Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.xib
-cCompileXIB /Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.xib
-cCompileXIB /Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.xib
-cCompileXIB /Users/lishiyong/iAlarm/SourceCode/MainWindow.xib
-cCompileXIB /Users/lishiyong/iAlarm/SourceCode/RootViewController.xib
-cCompileXIB /Users/lishiyong/iAlarm/SourceCode/SettingViewController.xib
-cProcessPCH /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch iAlarm_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o /Users/lishiyong/iAlarm/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmDetailViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLRepeatTypeViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmLRepeatTypeViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLSoundViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmLSoundViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModify.o /Users/lishiyong/iAlarm/SourceCode/AlarmModify.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyTableViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmModifyTableViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmModifyViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNameViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewDetailSuperViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmNewDetailSuperViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmNewViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionMapViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmPositionViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmVibrateViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/ApplicationCell.o /Users/lishiyong/iAlarm/SourceCode/ApplicationCell.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/CheckmarkDisclosureIndicatorCell.o /Users/lishiyong/iAlarm/SourceCode/CheckmarkDisclosureIndicatorCell.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DataUtility.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/DataUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DicManager.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/DicManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o /Users/lishiyong/iAlarm/SourceCode/iAlarmAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/IndividualSubviewsBasedApplicationCell.o /Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/LocationUtility.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/LocationUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RatingView.o /Users/lishiyong/iAlarm/SourceCode/RatingView.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RegionCenter.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/RegionCenter.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RootViewController.o /Users/lishiyong/iAlarm/SourceCode/RootViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/SettingViewController.o /Users/lishiyong/iAlarm/SourceCode/SettingViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/StandardLocationManager.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/StandardLocationManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/UIUtility.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/UIUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAlarmEntity.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAlarmEntity.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotation.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotation.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotationView.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotationView.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCCellDescription.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCCellDescription.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManager.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManagerDelegate.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManagerDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCParam.o /Users/lishiyong/iAlarm/SourceCode/YCParam.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCPositionType.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCPositionType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCRepeatType.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCRepeatType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCSound.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCSound.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCVehicleType.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCVehicleType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cLd /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm normal i386
-cGenerateDSYMFile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-cTouch /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk
-c000000004C6517790000000000000132
-t1281693561
-s306
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
-c000000004BFDFE39000000000027C7D0
-t1274936889
-s2607056
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.h
-c000000004BFDFDB200000000000004FE
-t1274936754
-s1278
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreLocation.framework/CoreLocation
-c000000004BFF44C00000000000068F90
-t1275020480
-s429968
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreLocation.framework/Headers/CoreLocation.h
-c000000004BFF44B600000000000001D0
-t1275020470
-s464
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Foundation
-c000000004BFDFE7C000000000029D5D0
-t1274936956
-s2741712
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
-c000000004BFDFE6E0000000000001466
-t1274936942
-s5222
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/MapKit.framework/Headers/MapKit.h
-c000000004C04724700000000000002FE
-t1275359815
-s766
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/MapKit.framework/MapKit
-c000000004C04725B0000000000160350
-t1275359835
-s1442640
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.h
-c000000004C04586B00000000000000C4
-t1275353195
-s196
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/QuartzCore.framework/QuartzCore
-c000000004C0458E90000000000151D30
-t1275353321
-s1383728
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
-c000000004C0470BB00000000000009CD
-t1275359419
-s2509
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/UIKit
-c000000004C0471620000000001D47210
-t1275359586
-s30700048
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/usr/include/Availability.h
-c000000004BF4CBF90000000000001A3B
-t1274334201
-s6715
-
-N/Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.h
-c000000004CCE559D00000000000001D4
-t1288590749
-s468
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m
-c000000004CCE559D0000000000000C2F
-t1288590749
-s3119
-i"iAlarmAppDelegate.h"
-
-N/Users/lishiyong/iAlarm/Resources/images/DarkBackground.png
-c000000004CC4667B000000000000004E
-t1287939707
-s78
-
-N/Users/lishiyong/iAlarm/Resources/images/LightBackground.png
-c000000004CC4667B000000000000004E
-t1287939707
-s78
-
-N/Users/lishiyong/iAlarm/Resources/images/MathGraph.png
-c000000004CC4667B0000000000001960
-t1287939707
-s6496
-
-N/Users/lishiyong/iAlarm/Resources/images/checkmarkicon.png
-c000000004CC4667B0000000000000226
-t1287939707
-s550
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/DataUtility.m
-c000000004CC915EB0000000000000D3F
-t1288246763
-s3391
-i"DataUtility.h"
-i"YCAlarmEntity.h"
-i"DicManager.h"
-i"YCPositionType.h"
-i"YCParam.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/DicManager.m
-c000000004CC4667B0000000000000EFF
-t1287939707
-s3839
-i"DicManager.h"
-i"YCSound.h"
-i"YCRepeatType.h"
-i"YCVehicleType.h"
-i"YCPositionType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/LocationUtility.m
-c000000004CCD72440000000000001024
-t1288532548
-s4132
-i"LocationUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/RegionCenter.m
-c000000004CC8F24C00000000000002D8
-t1288237644
-s728
-i"RegionCenter.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/StandardLocationManager.m
-c000000004CCD714000000000000015A4
-t1288532288
-s5540
-i"StandardLocationManager.h"
-i"YCParam.h"
-i"RegionCenter.h"
-i"YCLocationManager.h"
-i"UIUtility.h"
-i"LocationUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/UIUtility.m
-c000000004CCB83FF0000000000002551
-t1288406015
-s9553
-i"UIUtility.h"
-i<QuartzCore/QuartzCore.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAlarmEntity.m
-c000000004CC81F710000000000001538
-t1288183665
-s5432
-i"YCAlarmEntity.h"
-i"DataUtility.h"
-i"YCSound.h"
-i"YCRepeatType.h"
-i"YCVehicleType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotation.m
-c000000004CC97FAF0000000000000113
-t1288273839
-s275
-i"YCAnnotation.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotationView.m
-c000000004CC97FD000000000000000D6
-t1288273872
-s214
-i"YCAnnotationView.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCCellDescription.m
-c000000004CC985D5000000000000264C
-t1288275413
-s9804
-i"YCCellDescription.h"
-i"YCRepeatType.h"
-i"YCPositionType.h"
-i"DicManager.h"
-i"AlarmPositionViewController.h"
-i"AlarmLRepeatTypeViewController.h"
-i"AlarmLSoundViewController.h"
-i"AlarmVibrateViewController.h"
-i"AlarmNameViewController.h"
-i"AlarmPositionMapViewController.h"
-i"UIUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManager.m
-c000000004CCD753900000000000015C9
-t1288533305
-s5577
-i"YCLocationManager.h"
-i"LocationUtility.h"
-i"RegionCenter.h"
-i"YCLocationManagerDelegate.h"
-i"StandardLocationManager.h"
-i"YCParam.h"
-i"UIUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManagerDelegate.m
-c000000004CCD4C590000000000000A5D
-t1288522841
-s2653
-i"YCLocationManagerDelegate.h"
-i"DataUtility.h"
-i"YCAlarmEntity.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCParam.m
-c000000004CCD7D4500000000000003DB
-t1288535365
-s987
-i"YCParam.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCPositionType.m
-c000000004CC4667B000000000000056D
-t1287939707
-s1389
-i"YCPositionType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCRepeatType.m
-c000000004CC4667B000000000000054D
-t1287939707
-s1357
-i"YCRepeatType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCSound.m
-c000000004CC4667B000000000000043B
-t1287939707
-s1083
-i"YCSound.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCVehicleType.m
-c000000004CC4667B00000000000004C9
-t1287939707
-s1225
-i"YCVehicleType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.h
-c000000004CCE590300000000000001CD
-t1288591619
-s461
-i"AlarmNewDetailSuperViewController.h"
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.m
-c000000004CCE383300000000000016C8
-t1288583219
-s5832
-i"AlarmDetailViewController.h"
-i"UIUtility.h"
-i"YCCellDescription.h"
-i"YCAlarmEntity.h"
-i"DicManager.h"
-i"YCSound.h"
-i"DataUtility.h"
-i"YCVehicleType.h"
-i"YCRepeatType.h"
-i"YCPositionType.h"
-i"AlarmNameViewController.h"
-i"AlarmVibrateViewController.h"
-i"AlarmLSoundViewController.h"
-i"AlarmLRepeatTypeViewController.h"
-i"AlarmPositionViewController.h"
-i"LocationUtility.h"
-i<CoreGraphics/CoreGraphics.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.xib
-c000000004CC466760000000000004CE1
-t1287939702
-s19681
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmLRepeatTypeViewController.h
-c000000004CC4667600000000000001C3
-t1287939702
-s451
-i<UIKit/UIKit.h>
-i"AlarmModifyTableViewController.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmLRepeatTypeViewController.m
-c000000004CC6E88B00000000000011DE
-t1288104075
-s4574
-i"AlarmLRepeatTypeViewController.h"
-i"DicManager.h"
-i"YCRepeatType.h"
-i"YCCellDescription.h"
-i"UIUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmLSoundViewController.h
-c000000004CC4667600000000000001B0
-t1287939702
-s432
-i<UIKit/UIKit.h>
-i"AlarmModifyTableViewController.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmLSoundViewController.m
-c000000004CC466760000000000001899
-t1287939702
-s6297
-i"AlarmLSoundViewController.h"
-i"AlarmDetailViewController.h"
-i"YCAlarmEntity.h"
-i"YCCellDescription.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmModify.h
-c000000004CCE59030000000000000293
-t1288591619
-s659
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmModify.m
-c000000004CC466760000000000000341
-t1287939702
-s833
-i"AlarmModify.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmModifyTableViewController.h
-c000000004CCE59030000000000000274
-t1288591619
-s628
-i<UIKit/UIKit.h>
-i"AlarmModify.h"
-i"AlarmNewDetailSuperViewController.h"
-i"YCAlarmEntity.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmModifyTableViewController.m
-c000000004CC466760000000000000357
-t1287939702
-s855
-i"AlarmModifyTableViewController.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmModifyViewController.h
-c000000004CCE59030000000000000221
-t1288591619
-s545
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmModifyViewController.m
-c000000004CCE591D0000000000000390
-t1288591645
-s912
-i"AlarmModifyViewController.h"
-i"AlarmNewDetailSuperViewController.h"
-i"YCAlarmEntity.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.h
-c000000004CC4667600000000000001E5
-t1287939702
-s485
-i<UIKit/UIKit.h>
-i"AlarmModifyViewController.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.m
-c000000004CCE59100000000000000CB4
-t1288591632
-s3252
-i"AlarmNameViewController.h"
-i"AlarmNewDetailSuperViewController.h"
-i"YCAlarmEntity.h"
-i"YCCellDescription.h"
-i"UIUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.xib
-c000000004CC466760000000000005564
-t1287939702
-s21860
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNewDetailSuperViewController.h
-c000000004CCE590300000000000008A6
-t1288591619
-s2214
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNewDetailSuperViewController.m
-c000000004CCE5903000000000000293F
-t1288591619
-s10559
-i"AlarmNewDetailSuperViewController.h"
-i"UIUtility.h"
-i"YCCellDescription.h"
-i"DataUtility.h"
-i"YCAlarmEntity.h"
-i"CheckmarkDisclosureIndicatorCell.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNewEditSuperViewController.h
-c000000004CCE383300000000000008A4
-t1288583219
-s2212
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNewEditSuperViewController.m
-c000000004CC92ADF000000000000293B
-t1288252127
-s10555
-i"AlarmNewEditSuperViewController.h"
-i"UIUtility.h"
-i"YCCellDescription.h"
-i"DataUtility.h"
-i"YCAlarmEntity.h"
-i"CheckmarkDisclosureIndicatorCell.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNewViewController.h
-c000000004CCE5903000000000000032E
-t1288591619
-s814
-i"AlarmNewDetailSuperViewController.h"
-i<UIKit/UIKit.h>
-i<CoreLocation/CoreLocation.h>
-i<CoreGraphics/CoreGraphics.h>
-i<MapKit/MapKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmNewViewController.m
-c000000004CCE71E00000000000003AF9
-t1288597984
-s15097
-i"AlarmNewViewController.h"
-i"UIUtility.h"
-i"YCCellDescription.h"
-i"YCAlarmEntity.h"
-i"DicManager.h"
-i"YCSound.h"
-i"DataUtility.h"
-i"YCVehicleType.h"
-i"YCRepeatType.h"
-i"YCPositionType.h"
-i"AlarmNameViewController.h"
-i"AlarmVibrateViewController.h"
-i"AlarmLSoundViewController.h"
-i"AlarmLRepeatTypeViewController.h"
-i"AlarmPositionViewController.h"
-i"LocationUtility.h"
-i"CheckmarkDisclosureIndicatorCell.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.h
-c000000004CC97B7200000000000001C8
-t1288272754
-s456
-i"AlarmModifyViewController.h"
-i<UIKit/UIKit.h>
-i<MapKit/MapKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.m
-c000000004CCA9345000000000000132F
-t1288344389
-s4911
-i"AlarmPositionMapViewController.h"
-i"YCAnnotation.h"
-i"YCAlarmEntity.h"
-i"UIUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.xib
-c000000004CC96FA90000000000004906
-t1288269737
-s18694
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmPositionViewController.h
-c000000004CC4667600000000000001BC
-t1287939702
-s444
-i<UIKit/UIKit.h>
-i"AlarmModifyTableViewController.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmPositionViewController.m
-c000000004CC46676000000000000181C
-t1287939702
-s6172
-i"AlarmPositionViewController.h"
-i"DicManager.h"
-i"YCPositionType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.h
-c000000004CC4667600000000000001B8
-t1287939702
-s440
-i<UIKit/UIKit.h>
-i"AlarmModifyTableViewController.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.m
-c000000004CC4667600000000000016F9
-t1287939702
-s5881
-i"AlarmVibrateViewController.h"
-i"AlarmDetailViewController.h"
-i"YCAlarmEntity.h"
-i"YCCellDescription.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.xib
-c000000004CC466760000000000005141
-t1287939702
-s20801
-
-N/Users/lishiyong/iAlarm/SourceCode/ApplicationCell.h
-c000000004CC466760000000000000B82
-t1287939702
-s2946
-i<Foundation/Foundation.h>
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/ApplicationCell.m
-c000000004CC466760000000000000DE6
-t1287939702
-s3558
-i"ApplicationCell.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/CheckmarkDisclosureIndicatorCell.h
-c000000004CC4670000000000000001C0
-t1287939840
-s448
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/CheckmarkDisclosureIndicatorCell.m
-c000000004CC46451000000000000059A
-t1287939153
-s1434
-i"CheckmarkDisclosureIndicatorCell.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/DataUtility.h
-c000000004CC9152800000000000002DD
-t1288246568
-s733
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/DataUtility.m
-c000000004CC915EB0000000000000D3F
-t1288246763
-s3391
-i"DataUtility.h"
-i"YCAlarmEntity.h"
-i"DicManager.h"
-i"YCPositionType.h"
-i"YCParam.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/DicManager.h
-c000000004CC4667B0000000000000234
-t1287939707
-s564
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/DicManager.m
-c000000004CC4667B0000000000000EFF
-t1287939707
-s3839
-i"DicManager.h"
-i"YCSound.h"
-i"YCRepeatType.h"
-i"YCVehicleType.h"
-i"YCPositionType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.h
-c000000004CC466760000000000000B18
-t1287939702
-s2840
-i<Foundation/Foundation.h>
-i"ApplicationCell.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.m
-c000000004CC466760000000000000E4D
-t1287939702
-s3661
-i"IndividualSubviewsBasedApplicationCell.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.xib
-c000000004CC4667B0000000000007060
-t1287939707
-s28768
-
-N/Users/lishiyong/iAlarm/SourceCode/LocationUtility.h
-c000000004CCD742400000000000006CD
-t1288533028
-s1741
-i<Foundation/Foundation.h>
-i<CoreLocation/CoreLocation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/LocationUtility.m
-c000000004CCD72440000000000001024
-t1288532548
-s4132
-i"LocationUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/MainWindow.xib
-c000000004CCE57EA000000000000864B
-t1288591338
-s34379
-
-N/Users/lishiyong/iAlarm/SourceCode/RatingView.h
-c000000004CC466760000000000000A89
-t1287939702
-s2697
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/RatingView.m
-c000000004CC466760000000000000ED3
-t1287939702
-s3795
-i"RatingView.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/RegionCenter.h
-c000000004CCE5C4C000000000000025A
-t1288592460
-s602
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/RegionCenter.m
-c000000004CC8F24C00000000000002D8
-t1288237644
-s728
-i"RegionCenter.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/RootViewController.h
-c000000004CCE38330000000000000272
-t1288583219
-s626
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/RootViewController.m
-c000000004CCE657B0000000000002707
-t1288594811
-s9991
-i"RootViewController.h"
-i"AlarmDetailViewController.h"
-i"AlarmNewViewController.h"
-i"UIUtility.h"
-i"YCAlarmEntity.h"
-i"DataUtility.h"
-i"ApplicationCell.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/RootViewController.xib
-c000000004CCE381E00000000000050D6
-t1288583198
-s20694
-
-N/Users/lishiyong/iAlarm/SourceCode/SettingViewController.h
-c000000004CCE0FBC00000000000000ED
-t1288572860
-s237
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/SettingViewController.m
-c000000004CCE0FBC00000000000005AA
-t1288572860
-s1450
-i"SettingViewController.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/SettingViewController.xib
-c000000004CCE0FBC000000000000187A
-t1288572860
-s6266
-
-N/Users/lishiyong/iAlarm/SourceCode/StandardLocationManager.h
-c000000004CC8F37F0000000000000222
-t1288237951
-s546
-i<Foundation/Foundation.h>
-i<CoreLocation/CoreLocation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/StandardLocationManager.m
-c000000004CCD714000000000000015A4
-t1288532288
-s5540
-i"StandardLocationManager.h"
-i"YCParam.h"
-i"RegionCenter.h"
-i"YCLocationManager.h"
-i"UIUtility.h"
-i"LocationUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/UIUtility.h
-c000000004CCB83740000000000000527
-t1288405876
-s1319
-i<Foundation/Foundation.h>
-i<QuartzCore/QuartzCore.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/UIUtility.m
-c000000004CCB83FF0000000000002551
-t1288406015
-s9553
-i"UIUtility.h"
-i<QuartzCore/QuartzCore.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCAlarmEntity.h
-c000000004CC81F4C0000000000000BFD
-t1288183628
-s3069
-i<Foundation/Foundation.h>
-i<CoreLocation/CoreLocation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCAlarmEntity.m
-c000000004CC81F710000000000001538
-t1288183665
-s5432
-i"YCAlarmEntity.h"
-i"DataUtility.h"
-i"YCSound.h"
-i"YCRepeatType.h"
-i"YCVehicleType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCAnnotation.h
-c000000004CC97FF100000000000001B1
-t1288273905
-s433
-i<Foundation/Foundation.h>
-i<MapKit/MapKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCAnnotation.m
-c000000004CC97FAF0000000000000113
-t1288273839
-s275
-i"YCAnnotation.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCAnnotationView.h
-c000000004CC97FE4000000000000010B
-t1288273892
-s267
-i<Foundation/Foundation.h>
-i<MapKit/MapKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCAnnotationView.m
-c000000004CC97FD000000000000000D6
-t1288273872
-s214
-i"YCAnnotationView.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCCellDescription.h
-c000000004CC647B20000000000000A35
-t1288062898
-s2613
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCCellDescription.m
-c000000004CC985D5000000000000264C
-t1288275413
-s9804
-i"YCCellDescription.h"
-i"YCRepeatType.h"
-i"YCPositionType.h"
-i"DicManager.h"
-i"AlarmPositionViewController.h"
-i"AlarmLRepeatTypeViewController.h"
-i"AlarmLSoundViewController.h"
-i"AlarmVibrateViewController.h"
-i"AlarmNameViewController.h"
-i"AlarmPositionMapViewController.h"
-i"UIUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCLocationManager.h
-c000000004CCB975A000000000000038F
-t1288410970
-s911
-i"YCLocationManagerDelegateProtocol.h"
-i<Foundation/Foundation.h>
-i<CoreLocation/CoreLocation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCLocationManager.m
-c000000004CCD753900000000000015C9
-t1288533305
-s5577
-i"YCLocationManager.h"
-i"LocationUtility.h"
-i"RegionCenter.h"
-i"YCLocationManagerDelegate.h"
-i"StandardLocationManager.h"
-i"YCParam.h"
-i"UIUtility.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCLocationManagerDelegate.h
-c000000004CC920580000000000000243
-t1288249432
-s579
-i"YCLocationManagerDelegateProtocol.h"
-i"YCLocationManager.h"
-i<Foundation/Foundation.h>
-i<CoreLocation/CoreLocation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCLocationManagerDelegate.m
-c000000004CCD4C590000000000000A5D
-t1288522841
-s2653
-i"YCLocationManagerDelegate.h"
-i"DataUtility.h"
-i"YCAlarmEntity.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCLocationManagerDelegateProtocol.h
-c000000004CC824A90000000000000659
-t1288185001
-s1625
-i<Availability.h>
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCParam.h
-c000000004CCD7B6C00000000000005E4
-t1288534892
-s1508
-i<Foundation/Foundation.h>
-i<CoreLocation/CoreLocation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCParam.m
-c000000004CCD7D4500000000000003DB
-t1288535365
-s987
-i"YCParam.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCPositionType.h
-c000000004CC4667B0000000000000284
-t1287939707
-s644
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCPositionType.m
-c000000004CC4667B000000000000056D
-t1287939707
-s1389
-i"YCPositionType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCRepeatType.h
-c000000004CC4667B000000000000027C
-t1287939707
-s636
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCRepeatType.m
-c000000004CC4667B000000000000054D
-t1287939707
-s1357
-i"YCRepeatType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCSound.h
-c000000004CC4667B00000000000001CF
-t1287939707
-s463
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCSound.m
-c000000004CC4667B000000000000043B
-t1287939707
-s1083
-i"YCSound.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/YCVehicleType.h
-c000000004CC4667B000000000000020A
-t1287939707
-s522
-i<Foundation/Foundation.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/YCVehicleType.m
-c000000004CC4667B00000000000004C9
-t1287939707
-s1225
-i"YCVehicleType.h"
-
-N/Users/lishiyong/iAlarm/SourceCode/iAlarmAppDelegate.h
-c000000004CCE559D00000000000001D4
-t1288590749
-s468
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/SourceCode/iAlarmAppDelegate.m
-c000000004CCE57A300000000000015A4
-t1288591267
-s5540
-i"iAlarmAppDelegate.h"
-i"YCAlarmEntity.h"
-i"DataUtility.h"
-i"YCLocationManager.h"
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app
-t1288597985
-s578
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM
-t1288597985
-s102
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/AlarmDetailViewController.nib
-t1288590958
-s971
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/AlarmNameViewController.nib
-t1288590958
-s1510
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/AlarmPositionMapViewController.nib
-t1288590958
-s1152
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/AlarmVibrateViewController.nib
-t1288590958
-s971
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/DarkBackground.png
-t1288590957
-s78
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/IndividualSubviewsBasedApplicationCell.nib
-t1288590958
-s2365
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist
-t1288597957
-s583
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/LightBackground.png
-t1288590957
-s78
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/MainWindow.nib
-t1288591343
-s2006
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/MathGraph.png
-t1288590957
-s6496
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/PkgInfo
-t1288597957
-s8
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/RootViewController.nib
-t1288590959
-s940
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/SettingViewController.nib
-t1288590959
-s764
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/checkmarkicon.png
-t1288590957
-s550
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-t1288597985
-s232764
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmDetailViewController.o
-t1288591619
-s57140
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLRepeatTypeViewController.o
-t1288591619
-s52456
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLSoundViewController.o
-t1288591619
-s49600
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModify.o
-t1288591619
-s3912
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyTableViewController.o
-t1288591619
-s39112
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyViewController.o
-t1288591646
-s38932
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNameViewController.o
-t1288591633
-s47080
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewDetailSuperViewController.o
-t1288591619
-s71948
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewEditSuperViewController.o
-t1288590959
-s71736
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewViewController.o
-t1288597985
-s75360
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionMapViewController.o
-t1288591619
-s51304
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionViewController.o
-t1288591619
-s47720
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmVibrateViewController.o
-t1288591620
-s49908
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/ApplicationCell.o
-t1288590959
-s42680
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/CheckmarkDisclosureIndicatorCell.o
-t1288590959
-s39140
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DataUtility.o
-t1288592284
-s20820
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DicManager.o
-t1288592284
-s18644
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/IndividualSubviewsBasedApplicationCell.o
-t1288590960
-s39140
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/LocationUtility.o
-t1288592284
-s14116
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RatingView.o
-t1288590960
-s40320
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RegionCenter.o
-t1288594070
-s9636
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RootViewController.o
-t1288595234
-s65332
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/SettingViewController.o
-t1288590960
-s34572
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/StandardLocationManager.o
-t1288594070
-s19532
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/UIUtility.o
-t1288592285
-s61088
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAlarmEntity.o
-t1288592285
-s38888
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotation.o
-t1288592285
-s10020
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotationView.o
-t1288592285
-s5728
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCCellDescription.o
-t1288592285
-s71264
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManager.o
-t1288594070
-s23088
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManagerDelegate.o
-t1288592285
-s20384
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCParam.o
-t1288590960
-s17240
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCPositionType.o
-t1288592285
-s13624
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCRepeatType.o
-t1288592285
-s14168
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCSound.o
-t1288592285
-s12404
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCVehicleType.o
-t1288592285
-s12808
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarm.LinkFileList
-c000000004CCE59030000000000001150
-t1288591619
-s4432
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o
-t1288591268
-s59840
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o
-t1288590789
-s6272
-
-N/Users/lishiyong/iAlarm/iAlarm_Prefix.pch
-c000000004CCE559D00000000000000B5
-t1288590749
-s181
-i<Foundation/Foundation.h>
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/main.m
-c000000004CCE559D0000000000000162
-t1288590749
-s354
-i<UIKit/UIKit.h>
-
-N/var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch
-t1288590789
-s15232016
-
-NiAlarm-Info.plist
-c000000004CCE6A1A000000000000036E
-t1288595994
-s878
-
-CCheck dependencies
-r0
-lSLF07#2@18"Check dependencies310290785#310290785#0(0"0(0#1#0"8621321536#0"0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmDetailViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.405549
-e310284419.549374
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmDetailViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@70"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.m310284419#310284419#0(0"0(0#0#62"/Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.m8634680064#1769"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmDetailViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLRepeatTypeViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmLRepeatTypeViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.406562
-e310284419.520981
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLRepeatTypeViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmLRepeatTypeViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@75"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmLRepeatTypeViewController.m310284419#310284419#0(0"0(0#0#67"/Users/lishiyong/iAlarm/SourceCode/AlarmLRepeatTypeViewController.m8632339328#1779"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmLRepeatTypeViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLRepeatTypeViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLSoundViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmLSoundViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.521068
-e310284419.649563
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLSoundViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmLSoundViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@70"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmLSoundViewController.m310284419#310284419#0(0"0(0#0#62"/Users/lishiyong/iAlarm/SourceCode/AlarmLSoundViewController.m8650907520#1769"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmLSoundViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmLSoundViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModify.o /Users/lishiyong/iAlarm/SourceCode/AlarmModify.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.549462
-e310284419.599040
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModify.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmModify.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@56"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmModify.m310284419#310284419#0(0"0(0#0#48"/Users/lishiyong/iAlarm/SourceCode/AlarmModify.m8646836096#1741"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmModify.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModify.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyTableViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmModifyTableViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.599133
-e310284419.675162
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyTableViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmModifyTableViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@75"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmModifyTableViewController.m310284419#310284419#0(0"0(0#0#67"/Users/lishiyong/iAlarm/SourceCode/AlarmModifyTableViewController.m8641243520#1779"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmModifyTableViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyTableViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmModifyViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284446.006727
-e310284446.117792
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmModifyViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@70"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmModifyViewController.m310284446#310284446#0(0"0(0#0#62"/Users/lishiyong/iAlarm/SourceCode/AlarmModifyViewController.m8607220448#1769"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmModifyViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmModifyViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNameViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284433.724644
-e310284433.887674
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNameViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@68"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.m310284433#310284433#0(0"0(0#0#60"/Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.m8624593888#1765"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNameViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewDetailSuperViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmNewDetailSuperViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.727331
-e310284419.881295
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewDetailSuperViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmNewDetailSuperViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@78"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmNewDetailSuperViewController.m310284419#310284419#0(0"0(0#0#70"/Users/lishiyong/iAlarm/SourceCode/AlarmNewDetailSuperViewController.m8632446784#1785"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmNewDetailSuperViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewDetailSuperViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewEditSuperViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmNewEditSuperViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283759.611575
-e310283759.744925
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewEditSuperViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmNewEditSuperViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@76"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmNewEditSuperViewController.m310283759#310283759#0(0"0(0#0#68"/Users/lishiyong/iAlarm/SourceCode/AlarmNewEditSuperViewController.m8611087936#1781"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmNewEditSuperViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewEditSuperViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmNewViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310290785.016742
-e310290785.191872
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmNewViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@67"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmNewViewController.m310290785#310290785#0(0"0(0#0#59"/Users/lishiyong/iAlarm/SourceCode/AlarmNewViewController.m8648700256#1763"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmNewViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmNewViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionMapViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.881377
-e310284419.989318
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionMapViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@75"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.m310284419#310284419#0(0"0(0#0#67"/Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.m8627010240#1779"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionMapViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmPositionViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.911725
-e310284419.998074
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmPositionViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@72"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmPositionViewController.m310284419#310284419#0(0"0(0#0#64"/Users/lishiyong/iAlarm/SourceCode/AlarmPositionViewController.m8629757600#1773"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmPositionViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmPositionViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmVibrateViewController.o /Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284419.989400
-e310284420.083518
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmVibrateViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@71"Compile /Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.m310284419#310284420#0(0"0(0#0#63"/Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.m8650407744#1771"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/AlarmVibrateViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/ApplicationCell.o /Users/lishiyong/iAlarm/SourceCode/ApplicationCell.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283759.899933
-e310283759.972160
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/ApplicationCell.o
-x/Users/lishiyong/iAlarm/SourceCode/ApplicationCell.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@60"Compile /Users/lishiyong/iAlarm/SourceCode/ApplicationCell.m310283759#310283759#0(0"0(0#0#52"/Users/lishiyong/iAlarm/SourceCode/ApplicationCell.m8611411264#1749"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/ApplicationCell.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/ApplicationCell.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/CheckmarkDisclosureIndicatorCell.o /Users/lishiyong/iAlarm/SourceCode/CheckmarkDisclosureIndicatorCell.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283759.924354
-e310283759.998334
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/CheckmarkDisclosureIndicatorCell.o
-x/Users/lishiyong/iAlarm/SourceCode/CheckmarkDisclosureIndicatorCell.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@77"Compile /Users/lishiyong/iAlarm/SourceCode/CheckmarkDisclosureIndicatorCell.m310283759#310283760#0(0"0(0#0#69"/Users/lishiyong/iAlarm/SourceCode/CheckmarkDisclosureIndicatorCell.m8611042624#1783"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/CheckmarkDisclosureIndicatorCell.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/CheckmarkDisclosureIndicatorCell.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DataUtility.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/DataUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285084.778559
-e310285084.868532
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DataUtility.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/DataUtility.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@70"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/DataUtility.m310285084#310285084#0(0"0(0#0#62"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/DataUtility.m8613226432#1755"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/DataUtility.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DataUtility.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DataUtility.o /Users/lishiyong/iAlarm/SourceCode/DataUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283759.972253
-e310283760.049705
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DataUtility.o
-x/Users/lishiyong/iAlarm/SourceCode/DataUtility.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@56"Compile /Users/lishiyong/iAlarm/SourceCode/DataUtility.m310283759#310283760#0(0"0(0#0#48"/Users/lishiyong/iAlarm/SourceCode/DataUtility.m8607893024#1741"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/DataUtility.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DataUtility.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DicManager.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/DicManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285084.779431
-e310285084.850292
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DicManager.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/DicManager.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@69"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/DicManager.m310285084#310285084#0(0"0(0#0#61"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/DicManager.m8613070592#1753"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/DicManager.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DicManager.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DicManager.o /Users/lishiyong/iAlarm/SourceCode/DicManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283759.998416
-e310283760.069872
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DicManager.o
-x/Users/lishiyong/iAlarm/SourceCode/DicManager.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@55"Compile /Users/lishiyong/iAlarm/SourceCode/DicManager.m310283759#310283760#0(0"0(0#0#47"/Users/lishiyong/iAlarm/SourceCode/DicManager.m8606499424#1739"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/DicManager.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/DicManager.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/IndividualSubviewsBasedApplicationCell.o /Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.069949
-e310283760.144948
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/IndividualSubviewsBasedApplicationCell.o
-x/Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@83"Compile /Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.m310283760#310283760#0(0"0(0#0#75"/Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.m8609339456#1795"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/IndividualSubviewsBasedApplicationCell.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/LocationUtility.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/LocationUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285084.850571
-e310285084.923493
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/LocationUtility.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/LocationUtility.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@74"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/LocationUtility.m310285084#310285084#0(0"0(0#0#66"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/LocationUtility.m8612764608#1763"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/LocationUtility.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/LocationUtility.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/LocationUtility.o /Users/lishiyong/iAlarm/SourceCode/LocationUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.130978
-e310283760.195352
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/LocationUtility.o
-x/Users/lishiyong/iAlarm/SourceCode/LocationUtility.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@60"Compile /Users/lishiyong/iAlarm/SourceCode/LocationUtility.m310283760#310283760#0(0"0(0#0#52"/Users/lishiyong/iAlarm/SourceCode/LocationUtility.m8613775616#1749"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/LocationUtility.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/LocationUtility.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RatingView.o /Users/lishiyong/iAlarm/SourceCode/RatingView.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.145035
-e310283760.216734
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RatingView.o
-x/Users/lishiyong/iAlarm/SourceCode/RatingView.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@55"Compile /Users/lishiyong/iAlarm/SourceCode/RatingView.m310283760#310283760#0(0"0(0#0#47"/Users/lishiyong/iAlarm/SourceCode/RatingView.m8613450496#1739"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/RatingView.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RatingView.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RegionCenter.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/RegionCenter.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310286870.324789
-e310286870.443892
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RegionCenter.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/RegionCenter.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@71"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/RegionCenter.m310286870#310286870#0(0"0(0#0#63"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/RegionCenter.m8612958816#1757"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/RegionCenter.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RegionCenter.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RegionCenter.o /Users/lishiyong/iAlarm/SourceCode/RegionCenter.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.195443
-e310283760.246868
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RegionCenter.o
-x/Users/lishiyong/iAlarm/SourceCode/RegionCenter.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@57"Compile /Users/lishiyong/iAlarm/SourceCode/RegionCenter.m310283760#310283760#0(0"0(0#0#49"/Users/lishiyong/iAlarm/SourceCode/RegionCenter.m8612749504#1743"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/RegionCenter.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RegionCenter.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RootViewController.o /Users/lishiyong/iAlarm/SourceCode/RootViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310288034.404572
-e310288034.581106
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RootViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/RootViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@63"Compile /Users/lishiyong/iAlarm/SourceCode/RootViewController.m310288034#310288034#0(0"0(0#0#55"/Users/lishiyong/iAlarm/SourceCode/RootViewController.m8645436128#1755"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/RootViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/RootViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/SettingViewController.o /Users/lishiyong/iAlarm/SourceCode/SettingViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.246951
-e310283760.307060
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/SettingViewController.o
-x/Users/lishiyong/iAlarm/SourceCode/SettingViewController.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@66"Compile /Users/lishiyong/iAlarm/SourceCode/SettingViewController.m310283760#310283760#0(0"0(0#0#58"/Users/lishiyong/iAlarm/SourceCode/SettingViewController.m8611566560#1761"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/SettingViewController.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/SettingViewController.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/StandardLocationManager.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/StandardLocationManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310286870.325971
-e310286870.509845
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/StandardLocationManager.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/StandardLocationManager.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@82"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/StandardLocationManager.m310286870#310286870#0(0"0(0#0#74"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/StandardLocationManager.m8615699616#1779"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/StandardLocationManager.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/StandardLocationManager.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/StandardLocationManager.o /Users/lishiyong/iAlarm/SourceCode/StandardLocationManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.307151
-e310283760.381176
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/StandardLocationManager.o
-x/Users/lishiyong/iAlarm/SourceCode/StandardLocationManager.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@68"Compile /Users/lishiyong/iAlarm/SourceCode/StandardLocationManager.m310283760#310283760#0(0"0(0#0#60"/Users/lishiyong/iAlarm/SourceCode/StandardLocationManager.m8607992096#1765"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/StandardLocationManager.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/StandardLocationManager.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/UIUtility.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/UIUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285084.940980
-e310285085.050698
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/UIUtility.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/UIUtility.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@68"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/UIUtility.m310285084#310285085#0(0"0(0#0#60"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/UIUtility.m8629507904#1751"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/UIUtility.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/UIUtility.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/UIUtility.o /Users/lishiyong/iAlarm/SourceCode/UIUtility.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.332352
-e310283760.453822
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/UIUtility.o
-x/Users/lishiyong/iAlarm/SourceCode/UIUtility.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@54"Compile /Users/lishiyong/iAlarm/SourceCode/UIUtility.m310283760#310283760#0(0"0(0#0#46"/Users/lishiyong/iAlarm/SourceCode/UIUtility.m8606222208#1737"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/UIUtility.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/UIUtility.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAlarmEntity.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAlarmEntity.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285084.995584
-e310285085.107547
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAlarmEntity.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAlarmEntity.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@72"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAlarmEntity.m310285084#310285085#0(0"0(0#0#64"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAlarmEntity.m8628628928#1759"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAlarmEntity.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAlarmEntity.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAlarmEntity.o /Users/lishiyong/iAlarm/SourceCode/YCAlarmEntity.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.381261
-e310283760.480540
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAlarmEntity.o
-x/Users/lishiyong/iAlarm/SourceCode/YCAlarmEntity.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@58"Compile /Users/lishiyong/iAlarm/SourceCode/YCAlarmEntity.m310283760#310283760#0(0"0(0#0#50"/Users/lishiyong/iAlarm/SourceCode/YCAlarmEntity.m8608917696#1745"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCAlarmEntity.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAlarmEntity.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotation.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotation.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285085.050776
-e310285085.117480
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotation.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotation.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@71"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotation.m310285085#310285085#0(0"0(0#0#63"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotation.m8625815104#1757"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotation.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotation.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotation.o /Users/lishiyong/iAlarm/SourceCode/YCAnnotation.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.453915
-e310283760.518871
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotation.o
-x/Users/lishiyong/iAlarm/SourceCode/YCAnnotation.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@57"Compile /Users/lishiyong/iAlarm/SourceCode/YCAnnotation.m310283760#310283760#0(0"0(0#0#49"/Users/lishiyong/iAlarm/SourceCode/YCAnnotation.m8613668928#1743"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCAnnotation.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotation.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotationView.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotationView.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285085.107636
-e310285085.166010
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotationView.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotationView.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@75"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotationView.m310285085#310285085#0(0"0(0#0#67"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotationView.m8615185760#1765"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCAnnotationView.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotationView.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotationView.o /Users/lishiyong/iAlarm/SourceCode/YCAnnotationView.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.480625
-e310283760.539964
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotationView.o
-x/Users/lishiyong/iAlarm/SourceCode/YCAnnotationView.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@61"Compile /Users/lishiyong/iAlarm/SourceCode/YCAnnotationView.m310283760#310283760#0(0"0(0#0#53"/Users/lishiyong/iAlarm/SourceCode/YCAnnotationView.m8612789280#1751"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCAnnotationView.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCAnnotationView.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCCellDescription.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCCellDescription.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285085.117565
-e310285085.249075
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCCellDescription.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCCellDescription.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@76"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCCellDescription.m310285085#310285085#0(0"0(0#0#68"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCCellDescription.m8613798432#1767"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCCellDescription.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCCellDescription.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCCellDescription.o /Users/lishiyong/iAlarm/SourceCode/YCCellDescription.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284420.084003
-e310284420.194089
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCCellDescription.o
-x/Users/lishiyong/iAlarm/SourceCode/YCCellDescription.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@62"Compile /Users/lishiyong/iAlarm/SourceCode/YCCellDescription.m310284420#310284420#0(0"0(0#0#54"/Users/lishiyong/iAlarm/SourceCode/YCCellDescription.m8639212640#1753"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCCellDescription.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCCellDescription.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManager.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310286870.444308
-e310286870.548397
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManager.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManager.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@76"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManager.m310286870#310286870#0(0"0(0#0#68"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManager.m8650313184#1767"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManager.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManager.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManager.o /Users/lishiyong/iAlarm/SourceCode/YCLocationManager.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.540049
-e310283760.613646
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManager.o
-x/Users/lishiyong/iAlarm/SourceCode/YCLocationManager.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@62"Compile /Users/lishiyong/iAlarm/SourceCode/YCLocationManager.m310283760#310283760#0(0"0(0#0#54"/Users/lishiyong/iAlarm/SourceCode/YCLocationManager.m8612424384#1753"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCLocationManager.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManager.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManagerDelegate.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManagerDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285085.249174
-e310285085.328884
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManagerDelegate.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManagerDelegate.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@84"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManagerDelegate.m310285085#310285085#0(0"0(0#0#76"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManagerDelegate.m8648040064#1783"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCLocationManagerDelegate.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManagerDelegate.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManagerDelegate.o /Users/lishiyong/iAlarm/SourceCode/YCLocationManagerDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.613733
-e310283760.677720
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManagerDelegate.o
-x/Users/lishiyong/iAlarm/SourceCode/YCLocationManagerDelegate.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@70"Compile /Users/lishiyong/iAlarm/SourceCode/YCLocationManagerDelegate.m310283760#310283760#0(0"0(0#0#62"/Users/lishiyong/iAlarm/SourceCode/YCLocationManagerDelegate.m8609413088#1769"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCLocationManagerDelegate.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCLocationManagerDelegate.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCParam.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCParam.m normal i386 objective-c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCParam.o /Users/lishiyong/iAlarm/SourceCode/YCParam.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.671928
-e310283760.738510
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCParam.o
-x/Users/lishiyong/iAlarm/SourceCode/YCParam.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@52"Compile /Users/lishiyong/iAlarm/SourceCode/YCParam.m310283760#310283760#0(0"0(0#0#44"/Users/lishiyong/iAlarm/SourceCode/YCParam.m8606656352#1733"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCParam.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCParam.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCPositionType.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCPositionType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285085.260085
-e310285085.327920
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCPositionType.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCPositionType.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@73"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCPositionType.m310285085#310285085#0(0"0(0#0#65"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCPositionType.m8635682592#1761"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCPositionType.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCPositionType.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCPositionType.o /Users/lishiyong/iAlarm/SourceCode/YCPositionType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.677805
-e310283760.755335
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCPositionType.o
-x/Users/lishiyong/iAlarm/SourceCode/YCPositionType.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@59"Compile /Users/lishiyong/iAlarm/SourceCode/YCPositionType.m310283760#310283760#0(0"0(0#0#51"/Users/lishiyong/iAlarm/SourceCode/YCPositionType.m8602463296#1747"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCPositionType.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCPositionType.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCRepeatType.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCRepeatType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285085.328002
-e310285085.388215
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCRepeatType.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCRepeatType.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@71"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCRepeatType.m310285085#310285085#0(0"0(0#0#63"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCRepeatType.m8629267904#1757"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCRepeatType.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCRepeatType.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCRepeatType.o /Users/lishiyong/iAlarm/SourceCode/YCRepeatType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.738598
-e310283760.816408
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCRepeatType.o
-x/Users/lishiyong/iAlarm/SourceCode/YCRepeatType.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@57"Compile /Users/lishiyong/iAlarm/SourceCode/YCRepeatType.m310283760#310283760#0(0"0(0#0#49"/Users/lishiyong/iAlarm/SourceCode/YCRepeatType.m8616892288#1743"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCRepeatType.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCRepeatType.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCSound.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCSound.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285085.328948
-e310285085.391329
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCSound.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCSound.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@66"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCSound.m310285085#310285085#0(0"0(0#0#58"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCSound.m8628371040#1747"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCSound.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCSound.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCSound.o /Users/lishiyong/iAlarm/SourceCode/YCSound.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.755416
-e310283760.811267
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCSound.o
-x/Users/lishiyong/iAlarm/SourceCode/YCSound.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@52"Compile /Users/lishiyong/iAlarm/SourceCode/YCSound.m310283760#310283760#0(0"0(0#0#44"/Users/lishiyong/iAlarm/SourceCode/YCSound.m8613215296#1733"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCSound.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCSound.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCVehicleType.o /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCVehicleType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310285085.388303
-e310285085.440609
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCVehicleType.o
-x/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCVehicleType.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@72"Compile /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCVehicleType.m310285085#310285085#0(0"0(0#0#64"/Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCVehicleType.m8626896288#1759"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/../SourceCode/YCVehicleType.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCVehicleType.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCVehicleType.o /Users/lishiyong/iAlarm/SourceCode/YCVehicleType.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283760.811367
-e310283760.861203
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCVehicleType.o
-x/Users/lishiyong/iAlarm/SourceCode/YCVehicleType.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@58"Compile /Users/lishiyong/iAlarm/SourceCode/YCVehicleType.m310283760#310283760#0(0"0(0#0#50"/Users/lishiyong/iAlarm/SourceCode/YCVehicleType.m8612380096#1745"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/YCVehicleType.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/YCVehicleType.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o /Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283589.860925
-e310283589.928534
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o
-x/Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@59"Compile /Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m310283589#310283589#0(0"0(0#0#51"/Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m8606400704#1750"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o /Users/lishiyong/iAlarm/SourceCode/iAlarmAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310284068.465956
-e310284068.580662
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o
-x/Users/lishiyong/iAlarm/SourceCode/iAlarmAppDelegate.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@62"Compile /Users/lishiyong/iAlarm/SourceCode/iAlarmAppDelegate.m310284068#310284068#0(0"0(0#0#54"/Users/lishiyong/iAlarm/SourceCode/iAlarmAppDelegate.m8609491264#1753"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/SourceCode/iAlarmAppDelegate.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o /Users/lishiyong/iAlarm/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283589.860149
-e310283589.923086
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o
-x/Users/lishiyong/iAlarm/main.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@38"Compile /Users/lishiyong/iAlarm/main.m310283589#310283589#0(0"0(0#0#30"/Users/lishiyong/iAlarm/main.m8606877568#1716"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/main.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o0#
-
-CCompileXIB /Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.xib
-s310283757.775062
-e310283758.086072
-r1
-xCompileXIB
-x/Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.xib
-lSLF07#2@51"CompileXIB SourceCode/AlarmDetailViewController.xib310283757#310283758#0(0"0(0#0#64"/Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.xib8611257504#565"    cd /Users/lishiyong/iAlarm    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/AlarmDetailViewController.nib /Users/lishiyong/iAlarm/SourceCode/AlarmDetailViewController.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCompileXIB /Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.xib
-s310283757.782855
-e310283758.213100
-r1
-xCompileXIB
-x/Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.xib
-lSLF07#2@49"CompileXIB SourceCode/AlarmNameViewController.xib310283757#310283758#0(0"0(0#0#62"/Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.xib8610986208#561"    cd /Users/lishiyong/iAlarm    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/AlarmNameViewController.nib /Users/lishiyong/iAlarm/SourceCode/AlarmNameViewController.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCompileXIB /Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.xib
-s310283758.086156
-e310283758.429070
-r1
-xCompileXIB
-x/Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.xib
-lSLF07#2@56"CompileXIB SourceCode/AlarmPositionMapViewController.xib310283758#310283758#0(0"0(0#0#69"/Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.xib8616027872#575"    cd /Users/lishiyong/iAlarm    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/AlarmPositionMapViewController.nib /Users/lishiyong/iAlarm/SourceCode/AlarmPositionMapViewController.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCompileXIB /Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.xib
-s310283758.213176
-e310283758.594951
-r1
-xCompileXIB
-x/Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.xib
-lSLF07#2@52"CompileXIB SourceCode/AlarmVibrateViewController.xib310283758#310283758#0(0"0(0#0#65"/Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.xib8615311552#567"    cd /Users/lishiyong/iAlarm    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/AlarmVibrateViewController.nib /Users/lishiyong/iAlarm/SourceCode/AlarmVibrateViewController.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCompileXIB /Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.xib
-s310283758.429148
-e310283758.840292
-r1
-xCompileXIB
-x/Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.xib
-lSLF07#2@64"CompileXIB SourceCode/IndividualSubviewsBasedApplicationCell.xib310283758#310283758#0(0"0(0#0#77"/Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.xib8613649760#591"    cd /Users/lishiyong/iAlarm    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/IndividualSubviewsBasedApplicationCell.nib /Users/lishiyong/iAlarm/SourceCode/IndividualSubviewsBasedApplicationCell.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCompileXIB /Users/lishiyong/iAlarm/SourceCode/MainWindow.xib
-s310284143.004495
-e310284143.371234
-r1
-xCompileXIB
-x/Users/lishiyong/iAlarm/SourceCode/MainWindow.xib
-lSLF07#2@36"CompileXIB SourceCode/MainWindow.xib310284143#310284143#0(0"0(0#0#49"/Users/lishiyong/iAlarm/SourceCode/MainWindow.xib8601924832#535"    cd /Users/lishiyong/iAlarm    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/MainWindow.nib /Users/lishiyong/iAlarm/SourceCode/MainWindow.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCompileXIB /Users/lishiyong/iAlarm/SourceCode/RootViewController.xib
-s310283758.840370
-e310283759.250950
-r1
-xCompileXIB
-x/Users/lishiyong/iAlarm/SourceCode/RootViewController.xib
-lSLF07#2@44"CompileXIB SourceCode/RootViewController.xib310283758#310283759#0(0"0(0#0#57"/Users/lishiyong/iAlarm/SourceCode/RootViewController.xib8613002944#551"    cd /Users/lishiyong/iAlarm    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/RootViewController.nib /Users/lishiyong/iAlarm/SourceCode/RootViewController.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCompileXIB /Users/lishiyong/iAlarm/SourceCode/SettingViewController.xib
-s310283759.006895
-e310283759.345018
-r1
-xCompileXIB
-x/Users/lishiyong/iAlarm/SourceCode/SettingViewController.xib
-lSLF07#2@47"CompileXIB SourceCode/SettingViewController.xib310283759#310283759#0(0"0(0#0#60"/Users/lishiyong/iAlarm/SourceCode/SettingViewController.xib8612496544#557"    cd /Users/lishiyong/iAlarm    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.0    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/SettingViewController.nib /Users/lishiyong/iAlarm/SourceCode/SettingViewController.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk0#
-
-CCpResource build/Debug-iphonesimulator/iAlarm.app/DarkBackground.png Resources/images/DarkBackground.png
-s310283757.769853
-e310283757.782768
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/iAlarm.app/DarkBackground.png
-xResources/images/DarkBackground.png
-lSLF07#2@40"Copy Resources/images/DarkBackground.png310283757#310283757#0(0"0(0#0#59"/Users/lishiyong/iAlarm/Resources/images/DarkBackground.png8612424864#433"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks /Users/lishiyong/iAlarm/Resources/images/DarkBackground.png /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app0#
-
-CCpResource build/Debug-iphonesimulator/iAlarm.app/LightBackground.png Resources/images/LightBackground.png
-s310283757.771460
-e310283757.780005
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/iAlarm.app/LightBackground.png
-xResources/images/LightBackground.png
-lSLF07#2@41"Copy Resources/images/LightBackground.png310283757#310283757#0(0"0(0#0#60"/Users/lishiyong/iAlarm/Resources/images/LightBackground.png8612247040#434"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks /Users/lishiyong/iAlarm/Resources/images/LightBackground.png /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app0#
-
-CCpResource build/Debug-iphonesimulator/iAlarm.app/MathGraph.png Resources/images/MathGraph.png
-s310283757.773064
-e310283757.779874
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/iAlarm.app/MathGraph.png
-xResources/images/MathGraph.png
-lSLF07#2@35"Copy Resources/images/MathGraph.png310283757#310283757#0(0"0(0#0#54"/Users/lishiyong/iAlarm/Resources/images/MathGraph.png8611441408#428"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks /Users/lishiyong/iAlarm/Resources/images/MathGraph.png /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app0#
-
-CCpResource build/Debug-iphonesimulator/iAlarm.app/checkmarkicon.png Resources/images/checkmarkicon.png
-s310283757.769304
-e310283757.776893
-r1
-xCpResource
-xbuild/Debug-iphonesimulator/iAlarm.app/checkmarkicon.png
-xResources/images/checkmarkicon.png
-lSLF07#2@39"Copy Resources/images/checkmarkicon.png310283757#310283757#0(0"0(0#0#58"/Users/lishiyong/iAlarm/Resources/images/checkmarkicon.png8612543136#432"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks /Users/lishiyong/iAlarm/Resources/images/checkmarkicon.png /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app0#
-
-CGenerateDSYMFile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-s310290785.236624
-e310290785.289947
-r1
-xGenerateDSYMFile
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-lSLF07#2@106"GenerateDSYMFile build/Debug-iphonesimulator/iAlarm.app.dSYM build/Debug-iphonesimulator/iAlarm.app/iAlarm310290785#310290785#0(0"0(0#0#69"/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm8620402240#335"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/dsymutil /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm -o /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM0#
-
-CLd /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm normal i386
-s310290785.191968
-e310290785.236528
-r1
-xLd
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-xnormal
-xi386
-lSLF07#2@74"Link /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm310290785#310290785#0(0"0(0#0#0"8621066624#884"    cd /Users/lishiyong/iAlarm    setenv MACOSX_DEPLOYMENT_TARGET 10.6    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -arch i386 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -L/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -filelist /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarm.LinkFileList -mmacosx-version-min=10.6 -Xlinker -objc_abi_version -Xlinker 2 -framework Foundation -framework UIKit -framework CoreGraphics -framework CoreLocation -framework MapKit -framework QuartzCore -o /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm0#
-
-CProcessInfoPlistFile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist iAlarm-Info.plist
-s310290757.509347
-e310290757.512233
-r1
-xProcessInfoPlistFile
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist
-xiAlarm-Info.plist
-lSLF07#2@25"Process iAlarm-Info.plist310290757#310290757#0(0"0(0#0#41"/Users/lishiyong/iAlarm/iAlarm-Info.plist8616969856#431"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-infoPlistUtility iAlarm-Info.plist -genpkginfo /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist0#
-
-CProcessPCH /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch iAlarm_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283589.332440
-e310283589.860068
-r1
-xProcessPCH
-x/var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch
-xiAlarm_Prefix.pch
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@28"Precompile iAlarm_Prefix.pch310283589#310283589#0(0"0(0#0#41"/Users/lishiyong/iAlarm/iAlarm_Prefix.pch8609349024#1624"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c-header -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -c /Users/lishiyong/iAlarm/iAlarm_Prefix.pch -o /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch0#
-
-CTouch /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app
-s310290785.290014
-e310290785.292449
-r1
-xTouch
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app
-lSLF07#2@68"Touch /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app310290785#310290785#0(0"0(0#0#0"8648307392#247"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /usr/bin/touch -c /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app0#
-

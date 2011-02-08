@@ -1,189 +1,0 @@
-TiAlarm
-v7
-r0
-t310283589.959237
-cCheck dependencies
-cProcessInfoPlistFile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist iAlarm-Info.plist
-cProcessPCH /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch iAlarm_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o /Users/lishiyong/iAlarm/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o /Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-cLd /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm normal i386
-cGenerateDSYMFile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-cTouch /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk
-c000000004C6517790000000000000132
-t1281693561
-s306
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
-c000000004BFDFE39000000000027C7D0
-t1274936889
-s2607056
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Foundation
-c000000004BFDFE7C000000000029D5D0
-t1274936956
-s2741712
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
-c000000004BFDFE6E0000000000001466
-t1274936942
-s5222
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
-c000000004C0470BB00000000000009CD
-t1275359419
-s2509
-
-N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/UIKit.framework/UIKit
-c000000004C0471620000000001D47210
-t1275359586
-s30700048
-
-N/Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.h
-c000000004CCE559D00000000000001D4
-t1288590749
-s468
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m
-c000000004CCE559D0000000000000C2F
-t1288590749
-s3119
-i"iAlarmAppDelegate.h"
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app
-t1288590789
-s170
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM
-t1288590789
-s102
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist
-t1288590789
-s587
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/PkgInfo
-t1288590789
-s8
-
-N/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-t1288590789
-s15928
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarm.LinkFileList
-c000000004CCE55C500000000000000DF
-t1288590789
-s223
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o
-t1288590789
-s51036
-
-N/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o
-t1288590789
-s6272
-
-N/Users/lishiyong/iAlarm/iAlarm_Prefix.pch
-c000000004CCE559D00000000000000B5
-t1288590749
-s181
-i<Foundation/Foundation.h>
-i<UIKit/UIKit.h>
-
-N/Users/lishiyong/iAlarm/main.m
-c000000004CCE559D0000000000000162
-t1288590749
-s354
-i<UIKit/UIKit.h>
-
-N/var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch
-t1288590789
-s15232016
-
-NiAlarm-Info.plist
-c000000004CCE559D000000000000038D
-t1288590749
-s909
-
-CCheck dependencies
-r0
-lSLF07#2@18"Check dependencies310283589#310283589#0(0"0(0#1#0"8609452032#0"0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o /Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283589.860925
-e310283589.928534
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o
-x/Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@59"Compile /Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m310283589#310283589#0(0"0(0#0#51"/Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m8606400704#1750"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/Classes/iAlarmAppDelegate.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarmAppDelegate.o0#
-
-CCompileC build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o /Users/lishiyong/iAlarm/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283589.860149
-e310283589.923086
-r1
-xCompileC
-xbuild/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o
-x/Users/lishiyong/iAlarm/main.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@38"Compile /Users/lishiyong/iAlarm/main.m310283589#310283589#0(0"0(0#0#30"/Users/lishiyong/iAlarm/main.m8606877568#1716"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -include /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch -c /Users/lishiyong/iAlarm/main.m -o /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/main.o0#
-
-CGenerateDSYMFile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-s310283589.946507
-e310283589.957029
-r1
-xGenerateDSYMFile
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-lSLF07#2@106"GenerateDSYMFile build/Debug-iphonesimulator/iAlarm.app.dSYM build/Debug-iphonesimulator/iAlarm.app/iAlarm310283589#310283589#0(0"0(0#0#69"/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm8612908256#335"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/dsymutil /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm -o /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app.dSYM0#
-
-CLd /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm normal i386
-s310283589.928604
-e310283589.946416
-r1
-xLd
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm
-xnormal
-xi386
-lSLF07#2@74"Link /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm310283589#310283589#0(0"0(0#0#0"8613776096#820"    cd /Users/lishiyong/iAlarm    setenv MACOSX_DEPLOYMENT_TARGET 10.6    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -arch i386 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -L/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -filelist /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/Objects-normal/i386/iAlarm.LinkFileList -mmacosx-version-min=10.6 -Xlinker -objc_abi_version -Xlinker 2 -framework Foundation -framework UIKit -framework CoreGraphics -o /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/iAlarm0#
-
-CProcessInfoPlistFile /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist iAlarm-Info.plist
-s310283589.329636
-e310283589.332368
-r1
-xProcessInfoPlistFile
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist
-xiAlarm-Info.plist
-lSLF07#2@25"Process iAlarm-Info.plist310283589#310283589#0(0"0(0#0#41"/Users/lishiyong/iAlarm/iAlarm-Info.plist8602311424#431"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-infoPlistUtility iAlarm-Info.plist -genpkginfo /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app/Info.plist0#
-
-CProcessPCH /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch iAlarm_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
-s310283589.332440
-e310283589.860068
-r1
-xProcessPCH
-x/var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch
-xiAlarm_Prefix.pch
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@28"Precompile iAlarm_Prefix.pch310283589#310283589#0(0"0(0#0#41"/Users/lishiyong/iAlarm/iAlarm_Prefix.pch8609349024#1624"    cd /Users/lishiyong/iAlarm    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c-header -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -D__IPHONE_OS_VERSION_MIN_REQUIRED=30200 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-generated-files.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-own-target-headers.hmap -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-all-target-headers.hmap -iquote /Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/iAlarm-project-headers.hmap -F/Users/lishiyong/iAlarm/build/Debug-iphonesimulator -I/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/include -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources/i386 -I/Users/lishiyong/iAlarm/build/iAlarm.build/Debug-iphonesimulator/iAlarm.build/DerivedSources -c /Users/lishiyong/iAlarm/iAlarm_Prefix.pch -o /var/folders/fM/fMpu7qmbFXGYebxse3u9e++++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/iAlarm_Prefix-ghejcckorryqrlapwffphiuoifoc/iAlarm_Prefix.pch.gch0#
-
-CTouch /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app
-s310283589.957102
-e310283589.959205
-r1
-xTouch
-x/Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app
-lSLF07#2@68"Touch /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app310283589#310283589#0(0"0(0#0#0"8609426624#247"    cd /Users/lishiyong/iAlarm    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /usr/bin/touch -c /Users/lishiyong/iAlarm/build/Debug-iphonesimulator/iAlarm.app0#
-
